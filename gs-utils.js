@@ -1,8 +1,12 @@
 "use strict";
 
-function GSUnoop() {}
-
 const GSUonMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/u.test( navigator.userAgent );
+
+// -----------------------------------------------------------------------------
+function GSUnoop() {}
+function GSUisNoop( fn ) {
+	return !fn || fn === GSUnoop;
+}
 
 // -----------------------------------------------------------------------------
 function GSUisNum( n ) {
