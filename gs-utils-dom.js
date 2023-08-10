@@ -122,10 +122,6 @@ function GSUsetAttribute( el, attr, val ) {
 		Object.entries( attr ).forEach( kv => _GSUsetAttribute( el, ...kv ) );
 	}
 }
-function GSUsetGetAttribute( el, attr, val ) {
-	_GSUsetAttribute( el, attr, val );
-	return GSUgetAttribute( el, attr );
-}
 function _GSUsetAttribute( el, attr, val ) {
 	val !== false && val !== null && val !== undefined
 		? el.setAttribute( attr, val === true ? "" : val )
