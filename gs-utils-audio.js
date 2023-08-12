@@ -1,0 +1,45 @@
+"use strict";
+
+function GSUhashBufferV1( u8buf ) {
+	const hash = new Uint8Array( 19 );
+	const len = `${ u8buf.length }`.padStart( 9, "0" );
+	let i = 0;
+	let ind = 0;
+
+	for ( const u8 of u8buf ) {
+		hash[ ind ] += u8;
+		if ( ++ind >= 19 ) {
+			ind = 0;
+		}
+		if ( ++i >= 1000000 ) {
+			break;
+		}
+	}
+	return `1-${ len }-${ Array.from( hash )
+		.map( u8 => u8.toString( 16 ).padStart( 2, "0" ) )
+		.join( "" ) }`;
+}
+
+// -----------------------------------------------------------------------------
+function GSUpanningMerge( ...pans ) {
+	const lr = pans.map( _GSUpanningSplitLR )
+		.reduce( ( ret, lr ) => {
+			ret[ 0 ] *= lr[ 0 ];
+			ret[ 1 ] *= lr[ 1 ];
+			return ret;
+		}, [ 1, 1 ] );
+
+	return _GSUpanningMergeLR( ...lr );
+}
+function _GSUpanningMergeLR( l, r ) {
+	return (
+		l > r ? -1 + r / l :
+		l < r ?  1 - l / r : 0
+	);
+}
+function _GSUpanningSplitLR( pan ) {
+	return (
+		pan < 0 ? [ 1, 1 + pan ] :
+		pan > 0 ? [ 1 - pan, 1 ] : [ 1, 1 ]
+	);
+}
