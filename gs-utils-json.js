@@ -4,6 +4,39 @@ function GSUjsonCopy( o ) {
 	return JSON.parse( JSON.stringify( o ) );
 }
 
+function GSUdeepCopy( obj ) {
+	if ( GSUisObject( obj ) ) {
+		return Object.entries( obj ).reduce( ( cpy, [ k, v ] ) => {
+			cpy[ k ] = GSUdeepCopy( v );
+			return cpy;
+		}, {} );
+	}
+	return obj;
+}
+
+function GSUdeepAssign( a, b ) {
+	if ( b ) {
+		Object.entries( b ).forEach( ( [ k, val ] ) => {
+			if ( !GSUisObject( val ) ) {
+				a[ k ] = val;
+			} else if ( !GSUisObject( a[ k ] ) ) {
+				a[ k ] = GSUdeepCopy( val );
+			} else {
+				GSUdeepAssign( a[ k ], val );
+			}
+		} );
+	}
+	return a;
+}
+
+function GSUdeepFreeze( obj ) {
+	if ( GSUisObject( obj ) ) {
+		Object.freeze( obj );
+		Object.values( obj ).forEach( GSUdeepFreeze );
+	}
+	return obj;
+}
+
 function GSUdiffObjects( a, b ) {
 	let empty = true;
 	const diff = Object.entries( b ).reduce( ( diff, [ bk, bv ] ) => {
@@ -28,4 +61,62 @@ function GSUdiffObjects( a, b ) {
 		}
 	} );
 	return empty ? undefined : Object.freeze( diff );
+}
+
+function GSUdiffAssign( a, b ) {
+	if ( b ) {
+		Object.entries( b ).forEach( ( [ k, val ] ) => {
+			if ( a[ k ] !== val ) {
+				if ( val === undefined ) {
+					delete a[ k ];
+				} else if ( !GSUisObject( val ) ) {
+					a[ k ] = val;
+				} else if ( !GSUisObject( a[ k ] ) ) {
+					a[ k ] = GSUjsonCopy( val );
+				} else {
+					GSUdiffAssign( a[ k ], val );
+				}
+			}
+		} );
+	}
+	return a;
+}
+
+function GSUaddIfNotEmpty( obj, attr, valObj ) {
+	if ( GSUisntEmpty( valObj ) ) {
+		if ( attr in obj ) {
+			GSUdeepAssign( obj[ attr ], valObj );
+		} else {
+			obj[ attr ] = valObj;
+		}
+	}
+	return obj;
+}
+
+function GSUcomposeUndo( data, redo ) {
+	if ( GSUisObject( data ) && GSUisObject( redo ) ) {
+		return Object.freeze( Object.entries( redo ).reduce( ( undo, [ k, val ] ) => {
+			if ( data[ k ] !== val ) {
+				undo[ k ] = GSUcomposeUndo( data[ k ], val );
+			}
+			return undo;
+		}, {} ) );
+	}
+	return data;
+}
+
+function GSUcreateUpdateDelete( dataSrc, fnCreate, fnUpdate, fnDelete, dataChange ) {
+	if ( dataChange ) {
+		Object.entries( dataChange ).forEach( ( [ id, obj ] ) => {
+			if ( !obj ) {
+				if ( id in dataSrc ) {
+					fnDelete( id, dataChange );
+				}
+			} else if ( id in dataSrc ) {
+				fnUpdate( id, obj, dataChange );
+			} else {
+				fnCreate( id, obj, dataChange );
+			}
+		} );
+	}
 }
