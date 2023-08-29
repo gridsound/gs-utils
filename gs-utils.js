@@ -9,6 +9,30 @@ function GSUisNoop( fn ) {
 }
 
 // -----------------------------------------------------------------------------
+function GSUdebounce( fn, ms ) {
+	let timeoutId;
+
+	return ( ...args ) => {
+		clearTimeout( timeoutId );
+		timeoutId = setTimeout( () => fn( ...args ), ms );
+	};
+}
+function GSUthrottle( fn, ms ) {
+	let timeoutId;
+	let argsSaved;
+
+	return ( ...args ) => {
+		argsSaved = args;
+		if ( !timeoutId ) {
+			timeoutId = setTimeout( () => {
+				fn( ...argsSaved );
+				timeoutId = null;
+			}, ms );
+		}
+	};
+}
+
+// -----------------------------------------------------------------------------
 function GSUisObject( o ) {
 	return o !== null && typeof o === "object";
 }
