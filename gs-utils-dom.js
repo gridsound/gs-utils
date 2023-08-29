@@ -18,6 +18,23 @@ function GSUemptyElement( el ) {
 }
 
 // -----------------------------------------------------------------------------
+function GSUsetChildrenNumber( el, n, tag, prop ) {
+	return _GSUsetChildrenNumber( el, n, tag, prop, GSUcreateElement );
+}
+function GSUsetSVGChildrenNumber( el, n, tag, prop ) {
+	return _GSUsetChildrenNumber( el, n, tag, prop, GSUcreateElementSVG );
+}
+function _GSUsetChildrenNumber( el, n, tag, prop, createFn ) {
+	if ( el.children.length < n ) {
+		el.append( ...GSUnewArray( n - el.children.length, () => createFn( tag, prop ) ) );
+	} else {
+		while ( el.children.length > n ) {
+			el.lastChild.remove();
+		}
+	}
+}
+
+// -----------------------------------------------------------------------------
 const _GSUtemplates = new Map();
 
 function GSUsetTemplate( tmpId, fn ) {
