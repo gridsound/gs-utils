@@ -9,6 +9,31 @@ function GSUisNoop( fn ) {
 }
 
 // -----------------------------------------------------------------------------
+function GSUnewArray( l, fn ) {
+	return fn === undefined
+		? new Array( l )
+		: typeof fn === "function"
+			? Array.from( { length: l }, ( _, i ) => fn( i ) )
+			: Array.from( { length: l } ).fill( fn );
+}
+function GSUarrayFrom( a ) {
+	return Array.isArray( a ) ? a :
+		"length" in a ? Array.from( a ) : [ a ];
+}
+function GSUarrayLength( arr, len, fn ) {
+	if ( arr.length !== len ) {
+		if ( arr.length > len ) {
+			arr.length = len;
+		} else {
+			while ( arr.length < len ) {
+				arr.push( typeof fn === "function" ? fn( arr.length ) : fn );
+			}
+		}
+	}
+	return arr;
+}
+
+// -----------------------------------------------------------------------------
 function GSUdebounce( fn, ms ) {
 	let timeoutId;
 
@@ -52,11 +77,6 @@ function GSUtrim2( str ) {
 }
 
 // -----------------------------------------------------------------------------
-function GSUisNum( n ) {
-	return typeof n === "number" && !Number.isNaN( n );
-}
-
-// -----------------------------------------------------------------------------
 function GSUeaseInCirc( n ) {
 	return 1 - Math.sqrt( 1 - Math.pow( n, 2 ) );
 }
@@ -65,6 +85,9 @@ function GSUeaseOutCirc( n ) {
 }
 
 // -----------------------------------------------------------------------------
+function GSUisNum( n ) {
+	return typeof n === "number" && !Number.isNaN( n );
+}
 function GSUroundNum( val, dec = 0 ) {
 	return typeof val === "number"
 		? +val.toFixed( dec )
