@@ -115,6 +115,12 @@ function _GSUcreateElement( ns, tag, attrObj, children ) {
 	el.append( ...children.flat( 1 ).filter( ch => Boolean( ch ) || Number.isFinite( ch ) ) );
 	return el;
 }
+function GSUcreateA( attr, ...child ) {
+	return GSUcreateElement( "a", { href: true, ...attr }, ...child );
+}
+function GSUcreateAExt( attr, ...child ) {
+	return GSUcreateA( { ...attr, target: "_blank", rel: "noopener" }, ...child );
+}
 function GSUcreateButton( attr, ...child ) {
 	return GSUcreateElement( "button", { type: "button", ...attr }, ...child );
 }
