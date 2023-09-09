@@ -115,15 +115,16 @@ function _GSUcreateElement( ns, tag, attrObj, children ) {
 	el.append( ...children.flat( 1 ).filter( ch => Boolean( ch ) || Number.isFinite( ch ) ) );
 	return el;
 }
-function GSUcreateA( attr, ...child ) {
-	return GSUcreateElement( "a", { href: true, ...attr }, ...child );
-}
-function GSUcreateAExt( attr, ...child ) {
-	return GSUcreateA( { ...attr, target: "_blank", rel: "noopener" }, ...child );
-}
-function GSUcreateButton( attr, ...child ) {
-	return GSUcreateElement( "button", { type: "button", ...attr }, ...child );
-}
+function GSUcreateA( attr, ...child ) { return GSUcreateElement( "a", { href: true, ...attr }, ...child ); }
+function GSUcreateI( attr, ...child ) { return GSUcreateElement( "i", attr, ...child ); }
+function GSUcreateDiv( attr, ...child ) { return GSUcreateElement( "div", attr, ...child ); }
+function GSUcreateAExt( attr, ...child ) { return GSUcreateA( { ...attr, target: "_blank", rel: "noopener" }, ...child ); }
+function GSUcreateSpan( attr, ...child ) { return GSUcreateElement( "span", attr, ...child ); }
+function GSUcreateInput( attr, ...child ) { return GSUcreateElement( "input", attr, ...child ); }
+function GSUcreateLabel( attr, ...child ) { return GSUcreateElement( "label", attr, ...child ); }
+function GSUcreateButton( attr, ...child ) { return GSUcreateElement( "button", { type: "button", ...attr }, ...child ); }
+function GSUcreateSelect( attr, ...child ) { return GSUcreateElement( "select", attr, ...child ); }
+function GSUcreateOption( attr, child ) { return GSUcreateElement( "option", attr, child || attr?.value ); }
 
 // -----------------------------------------------------------------------------
 function GSUhasAttribute( el, attr ) {
