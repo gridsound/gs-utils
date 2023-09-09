@@ -115,6 +115,9 @@ function _GSUcreateElement( ns, tag, attrObj, children ) {
 	el.append( ...children.flat( 1 ).filter( ch => Boolean( ch ) || Number.isFinite( ch ) ) );
 	return el;
 }
+function GSUcreateButton( attr, ...child ) {
+	return GSUcreateElement( "button", { type: "button", ...attr }, ...child );
+}
 
 // -----------------------------------------------------------------------------
 function GSUhasAttribute( el, attr ) {
