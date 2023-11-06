@@ -9,6 +9,18 @@ function GSUisNoop( fn ) {
 }
 
 // -----------------------------------------------------------------------------
+function GSUforEach( obj, fn ) {
+	if ( obj?.forEach ) {
+		obj.forEach( fn );
+	} else {
+		for ( const k in obj ) {
+			fn( k, obj[ k ], obj );
+		}
+	}
+	return obj;
+}
+
+// -----------------------------------------------------------------------------
 function GSUnewArray( l, fn ) {
 	return fn === undefined
 		? new Array( l )
