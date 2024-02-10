@@ -4,6 +4,9 @@ const GSUonMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mi
 
 // -----------------------------------------------------------------------------
 function GSUnoop() {}
+function GSUnoopFalse() {
+	return false;
+}
 function GSUisNoop( fn ) {
 	return !fn || fn === GSUnoop;
 }
