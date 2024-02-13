@@ -22,6 +22,17 @@ function GSUforEach( obj, fn ) {
 	}
 	return obj;
 }
+function GSUreduce( obj, fn, val ) {
+	let val2 = val;
+
+	if ( obj?.reduce ) {
+		return obj.reduce( fn, val2 );
+	}
+	for ( const k in obj ) {
+		val2 = fn( val2, k, obj[ k ], obj );
+	}
+	return val2;
+}
 
 // -----------------------------------------------------------------------------
 function GSUnewArray( l, fn ) {
