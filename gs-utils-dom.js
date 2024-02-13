@@ -165,6 +165,9 @@ function GSUrecallAttributes( el, props ) {
 }
 
 // -----------------------------------------------------------------------------
+function GSUhasDataTransfer( e, list ) {
+	return list.some( k => e.dataTransfer.types.includes( k ) );
+}
 function GSUgetDataTransfer( e, list ) {
 	const ret = [];
 
