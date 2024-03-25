@@ -8,7 +8,7 @@ function GSUnoopFalse() {
 	return false;
 }
 function GSUisNoop( fn ) {
-	return !fn || fn === GSUnoop;
+	return !fn || fn === GSUnoop || fn === GSUnoopFalse;
 }
 
 // -----------------------------------------------------------------------------
