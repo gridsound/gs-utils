@@ -43,3 +43,22 @@ function _GSUpanningSplitLR( pan ) {
 		pan > 0 ? [ 1 - pan, 1 ] : [ 1, 1 ]
 	);
 }
+
+// -----------------------------------------------------------------------------
+function GSUcloneBuffer( ctx, buf ) {
+	const bufSize = buf.duration * ctx.sampleRate;
+	const nbChans = buf.numberOfChannels;
+	const cpy = ctx.createBuffer( nbChans, bufSize, ctx.sampleRate );
+
+	for ( let i = 0; i < nbChans; ++i ) {
+		cpy.copyToChannel( buf.getChannelData( i ), i );
+	}
+	return cpy;
+}
+
+function GSUreverseBuffer( buf ) {
+	for ( let i = buf.numberOfChannels - 1; i >= 0; --i ) {
+		Array.prototype.reverse.call( buf.getChannelData( i ) );
+	}
+	return buf;
+}
