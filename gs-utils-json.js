@@ -1,5 +1,12 @@
 "use strict";
 
+function GSUgetNewId( obj ) {
+	let i = 0;
+
+	for ( ; i in obj; ++i ) {}
+	return `${ i }`;
+}
+
 function GSUjsonCopy( o ) {
 	return JSON.parse( JSON.stringify( o ) );
 }
