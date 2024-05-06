@@ -150,9 +150,13 @@ function GSUsetAttribute( el, attr, val ) {
 	}
 }
 function _GSUsetAttribute( el, attr, val ) {
-	val !== false && val !== null && val !== undefined
-		? el.setAttribute( attr, val === true ? "" : val )
-		: el.removeAttribute( attr );
+	if ( val === false || val === null || val === undefined ) {
+		el.removeAttribute( attr );
+	} else if ( attr === "style" && typeof val !== "string" ) {
+		GSUforEach( val, ( prop, val ) => el.style[ prop ] = val );
+	} else {
+		el.setAttribute( attr, val === true ? "" : val );
+	}
 }
 
 // -----------------------------------------------------------------------------
