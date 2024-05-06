@@ -142,6 +142,10 @@ function GSUgetAttributeNum( el, attr ) {
 	}
 	return n;
 }
+
+// -----------------------------------------------------------------------------
+function GSUsetViewBox( svg, x, y, w, h ) { GSUsetAttribute( svg, "viewBox", `${ x } ${ y } ${ w } ${ h }` ); }
+function GSUsetViewBoxWH( svg, w, h ) { GSUsetViewBox( svg, 0, 0, w, h ); }
 function GSUsetAttribute( el, attr, val ) {
 	if ( typeof attr === "string" ) {
 		_GSUsetAttribute( el, attr, val );
