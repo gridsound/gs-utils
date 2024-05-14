@@ -4,19 +4,19 @@ const GSUpopup = document.createElement( "gsui-popup" );
 
 document.body.prepend( GSUpopup );
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUunselectText() {
 	window.getSelection().removeAllRanges();
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUemptyElement( el ) {
 	while ( el.lastChild ) {
 		el.lastChild.remove();
 	}
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUsetChildrenNumber( el, n, tag, prop ) {
 	return _GSUsetChildrenNumber( el, n, tag, prop, GSUcreateElement );
 }
@@ -33,7 +33,7 @@ function _GSUsetChildrenNumber( el, n, tag, prop, createFn ) {
 	}
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 const _GSUtemplates = new Map();
 
 function GSUsetTemplate( tmpId, fn ) {
@@ -46,7 +46,7 @@ function GSUgetTemplate( tmpId, ...args ) {
 	return _GSUtemplates.get( tmpId )( ...args );
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUfindElements( root, graph ) {
 	return typeof graph === "string"
 		? _GSUfindElementsStr( root, graph )
@@ -80,7 +80,7 @@ function _GSUfindElementsQuery( root, sel ) {
 		: root.querySelector( sel );
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUdispatchEvent( el, component, eventName, ...args ) {
 	el.dispatchEvent( new CustomEvent( "gsuiEvents", {
 		bubbles: true,
@@ -100,7 +100,7 @@ function GSUlistenEvents( el, cbs ) {
 	} );
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUcreateElement( tag, attr, ...children ) {
 	return _GSUcreateElement( "http://www.w3.org/1999/xhtml", tag, attr, children );
 }
@@ -125,7 +125,7 @@ function GSUcreateButton( attr, ...child ) { return GSUcreateElement( "button", 
 function GSUcreateSelect( attr, ...child ) { return GSUcreateElement( "select", attr, ...child ); }
 function GSUcreateOption( attr, child ) { return GSUcreateElement( "option", attr, child || attr?.value ); }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUhasAttribute( el, attr ) {
 	return el.hasAttribute( attr );
 }
@@ -142,7 +142,7 @@ function GSUgetAttributeNum( el, attr ) {
 	return n;
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUsetViewBox( svg, x, y, w, h ) { GSUsetAttribute( svg, "viewBox", `${ x } ${ y } ${ w } ${ h }` ); }
 function GSUsetViewBoxWH( svg, w, h ) { GSUsetViewBox( svg, 0, 0, w, h ); }
 function GSUsetAttribute( el, attr, val ) {
@@ -162,7 +162,7 @@ function _GSUsetAttribute( el, attr, val ) {
 	}
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUrecallAttributes( el, props ) {
 	Object.entries( props ).forEach( ( [ p, val ] ) => {
 		el.hasAttribute( p )
@@ -171,7 +171,7 @@ function GSUrecallAttributes( el, props ) {
 	} );
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUhasDataTransfer( e, list ) {
 	return list.some( k => e.dataTransfer.types.includes( k ) );
 }
@@ -189,7 +189,7 @@ function GSUgetDataTransfer( e, list ) {
 	return ret;
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 const _GSUresizeMap = new Map();
 const _GSUresizeObs = new ResizeObserver( entries => {
 	entries.forEach( e => {

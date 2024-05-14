@@ -2,7 +2,7 @@
 
 const GSUonMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/u.test( navigator.userAgent );
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUnoop() {}
 function GSUnoopFalse() {
 	return false;
@@ -11,7 +11,7 @@ function GSUisNoop( fn ) {
 	return !fn || fn === GSUnoop || fn === GSUnoopFalse;
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUforEach( obj, fn ) {
 	if ( obj?.forEach ) {
 		obj.forEach( fn );
@@ -34,7 +34,7 @@ function GSUreduce( obj, fn, val ) {
 	return val2;
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUnewArray( l, fn ) {
 	return fn === undefined
 		? new Array( l )
@@ -59,7 +59,7 @@ function GSUarrayLength( arr, len, fn ) {
 	return arr;
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUdebounce( fn, ms ) {
 	let timeoutId;
 
@@ -83,7 +83,7 @@ function GSUthrottle( fn, ms ) {
 	};
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUisObject( o ) {
 	return o !== null && typeof o === "object";
 }
@@ -97,12 +97,12 @@ function GSUisntEmpty( o ) {
 	return !GSUisEmpty( o );
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUtrim2( str ) {
 	return str ? str.trim().replace( /\s+/ug, " " ) : "";
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUeaseInCirc( n ) {
 	return 1 - Math.sqrt( 1 - Math.pow( n, 2 ) );
 }
@@ -110,7 +110,7 @@ function GSUeaseOutCirc( n ) {
 	return Math.sqrt( 1 - Math.pow( n - 1, 2 ) );
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUisNum( n ) {
 	return typeof n === "number" && !Number.isNaN( n );
 }
@@ -130,7 +130,7 @@ function GSUsplitNums( str, del = " " ) {
 	return str.split( del ).map( n => +n );
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUuuid() {
 	const rnd = crypto.getRandomValues( new Uint8Array( 36 ) );
 	const uuid = rnd.reduce( ( arr, n ) => {
@@ -147,7 +147,7 @@ function GSUuuid() {
 	return uuid.join( "" );
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUuniqueName( nameOri, arr ) {
 	const name = GSUtrim2( nameOri );
 
@@ -167,7 +167,7 @@ function GSUuniqueName( nameOri, arr ) {
 	return name;
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUplural( nb, word, s ) {
 	const w = word[ word.length - 1 ] === "s"
 		? word
@@ -177,13 +177,4 @@ function GSUplural( nb, word, s ) {
 		: `${ w }'${ w[ w.length - 1 ] === "s" ? "" : "s" }`;
 
 	return `${ nb } ${ ws }`;
-}
-
-// -----------------------------------------------------------------------------
-function GSUmapCallbacks( names, fns ) {
-	const on = {};
-
-	names.forEach( n => on[ n ] = GSUnoop );
-	Object.assign( Object.seal( on ), fns );
-	return Object.freeze( on );
 }

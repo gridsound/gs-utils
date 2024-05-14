@@ -20,7 +20,7 @@ function GSUhashBufferV1( u8buf ) {
 		.join( "" ) }`;
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUpanningMerge( ...pans ) {
 	const lr = pans.map( _GSUpanningSplitLR )
 		.reduce( ( ret, lr ) => {
@@ -44,7 +44,7 @@ function _GSUpanningSplitLR( pan ) {
 	);
 }
 
-// -----------------------------------------------------------------------------
+// .............................................................................
 function GSUcloneBuffer( ctx, buf ) {
 	const bufSize = buf.duration * ctx.sampleRate;
 	const nbChans = buf.numberOfChannels;
