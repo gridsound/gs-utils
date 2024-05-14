@@ -1,9 +1,8 @@
 "use strict";
 
 const GSUpopup = document.createElement( "gsui-popup" );
-const GSUdragshield = document.createElement( "gsui-dragshield" );
 
-document.body.prepend( GSUdragshield, GSUpopup );
+document.body.prepend( GSUpopup );
 
 // -----------------------------------------------------------------------------
 function GSUunselectText() {
