@@ -143,6 +143,25 @@ function GSUgetAttributeNum( el, attr ) {
 }
 
 // .............................................................................
+function GSUgetStyle( el, prop ) {
+	return prop.startsWith( "--" )
+		? el.style.getPropertyValue( prop )
+		: el.style[ prop ];
+}
+function GSUsetStyle( el, prop, val ) {
+	typeof prop === "string"
+		? _GSUsetStyle( el, prop, val )
+		: GSUforEach( prop, _GSUsetStyle.bind( null, el ) );
+}
+function _GSUsetStyle( el, prop, val ) {
+	if ( prop.startsWith( "--" ) ) {
+		el.style.setProperty( prop, val );
+	} else {
+		el.style[ prop ] = val;
+	}
+}
+
+// .............................................................................
 function GSUsetViewBox( svg, x, y, w, h ) { GSUsetAttribute( svg, "viewBox", `${ x } ${ y } ${ w } ${ h }` ); }
 function GSUsetViewBoxWH( svg, w, h ) { GSUsetViewBox( svg, 0, 0, w, h ); }
 function GSUsetAttribute( el, attr, val ) {
