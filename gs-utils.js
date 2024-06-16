@@ -1,6 +1,11 @@
 "use strict";
 
 const GSUonMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/u.test( navigator.userAgent );
+const GSUonIphone = [ "iPhone Simulator", "iPhone" ].includes( navigator.platform );
+const GSUonOpera = navigator.userAgent.toLowerCase().includes( "op" );
+const GSUonChrome = navigator.userAgent.includes( "Chrome" ) && !GSUonOpera;
+const GSUonSafari = navigator.userAgent.includes( "Safari" ) && !GSUonChrome;
+const GSUonFirefox = navigator.userAgent.includes( "Firefox" );
 
 // .............................................................................
 function GSUnoop() {}
