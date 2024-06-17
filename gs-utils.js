@@ -124,6 +124,9 @@ function GSUinRange( n, min, max ) {
 		? min <= n && n <= max
 		: max <= n && n <= min;
 }
+function GSUapproxEqual( n, x, diff ) {
+	return GSUinRange( n, x - diff, x + diff );
+}
 function GSUroundNum( val, dec = 0 ) {
 	return typeof val === "number"
 		? +val.toFixed( dec )
