@@ -119,17 +119,20 @@ function GSUeaseOutCirc( n ) {
 function GSUisNum( n ) {
 	return typeof n === "number" && !Number.isNaN( n );
 }
+function GSUinRange( n, min, max ) {
+	return min < max
+		? min <= n && n <= max
+		: max <= n && n <= min;
+}
 function GSUroundNum( val, dec = 0 ) {
 	return typeof val === "number"
 		? +val.toFixed( dec )
 		: val.map( n => +n.toFixed( dec ) );
 }
 function GSUclampNum( n, min, max ) {
-	return (
-		min < max
-			? Math.max( min, Math.min( n || 0, max ) )
-			: Math.max( max, Math.min( n || 0, min ) )
-	);
+	return min < max
+		? Math.max( min, Math.min( n || 0, max ) )
+		: Math.max( max, Math.min( n || 0, min ) );
 }
 function GSUsplitNums( str, del = " " ) {
 	return str.split( del ).map( n => +n );
