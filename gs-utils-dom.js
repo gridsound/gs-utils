@@ -5,6 +5,12 @@ const GSUpopup = document.createElement( "gsui-popup" );
 document.body.prepend( GSUpopup );
 
 // .............................................................................
+function GSUdefineElement( name, clazz ) {
+	Object.freeze( clazz );
+	customElements.define( name, clazz );
+}
+
+// .............................................................................
 function GSUunselectText() {
 	window.getSelection().removeAllRanges();
 }
