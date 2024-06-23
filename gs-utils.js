@@ -70,7 +70,7 @@ function GSUdebounce( fn, ms ) {
 
 	return ( ...args ) => {
 		clearTimeout( timeoutId );
-		timeoutId = setTimeout( () => fn( ...args ), ms );
+		return timeoutId = setTimeout( () => fn( ...args ), ms );
 	};
 }
 function GSUthrottle( fn, ms ) {
@@ -85,6 +85,7 @@ function GSUthrottle( fn, ms ) {
 				timeoutId = null;
 			}, ms );
 		}
+		return timeoutId;
 	};
 }
 
