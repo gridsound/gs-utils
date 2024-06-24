@@ -109,11 +109,11 @@ function GSUtrim2( str ) {
 }
 
 // .............................................................................
-function GSUeaseInCirc( n ) {
-	return 1 - Math.sqrt( 1 - Math.pow( n, 2 ) );
+function GSUeaseInCirc( n, pow = 2 ) {
+	return 1 - Math.sqrt( 1 - n ** pow );
 }
-function GSUeaseOutCirc( n ) {
-	return Math.sqrt( 1 - Math.pow( n - 1, 2 ) );
+function GSUeaseOutCirc( n, pow = 2 ) {
+	return Math.sqrt( 1 - ( n - 1 ) ** pow );
 }
 
 // .............................................................................
