@@ -72,10 +72,17 @@ function _GSUfindElementsObj( root, obj ) {
 	}
 }
 function _GSUfindElementsStr( root, sel ) {
+	if ( sel.startsWith( "[]" ) ) {
+		const sel2 = sel.slice( 2 );
+
+		return !Array.isArray( root )
+			? _GSUfindElementsQueryAll( root, sel2 )
+			: root.map( r => _GSUfindElementsQueryAll( r, sel2 ) ).flat();
+	}
 	if ( Array.isArray( root ) ) {
 		let el;
 
-		Array.prototype.find.call( root, r => el = _GSUfindElementsQuery( r, sel ) );
+		root.find( r => el = _GSUfindElementsQuery( r, sel ) );
 		return el || null;
 	}
 	return _GSUfindElementsQuery( root, sel );
@@ -84,6 +91,14 @@ function _GSUfindElementsQuery( root, sel ) {
 	return root.matches( sel )
 		? root
 		: root.querySelector( sel );
+}
+function _GSUfindElementsQueryAll( root, sel ) {
+	const arr = Array.from( root.querySelectorAll( sel ) );
+
+	if ( root.matches( sel ) ) {
+		arr.unshift( root );
+	}
+	return arr;
 }
 
 // .............................................................................
