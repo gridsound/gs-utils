@@ -141,6 +141,17 @@ function GSUclampNum( n, min, max ) {
 function GSUsplitNums( str, del = " " ) {
 	return str.split( del ).map( n => +n );
 }
+function GSUsum( arr ) {
+	return arr.reduce( ( sum, n ) => sum + n, 0 );
+}
+function GSUavg( arr ) {
+	return GSUsum( arr ) / arr.length;
+}
+function GSUstack( arr, x ) {
+	arr.pop();
+	arr.unshift( x );
+	return arr;
+}
 
 // .............................................................................
 function GSUuuid() {
