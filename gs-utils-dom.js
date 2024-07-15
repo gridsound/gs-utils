@@ -171,10 +171,10 @@ function GSUgetStyle( el, prop ) {
 }
 function GSUsetStyle( el, prop, val ) {
 	typeof prop === "string"
-		? _GSUsetStyle( el, prop, val )
+		? _GSUsetStyle( el, val, prop )
 		: GSUforEach( prop, _GSUsetStyle.bind( null, el ) );
 }
-function _GSUsetStyle( el, prop, val ) {
+function _GSUsetStyle( el, val, prop ) {
 	if ( prop.startsWith( "--" ) ) {
 		el.style.setProperty( prop, val );
 	} else {
@@ -196,7 +196,7 @@ function _GSUsetAttribute( el, attr, val ) {
 	if ( val === false || val === null || val === undefined ) {
 		el.removeAttribute( attr );
 	} else if ( attr === "style" && typeof val !== "string" ) {
-		GSUforEach( val, ( prop, val ) => el.style[ prop ] = val );
+		GSUforEach( val, ( val, prop ) => el.style[ prop ] = val );
 	} else {
 		el.setAttribute( attr, val === true ? "" : val );
 	}

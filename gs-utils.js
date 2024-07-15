@@ -22,7 +22,7 @@ function GSUforEach( obj, fn ) {
 		obj.forEach( fn );
 	} else {
 		for ( const k in obj ) {
-			fn( k, obj[ k ], obj );
+			fn( obj[ k ], k, obj );
 		}
 	}
 	return obj;
@@ -34,7 +34,7 @@ function GSUreduce( obj, fn, val ) {
 		return obj.reduce( fn, val2 );
 	}
 	for ( const k in obj ) {
-		val2 = fn( val2, k, obj[ k ], obj );
+		val2 = fn( val2, obj[ k ], k, obj );
 	}
 	return val2;
 }
