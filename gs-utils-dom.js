@@ -169,6 +169,9 @@ function GSUsetAttribute( el, attr, val ) {
 		Object.entries( attr ).forEach( kv => _GSUsetAttribute( el, ...kv ) );
 	}
 }
+function GSUtoggleAttribute( el, attr ) {
+	_GSUsetAttribute( el, attr, !GSUhasAttribute( el, attr ) );
+}
 function _GSUsetAttribute( el, attr, val ) {
 	if ( val === false || val === null || val === undefined ) {
 		el.removeAttribute( attr );
