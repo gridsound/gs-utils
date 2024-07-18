@@ -162,6 +162,24 @@ function GSUgetAttributeNum( el, attr ) {
 	}
 	return n;
 }
+function GSUsetAttribute( el, attr, val ) {
+	if ( typeof attr === "string" ) {
+		_GSUsetAttribute( el, attr, val );
+	} else if ( attr ) {
+		Object.entries( attr ).forEach( kv => _GSUsetAttribute( el, ...kv ) );
+	}
+}
+function _GSUsetAttribute( el, attr, val ) {
+	if ( val === false || val === null || val === undefined ) {
+		el.removeAttribute( attr );
+	} else if ( attr === "style" && typeof val !== "string" ) {
+		GSUforEach( val, ( val, prop ) => el.style[ prop ] = val );
+	} else {
+		el.setAttribute( attr, val === true ? "" : val );
+	}
+}
+function GSUsetViewBox( svg, x, y, w, h ) { GSUsetAttribute( svg, "viewBox", `${ x } ${ y } ${ w } ${ h }` ); }
+function GSUsetViewBoxWH( svg, w, h ) { GSUsetViewBox( svg, 0, 0, w, h ); }
 
 // .............................................................................
 function GSUgetStyle( el, prop ) {
@@ -179,26 +197,6 @@ function _GSUsetStyle( el, val, prop ) {
 		el.style.setProperty( prop, val );
 	} else {
 		el.style[ prop ] = val;
-	}
-}
-
-// .............................................................................
-function GSUsetViewBox( svg, x, y, w, h ) { GSUsetAttribute( svg, "viewBox", `${ x } ${ y } ${ w } ${ h }` ); }
-function GSUsetViewBoxWH( svg, w, h ) { GSUsetViewBox( svg, 0, 0, w, h ); }
-function GSUsetAttribute( el, attr, val ) {
-	if ( typeof attr === "string" ) {
-		_GSUsetAttribute( el, attr, val );
-	} else if ( attr ) {
-		Object.entries( attr ).forEach( kv => _GSUsetAttribute( el, ...kv ) );
-	}
-}
-function _GSUsetAttribute( el, attr, val ) {
-	if ( val === false || val === null || val === undefined ) {
-		el.removeAttribute( attr );
-	} else if ( attr === "style" && typeof val !== "string" ) {
-		GSUforEach( val, ( val, prop ) => el.style[ prop ] = val );
-	} else {
-		el.setAttribute( attr, val === true ? "" : val );
 	}
 }
 
