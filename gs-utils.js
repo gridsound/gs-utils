@@ -154,7 +154,7 @@ function GSUstack( arr, x ) {
 	arr.unshift( x );
 	return arr;
 }
-function GSUsplitSeconds( sec, format ) {
+function GSUsplitSeconds( sec ) {
 	const m = `${ sec / 60 | 0 }`;
 	const s = `${ sec - m * 60 | 0 }`.padStart( 2, "0" );
 	const ms = `${ ( sec - ( sec | 0 ) ) * 1000 | 0 }`.padStart( 3, "0" );
