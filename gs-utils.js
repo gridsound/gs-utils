@@ -147,7 +147,7 @@ function GSUsum( arr ) {
 	return arr.reduce( ( sum, n ) => sum + n, 0 );
 }
 function GSUavg( arr ) {
-	return GSUsum( arr ) / arr.length;
+	return GSUsum( arr ) / arr.length || 0;
 }
 function GSUstack( arr, x ) {
 	arr.pop();
