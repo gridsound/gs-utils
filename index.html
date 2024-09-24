@@ -1,0 +1,195 @@
+<script src="gs-utils.js"></script>
+<script>
+
+let tests = 0;
+let testsPassed = 0;
+
+function test( id, val, expected ) {
+	if ( val === expected ) {
+		++testsPassed;
+	} else {
+		console.log( `test:${ id }`, val, "!==", expected );
+	}
+	++tests;
+}
+
+// test( "xxxxxx.0", xxxxxx(), 123456 );
+
+test( "GSUnoop.0", GSUnoop(),    undefined );
+test( "GSUnoop.1", GSUnoop( 1 ), undefined );
+
+test( "GSUnoopFalse.0", GSUnoopFalse(),      false );
+test( "GSUnoopFalse.1", GSUnoopFalse( true), false );
+
+test( "GSUisNoop.0", GSUisNoop( GSUnoop ),      true );
+test( "GSUisNoop.1", GSUisNoop( GSUnoopFalse ), true );
+
+const fnSum = ( sum, n, i ) => sum + n + i;
+test( "GSUreduce.0", GSUreduce( [],                      fnSum, 0 ), 0 );
+test( "GSUreduce.1", GSUreduce( {},                      fnSum, 0 ), 0 );
+test( "GSUreduce.2", GSUreduce( [ 10, 20, 30 ],          fnSum, 0 ), 63 );
+test( "GSUreduce.3", GSUreduce( { a: 10, b: 20, c: 30 }, fnSum, 0 ), "10a20b30c" );
+
+test( "GSUeaseInCirc.0", GSUeaseInCirc( 0 ),      0 );
+test( "GSUeaseInCirc.1", GSUeaseInCirc( 1 ),      1 );
+test( "GSUeaseInCirc.2", GSUeaseInCirc( .25 ),    .031754163448145745 );
+test( "GSUeaseInCirc.3", GSUeaseInCirc( .5 ),     .1339745962155614 );
+test( "GSUeaseInCirc.4", GSUeaseInCirc( .75 ),    .3385621722338523 );
+test( "GSUeaseInCirc.5", GSUeaseInCirc( .25, 2 ), .031754163448145745 );
+test( "GSUeaseInCirc.6", GSUeaseInCirc( .25, 3 ), .007843258350778481 );
+test( "GSUeaseInCirc.7", GSUeaseInCirc( .25, 4 ), .001955036083043038 );
+
+test( "GSUeaseOutCirc.0", GSUeaseOutCirc( 0 ),      0 );
+test( "GSUeaseOutCirc.1", GSUeaseOutCirc( 1 ),      1 );
+test( "GSUeaseOutCirc.2", GSUeaseOutCirc( .25 ),    .6614378277661477 );
+test( "GSUeaseOutCirc.3", GSUeaseOutCirc( .5 ),     .8660254037844386 );
+test( "GSUeaseOutCirc.4", GSUeaseOutCirc( .75 ),    .9682458365518543 );
+test( "GSUeaseOutCirc.5", GSUeaseOutCirc( .25, 2 ), .6614378277661477 );
+test( "GSUeaseOutCirc.6", GSUeaseOutCirc( .25, 3 ), 1.192424001771182 ); // ???
+test( "GSUeaseOutCirc.7", GSUeaseOutCirc( .25, 4 ), .8267972847076845 );
+
+test( "GSUnewArray.0", JSON.stringify( GSUnewArray( 0 ) ),         "[]" );
+test( "GSUnewArray.1", JSON.stringify( GSUnewArray( 1 ) ),         JSON.stringify( [ undefined ] ) );
+test( "GSUnewArray.2", JSON.stringify( GSUnewArray( 2 ) ),         JSON.stringify( [ undefined, undefined ] ) );
+test( "GSUnewArray.3", JSON.stringify( GSUnewArray( 3, 7 ) ),      "[7,7,7]" );
+test( "GSUnewArray.4", JSON.stringify( GSUnewArray( 3, i => i ) ), "[0,1,2]" );
+
+const objEmpty = {};
+const arrEmpty = [];
+const arr123 = [ 1, 2, 3 ];
+test( "GSUarrayFrom.0", GSUarrayFrom( arr123 ),        arr123 );
+test( "GSUarrayFrom.1", GSUarrayFrom( arrEmpty ),      arrEmpty );
+test( "GSUarrayFrom.2", GSUarrayFrom( objEmpty )[ 0 ], objEmpty );
+// test( "GSUarrayFrom.2", GSUarrayFrom( 21 )[ 0 ], 21 );
+
+test( "GSUisObject.0", GSUisObject( {} ),    true );
+test( "GSUisObject.1", GSUisObject( [] ),    true );
+test( "GSUisObject.2", GSUisObject( 21 ),    false );
+test( "GSUisObject.3", GSUisObject( "abc" ), false );
+test( "GSUisObject.4", GSUisObject( null ),  false );
+test( "GSUisObject.5", GSUisObject(),        false );
+
+test( "GSUisEmpty.0", GSUisEmpty( {} ),               true );
+test( "GSUisEmpty.1", GSUisEmpty( [] ),               true );
+test( "GSUisEmpty.2", GSUisEmpty( [ 0 ] ),            false );
+test( "GSUisEmpty.3", GSUisEmpty( { a: null } ),      false );
+test( "GSUisEmpty.4", GSUisEmpty( { a: undefined } ), false );
+
+test( "GSUtrim2.0", GSUtrim2( "" ), "" );
+test( "GSUtrim2.1", GSUtrim2( "a" ), "a" );
+test( "GSUtrim2.2", GSUtrim2( "a b c" ), "a b c" );
+test( "GSUtrim2.3", GSUtrim2( "  a  b  c  " ), "a b c" );
+test( "GSUtrim2.4", GSUtrim2( " \t a  b\tc \t " ), "a b c" );
+
+test( "GSUisNum.0", GSUisNum( 0 ),     true );
+test( "GSUisNum.1", GSUisNum( 21.5 ),  true );
+test( "GSUisNum.2", GSUisNum( "21" ),  false );
+test( "GSUisNum.3", GSUisNum( "abc" ), false );
+test( "GSUisNum.4", GSUisNum(),        false );
+test( "GSUisNum.5", GSUisNum( NaN ),   false );
+test( "GSUisNum.6", GSUisNum( null ),  false );
+
+// test( "GSUsplitNums.0", JSON.stringify( GSUsplitNums( "" ) ),           "[]" );
+test( "GSUsplitNums.1", JSON.stringify( GSUsplitNums( "1" ) ),          "[1]" );
+test( "GSUsplitNums.2", JSON.stringify( GSUsplitNums( "1 2 3" ) ),      "[1,2,3]" );
+test( "GSUsplitNums.3", JSON.stringify( GSUsplitNums( "7",     "," ) ), "[7]" );
+test( "GSUsplitNums.4", JSON.stringify( GSUsplitNums( "7,8,9", "," ) ), "[7,8,9]" );
+test( "GSUsplitNums.5", JSON.stringify( GSUsplitNums( "3/4",   "/" ) ), "[3,4]" );
+
+test( "GSUinRange.0", GSUinRange(   0,   0,   1 ), true );
+test( "GSUinRange.1", GSUinRange(  20,  20,  22 ), true );
+test( "GSUinRange.2", GSUinRange(  21,  20,  22 ), true );
+test( "GSUinRange.3", GSUinRange(  22,  20,  22 ), true );
+test( "GSUinRange.4", GSUinRange(  20,  22,  20 ), true );
+test( "GSUinRange.5", GSUinRange(  21,  22,  20 ), true );
+test( "GSUinRange.6", GSUinRange(  22,  22,  20 ), true );
+test( "GSUinRange.7", GSUinRange( -20, -20, -22 ), true );
+test( "GSUinRange.8", GSUinRange( -21, -20, -22 ), true );
+test( "GSUinRange.9", GSUinRange( -22, -20, -22 ), true );
+test( "GSUinRange.a", GSUinRange( -20, -22, -20 ), true );
+test( "GSUinRange.b", GSUinRange( -21, -22, -20 ), true );
+test( "GSUinRange.c", GSUinRange( -22, -22, -20 ), true );
+test( "GSUinRange.d", GSUinRange(  .1,   0,   0 ), false );
+test( "GSUinRange.e", GSUinRange( -.1,   0,   0 ), false );
+test( "GSUinRange.f", GSUinRange(   2,   0,   1 ), false );
+test( "GSUinRange.g", GSUinRange(  -1,   0,   1 ), false );
+test( "GSUinRange.h", GSUinRange( -.001, 0,   1 ), false );
+test( "GSUinRange.i", GSUinRange( 1.001, 0,   1 ), false );
+
+test( "GSUclampNum.0", GSUclampNum(  19,  20,  30 ),  20 );
+test( "GSUclampNum.1", GSUclampNum(  20,  20,  30 ),  20 );
+test( "GSUclampNum.2", GSUclampNum(  21,  20,  30 ),  21 );
+test( "GSUclampNum.3", GSUclampNum(  29,  20,  30 ),  29 );
+test( "GSUclampNum.4", GSUclampNum(  30,  20,  30 ),  30 );
+test( "GSUclampNum.5", GSUclampNum(  31,  20,  30 ),  30 );
+test( "GSUclampNum.6", GSUclampNum( -19, -20, -30 ), -20 );
+test( "GSUclampNum.7", GSUclampNum( -20, -20, -30 ), -20 );
+test( "GSUclampNum.8", GSUclampNum( -21, -20, -30 ), -21 );
+test( "GSUclampNum.9", GSUclampNum( -29, -20, -30 ), -29 );
+test( "GSUclampNum.a", GSUclampNum( -30, -20, -30 ), -30 );
+test( "GSUclampNum.b", GSUclampNum( -31, -20, -30 ), -30 );
+
+test( "GSUapproxEqual.0", GSUapproxEqual(   0,     0,  0 ),  true );
+test( "GSUapproxEqual.1", GSUapproxEqual(  -0,    -0,  0 ),  true );
+test( "GSUapproxEqual.2", GSUapproxEqual(  21,    21,  0 ),  true );
+test( "GSUapproxEqual.3", GSUapproxEqual(  20.9,  21, .1 ),  true );
+test( "GSUapproxEqual.4", GSUapproxEqual(  21.1,  21, .1 ),  true );
+test( "GSUapproxEqual.5", GSUapproxEqual(  80,   100, 20 ),  true );
+test( "GSUapproxEqual.6", GSUapproxEqual( 120,   100, 20 ),  true );
+test( "GSUapproxEqual.7", GSUapproxEqual( 120.1, 100, 20 ),  false );
+test( "GSUapproxEqual.8", GSUapproxEqual(  79.9, 100, 20 ),  false );
+test( "GSUapproxEqual.9", GSUapproxEqual(  21.1,  21,  0 ),  false );
+test( "GSUapproxEqual.a", GSUapproxEqual(  20.8,  21, .1 ),  false );
+test( "GSUapproxEqual.b", GSUapproxEqual(  21.2,  21, .1 ),  false );
+test( "GSUapproxEqual.c", GSUapproxEqual(  -21,    -21,  0 ), true );
+test( "GSUapproxEqual.d", GSUapproxEqual(  -20.9,  -21, .1 ), true );
+test( "GSUapproxEqual.e", GSUapproxEqual(  -21.1,  -21, .1 ), true );
+test( "GSUapproxEqual.f", GSUapproxEqual(  -80,   -100, 20 ), true );
+test( "GSUapproxEqual.g", GSUapproxEqual( -120,   -100, 20 ), true );
+test( "GSUapproxEqual.h", GSUapproxEqual( -120.1, -100, 20 ), false );
+test( "GSUapproxEqual.i", GSUapproxEqual(  -79.9, -100, 20 ), false );
+test( "GSUapproxEqual.j", GSUapproxEqual(  -21.1,  -21,  0 ), false );
+test( "GSUapproxEqual.k", GSUapproxEqual(  -20.8,  -21, .1 ), false );
+test( "GSUapproxEqual.l", GSUapproxEqual(  -21.2,  -21, .1 ), false );
+
+test( "GSUroundNum.0", GSUroundNum(   0 ),     0 );
+test( "GSUroundNum.1", GSUroundNum(  21 ),    21 );
+test( "GSUroundNum.2", GSUroundNum(  21.1 ),  21 );
+test( "GSUroundNum.3", GSUroundNum(  21.9 ),  22 );
+test( "GSUroundNum.4", GSUroundNum( -21.9 ), -22 );
+test( "GSUroundNum.5", GSUroundNum( -21.1 ), -21 );
+test( "GSUroundNum.6", GSUroundNum( Math.PI, 1 ), 3.1 );
+test( "GSUroundNum.7", GSUroundNum( Math.PI, 3 ), 3.142 );
+test( "GSUroundNum.8", GSUroundNum( Math.PI, 6 ), 3.141593 );
+
+test( "GSUuuid.0", GSUuuid().length, 36 );
+
+test( "GSUsum.0", GSUsum( [] ),                    0 );
+test( "GSUsum.1", GSUsum( [ 7 ] ),                 7 );
+test( "GSUsum.2", GSUsum( [ 1, 2, 3, 4, 5, 6 ] ), 21 );
+
+test( "GSUavg.0", GSUavg( [] ),              0 );
+test( "GSUavg.1", GSUavg( [ -10, 15 ] ),     2.5 );
+test( "GSUavg.2", GSUavg( [ 10, 20 ] ),     15 );
+test( "GSUavg.3", GSUavg( [ 10, 20, 30 ] ), 20 );
+
+test( "GSUstack.0", GSUsum( GSUstack( [ 5 ],       2 ) ), 2 );
+test( "GSUstack.1", GSUsum( GSUstack( [ 2, 5 ],    7 ) ), 9 );
+test( "GSUstack.2", GSUsum( GSUstack( [ 5, 7 ],    3 ) ), 8 );
+test( "GSUstack.3", GSUsum( GSUstack( [ 1, 2, 3 ], 4 ) ), 7 );
+
+test( "GSUuniqueName.0", GSUuniqueName( "foo",   [] ),                          "foo" );
+test( "GSUuniqueName.1", GSUuniqueName( "foo",   [ "foo" ] ),                   "foo-2" );
+test( "GSUuniqueName.2", GSUuniqueName( "foo",   [ "foo", "foo-2" ] ),          "foo-3" );
+test( "GSUuniqueName.3", GSUuniqueName( "foo-2", [ "foo", "foo-2" ] ),          "foo-3" );
+test( "GSUuniqueName.4", GSUuniqueName( "foo-2", [ "foo", "foo-3" ] ),          "foo-2" );
+test( "GSUuniqueName.5", GSUuniqueName( "foo-2", [ "foo", "foo-3", "foo-2" ] ), "foo-4" );
+
+test( "GSUsplitSeconds.0", JSON.stringify( GSUsplitSeconds(  0 ) ),       '{"m":"0","s":"00","ms":"000"}' );
+test( "GSUsplitSeconds.1", JSON.stringify( GSUsplitSeconds( 21 ) ),       '{"m":"0","s":"21","ms":"000"}' );
+test( "GSUsplitSeconds.2", JSON.stringify( GSUsplitSeconds( 60 ) ),       '{"m":"1","s":"00","ms":"000"}' );
+test( "GSUsplitSeconds.3", JSON.stringify( GSUsplitSeconds( 71 ) ),       '{"m":"1","s":"11","ms":"000"}' );
+test( "GSUsplitSeconds.4", JSON.stringify( GSUsplitSeconds( 71.12345 ) ), '{"m":"1","s":"11","ms":"123"}' );
+
+console.log( `${ testsPassed } / ${ tests }` );
+</script>
