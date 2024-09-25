@@ -18,8 +18,8 @@ function test( id, val, expected ) {
 test( "GSUnoop.0", GSUnoop(),    undefined );
 test( "GSUnoop.1", GSUnoop( 1 ), undefined );
 
-test( "GSUnoopFalse.0", GSUnoopFalse(),      false );
-test( "GSUnoopFalse.1", GSUnoopFalse( true), false );
+test( "GSUnoopFalse.0", GSUnoopFalse(),       false );
+test( "GSUnoopFalse.1", GSUnoopFalse( true ), false );
 
 test( "GSUisNoop.0", GSUisNoop( GSUnoop ),      true );
 test( "GSUisNoop.1", GSUisNoop( GSUnoopFalse ), true );
@@ -168,10 +168,10 @@ test( "GSUsum.0", GSUsum( [] ),                    0 );
 test( "GSUsum.1", GSUsum( [ 7 ] ),                 7 );
 test( "GSUsum.2", GSUsum( [ 1, 2, 3, 4, 5, 6 ] ), 21 );
 
-test( "GSUavg.0", GSUavg( [] ),              0 );
-test( "GSUavg.1", GSUavg( [ -10, 15 ] ),     2.5 );
-test( "GSUavg.2", GSUavg( [ 10, 20 ] ),     15 );
-test( "GSUavg.3", GSUavg( [ 10, 20, 30 ] ), 20 );
+test( "GSUavg.0", GSUavg( [] ),               0 );
+test( "GSUavg.1", GSUavg( [ -10, 15 ] ),      2.5 );
+test( "GSUavg.2", GSUavg( [  10, 20 ] ),     15 );
+test( "GSUavg.3", GSUavg( [  10, 20, 30 ] ), 20 );
 
 test( "GSUstack.0", GSUsum( GSUstack( [ 5 ],       2 ) ), 2 );
 test( "GSUstack.1", GSUsum( GSUstack( [ 2, 5 ],    7 ) ), 9 );
