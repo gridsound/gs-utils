@@ -178,12 +178,13 @@ test( "GSUstack.1", GSUsum( GSUstack( [ 2, 5 ],    7 ) ), 9 );
 test( "GSUstack.2", GSUsum( GSUstack( [ 5, 7 ],    3 ) ), 8 );
 test( "GSUstack.3", GSUsum( GSUstack( [ 1, 2, 3 ], 4 ) ), 7 );
 
-test( "GSUuniqueName.0", GSUuniqueName( "foo",   [] ),                          "foo" );
-test( "GSUuniqueName.1", GSUuniqueName( "foo",   [ "foo" ] ),                   "foo-2" );
-test( "GSUuniqueName.2", GSUuniqueName( "foo",   [ "foo", "foo-2" ] ),          "foo-3" );
-test( "GSUuniqueName.3", GSUuniqueName( "foo-2", [ "foo", "foo-2" ] ),          "foo-3" );
-test( "GSUuniqueName.4", GSUuniqueName( "foo-2", [ "foo", "foo-3" ] ),          "foo-2" );
-test( "GSUuniqueName.5", GSUuniqueName( "foo-2", [ "foo", "foo-3", "foo-2" ] ), "foo-4" );
+test( "GSUuniqueName.0", GSUuniqueName( "foo",      [] ),                                "foo" );
+test( "GSUuniqueName.1", GSUuniqueName( "foo",      [ "foo" ] ),                         "foo-2" );
+test( "GSUuniqueName.2", GSUuniqueName( "foo",      [ "foo", "foo-2" ] ),                "foo-3" );
+test( "GSUuniqueName.3", GSUuniqueName( "foo-2",    [ "foo", "foo-2" ] ),                "foo-3" );
+test( "GSUuniqueName.4", GSUuniqueName( "foo-2",    [ "foo", "foo-3" ] ),                "foo-2" );
+test( "GSUuniqueName.5", GSUuniqueName( "foo-2",    [ "foo", "foo-3", "foo-2" ] ),       "foo-4" );
+test( "GSUuniqueName.6", GSUuniqueName( "foo-21-2", [ "foo", "foo-21-1", "foo-21-2" ] ), "foo-21-3" );
 
 test( "GSUsplitSeconds.0", JSON.stringify( GSUsplitSeconds(  0 ) ),       '{"m":"0","s":"00","ms":"000"}' );
 test( "GSUsplitSeconds.1", JSON.stringify( GSUsplitSeconds( 21 ) ),       '{"m":"0","s":"21","ms":"000"}' );

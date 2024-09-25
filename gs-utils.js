@@ -183,9 +183,9 @@ function GSUuuid() {
 function GSUuniqueName( nameOri, arr ) {
 	const name = GSUtrim2( nameOri );
 
-	if ( arr.indexOf( name ) > -1 ) {
+	if ( arr.includes( name ) ) {
 		const name2 = /-\d+$/u.test( name )
-			? name.substr( 0, name.lastIndexOf( "-" ) ).trim()
+			? name.substring( 0, name.lastIndexOf( "-" ) ).trim()
 			: name;
 		const reg = new RegExp( `^${ name2 }-(\\d+)$`, "u" );
 		const nb = arr.reduce( ( nb, str ) => {
