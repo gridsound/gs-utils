@@ -21,6 +21,22 @@ function GSUgetFileContent( file, format ) {
 	} );
 }
 
+function GSUdownloadURL( name, url ) {
+	const a = GSUcreateA( {
+		href: url,
+		download: name,
+		target: "_blank"
+	} );
+
+	document.body.append( a );
+	a.click();
+	a.remove();
+}
+
+function GSUdownloadBlob( name, blob ) {
+	GSUdownloadURL( name, URL.createObjectURL( blob ) );
+}
+
 function GSUgetFilesDataTransfert( dataTransferItems ) {
 	const files = [];
 
