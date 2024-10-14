@@ -170,7 +170,9 @@ function GSUsetAttribute( el, attr, val ) {
 	}
 }
 function GSUtoggleAttribute( el, attr, val = true ) {
-	_GSUsetAttribute( el, attr, !GSUhasAttribute( el, attr ) && val );
+	_GSUsetAttribute( el, attr, val === true
+		? !GSUhasAttribute( el, attr )
+		: GSUgetAttribute( el, attr ) === val ? false : val );
 }
 function _GSUsetAttribute( el, attr, val ) {
 	if ( val === false || val === null || val === undefined ) {
