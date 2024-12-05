@@ -89,6 +89,13 @@ test( "GSUisNum.4", GSUisNum(),        false );
 test( "GSUisNum.5", GSUisNum( NaN ),   false );
 test( "GSUisNum.6", GSUisNum( null ),  false );
 
+test( "GSUsignNum.0", GSUsignNum( +0 ),     "0" );
+test( "GSUsignNum.1", GSUsignNum( -0 ),     "0" );
+test( "GSUsignNum.2", GSUsignNum(  1 ),    "+1" );
+test( "GSUsignNum.3", GSUsignNum( -1 ),    "-1" );
+test( "GSUsignNum.4", GSUsignNum( .009 ),  "+0.009" );
+test( "GSUsignNum.5", GSUsignNum( -.009 ), "-0.009" );
+
 // test( "GSUsplitNums.0", JSON.stringify( GSUsplitNums( "" ) ),           "[]" );
 test( "GSUsplitNums.1", JSON.stringify( GSUsplitNums( "1" ) ),          "[1]" );
 test( "GSUsplitNums.2", JSON.stringify( GSUsplitNums( "1 2 3" ) ),      "[1,2,3]" );
