@@ -12,7 +12,7 @@ function GSUjsonCopy( o ) {
 }
 
 function GSUdeepCopy( obj ) {
-	if ( GSUisObject( obj ) ) {
+	if ( GSUisObj( obj ) ) {
 		return Object.entries( obj ).reduce( ( cpy, [ k, v ] ) => {
 			cpy[ k ] = GSUdeepCopy( v );
 			return cpy;
@@ -24,9 +24,9 @@ function GSUdeepCopy( obj ) {
 function GSUdeepAssign( a, b ) {
 	if ( b ) {
 		Object.entries( b ).forEach( ( [ k, val ] ) => {
-			if ( !GSUisObject( val ) ) {
+			if ( !GSUisObj( val ) ) {
 				a[ k ] = val;
-			} else if ( !GSUisObject( a[ k ] ) ) {
+			} else if ( !GSUisObj( a[ k ] ) ) {
 				a[ k ] = GSUdeepCopy( val );
 			} else {
 				GSUdeepAssign( a[ k ], val );
@@ -37,7 +37,7 @@ function GSUdeepAssign( a, b ) {
 }
 
 function GSUdeepFreeze( obj ) {
-	if ( GSUisObject( obj ) ) {
+	if ( GSUisObj( obj ) ) {
 		Object.freeze( obj );
 		Object.values( obj ).forEach( GSUdeepFreeze );
 	}
@@ -76,9 +76,9 @@ function GSUdiffAssign( a, b ) {
 			if ( a[ k ] !== val ) {
 				if ( val === undefined ) {
 					delete a[ k ];
-				} else if ( !GSUisObject( val ) ) {
+				} else if ( !GSUisObj( val ) ) {
 					a[ k ] = val;
-				} else if ( !GSUisObject( a[ k ] ) ) {
+				} else if ( !GSUisObj( a[ k ] ) ) {
 					a[ k ] = GSUjsonCopy( val );
 				} else {
 					GSUdiffAssign( a[ k ], val );
@@ -101,7 +101,7 @@ function GSUaddIfNotEmpty( obj, attr, valObj ) {
 }
 
 function GSUcomposeUndo( data, redo ) {
-	if ( GSUisObject( data ) && GSUisObject( redo ) ) {
+	if ( GSUisObj( data ) && GSUisObj( redo ) ) {
 		return Object.freeze( Object.entries( redo ).reduce( ( undo, [ k, val ] ) => {
 			if ( data[ k ] !== val ) {
 				undo[ k ] = GSUcomposeUndo( data[ k ], val );

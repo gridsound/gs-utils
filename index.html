@@ -79,12 +79,12 @@ test( "GSUarrayFrom.1", GSUarrayFrom( arrEmpty ),      arrEmpty );
 test( "GSUarrayFrom.2", GSUarrayFrom( objEmpty )[ 0 ], objEmpty );
 // test( "GSUarrayFrom.2", GSUarrayFrom( 21 )[ 0 ], 21 );
 
-test( "GSUisObject.0", GSUisObject( {} ),    true );
-test( "GSUisObject.1", GSUisObject( [] ),    true );
-test( "GSUisObject.2", GSUisObject( 21 ),    false );
-test( "GSUisObject.3", GSUisObject( "abc" ), false );
-test( "GSUisObject.4", GSUisObject( null ),  false );
-test( "GSUisObject.5", GSUisObject(),        false );
+test( "GSUisObj.0", GSUisObj( {} ),    true );
+test( "GSUisObj.1", GSUisObj( [] ),    true );
+test( "GSUisObj.2", GSUisObj( 21 ),    false );
+test( "GSUisObj.3", GSUisObj( "abc" ), false );
+test( "GSUisObj.4", GSUisObj( null ),  false );
+test( "GSUisObj.5", GSUisObj(),        false );
 
 test( "GSUisEmpty.0", GSUisEmpty( {} ),               true );
 test( "GSUisEmpty.1", GSUisEmpty( [] ),               true );

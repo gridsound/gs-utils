@@ -91,10 +91,10 @@ function GSUthrottle( fn, ms ) {
 	};
 }
 
+// GSUisXxxxx
 // .............................................................................
-function GSUisObject( o ) {
-	return o !== null && typeof o === "object";
-}
+function GSUisObj( o ) { return o !== null && typeof o === "object"; }
+function GSUisNum( n ) { return typeof n === "number" && !Number.isNaN( n ); }
 function GSUisEmpty( o ) {
 	for ( const a in o ) {
 		return false;
@@ -119,9 +119,6 @@ function GSUeaseOutCirc( n, pow = 2 ) {
 }
 
 // .............................................................................
-function GSUisNum( n ) {
-	return typeof n === "number" && !Number.isNaN( n );
-}
 function GSUsignNum( n ) {
 	return n >= 0 ? `+${ n }` : `${ n }`;
 }
