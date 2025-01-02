@@ -88,9 +88,17 @@ test( "GSUisObject.5", GSUisObject(),        false );
 
 test( "GSUisEmpty.0", GSUisEmpty( {} ),               true );
 test( "GSUisEmpty.1", GSUisEmpty( [] ),               true );
+test( "GSUisEmpty.5", GSUisEmpty( "" ),               true );
+test( "GSUisEmpty.6", GSUisEmpty( "0" ),              false );
 test( "GSUisEmpty.2", GSUisEmpty( [ 0 ] ),            false );
 test( "GSUisEmpty.3", GSUisEmpty( { a: null } ),      false );
 test( "GSUisEmpty.4", GSUisEmpty( { a: undefined } ), false );
+test( "GSUisEmpty.7", GSUisEmpty( null ),             true );
+test( "GSUisEmpty.8", GSUisEmpty( undefined ),        true );
+test( "GSUisEmpty.9", GSUisEmpty( 21 ),               true );
+test( "GSUisEmpty.a", GSUisEmpty( NaN ),              true );
+test( "GSUisEmpty.b", GSUisEmpty( true ),             true );
+test( "GSUisEmpty.c", GSUisEmpty( false ),            true );
 
 test( "GSUtrim2.0", GSUtrim2( "" ),                "" );
 test( "GSUtrim2.1", GSUtrim2( "a" ),               "a" );
