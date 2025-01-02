@@ -1,6 +1,8 @@
 <script src="gs-utils.js"></script>
 <script>
 
+function lg( a ) { return console.log( ...arguments ), a; }
+
 let tests = 0;
 let testsPassed = 0;
 
@@ -171,13 +173,30 @@ test( "GSUsignNum.3", GSUsignNum( -1 ),    "-1" );
 test( "GSUsignNum.4", GSUsignNum( .009 ),  "+0.009" );
 test( "GSUsignNum.5", GSUsignNum( -.009 ), "-0.009" );
 
+// .............................................................................
 // test( "GSUsplitNums.0", JSON.stringify( GSUsplitNums( "" ) ),           "[]" );
 test( "GSUsplitNums.1", JSON.stringify( GSUsplitNums( "1" ) ),          "[1]" );
 test( "GSUsplitNums.2", JSON.stringify( GSUsplitNums( "1 2 3" ) ),      "[1,2,3]" );
 test( "GSUsplitNums.3", JSON.stringify( GSUsplitNums( "7",     "," ) ), "[7]" );
 test( "GSUsplitNums.4", JSON.stringify( GSUsplitNums( "7,8,9", "," ) ), "[7,8,9]" );
 test( "GSUsplitNums.5", JSON.stringify( GSUsplitNums( "3/4",   "/" ) ), "[3,4]" );
+// ....................................
+test( "GSUsplitInts.0", JSON.stringify( GSUsplitInts( 21,           "/" ) ),   "[]" );
+test( "GSUsplitInts.1", JSON.stringify( GSUsplitInts( NaN,          "/" ) ),   "[]" );
+test( "GSUsplitInts.2", JSON.stringify( GSUsplitInts( null,         "/" ) ),   "[]" );
+test( "GSUsplitInts.3", JSON.stringify( GSUsplitInts( true,         "/" ) ),   "[]" );
+test( "GSUsplitInts.4", JSON.stringify( GSUsplitInts( false,        "/" ) ),   "[]" );
+test( "GSUsplitInts.5", JSON.stringify( GSUsplitInts( undefined,    "/" ) ),   "[]" );
+test( "GSUsplitInts.6", JSON.stringify( GSUsplitInts( GSUnoop,      "/" ) ),   "[]" );
+test( "GSUsplitInts.7", JSON.stringify( GSUsplitInts( "1",          "/" ) ),   "[1]" );
+test( "GSUsplitInts.8", JSON.stringify( GSUsplitInts( "1.5/3.15",   "/" ) ),   "[1,3]" );
+test( "GSUsplitInts.9", JSON.stringify( GSUsplitInts( "-1.5/-3.15", "/" ) ),   "[-1,-3]" );
+test( "GSUsplitInts.a", JSON.stringify( GSUsplitInts( "1/2",        "/" ) ),   "[1,2]" );
+test( "GSUsplitInts.b", JSON.stringify( GSUsplitInts( "1/2/foo",    "/" ) ),   "[1,2,0]" );
+test( "GSUsplitInts.c", JSON.stringify( GSUsplitInts( "1/2//3",     "/" ) ),   "[1,2,0,3]" );
+test( "GSUsplitInts.d", JSON.stringify( GSUsplitInts( "//",         "/" ) ),   "[0,0,0]" );
 
+// .............................................................................
 test( "GSUinRange.0", GSUinRange(   0,   0,   1 ), true );
 test( "GSUinRange.1", GSUinRange(  20,  20,  22 ), true );
 test( "GSUinRange.2", GSUinRange(  21,  20,  22 ), true );

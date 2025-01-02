@@ -148,6 +148,9 @@ function GSUclampNum( n, min, max ) {
 function GSUsplitNums( str, del = " " ) {
 	return str.split( del ).map( n => +n );
 }
+function GSUsplitInts( str, del = " " ) {
+	return str?.split?.( del ).map( n => n | 0 ) || [];
+}
 function GSUsum( arr ) {
 	return arr.reduce( ( sum, n ) => sum + n, 0 );
 }
