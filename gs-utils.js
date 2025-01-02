@@ -45,7 +45,7 @@ function _GSUreduce( obj, fn, val ) {
 function GSUnewArray( l, fn ) {
 	return fn === undefined
 		? new Array( l )
-		: typeof fn === "function"
+		: GSUisFun( fn )
 			? Array.from( { length: l }, ( _, i ) => fn( i ) )
 			: Array.from( { length: l } ).fill( fn );
 }
@@ -59,7 +59,7 @@ function GSUarrayLength( arr, len, fn ) {
 			arr.length = len;
 		} else {
 			while ( arr.length < len ) {
-				arr.push( typeof fn === "function" ? fn( arr.length ) : fn );
+				arr.push( GSUisFun( fn ) ? fn( arr.length ) : fn );
 			}
 		}
 	}
@@ -94,6 +94,8 @@ function GSUthrottle( fn, ms ) {
 // GSUisXxxxx
 // .............................................................................
 function GSUisObj( o ) { return o !== null && typeof o === "object"; }
+function GSUisStr( n ) { return typeof n === "string"; }
+function GSUisFun( n ) { return typeof n === "function"; }
 function GSUisNum( n ) { return typeof n === "number" && !Number.isNaN( n ); }
 function GSUisEmpty( o ) {
 	for ( const a in o ) {
@@ -123,7 +125,7 @@ function GSUsignNum( n ) {
 	return n >= 0 ? `+${ n }` : `${ n }`;
 }
 function GSUinRange( n, min, max ) {
-	if ( n === "" || ( typeof n !== "string" && typeof n !== "number" ) ) {
+	if ( n === "" || ( !GSUisStr( n ) && !GSUisNum( n ) ) ) {
 		return false;
 	}
 	return min < max
@@ -134,7 +136,7 @@ function GSUapproxEqual( n, x, diff ) {
 	return GSUinRange( n, x - diff, x + diff );
 }
 function GSUroundNum( val, dec = 0 ) {
-	return typeof val === "number"
+	return GSUisNum( val )
 		? +val.toFixed( dec )
 		: val.map( n => +n.toFixed( dec ) );
 }
