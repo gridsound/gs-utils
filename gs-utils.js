@@ -126,6 +126,9 @@ function GSUsignNum( n ) {
 	return n >= 0 ? `+${ n }` : `${ n }`;
 }
 function GSUinRange( n, min, max ) {
+	if ( n === "" || ( typeof n !== "string" && typeof n !== "number" ) ) {
+		return false;
+	}
 	return min < max
 		? min <= n && n <= max
 		: max <= n && n <= min;

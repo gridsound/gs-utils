@@ -139,6 +139,16 @@ test( "GSUinRange.f", GSUinRange(   2,   0,   1 ), false );
 test( "GSUinRange.g", GSUinRange(  -1,   0,   1 ), false );
 test( "GSUinRange.h", GSUinRange( -.001, 0,   1 ), false );
 test( "GSUinRange.i", GSUinRange( 1.001, 0,   1 ), false );
+test( "GSUinRange.j", GSUinRange( undefined, -Infinity, Infinity ), false );
+test( "GSUinRange.k", GSUinRange( NaN,       -Infinity, Infinity ), false );
+test( "GSUinRange.l", GSUinRange( null,      -Infinity, Infinity ), false );
+test( "GSUinRange.m", GSUinRange( "-0.5",    -Infinity, Infinity ), true );
+test( "GSUinRange.n", GSUinRange( "0",       -Infinity, Infinity ), true );
+test( "GSUinRange.o", GSUinRange( "21",      -Infinity, Infinity ), true );
+test( "GSUinRange.p", GSUinRange( "a",       -Infinity, Infinity ), false );
+test( "GSUinRange.q", GSUinRange( "",        -Infinity, Infinity ), false );
+test( "GSUinRange.r", GSUinRange( false,     -Infinity, Infinity ), false );
+test( "GSUinRange.s", GSUinRange( true,      -Infinity, Infinity ), false );
 
 test( "GSUclampNum.0", GSUclampNum(  19,  20,  30 ),  20 );
 test( "GSUclampNum.1", GSUclampNum(  20,  20,  30 ),  20 );
