@@ -123,7 +123,7 @@ function GSUisNum( n ) {
 	return typeof n === "number" && !Number.isNaN( n );
 }
 function GSUsignNum( n ) {
-	return n > 0 ? `+${ n }` : `${ n }`;
+	return n >= 0 ? `+${ n }` : `${ n }`;
 }
 function GSUinRange( n, min, max ) {
 	return min < max
