@@ -92,11 +92,19 @@ test( "GSUisEmpty.2", GSUisEmpty( [ 0 ] ),            false );
 test( "GSUisEmpty.3", GSUisEmpty( { a: null } ),      false );
 test( "GSUisEmpty.4", GSUisEmpty( { a: undefined } ), false );
 
-test( "GSUtrim2.0", GSUtrim2( "" ), "" );
-test( "GSUtrim2.1", GSUtrim2( "a" ), "a" );
-test( "GSUtrim2.2", GSUtrim2( "a b c" ), "a b c" );
-test( "GSUtrim2.3", GSUtrim2( "  a  b  c  " ), "a b c" );
+test( "GSUtrim2.0", GSUtrim2( "" ),                "" );
+test( "GSUtrim2.1", GSUtrim2( "a" ),               "a" );
+test( "GSUtrim2.2", GSUtrim2( "a b c" ),           "a b c" );
+test( "GSUtrim2.3", GSUtrim2( "  a  b  c  " ),     "a b c" );
 test( "GSUtrim2.4", GSUtrim2( " \t a  b\tc \t " ), "a b c" );
+test( "GSUtrim2.5", GSUtrim2( 21 ),        "" );
+test( "GSUtrim2.6", GSUtrim2( NaN ),       "" );
+test( "GSUtrim2.7", GSUtrim2( true ),      "" );
+test( "GSUtrim2.8", GSUtrim2( false ),     "" );
+test( "GSUtrim2.9", GSUtrim2( null ),      "" );
+test( "GSUtrim2.a", GSUtrim2( undefined ), "" );
+test( "GSUtrim2.b", GSUtrim2( {} ),        "" );
+test( "GSUtrim2.c", GSUtrim2( [] ),        "" );
 
 test( "GSUisNum.0", GSUisNum( 0 ),     true );
 test( "GSUisNum.1", GSUisNum( 21.5 ),  true );
