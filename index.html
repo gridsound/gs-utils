@@ -24,6 +24,23 @@ test( "GSUnoopFalse.1", GSUnoopFalse( true ), false );
 test( "GSUisNoop.0", GSUisNoop( GSUnoop ),      true );
 test( "GSUisNoop.1", GSUisNoop( GSUnoopFalse ), true );
 
+const objFE = { a: 10, b: 20 };
+const arrFE = [ 10, 20 ];
+let resFE;
+test( "GSUforEach.0", GSUforEach( objFE, GSUnoop ), objFE );
+test( "GSUforEach.1", GSUforEach( arrFE, GSUnoop ), arrFE );
+test( "GSUforEach.2", GSUforEach( null, GSUnoop ), null );
+test( "GSUforEach.3", GSUforEach( false, GSUnoop ), false );
+test( "GSUforEach.4", GSUforEach( undefined, GSUnoop ), undefined );
+test( "GSUforEach.5", GSUforEach( true, GSUnoop ), true );
+test( "GSUforEach.6", GSUforEach( 21, GSUnoop ), 21 );
+resFE = "";
+GSUforEach( objFE, ( val, key, obj ) => { resFE += `${ key }:${ val }:${ obj === objFE }:` } );
+test( "GSUforEach.7", resFE, "a:10:true:b:20:true:" );
+resFE = "";
+GSUforEach( arrFE, ( val, key, obj ) => { resFE += `${ key }:${ val }:${ obj === arrFE }:` } );
+test( "GSUforEach.8", resFE, "0:10:true:1:20:true:" );
+
 const fnSum = ( sum, n, i ) => sum + n + i;
 test( "GSUreduce.0", GSUreduce( [],                      fnSum, 0 ), 0 );
 test( "GSUreduce.1", GSUreduce( {},                      fnSum, 0 ), 0 );
