@@ -174,27 +174,37 @@ test( "GSUsignNum.4", GSUsignNum( .009 ),  "+0.009" );
 test( "GSUsignNum.5", GSUsignNum( -.009 ), "-0.009" );
 
 // .............................................................................
-// test( "GSUsplitNums.0", JSON.stringify( GSUsplitNums( "" ) ),           "[]" );
-test( "GSUsplitNums.1", JSON.stringify( GSUsplitNums( "1" ) ),          "[1]" );
-test( "GSUsplitNums.2", JSON.stringify( GSUsplitNums( "1 2 3" ) ),      "[1,2,3]" );
-test( "GSUsplitNums.3", JSON.stringify( GSUsplitNums( "7",     "," ) ), "[7]" );
-test( "GSUsplitNums.4", JSON.stringify( GSUsplitNums( "7,8,9", "," ) ), "[7,8,9]" );
-test( "GSUsplitNums.5", JSON.stringify( GSUsplitNums( "3/4",   "/" ) ), "[3,4]" );
+test( "GSUsplitNums.0", JSON.stringify( GSUsplitNums( 21                ) ), "[]" );
+test( "GSUsplitNums.1", JSON.stringify( GSUsplitNums( NaN               ) ), "[]" );
+test( "GSUsplitNums.2", JSON.stringify( GSUsplitNums( null              ) ), "[]" );
+test( "GSUsplitNums.3", JSON.stringify( GSUsplitNums( true              ) ), "[]" );
+test( "GSUsplitNums.4", JSON.stringify( GSUsplitNums( false             ) ), "[]" );
+test( "GSUsplitNums.5", JSON.stringify( GSUsplitNums( undefined         ) ), "[]" );
+test( "GSUsplitNums.6", JSON.stringify( GSUsplitNums( GSUnoop           ) ), "[]" );
+test( "GSUsplitNums.7", JSON.stringify( GSUsplitNums( ""                ) ), "[]" );
+test( "GSUsplitNums.8", JSON.stringify( GSUsplitNums( "1"               ) ), "[1]" );
+test( "GSUsplitNums.9", JSON.stringify( GSUsplitNums( "1 2 3"           ) ), "[1,2,3]" );
+test( "GSUsplitNums.a", JSON.stringify( GSUsplitNums( "7",          "," ) ), "[7]" );
+test( "GSUsplitNums.b", JSON.stringify( GSUsplitNums( "1/2/foo",    "/" ) ), "[1,2,0]" );
+test( "GSUsplitNums.c", JSON.stringify( GSUsplitNums( "3/4",        "/" ) ), "[3,4]" );
+test( "GSUsplitNums.d", JSON.stringify( GSUsplitNums( "1.2/-3.14",  "/" ) ), "[1.2,-3.14]" );
+test( "GSUsplitNums.e", JSON.stringify( GSUsplitNums( "//",         "/" ) ), "[0,0,0]" );
 // ....................................
-test( "GSUsplitInts.0", JSON.stringify( GSUsplitInts( 21,           "/" ) ),   "[]" );
-test( "GSUsplitInts.1", JSON.stringify( GSUsplitInts( NaN,          "/" ) ),   "[]" );
-test( "GSUsplitInts.2", JSON.stringify( GSUsplitInts( null,         "/" ) ),   "[]" );
-test( "GSUsplitInts.3", JSON.stringify( GSUsplitInts( true,         "/" ) ),   "[]" );
-test( "GSUsplitInts.4", JSON.stringify( GSUsplitInts( false,        "/" ) ),   "[]" );
-test( "GSUsplitInts.5", JSON.stringify( GSUsplitInts( undefined,    "/" ) ),   "[]" );
-test( "GSUsplitInts.6", JSON.stringify( GSUsplitInts( GSUnoop,      "/" ) ),   "[]" );
-test( "GSUsplitInts.7", JSON.stringify( GSUsplitInts( "1",          "/" ) ),   "[1]" );
-test( "GSUsplitInts.8", JSON.stringify( GSUsplitInts( "1.5/3.15",   "/" ) ),   "[1,3]" );
-test( "GSUsplitInts.9", JSON.stringify( GSUsplitInts( "-1.5/-3.15", "/" ) ),   "[-1,-3]" );
-test( "GSUsplitInts.a", JSON.stringify( GSUsplitInts( "1/2",        "/" ) ),   "[1,2]" );
-test( "GSUsplitInts.b", JSON.stringify( GSUsplitInts( "1/2/foo",    "/" ) ),   "[1,2,0]" );
-test( "GSUsplitInts.c", JSON.stringify( GSUsplitInts( "1/2//3",     "/" ) ),   "[1,2,0,3]" );
-test( "GSUsplitInts.d", JSON.stringify( GSUsplitInts( "//",         "/" ) ),   "[0,0,0]" );
+test( "GSUsplitInts.0", JSON.stringify( GSUsplitInts( 21                ) ), "[]" );
+test( "GSUsplitInts.1", JSON.stringify( GSUsplitInts( NaN               ) ), "[]" );
+test( "GSUsplitInts.2", JSON.stringify( GSUsplitInts( null              ) ), "[]" );
+test( "GSUsplitInts.3", JSON.stringify( GSUsplitInts( true              ) ), "[]" );
+test( "GSUsplitInts.4", JSON.stringify( GSUsplitInts( false             ) ), "[]" );
+test( "GSUsplitInts.5", JSON.stringify( GSUsplitInts( undefined         ) ), "[]" );
+test( "GSUsplitInts.6", JSON.stringify( GSUsplitInts( GSUnoop           ) ), "[]" );
+test( "GSUsplitInts.7", JSON.stringify( GSUsplitInts( ""                ) ), "[]" );
+test( "GSUsplitInts.8", JSON.stringify( GSUsplitInts( "1",          "/" ) ), "[1]" );
+test( "GSUsplitInts.9", JSON.stringify( GSUsplitInts( "1.5/3.15",   "/" ) ), "[1,3]" );
+test( "GSUsplitInts.a", JSON.stringify( GSUsplitInts( "-1.5/-3.15", "/" ) ), "[-1,-3]" );
+test( "GSUsplitInts.b", JSON.stringify( GSUsplitInts( "1/2",        "/" ) ), "[1,2]" );
+test( "GSUsplitInts.c", JSON.stringify( GSUsplitInts( "1/2/foo",    "/" ) ), "[1,2,0]" );
+test( "GSUsplitInts.d", JSON.stringify( GSUsplitInts( "1/2//3",     "/" ) ), "[1,2,0,3]" );
+test( "GSUsplitInts.e", JSON.stringify( GSUsplitInts( "//",         "/" ) ), "[0,0,0]" );
 
 // .............................................................................
 test( "GSUinRange.0", GSUinRange(   0,   0,   1 ), true );

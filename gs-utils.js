@@ -146,10 +146,10 @@ function GSUclampNum( n, min, max ) {
 		: Math.max( max, Math.min( n || 0, min ) );
 }
 function GSUsplitNums( str, del = " " ) {
-	return str.split( del ).map( n => +n );
+	return str && GSUisStr( str ) ? str.split( del ).map( n => +n || 0 ) : [];
 }
 function GSUsplitInts( str, del = " " ) {
-	return str?.split?.( del ).map( n => n | 0 ) || [];
+	return str && GSUisStr( str ) ? str.split( del ).map( n => n | 0 ) : [];
 }
 function GSUsum( arr ) {
 	return arr.reduce( ( sum, n ) => sum + n, 0 );
