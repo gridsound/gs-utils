@@ -138,7 +138,7 @@ function GSUapproxEqual( n, x, diff ) {
 function GSUroundNum( val, dec = 0 ) {
 	return GSUisNum( val )
 		? +val.toFixed( dec )
-		: val.map( n => +n.toFixed( dec ) );
+		: val?.map?.( n => +n.toFixed( dec ) ) || +val || 0;
 }
 function GSUclampNum( n, min, max ) {
 	return min < max
