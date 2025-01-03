@@ -54,7 +54,7 @@ function GSUgetTemplate( tmpId, ...args ) {
 
 // .............................................................................
 function GSUfindElements( root, graph ) {
-	return typeof graph === "string"
+	return GSUisStr( graph )
 		? _GSUfindElementsStr( root, graph )
 		: Object.seal( Array.isArray( graph )
 			? _GSUfindElementsArr( root, graph )
@@ -163,7 +163,7 @@ function GSUgetAttributeNum( el, attr ) {
 	return n;
 }
 function GSUsetAttribute( el, attr, val ) {
-	if ( typeof attr === "string" ) {
+	if ( GSUisStr( attr ) ) {
 		_GSUsetAttribute( el, attr, val );
 	} else if ( attr ) {
 		Object.entries( attr ).forEach( kv => _GSUsetAttribute( el, ...kv ) );
@@ -177,7 +177,7 @@ function GSUtoggleAttribute( el, attr, val = true ) {
 function _GSUsetAttribute( el, attr, val ) {
 	if ( val === false || val === null || val === undefined ) {
 		el.removeAttribute( attr );
-	} else if ( attr === "style" && typeof val !== "string" ) {
+	} else if ( attr === "style" && !GSUisStr( val ) ) {
 		GSUforEach( val, ( val, prop ) => el.style[ prop ] = val );
 	} else {
 		el.setAttribute( attr, val === true ? "" : val );
@@ -193,7 +193,7 @@ function GSUgetStyle( el, prop ) {
 		: el.style[ prop ];
 }
 function GSUsetStyle( el, prop, val ) {
-	typeof prop === "string"
+	GSUisStr( prop )
 		? _GSUsetStyle( el, val, prop )
 		: GSUforEach( prop, _GSUsetStyle.bind( null, el ) );
 }
