@@ -1,5 +1,13 @@
 "use strict";
 
+function GSUXtoHz( x ) {
+	return 2 ** ( x * 11 - 11 );
+}
+function GSUHztoX( x ) {
+	return ( Math.log2( x ) + 11 ) / 11;
+}
+
+// .............................................................................
 function GSUhashBufferV1( u8buf ) {
 	const hash = new Uint8Array( 19 );
 	const len = `${ u8buf.length }`.padStart( 9, "0" );

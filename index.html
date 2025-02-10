@@ -1,4 +1,5 @@
 <script src="gs-utils.js"></script>
+<script src="gs-utils-audio.js"></script>
 <script>
 
 function lg( a ) { return console.log( ...arguments ), a; }
@@ -128,6 +129,8 @@ test( "GSUeaseOutCirc.4", GSUeaseOutCirc( .75 ),    .9682458365518543 );
 test( "GSUeaseOutCirc.5", GSUeaseOutCirc( .25, 2 ), .6614378277661477 );
 test( "GSUeaseOutCirc.6", GSUeaseOutCirc( .25, 3 ), 1.192424001771182 ); // ???
 test( "GSUeaseOutCirc.7", GSUeaseOutCirc( .25, 4 ), .8267972847076845 );
+// ....................................
+test( "GSUHztoX.0", GSUHztoX( GSUXtoHz( .5 ) ), .5 );
 
 // .............................................................................
 test( "GSUnewArray.0", JSON.stringify( GSUnewArray( 0 ) ),         "[]" );
