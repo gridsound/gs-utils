@@ -121,6 +121,9 @@ function GSUeaseOutCirc( n, pow = 2 ) {
 }
 
 // .............................................................................
+function GSUlogN( x, y ) {
+	return Math.log( y ) / Math.log( x );
+}
 function GSUsignNum( n ) {
 	return n >= 0 ? `+${ n }` : `${ n }`;
 }
