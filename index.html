@@ -130,7 +130,9 @@ test( "GSUeaseOutCirc.5", GSUeaseOutCirc( .25, 2 ), .6614378277661477 );
 test( "GSUeaseOutCirc.6", GSUeaseOutCirc( .25, 3 ), 1.192424001771182 ); // ???
 test( "GSUeaseOutCirc.7", GSUeaseOutCirc( .25, 4 ), .8267972847076845 );
 // ....................................
-test( "GSUHztoX.0", GSUHztoX( GSUXtoHz( .5 ) ), .5 );
+test( "GSUHztoX.0", GSUroundNum( GSUHztoX( GSUXtoHz( .5 ) ), 8 ), .5 );
+test( "GSUHztoX.1", GSUHztoX( 1 ), 1 );
+test( "GSUHztoX.2", GSUXtoHz( 1 ), 1 );
 // ....................................
 test( "GSUlogN.0", GSUroundNum( GSUlogN( 10, 1000 ), 8 ), 3 );
 test( "GSUlogN.1", GSUroundNum( GSUlogN( 2, 1024 ), 8 ), 10 );

@@ -1,10 +1,16 @@
 "use strict";
 
+const GSUXtoHz_a = 128;
+const GSUXtoHz_b = .945;
+const GSUXtoHz_c = GSUXtoHz_a - GSUXtoHz_b;
+
 function GSUXtoHz( x ) {
-	return 2 ** ( x * 11 - 11 );
+	return ( ( GSUXtoHz_a ** x ) - GSUXtoHz_b ) / GSUXtoHz_c;
+	// return 2 ** ( x * 11 - 11 );
 }
 function GSUHztoX( x ) {
-	return ( Math.log2( x ) + 11 ) / 11;
+	return GSUlogN( GSUXtoHz_a, ( x * GSUXtoHz_c + GSUXtoHz_b ) );
+	// return ( Math.log2( x ) + 11 ) / 11;
 }
 
 // .............................................................................
