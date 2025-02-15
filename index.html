@@ -91,6 +91,45 @@ test( "GSUisFun.a", GSUisFun( 0 ),         false );
 test( "GSUisFun.b", GSUisFun( GSUnoop ),   true );
 test( "GSUisFun.c", GSUisFun( () => {} ),  true );
 
+// GSUisEqual ..................................................................
+test( "GSUisEqual.0", GSUisEqual( 0, 0 ),                 true );
+test( "GSUisEqual.1", GSUisEqual( 1, 1 ),                 true );
+test( "GSUisEqual.2", GSUisEqual( true, true ),           true );
+test( "GSUisEqual.3", GSUisEqual( false, false ),         true );
+test( "GSUisEqual.4", GSUisEqual( NaN, NaN ),             true );
+test( "GSUisEqual.5", GSUisEqual( null, null ),           true );
+test( "GSUisEqual.6", GSUisEqual( undefined, undefined ), true );
+test( "GSUisEqual.7", GSUisEqual( GSUnoop, GSUnoop ),     true );
+test( "GSUisEqual.8", GSUisEqual( {}, {} ),                                     true );
+test( "GSUisEqual.9", GSUisEqual( [], [] ),                                     true );
+test( "GSUisEqual.a", GSUisEqual( [ 0 ], [ 0 ] ),                               true );
+test( "GSUisEqual.b", GSUisEqual( [ 0, 1 ], [ 0, 1 ] ),                         true );
+test( "GSUisEqual.c", GSUisEqual( [ 0, [ 1 ] ], [ 0, [ 1 ] ] ),                 true );
+test( "GSUisEqual.d", GSUisEqual( [ [ 0 ], [ [ 1 ] ] ], [ [ 0 ], [ [ 1 ] ] ] ), true );
+test( "GSUisEqual.e", GSUisEqual( [ 0, [ 1, {} ] ], [ 0, [ 1, {} ] ] ),         true );
+test( "GSUisEqual.f", GSUisEqual( { a: 21 }, { a: 21 } ),                                                           true );
+test( "GSUisEqual.g", GSUisEqual( { a: 21, b: NaN, c: 42 }, { a: 21, b: NaN, c: 42 } ),                             true );
+test( "GSUisEqual.h", GSUisEqual( { a: [ 0, 1 ], b: NaN, c: 42 }, { a: [ 0, 1 ], b: NaN, c: 42 } ),                 true );
+test( "GSUisEqual.i", GSUisEqual( { a: [ 0, 1 ], b: NaN, c: { aa: 42 } }, { a: [ 0, 1 ], b: NaN, c: { aa: 42 } } ), true );
+test( "GSUisEqual.j", GSUisEqual( 0, "0" ),             false );
+test( "GSUisEqual.k", GSUisEqual( 1, "1" ),             false );
+test( "GSUisEqual.l", GSUisEqual( true, false ),        false );
+test( "GSUisEqual.m", GSUisEqual( false, undefined ),   false );
+test( "GSUisEqual.n", GSUisEqual( NaN, null ),          false );
+test( "GSUisEqual.o", GSUisEqual( null, {} ),           false );
+test( "GSUisEqual.p", GSUisEqual( undefined, null ),    false );
+test( "GSUisEqual.q", GSUisEqual( {}, [] ),             false );
+test( "GSUisEqual.r", GSUisEqual( [], "" ),             false );
+test( "GSUisEqual.s", GSUisEqual( () => {}, () => {} ), false );
+test( "GSUisEqual.t", GSUisEqual( [], [ 0 ] ),          false );
+test( "GSUisEqual.u", GSUisEqual( [ 0 ], [] ),          false );
+test( "GSUisEqual.v", GSUisEqual( {}, { a: 0 } ),       false );
+test( "GSUisEqual.w", GSUisEqual( { a: 0 }, {} ),       false );
+test( "GSUisEqual.x", GSUisEqual( [ 0, 1, 2 ], [ 0, 1, 3 ] ),                       false );
+test( "GSUisEqual.y", GSUisEqual( [ 0, [ 1, 2 ] ], [ 0, [ 1, 3 ] ] ),               false );
+test( "GSUisEqual.z", GSUisEqual( [ 0, [ 1, { a: 2 } ] ], [ 0, [ 1, { a: 3 } ] ] ), false );
+test( "GSUisEqual.A", GSUisEqual( [ 0, [ 1, { a: 2 } ] ], [ 0, [ 1, { b: 2 } ] ] ), false );
+
 // GSUforEach/reduce ...........................................................
 const objFE = { a: 10, b: 20 };
 const arrFE = [ 10, 20 ];

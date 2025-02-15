@@ -17,6 +17,24 @@ function GSUisNoop( fn ) {
 }
 
 // .............................................................................
+function GSUisEqual( a, b ) {
+	if ( !GSUisObj( a ) || !GSUisObj( b ) ) {
+		return Object.is( a, b );
+	}
+	return GSUisArr( a ) === GSUisArr( b ) && _GSUisEqual( a, b ) && _GSUisEqual( b, a )
+}
+function _GSUisEqual( a, b ) {
+	for ( const i in a ) {
+		const eq = GSUisEqual( a[ i ], b[ i ] );
+
+		if ( eq === false ) {
+			return false;
+		}
+	}
+	return true;
+}
+
+// .............................................................................
 function GSUforEach( obj, fn ) {
 	if ( obj?.forEach ) {
 		obj.forEach( fn );
