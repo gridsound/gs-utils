@@ -210,7 +210,9 @@ function GSUrecallAttributes( el, props ) {
 	Object.entries( props ).forEach( ( [ p, val ] ) => {
 		el.hasAttribute( p )
 			? el.attributeChangedCallback?.( p, null, el.getAttribute( p ) )
-			: _GSUsetAttribute( el, p, val );
+			: val !== false
+				? _GSUsetAttribute( el, p, val )
+				: el.$attributeChanged?.( p, null, null )
 	} );
 }
 
