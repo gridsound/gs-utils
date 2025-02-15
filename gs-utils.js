@@ -8,6 +8,15 @@ const GSUonSafari = navigator.userAgent.includes( "Safari" ) && !GSUonChrome;
 const GSUonFirefox = navigator.userAgent.includes( "Firefox" );
 
 // .............................................................................
+const GSUmodels = new Map();
+function GSUsetModel( id, obj ) {
+	GSUmodels.set( id, GSUdeepFreeze( obj ) );
+}
+function GSUgetModel( id, obj ) {
+	return Object.assign( Object.seal( GSUdeepCopy( GSUmodels.get( id ) ) ), obj );
+}
+
+// .............................................................................
 function GSUnoop() {}
 function GSUnoopFalse() {
 	return false;
