@@ -37,6 +37,16 @@ test( "GSUisObj.8", GSUisObj( [] ),        true );
 test( "GSUisObj.9", GSUisObj( 21 ),        false );
 test( "GSUisObj.a", GSUisObj( "abc" ),     false );
 // ....................................
+test( "GSUisArr.0", GSUisArr( [] ),        true );
+test( "GSUisArr.1", GSUisArr( [ 0 ] ),     true );
+test( "GSUisArr.2", GSUisArr( {} ),        false );
+test( "GSUisArr.3", GSUisArr( "abc" ),     false );
+test( "GSUisArr.4", GSUisArr( "" ),        false );
+test( "GSUisArr.5", GSUisArr( null ),      false );
+test( "GSUisArr.6", GSUisArr( undefined ), false );
+test( "GSUisArr.7", GSUisArr( true ),      false );
+test( "GSUisArr.8", GSUisArr( GSUnoop ),   false );
+// ....................................
 test( "GSUisNoop.0", GSUisNoop( GSUnoop ),      true );
 test( "GSUisNoop.1", GSUisNoop( GSUnoopFalse ), true );
 // ....................................

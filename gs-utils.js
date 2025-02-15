@@ -94,6 +94,7 @@ function GSUthrottle( fn, ms ) {
 // GSUisXxxxx
 // .............................................................................
 function GSUisObj( o ) { return o !== null && typeof o === "object"; }
+function GSUisArr( a ) { return Array.isArray( a ); }
 function GSUisStr( n ) { return typeof n === "string"; }
 function GSUisFun( n ) { return typeof n === "function"; }
 function GSUisNum( n ) { return typeof n === "number" && !Number.isNaN( n ); }
