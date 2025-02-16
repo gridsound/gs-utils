@@ -86,6 +86,12 @@ GSUsetModel( "lfo", {
 	speed: 1,
 	amp: 1,
 } );
+GSUsetModel( "noise", {
+	toggle: false,
+	color: "white",
+	gain: .1,
+	pan: 0,
+} );
 GSUsetModel( "oscillator", {
 	order: 0,
 	wave: "sine",
@@ -110,6 +116,7 @@ GSUsetModel( "synth", {
 		gain: GSUgetModel( "lfo" ),
 		detune: GSUgetModel( "lfo", { amp: 12 } ),
 	},
+	noise: GSUgetModel( "noise" ),
 	oscillators: {},
 } );
 
