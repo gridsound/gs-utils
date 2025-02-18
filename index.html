@@ -426,6 +426,15 @@ myMod.a = 21;
 test( "GSUsetModel.f", myMod.a, 21 );
 myMod.b = 42;
 test( "GSUsetModel.g", myMod.b, undefined );
+test( "GSUsetModel.h", GSUgetModel( "foo", null ), { a: 1 } );
+test( "GSUsetModel.i", GSUgetModel( "foo", undefined ), { a: 1 } );
+test( "GSUsetModel.j", GSUgetModel( "foo", false ), { a: 1 } );
+test( "GSUsetModel.k", GSUgetModel( "foo", true ), { a: 1 } );
+test( "GSUsetModel.l", GSUgetModel( "foo", NaN ), { a: 1 } );
+test( "GSUsetModel.m", GSUgetModel( "foo", "hello" ), { a: 1 } );
+test( "GSUsetModel.n", GSUgetModel( "foo", [] ), { a: 1 } );
+test( "GSUsetModel.o", GSUgetModel( "foo", { b: 2, c: 3, a: 21 } ), { a: 21 } );
+test( "GSUsetModel.p", GSUgetModel( "foo", document.body ), { a: 1 } );
 
 // .............................................................................
 console.log( `${ testsPassed } / ${ tests }` );
