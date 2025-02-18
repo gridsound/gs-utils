@@ -129,7 +129,7 @@ function GSUisEmpty( o ) {
 	for ( const a in o ) {
 		return false;
 	}
-	return true;
+	return !o?.size;
 }
 function GSUisntEmpty( o ) {
 	return !GSUisEmpty( o );
