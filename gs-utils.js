@@ -119,9 +119,6 @@ function GSUisEmpty( o ) {
 	}
 	return !o?.size;
 }
-function GSUisntEmpty( o ) {
-	return !GSUisEmpty( o );
-}
 
 // .............................................................................
 function GSUtrim2( str ) {

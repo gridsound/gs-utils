@@ -90,7 +90,7 @@ function GSUdiffAssign( a, b ) {
 }
 
 function GSUaddIfNotEmpty( obj, attr, valObj ) {
-	if ( GSUisntEmpty( valObj ) ) {
+	if ( !GSUisEmpty( valObj ) ) {
 		if ( attr in obj ) {
 			GSUdeepAssign( obj[ attr ], valObj );
 		} else {
