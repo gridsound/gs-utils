@@ -8,23 +8,9 @@ const GSUonSafari = navigator.userAgent.includes( "Safari" ) && !GSUonChrome;
 const GSUonFirefox = navigator.userAgent.includes( "Firefox" );
 
 // .............................................................................
-const GSUmodels = new Map();
-function GSUsetModel( id, obj ) {
-	GSUmodels.set( id, GSUdeepFreeze( obj ) );
-}
-function GSUgetModel( id, obj ) {
-	const mod = GSUmodels.get( id );
-
-	return !mod ? null : Object.assign( Object.seal( GSUdeepCopy( mod ) ), obj );
-}
-
-// .............................................................................
 function GSUnoop() {}
 function GSUnoopFalse() {
 	return false;
-}
-function GSUisNoop( fn ) {
-	return !fn || fn === GSUnoop || fn === GSUnoopFalse;
 }
 
 // .............................................................................
@@ -250,4 +236,15 @@ function GSUplural( nb, word, s ) {
 		: `${ w }'${ w[ w.length - 1 ] === "s" ? "" : "s" }`;
 
 	return `${ nb } ${ ws }`;
+}
+
+// .............................................................................
+const GSUmodels = new Map();
+function GSUsetModel( id, obj ) {
+	GSUmodels.set( id, GSUdeepFreeze( obj ) );
+}
+function GSUgetModel( id, obj ) {
+	const mod = GSUmodels.get( id );
+
+	return !mod ? null : Object.assign( Object.seal( GSUdeepCopy( mod ) ), obj );
 }
