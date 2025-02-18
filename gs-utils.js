@@ -241,7 +241,15 @@ function GSUsetModel( id, obj ) {
 	GSUmodels.set( id, GSUdeepFreeze( obj ) );
 }
 function GSUgetModel( id, obj ) {
-	const mod = GSUmodels.get( id );
+	const mod = GSUdeepCopy( GSUmodels.get( id ) );
 
-	return !mod ? null : Object.assign( Object.seal( GSUdeepCopy( mod ) ), obj );
+	if ( !mod ) {
+		return null;
+	}
+	GSUforEach( obj, ( val, key ) => {
+		if ( key in mod ) {
+			mod[ key ] = val;
+		}
+	} );
+	return Object.seal( mod );
 }

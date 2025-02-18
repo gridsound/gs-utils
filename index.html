@@ -413,21 +413,19 @@ test( "GSUsetModel.4", GSUsetModel( "foo", { a: 1 } ), undefined );
 test( "GSUsetModel.5", GSUisEmpty( GSUmodels ), false );
 test( "GSUsetModel.6", GSUgetModel( "foo" ), { a: 1 } );
 test( "GSUsetModel.7", GSUgetModel( "foo", { a: 2 } ), { a: 2 } );
-try {
-	GSUgetModel( "foo", { b: 2 } )
-	test( "GSUsetModel.8", 0, "Should failed here" );
-} catch ( e ) {
-	test( "GSUsetModel.8", 0, 0 );
-}
-test( "GSUsetModel.9", GSUmodels.get( "foo" ), { a: 1 } );
-test( "GSUsetModel.a", GSUmodels.get( "foo" ).a, 1 );
+test( "GSUsetModel.8", GSUgetModel( "foo", { b: 2 } ).a, 1 );
+test( "GSUsetModel.9", GSUgetModel( "foo", { b: 2 } ).b, undefined );
+test( "GSUsetModel.a", GSUgetModel( "foo", { a: 3, b: 4 } ).a, 3 );
+test( "GSUsetModel.b", GSUgetModel( "foo", { a: 3, b: 4 } ).b, undefined );
+test( "GSUsetModel.c", GSUmodels.get( "foo" ), { a: 1 } );
+test( "GSUsetModel.d", GSUmodels.get( "foo" ).a, 1 );
 GSUmodels.get( "foo" ).a = 2;
-test( "GSUsetModel.b", GSUmodels.get( "foo" ).a, 1 );
+test( "GSUsetModel.e", GSUmodels.get( "foo" ).a, 1 );
 const myMod = GSUgetModel( "foo" );
 myMod.a = 21;
-test( "GSUsetModel.c", myMod.a, 21 );
+test( "GSUsetModel.f", myMod.a, 21 );
 myMod.b = 42;
-test( "GSUsetModel.d", myMod.b, undefined );
+test( "GSUsetModel.g", myMod.b, undefined );
 
 // .............................................................................
 console.log( `${ testsPassed } / ${ tests }` );
