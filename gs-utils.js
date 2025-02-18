@@ -13,7 +13,9 @@ function GSUsetModel( id, obj ) {
 	GSUmodels.set( id, GSUdeepFreeze( obj ) );
 }
 function GSUgetModel( id, obj ) {
-	return Object.assign( Object.seal( GSUdeepCopy( GSUmodels.get( id ) ) ), obj );
+	const mod = GSUmodels.get( id );
+
+	return !mod ? null : Object.assign( Object.seal( GSUdeepCopy( mod ) ), obj );
 }
 
 // .............................................................................
