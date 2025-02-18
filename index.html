@@ -1,4 +1,5 @@
 <script src="gs-utils.js"></script>
+<script src="gs-utils-json.js"></script>
 <script src="gs-utils-audio.js"></script>
 <script>
 
@@ -405,6 +406,31 @@ test( "GSUsplitSeconds.1", GSUsplitSeconds( 21 ),       { m: "0", s: "21", ms: "
 test( "GSUsplitSeconds.2", GSUsplitSeconds( 60 ),       { m: "1", s: "00", ms: "000" } );
 test( "GSUsplitSeconds.3", GSUsplitSeconds( 71 ),       { m: "1", s: "11", ms: "000" } );
 test( "GSUsplitSeconds.4", GSUsplitSeconds( 71.12345 ), { m: "1", s: "11", ms: "123" } );
+
+// .............................................................................
+test( "GSUsetModel.0", GSUisEmpty( GSUmodels ), true );
+test( "GSUsetModel.1", GSUgetModel( "foo" ), null );
+test( "GSUsetModel.2", GSUgetModel(), null );
+test( "GSUsetModel.3", GSUisEmpty( GSUmodels ), true );
+test( "GSUsetModel.4", GSUsetModel( "foo", { a: 1 } ), undefined );
+test( "GSUsetModel.5", GSUisEmpty( GSUmodels ), false );
+test( "GSUsetModel.6", GSUgetModel( "foo" ), { a: 1 } );
+test( "GSUsetModel.7", GSUgetModel( "foo", { a: 2 } ), { a: 2 } );
+try {
+	GSUgetModel( "foo", { b: 2 } )
+	test( "GSUsetModel.8", 0, "Should failed here" );
+} catch ( e ) {
+	test( "GSUsetModel.8", 0, 0 );
+}
+test( "GSUsetModel.9", GSUmodels.get( "foo" ), { a: 1 } );
+test( "GSUsetModel.a", GSUmodels.get( "foo" ).a, 1 );
+GSUmodels.get( "foo" ).a = 2;
+test( "GSUsetModel.b", GSUmodels.get( "foo" ).a, 1 );
+const myMod = GSUgetModel( "foo" );
+myMod.a = 21;
+test( "GSUsetModel.c", myMod.a, 21 );
+myMod.b = 42;
+test( "GSUsetModel.d", myMod.b, undefined );
 
 // .............................................................................
 console.log( `${ testsPassed } / ${ tests }` );
