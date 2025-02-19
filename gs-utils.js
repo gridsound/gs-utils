@@ -187,12 +187,12 @@ function GSUsplitSeconds( sec ) {
 }
 
 // .............................................................................
-function GSUrealImagToXY( real, imag ) {
+function GSUrealImagToXY( real, imag, width ) {
 	const arr = [];
 	const fn = _GSUrealImagToXY.bind( null, real, imag );
 
-	for ( let x = 0; x < 256; ++x ) {
-		arr.push( fn( x / 256 ) );
+	for ( let x = 0; x < width; ++x ) {
+		arr.push( fn( x / width ) );
 	}
 	return arr;
 }
