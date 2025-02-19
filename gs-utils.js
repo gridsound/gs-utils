@@ -187,6 +187,24 @@ function GSUsplitSeconds( sec ) {
 }
 
 // .............................................................................
+function GSUrealImagToXY( real, imag ) {
+	const arr = [];
+	const fn = _GSUrealImagToXY.bind( null, real, imag );
+
+	for ( let x = 0; x < 256; ++x ) {
+		arr.push( fn( x / 256 ) );
+	}
+	return arr;
+}
+function _GSUrealImagToXY( a, b, t ) {
+	return a.reduce( ( val, ai, i ) => {
+		const tmp = Math.PI * 2 * i * t;
+
+		return val + ai * Math.cos( tmp ) + b[ i ] * Math.sin( tmp );
+	}, 0 );
+}
+
+// .............................................................................
 function GSUuuid() {
 	const rnd = crypto.getRandomValues( new Uint8Array( 36 ) );
 	const uuid = rnd.reduce( ( arr, n ) => {
