@@ -95,6 +95,7 @@ GSUsetModel( "noise", {
 GSUsetModel( "oscillator", {
 	order: 0,
 	wave: "sine",
+	waveCustom: null,
 	source: null,
 	phaze: 0,
 	pan: 0,
