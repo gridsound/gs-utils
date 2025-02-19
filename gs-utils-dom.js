@@ -105,7 +105,7 @@ function _GSUfindElementsQueryAll( root, sel ) {
 function GSUdispatchEvent( el, component, eventName, ...args ) {
 	el.dispatchEvent( new CustomEvent( "gsuiEvents", {
 		bubbles: true,
-		detail: { component, eventName, args },
+		detail: { component, eventName, args, target: el },
 	} ) );
 }
 function GSUlistenEvents( el, cbs ) {
@@ -114,7 +114,7 @@ function GSUlistenEvents( el, cbs ) {
 		const cbs2 = cbs[ d.component ] || cbs.default;
 		const fn = cbs2 && ( cbs2[ d.eventName ] || cbs2.default );
 
-		if ( fn && fn( d, e.target, e ) !== true ) {
+		if ( fn && fn( d, d.target, e ) !== true ) {
 			e.stopPropagation();
 			e.stopImmediatePropagation();
 		}
