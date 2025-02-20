@@ -1,42 +1,31 @@
 "use strict";
 
-// memoization of the reversal of different lengths.
-const GSUfftmemoizedReversal_ = {};
-const GSUfftmemoizedZeroBuffers_ = {};
-
 function GSUfftConstructComplexArray_( signal ) {
-	const complexSignal = {
-		real: signal.real === undefined
-			? signal.slice()
-			: signal.real.slice(),
-	};
-	const bufferSize = complexSignal.real.length;
+	const real = signal.real
+		? signal.real.slice()
+		: signal.slice();
 
-	if ( GSUfftmemoizedZeroBuffers_[ bufferSize ] === undefined ) {
-		GSUfftmemoizedZeroBuffers_[ bufferSize ] = Array.apply( null, Array( bufferSize ) ).map( Number.prototype.valueOf, 0 );
-	}
-	complexSignal.imag = GSUfftmemoizedZeroBuffers_[ bufferSize ].slice();
-	return complexSignal;
+	return {
+		real,
+		imag: GSUnewArray( real.length, 0 ),
+	};
 }
 
 function GSUfftBitReverseArray_( N ) {
-	if ( GSUfftmemoizedReversal_[ N ] === undefined ) {
-		const maxBinaryLength = ( N - 1 ).toString( 2 ).length; // get the binary length of the largest index.
-		const templateBinary = "0".repeat( maxBinaryLength ); // create a template binary of that length.
-		const reversed = {};
+	const maxBinaryLength = ( N - 1 ).toString( 2 ).length; // get the binary length of the largest index.
+	const templateBinary = "0".repeat( maxBinaryLength ); // create a template binary of that length.
+	const reversed = {};
 
-		for ( let n = 0; n < N; ++n ) {
-			let currBinary = n.toString( 2 ); // get binary value of current index.
+	for ( let n = 0; n < N; ++n ) {
+		let currBinary = n.toString( 2 ); // get binary value of current index.
 
-			// prepend zeros from template to current binary. This makes binary values of all indices have the same length.
-			currBinary = templateBinary.substr( currBinary.length ) + currBinary;
+		// prepend zeros from template to current binary. This makes binary values of all indices have the same length.
+		currBinary = templateBinary.substr( currBinary.length ) + currBinary;
 
-			currBinary = [ ...currBinary ].reverse().join( "" ); // reverse
-			reversed[ n ] = parseInt( currBinary, 2 ); // convert to decimal
-		}
-		GSUfftmemoizedReversal_[ N ] = reversed; // save
+		currBinary = [ ...currBinary ].reverse().join( "" ); // reverse
+		reversed[ n ] = parseInt( currBinary, 2 ); // convert to decimal
 	}
-	return GSUfftmemoizedReversal_[ N ];
+	return reversed;
 }
 
 function GSUfftMultiply_( a, b ) {
@@ -90,10 +79,10 @@ function GSUfft( signal ) {
 	const logN = Math.log2( N );
 
 	if ( Math.round( logN ) !== logN ) {
-		throw new Error( "Input size must be a power of 2." );
+		throw new Error( "GSUfft: Input size must be a power of 2." );
 	}
 	if ( complexSignal.real.length !== complexSignal.imag.length ) {
-		throw new Error( "Real and imaginary components must have the same length." );
+		throw new Error( "GSUfft: Real and imaginary components must have the same length." );
 	}
 
 	const bitReversedIndices = GSUfftBitReverseArray_( N );
@@ -151,8 +140,8 @@ function GSUfft( signal ) {
 }
 
 function GSUifft( signal ) {
-	if ( signal.real === undefined || signal.imag === undefined ) {
-		throw new Error( "IFFT only accepts a complex input." );
+	if ( !signal.real || !signal.imag ) {
+		throw new Error( "GSUifft: only accepts a complex input." );
 	}
 
 	const N = signal.real.length;
