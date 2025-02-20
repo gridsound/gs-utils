@@ -1,70 +1,5 @@
 "use strict";
 
-function GSUfftConstructComplexArray_( signal ) {
-	const real = signal.real
-		? signal.real.slice()
-		: signal.slice();
-
-	return {
-		real,
-		imag: GSUnewArray( real.length, 0 ),
-	};
-}
-
-function GSUfftBitReverseArray_( N ) {
-	const maxBinaryLength = ( N - 1 ).toString( 2 ).length; // get the binary length of the largest index.
-	const templateBinary = "0".repeat( maxBinaryLength ); // create a template binary of that length.
-	const reversed = {};
-
-	for ( let n = 0; n < N; ++n ) {
-		let currBinary = n.toString( 2 ); // get binary value of current index.
-
-		// prepend zeros from template to current binary. This makes binary values of all indices have the same length.
-		currBinary = templateBinary.substr( currBinary.length ) + currBinary;
-
-		currBinary = [ ...currBinary ].reverse().join( "" ); // reverse
-		reversed[ n ] = parseInt( currBinary, 2 ); // convert to decimal
-	}
-	return reversed;
-}
-
-function GSUfftMultiply_( a, b ) {
-	return {
-		real: a.real * b.real - a.imag * b.imag,
-		imag: a.real * b.imag + a.imag * b.real,
-	};
-}
-
-function GSUfftAdd_( a, b ) {
-	return {
-		real: a.real + b.real,
-		imag: a.imag + b.imag,
-	};
-}
-
-function GSUfftSubtract_( a, b ) {
-	return {
-		real: a.real - b.real,
-		imag: a.imag - b.imag,
-	};
-}
-
-function GSUfftEuler_( kn, N ) {
-	const x = -2 * Math.PI * kn / N;
-
-	return {
-		real: Math.cos( x ),
-		imag: Math.sin( x ),
-	};
-}
-
-function GSUfftConj_( a ) {
-	a.imag *= -1;
-	return a;
-}
-
-// .............................................................................
-
 function GSUfft( signal ) {
 	let complexSignal = {};
 
@@ -139,6 +74,7 @@ function GSUfft( signal ) {
 	return complexSignal;
 }
 
+// .............................................................................
 function GSUifft( signal ) {
 	if ( !signal.real || !signal.imag ) {
 		throw new Error( "GSUifft: only accepts a complex input." );
@@ -167,4 +103,62 @@ function GSUifft( signal ) {
 	complexSignal.real = X.real.map( val => val / N );
 	complexSignal.imag = X.imag.map( val => val / N );
 	return complexSignal;
+}
+
+// .............................................................................
+function GSUfftConstructComplexArray_( signal ) {
+	const real = signal.real
+		? signal.real.slice()
+		: signal.slice();
+
+	return {
+		real,
+		imag: GSUnewArray( real.length, 0 ),
+	};
+}
+function GSUfftBitReverseArray_( N ) {
+	const maxBinaryLength = ( N - 1 ).toString( 2 ).length; // get the binary length of the largest index.
+	const templateBinary = "0".repeat( maxBinaryLength ); // create a template binary of that length.
+	const reversed = {};
+
+	for ( let n = 0; n < N; ++n ) {
+		let currBinary = n.toString( 2 ); // get binary value of current index.
+
+		// prepend zeros from template to current binary. This makes binary values of all indices have the same length.
+		currBinary = templateBinary.substr( currBinary.length ) + currBinary;
+
+		currBinary = [ ...currBinary ].reverse().join( "" ); // reverse
+		reversed[ n ] = parseInt( currBinary, 2 ); // convert to decimal
+	}
+	return reversed;
+}
+function GSUfftMultiply_( a, b ) {
+	return {
+		real: a.real * b.real - a.imag * b.imag,
+		imag: a.real * b.imag + a.imag * b.real,
+	};
+}
+function GSUfftAdd_( a, b ) {
+	return {
+		real: a.real + b.real,
+		imag: a.imag + b.imag,
+	};
+}
+function GSUfftSubtract_( a, b ) {
+	return {
+		real: a.real - b.real,
+		imag: a.imag - b.imag,
+	};
+}
+function GSUfftEuler_( kn, N ) {
+	const x = -2 * Math.PI * kn / N;
+
+	return {
+		real: Math.cos( x ),
+		imag: Math.sin( x ),
+	};
+}
+function GSUfftConj_( a ) {
+	a.imag *= -1;
+	return a;
 }
