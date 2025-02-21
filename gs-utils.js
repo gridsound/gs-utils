@@ -299,7 +299,7 @@ function GSUmultiLineToRegularPts( sortedPts, nb ) {
 		const y = GSUlineFindY( ptA, ptB, currX );
 
 		currX += stepX;
-		if ( currX > ptB.x ) {
+		while ( currX > sortedPts[ currPt + 1 ]?.x ) {
 			++currPt;
 		}
 		return y;
