@@ -287,6 +287,11 @@ function _GSUlineFindY( ptA, ptB, x ) {
 }
 
 // .............................................................................
+function GSUsampleDottedCurve( curveDots, nb ) {
+	const sortedDots = Object.values( curveDots ).sort( ( a, b ) => a.x - b.x );
+
+	return GSUsampleDottedCurveSorted( sortedDots, nb );
+}
 function GSUsampleDottedCurveSorted( sortedPts, nb ) {
 	let currX = sortedPts[ 0 ].x;
 	let currPt = 0;
