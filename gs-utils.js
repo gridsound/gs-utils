@@ -287,7 +287,7 @@ function _GSUlineFindY( ptA, ptB, x ) {
 }
 
 // .............................................................................
-function GSUmultiLineToRegularPts( sortedPts, nb ) {
+function GSUsampleDottedCurveSorted( sortedPts, nb ) {
 	let currX = sortedPts[ 0 ].x;
 	let currPt = 0;
 	const w = sortedPts.at( -1 ).x - currX;

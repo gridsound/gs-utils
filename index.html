@@ -447,14 +447,14 @@ test( "GSUlineFindY.6", GSUlineFindY( { x: -10, y:  1 }, { x: 10, y: 2 },  0 ), 
 test( "GSUlineFindY.7", GSUlineFindY( { x: -10, y: -1 }, { x: 10, y: 1 },  0 ), 0   );
 
 // .............................................................................
-test( "GSUmultiLineToRegularPts.0", GSUmultiLineToRegularPts( [ { x:  0, y:  0 }, { x: 1,   y: 1 } ], 2 ), [  0, 1 ] );
-test( "GSUmultiLineToRegularPts.1", GSUmultiLineToRegularPts( [ { x: -1, y: -1 }, { x: 1,   y: 1 } ], 2 ), [ -1, 1 ] );
-test( "GSUmultiLineToRegularPts.2", GSUmultiLineToRegularPts( [ { x:  0, y:  0 }, { x: 1,   y: 1 } ], 3 ), [  0, .5, 1 ] );
-test( "GSUmultiLineToRegularPts.3", GSUmultiLineToRegularPts( [ { x:  0, y:  0 }, { x: 1,   y: 1 } ], 4 ), [  0, 1 / 3, 2 / 3, 1 ] );
-test( "GSUmultiLineToRegularPts.4", GSUmultiLineToRegularPts( [ { x:  0, y:  0 }, { x:  .5, y: 3 }, { x: 1, y: 0 } ], 2 ), [ 0, 0 ] );
-test( "GSUmultiLineToRegularPts.5", GSUmultiLineToRegularPts( [ { x:  0, y:  0 }, { x:  .5, y: 3 }, { x: 1, y: 0 } ], 3 ), [ 0, 3, 0 ] );
-test( "GSUmultiLineToRegularPts.6", GSUmultiLineToRegularPts( [ { x:  0, y:  0 }, { x:  .5, y: 3 }, { x: 1, y: 0 } ], 4 ), [ 0, 2, 2, 0 ] );
-test( "GSUmultiLineToRegularPts.7", GSUmultiLineToRegularPts( [ { x: -3, y:  0 }, { x: 0,   y: 3 }, { x: 3, y: 0 } ], 4 ), [ 0, 2, 2, 0 ] );
+test( "GSUsampleDottedCurveSorted.0", GSUsampleDottedCurveSorted( [ { x:  0, y:  0 }, { x: 1,   y: 1 } ], 2 ), [  0, 1 ] );
+test( "GSUsampleDottedCurveSorted.1", GSUsampleDottedCurveSorted( [ { x: -1, y: -1 }, { x: 1,   y: 1 } ], 2 ), [ -1, 1 ] );
+test( "GSUsampleDottedCurveSorted.2", GSUsampleDottedCurveSorted( [ { x:  0, y:  0 }, { x: 1,   y: 1 } ], 3 ), [  0, .5, 1 ] );
+test( "GSUsampleDottedCurveSorted.3", GSUsampleDottedCurveSorted( [ { x:  0, y:  0 }, { x: 1,   y: 1 } ], 4 ), [  0, 1 / 3, 2 / 3, 1 ] );
+test( "GSUsampleDottedCurveSorted.4", GSUsampleDottedCurveSorted( [ { x:  0, y:  0 }, { x:  .5, y: 3 }, { x: 1, y: 0 } ], 2 ), [ 0, 0 ] );
+test( "GSUsampleDottedCurveSorted.5", GSUsampleDottedCurveSorted( [ { x:  0, y:  0 }, { x:  .5, y: 3 }, { x: 1, y: 0 } ], 3 ), [ 0, 3, 0 ] );
+test( "GSUsampleDottedCurveSorted.6", GSUsampleDottedCurveSorted( [ { x:  0, y:  0 }, { x:  .5, y: 3 }, { x: 1, y: 0 } ], 4 ), [ 0, 2, 2, 0 ] );
+test( "GSUsampleDottedCurveSorted.7", GSUsampleDottedCurveSorted( [ { x: -3, y:  0 }, { x: 0,   y: 3 }, { x: 3, y: 0 } ], 4 ), [ 0, 2, 2, 0 ] );
 
 // .............................................................................
 console.log( `${ testsPassed } / ${ tests }` );
