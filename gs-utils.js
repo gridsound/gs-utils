@@ -288,10 +288,10 @@ function _GSUlineFindY( ptA, ptB, x ) {
 
 // .............................................................................
 function GSUmultiLineToRegularPts( sortedPts, nb ) {
-	const w = sortedPts.at( -1 ).x - sortedPts[ 0 ].x;
-	const stepX = w / ( nb - 1 );
-	let currX = 0;
+	let currX = sortedPts[ 0 ].x;
 	let currPt = 0;
+	const w = sortedPts.at( -1 ).x - currX;
+	const stepX = w / ( nb - 1 );
 
 	return GSUnewArray( nb, i => {
 		const ptA = sortedPts[ currPt ];

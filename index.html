@@ -437,20 +437,24 @@ test( "GSUsetModel.o", GSUgetModel( "foo", { b: 2, c: 3, a: 21 } ), { a: 21 } );
 test( "GSUsetModel.p", GSUgetModel( "foo", document.body ), { a: 1 } );
 
 // .............................................................................
-test( "GSUlineFindY.0", GSUlineFindY( { x: 10, y: 1 }, { x: 20, y: 2 }, 15 ), 1.5 );
-test( "GSUlineFindY.1", GSUlineFindY( { x: 20, y: 2 }, { x: 10, y: 1 }, 15 ), 1.5 );
-test( "GSUlineFindY.2", GSUlineFindY( { x: 10, y: 1 }, { x: 20, y: 2 }, 10 ), 1   );
-test( "GSUlineFindY.3", GSUlineFindY( { x: 10, y: 1 }, { x: 20, y: 2 }, 20 ), 2   );
-test( "GSUlineFindY.4", GSUlineFindY( { x: 10, y: 1 }, { x: 20, y: 2 },  5 ),  .5 );
-test( "GSUlineFindY.5", GSUlineFindY( { x: 10, y: 1 }, { x: 20, y: 2 }, 25 ), 2.5 );
+test( "GSUlineFindY.0", GSUlineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 15 ), 1.5 );
+test( "GSUlineFindY.1", GSUlineFindY( { x:  20, y:  2 }, { x: 10, y: 1 }, 15 ), 1.5 );
+test( "GSUlineFindY.2", GSUlineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 10 ), 1   );
+test( "GSUlineFindY.3", GSUlineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 20 ), 2   );
+test( "GSUlineFindY.4", GSUlineFindY( { x:  10, y:  1 }, { x: 20, y: 2 },  5 ),  .5 );
+test( "GSUlineFindY.5", GSUlineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 25 ), 2.5 );
+test( "GSUlineFindY.6", GSUlineFindY( { x: -10, y:  1 }, { x: 10, y: 2 },  0 ), 1.5 );
+test( "GSUlineFindY.7", GSUlineFindY( { x: -10, y: -1 }, { x: 10, y: 1 },  0 ), 0   );
 
 // .............................................................................
-test( "GSUmultiLineToRegularPts.0", GSUmultiLineToRegularPts( [ { x: 0, y: 0 }, { x: 1, y: 1 } ], 2 ), [ 0, 1 ] );
-test( "GSUmultiLineToRegularPts.1", GSUmultiLineToRegularPts( [ { x: 0, y: 0 }, { x: 1, y: 1 } ], 3 ), [ 0, .5, 1 ] );
-test( "GSUmultiLineToRegularPts.2", GSUmultiLineToRegularPts( [ { x: 0, y: 0 }, { x: 1, y: 1 } ], 4 ), [ 0, 1 / 3, 2 / 3, 1 ] );
-test( "GSUmultiLineToRegularPts.3", GSUmultiLineToRegularPts( [ { x: 0, y: 0 }, { x: .5, y: 3 }, { x: 1, y: 0 } ], 2 ), [ 0, 0 ] );
-test( "GSUmultiLineToRegularPts.4", GSUmultiLineToRegularPts( [ { x: 0, y: 0 }, { x: .5, y: 3 }, { x: 1, y: 0 } ], 3 ), [ 0, 3, 0 ] );
-test( "GSUmultiLineToRegularPts.5", GSUmultiLineToRegularPts( [ { x: 0, y: 0 }, { x: .5, y: 3 }, { x: 1, y: 0 } ], 4 ), [ 0, 2, 2, 0 ] );
+test( "GSUmultiLineToRegularPts.0", GSUmultiLineToRegularPts( [ { x:  0, y:  0 }, { x: 1,   y: 1 } ], 2 ), [  0, 1 ] );
+test( "GSUmultiLineToRegularPts.1", GSUmultiLineToRegularPts( [ { x: -1, y: -1 }, { x: 1,   y: 1 } ], 2 ), [ -1, 1 ] );
+test( "GSUmultiLineToRegularPts.2", GSUmultiLineToRegularPts( [ { x:  0, y:  0 }, { x: 1,   y: 1 } ], 3 ), [  0, .5, 1 ] );
+test( "GSUmultiLineToRegularPts.3", GSUmultiLineToRegularPts( [ { x:  0, y:  0 }, { x: 1,   y: 1 } ], 4 ), [  0, 1 / 3, 2 / 3, 1 ] );
+test( "GSUmultiLineToRegularPts.4", GSUmultiLineToRegularPts( [ { x:  0, y:  0 }, { x:  .5, y: 3 }, { x: 1, y: 0 } ], 2 ), [ 0, 0 ] );
+test( "GSUmultiLineToRegularPts.5", GSUmultiLineToRegularPts( [ { x:  0, y:  0 }, { x:  .5, y: 3 }, { x: 1, y: 0 } ], 3 ), [ 0, 3, 0 ] );
+test( "GSUmultiLineToRegularPts.6", GSUmultiLineToRegularPts( [ { x:  0, y:  0 }, { x:  .5, y: 3 }, { x: 1, y: 0 } ], 4 ), [ 0, 2, 2, 0 ] );
+test( "GSUmultiLineToRegularPts.7", GSUmultiLineToRegularPts( [ { x: -3, y:  0 }, { x: 0,   y: 3 }, { x: 3, y: 0 } ], 4 ), [ 0, 2, 2, 0 ] );
 
 // .............................................................................
 console.log( `${ testsPassed } / ${ tests }` );
