@@ -437,5 +437,13 @@ test( "GSUsetModel.o", GSUgetModel( "foo", { b: 2, c: 3, a: 21 } ), { a: 21 } );
 test( "GSUsetModel.p", GSUgetModel( "foo", document.body ), { a: 1 } );
 
 // .............................................................................
+test( "GSUlineFindY.0", GSUlineFindY( { x: 10, y: 1 }, { x: 20, y: 2 }, 15 ), 1.5 );
+test( "GSUlineFindY.1", GSUlineFindY( { x: 20, y: 2 }, { x: 10, y: 1 }, 15 ), 1.5 );
+test( "GSUlineFindY.2", GSUlineFindY( { x: 10, y: 1 }, { x: 20, y: 2 }, 10 ), 1   );
+test( "GSUlineFindY.3", GSUlineFindY( { x: 10, y: 1 }, { x: 20, y: 2 }, 20 ), 2   );
+test( "GSUlineFindY.4", GSUlineFindY( { x: 10, y: 1 }, { x: 20, y: 2 },  5 ),  .5 );
+test( "GSUlineFindY.5", GSUlineFindY( { x: 10, y: 1 }, { x: 20, y: 2 }, 25 ), 2.5 );
+
+// .............................................................................
 console.log( `${ testsPassed } / ${ tests }` );
 </script>

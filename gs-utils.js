@@ -271,3 +271,17 @@ function GSUgetModel( id, obj ) {
 	} );
 	return Object.seal( mod );
 }
+
+// .............................................................................
+function GSUlineFindY( a, b, x ) {
+	return a.x < b.x
+		? _GSUlineFindY( a, b, x )
+		: _GSUlineFindY( b, a, x );
+}
+function _GSUlineFindY( a, b, x ) {
+	const w = b.x - a.x;
+	const h = b.y - a.y;
+	const xx = x - a.x;
+
+	return xx / w * h + a.y;
+}
