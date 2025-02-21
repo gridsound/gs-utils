@@ -273,15 +273,35 @@ function GSUgetModel( id, obj ) {
 }
 
 // .............................................................................
-function GSUlineFindY( a, b, x ) {
-	return a.x < b.x
-		? _GSUlineFindY( a, b, x )
-		: _GSUlineFindY( b, a, x );
+function GSUlineFindY( ptA, ptB, x ) {
+	return ptA.x < ptB.x
+		? _GSUlineFindY( ptA, ptB, x )
+		: _GSUlineFindY( ptB, ptA, x );
 }
-function _GSUlineFindY( a, b, x ) {
-	const w = b.x - a.x;
-	const h = b.y - a.y;
-	const xx = x - a.x;
+function _GSUlineFindY( ptA, ptB, x ) {
+	const w = ptB.x - ptA.x;
+	const h = ptB.y - ptA.y;
+	const xx = x - ptA.x;
 
-	return xx / w * h + a.y;
+	return xx / w * h + ptA.y;
+}
+
+// .............................................................................
+function GSUmultiLineToRegularPts( sortedPts, nb ) {
+	const w = sortedPts.at( -1 ).x - sortedPts[ 0 ].x;
+	const stepX = w / ( nb - 1 );
+	let currX = 0;
+	let currPt = 0;
+
+	return GSUnewArray( nb, i => {
+		const ptA = sortedPts[ currPt ];
+		const ptB = sortedPts[ currPt + 1 ];
+		const y = GSUlineFindY( ptA, ptB, currX );
+
+		currX += stepX;
+		if ( currX > ptB.x ) {
+			++currPt;
+		}
+		return y;
+	} );
 }
