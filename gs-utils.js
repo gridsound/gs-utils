@@ -314,34 +314,37 @@ function GSUsampleDottedCurveSorted( sortedPts, nb ) {
 // .............................................................................
 function GSUsampleDotLine( dots, nb ) {
 	const dataDots = Object.values( dots ).sort( ( a, b ) => a.x - b.x );
-	const dataFloat = [];
+	const dataFloat = GSUnewArray( nb, 0 );
 
 	if ( dataDots.length > 1 ) {
-		const lineW = dataDots.at( -1 ).x - dataDots[ 0 ].x;
-		let nbStill = nb;
+		const stepX = ( dataDots.at( -1 ).x - dataDots[ 0 ].x ) / nb;
+		let currX = dataDots[ 0 ].x;
+		let fn = null;
+		let dot = null;
+		let prevDot = null;
+		let dotI = 0;
+		let dotW = 0;
+		let dotH = 0;
 
-		dataDots.forEach( ( dot, i, arr ) => {
-			if ( i > 0 ) {
-				nbStill -= _GSUsampleDotLine_dotsN( dataFloat, dot, arr[ i - 1 ], i === arr.length - 1, nb, nbStill, lineW );
+		for ( let i = 0; i < nb; ++i ) {
+			while ( !dotI || currX >= dataDots[ dotI ].x ) {
+				prevDot = dataDots[ dotI ];
+				dot = dataDots[ ++dotI ];
+				dotW = ( dot.x - prevDot.x );
+				dotH = ( dot.y - prevDot.y );
+				fn = (
+					_GSUsampleDotLine_fns[ dot.type ] ||
+					_GSUsampleDotLine_fns.line
+				).bind( null, dot.val );
 			}
-		} );
+			dataFloat[ i ] = [
+				currX,
+				prevDot.y + dotH * fn( ( currX - prevDot.x ) / dotW ),
+			];
+			currX += stepX;
+		}
 	}
 	return dataFloat;
-}
-function _GSUsampleDotLine_dotsN( arr, dot, prevDot, isLast, nb, nbStill, lineW ) {
-	const w = ( dot.x - prevDot.x );
-	const h = ( dot.y - prevDot.y );
-	const resW = isLast ? nbStill : Math.min( nb * w / lineW | 0, nbStill );
-	const stepX = w / resW;
-	const fn = ( _GSUsampleDotLine_fns[ dot.type ] || _GSUsampleDotLine_fns.line ).bind( null, dot.val );
-
-	for ( let i = 0; i < resW; ++i ) {
-		arr.push( [
-			prevDot.x + stepX * i,
-			prevDot.y + h * fn( i / ( resW - 1 ) ),
-		] );
-	}
-	return resW;
 }
 const _GSUsampleDotLine_fns = Object.freeze( {
 	line: ( val, p ) => {
