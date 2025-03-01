@@ -318,19 +318,20 @@ function GSUsampleDotLine( dots, nb ) {
 
 	if ( dataDots.length > 1 ) {
 		const lineW = dataDots.at( -1 ).x - dataDots[ 0 ].x;
+		let nbStill = nb;
 
 		dataDots.forEach( ( dot, i, arr ) => {
 			if ( i > 0 ) {
-				_GSUsampleDotLine_dotsN( dataFloat, dot, arr[ i - 1 ], nb, lineW );
+				nbStill -= _GSUsampleDotLine_dotsN( dataFloat, dot, arr[ i - 1 ], i === arr.length - 1, nb, nbStill, lineW );
 			}
 		} );
 	}
 	return dataFloat;
 }
-function _GSUsampleDotLine_dotsN( arr, dot, prevDot, nb, lineW ) {
+function _GSUsampleDotLine_dotsN( arr, dot, prevDot, isLast, nb, nbStill, lineW ) {
 	const w = ( dot.x - prevDot.x );
 	const h = ( dot.y - prevDot.y );
-	const resW = nb * w / lineW;
+	const resW = isLast ? nbStill : Math.min( nb * w / lineW | 0, nbStill );
 	const stepX = w / resW;
 	const fn = ( _GSUsampleDotLine_fns[ dot.type ] || _GSUsampleDotLine_fns.line ).bind( null, dot.val );
 
@@ -340,6 +341,7 @@ function _GSUsampleDotLine_dotsN( arr, dot, prevDot, nb, lineW ) {
 			prevDot.y + h * fn( i / ( resW - 1 ) ),
 		] );
 	}
+	return resW;
 }
 const _GSUsampleDotLine_fns = Object.freeze( {
 	line: ( val, p ) => {
