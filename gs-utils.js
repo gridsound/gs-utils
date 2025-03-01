@@ -310,3 +310,61 @@ function GSUsampleDottedCurveSorted( sortedPts, nb ) {
 		return y;
 	} );
 }
+
+// .............................................................................
+function GSUsampleDotLine( dots, nb ) {
+	const dataDots = Object.values( dots ).sort( ( a, b ) => a.x - b.x );
+	const dataFloat = [];
+
+	if ( dataDots.length > 1 ) {
+		const lineW = dataDots.at( -1 ).x - dataDots[ 0 ].x;
+
+		dataDots.forEach( ( dot, i, arr ) => {
+			if ( i > 0 ) {
+				_GSUsampleDotLine_dotsN( dataFloat, dot, arr[ i - 1 ], nb, lineW );
+			}
+		} );
+	}
+	return dataFloat;
+}
+function _GSUsampleDotLine_dotsN( arr, dot, prevDot, nb, lineW ) {
+	const w = ( dot.x - prevDot.x );
+	const h = ( dot.y - prevDot.y );
+	const resW = nb * w / lineW;
+	const stepX = w / resW;
+	const fn = ( _GSUsampleDotLine_fns[ dot.type ] || _GSUsampleDotLine_fns.line ).bind( null, dot.val );
+
+	for ( let i = 0; i < resW; ++i ) {
+		arr.push( [
+			prevDot.x + stepX * i,
+			prevDot.y + h * fn( i / ( resW - 1 ) ),
+		] );
+	}
+}
+const _GSUsampleDotLine_fns = Object.freeze( {
+	line: ( val, p ) => {
+		return Math.min( p, 1 );
+	},
+	stair: ( val, p ) => {
+		const nbStairsAbs = Math.abs( val );
+		const inv = val < 0;
+		const y = ( Math.floor( p / ( 1 / ( nbStairsAbs + inv ) ) ) + !inv ) * ( 1 / ( nbStairsAbs + !inv ) );
+
+		return Math.min( y, 1 );
+	},
+	sineWave: ( val, p ) => {
+		const val2 = val * ( ( val - .5 ) / val );
+
+		return .5 + Math.sin( Math.PI * 1.5 + p * val2 * Math.PI * 2 ) / 2;
+	},
+	triangleWave: ( val, p ) => {
+		const val2 = val * ( ( val - .5 ) / val );
+
+		return -Math.abs( 2 * val2 * p % 2 - 1 ) + 1;
+	},
+	squareWave: ( val, p ) => {
+		const val2 = Math.floor( p / ( 1 / ( val * 2 ) ) ) % 2 === 0;
+
+		return val2 && p < 1 ? 0 : 1;
+	},
+} );
