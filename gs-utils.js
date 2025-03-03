@@ -287,31 +287,6 @@ function _GSUlineFindY( ptA, ptB, x ) {
 }
 
 // .............................................................................
-function GSUsampleDottedCurve( curveDots, nb ) {
-	const sortedDots = Object.values( curveDots ).sort( ( a, b ) => a.x - b.x );
-
-	return GSUsampleDottedCurveSorted( sortedDots, nb );
-}
-function GSUsampleDottedCurveSorted( sortedPts, nb ) {
-	let currX = sortedPts[ 0 ].x;
-	let currPt = 0;
-	const w = sortedPts.at( -1 ).x - currX;
-	const stepX = w / ( nb - 1 );
-
-	return GSUnewArray( nb, i => {
-		const ptA = sortedPts[ currPt ];
-		const ptB = sortedPts[ currPt + 1 ];
-		const y = GSUlineFindY( ptA, ptB, currX );
-
-		currX += stepX;
-		while ( currX > sortedPts[ currPt + 1 ]?.x ) {
-			++currPt;
-		}
-		return y;
-	} );
-}
-
-// .............................................................................
 function GSUsampleDotLine( dots, nb ) {
 	const dataDots = Object.values( dots ).sort( ( a, b ) => a.x - b.x );
 	const dataFloat = GSUnewArray( nb, 0 );
