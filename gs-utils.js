@@ -317,7 +317,7 @@ function GSUsampleDotLine( dots, nb ) {
 	const dataFloat = GSUnewArray( nb, 0 );
 
 	if ( dataDots.length > 1 ) {
-		const stepX = ( dataDots.at( -1 ).x - dataDots[ 0 ].x ) / nb;
+		const stepX = ( dataDots.at( -1 ).x - dataDots[ 0 ].x ) / ( nb - 1 );
 		let currX = dataDots[ 0 ].x;
 		let fn = null;
 		let dot = null;
@@ -327,7 +327,7 @@ function GSUsampleDotLine( dots, nb ) {
 		let dotH = 0;
 
 		for ( let i = 0; i < nb; ++i ) {
-			while ( !dotI || currX >= dataDots[ dotI ].x ) {
+			while ( dotI < dataDots.length - 1 && ( !dotI || currX >= dataDots[ dotI ].x ) ) {
 				prevDot = dataDots[ dotI ];
 				dot = dataDots[ ++dotI ];
 				dotW = ( dot.x - prevDot.x );
