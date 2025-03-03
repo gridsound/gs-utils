@@ -339,7 +339,7 @@ function GSUsampleDotLine( dots, nb ) {
 			}
 			dataFloat[ i ] = [
 				currX,
-				prevDot.y + dotH * fn( ( currX - prevDot.x ) / dotW ),
+				prevDot.y + dotH * fn( ( currX - prevDot.x ) / dotW, i ),
 			];
 			currX += stepX;
 		}
@@ -350,12 +350,12 @@ const _GSUsampleDotLine_fns = Object.freeze( {
 	line: ( val, p ) => {
 		return Math.min( p, 1 );
 	},
-	stair: ( val, p ) => {
+	stair: ( val, p, i ) => {
 		const nbStairsAbs = Math.abs( val );
 		const inv = val < 0;
 		const y = ( Math.floor( p / ( 1 / ( nbStairsAbs + inv ) ) ) + !inv ) * ( 1 / ( nbStairsAbs + !inv ) );
 
-		return Math.min( y, 1 );
+		return i ? Math.min( y, 1 ) : 0;
 	},
 	sineWave: ( val, p ) => {
 		const val2 = val * ( ( val - .5 ) / val );
