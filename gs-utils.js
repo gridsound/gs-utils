@@ -308,8 +308,9 @@ function GSUsampleDotLine( dots, nb ) {
 				dotW = ( dot.x - prevDot.x );
 				dotH = ( dot.y - prevDot.y );
 				fn = (
-					_GSUsampleDotLine_fns[ dot.type ] ||
-					_GSUsampleDotLine_fns.line
+					!dot.val
+						? _GSUsampleDotLine_fns.line
+						: _GSUsampleDotLine_fns[ dot.type ] || _GSUsampleDotLine_fns.line
 				).bind( null, dot.val );
 			}
 			dataFloat[ i ] = [
