@@ -334,14 +334,18 @@ const _GSUsampleDotLine_fns = Object.freeze( {
 		return i ? Math.min( y, 1 ) : 0;
 	},
 	sineWave: ( val, p ) => {
-		const val2 = val * ( ( val - .5 ) / val );
+		const val2 = Math.abs( val );
+		const val3 = val2 * ( ( val2 - .5 ) / val2 );
+		const p2 = val < 0 ? p + 1 : p;
 
-		return .5 + Math.sin( Math.PI * 1.5 + p * val2 * Math.PI * 2 ) / 2;
+		return .5 + Math.sin( Math.PI * 1.5 + p2 * val3 * Math.PI * 2 ) / 2;
 	},
 	triangleWave: ( val, p ) => {
-		const val2 = val * ( ( val - .5 ) / val );
+		const val2 = Math.abs( val );
+		const val3 = val2 * ( ( val2 - .5 ) / val2 );
+		const p2 = val < 0 ? p + 1 : p;
 
-		return -Math.abs( 2 * val2 * p % 2 - 1 ) + 1;
+		return -Math.abs( 2 * val3 * p2 % 2 - 1 ) + 1;
 	},
 	squareWave: ( val, p ) => {
 		const val2 = Math.floor( p / ( 1 / ( val * 2 ) ) ) % 2 === 0;
