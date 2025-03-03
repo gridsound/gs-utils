@@ -313,25 +313,24 @@ function GSUsampleDotLine( dots, nb ) {
 						: _GSUsampleDotLine_fns[ dot.type ] || _GSUsampleDotLine_fns.line
 				).bind( null, dot.val );
 			}
-			dataFloat[ i ] = [
-				currX,
-				prevDot.y + dotH * fn( ( currX - prevDot.x ) / dotW, i ),
-			];
+
+			const p = GSUclampNum( ( currX - prevDot.x ) / dotW, 0, 1 );
+			const y = GSUclampNum( fn( p, i ), 0, 1 );
+
+			dataFloat[ i ] = [ currX, prevDot.y + dotH * y ];
 			currX += stepX;
 		}
 	}
 	return dataFloat;
 }
 const _GSUsampleDotLine_fns = Object.freeze( {
-	line: ( val, p ) => {
-		return Math.min( p, 1 );
-	},
+	line: ( _, p ) => p,
 	stair: ( val, p, i ) => {
 		const nbStairsAbs = Math.abs( val );
 		const inv = val < 0;
 		const y = ( Math.floor( p / ( 1 / ( nbStairsAbs + inv ) ) ) + !inv ) * ( 1 / ( nbStairsAbs + !inv ) );
 
-		return i ? Math.min( y, 1 ) : 0;
+		return i ? y : 0;
 	},
 	sineWave: ( val, p ) => {
 		const val2 = Math.abs( val );
