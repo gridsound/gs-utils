@@ -307,11 +307,14 @@ function GSUsampleDotLine( dots, nb ) {
 				dot = dataDots[ ++dotI ];
 				dotW = ( dot.x - prevDot.x );
 				dotH = ( dot.y - prevDot.y );
+
+				const dotVal = dot.type === "curve" ? dot.val : Math.round( dot.val );
+
 				fn = (
-					!dot.val
+					!dotVal
 						? _GSUsampleDotLine_fns.line
 						: _GSUsampleDotLine_fns[ dot.type ] || _GSUsampleDotLine_fns.line
-				).bind( null, dot.val );
+				).bind( null, dotVal );
 			}
 
 			const p = GSUclampNum( ( currX - prevDot.x ) / dotW, 0, 1 );
@@ -325,6 +328,11 @@ function GSUsampleDotLine( dots, nb ) {
 }
 const _GSUsampleDotLine_fns = Object.freeze( {
 	line: ( _, p ) => p,
+	curve: ( val, p ) => {
+		return val > 0
+			? 1 - ( ( 1 - p ) ** ( val + 1 ) )
+			: p ** -( val - 1 );
+	},
 	stair: ( val, p, i ) => {
 		const nbStairsAbs = Math.abs( val );
 		const inv = val < 0;
