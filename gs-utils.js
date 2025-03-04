@@ -308,7 +308,7 @@ function GSUsampleDotLine( dots, nb ) {
 				dotW = ( dot.x - prevDot.x );
 				dotH = ( dot.y - prevDot.y );
 
-				const dotVal = dot.type === "curve" ? dot.val : Math.round( dot.val );
+				const dotVal = ( !dot.type || dot.type === "curve" ? dot.val : Math.round( dot.val ) );
 
 				fn = (
 					!dotVal
