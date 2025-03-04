@@ -161,7 +161,7 @@ GSUsetModel( "fx.waveshaper", {
 	symmetry: true,
 	oversample: "none",
 	curve: {
-		0: { x:  0, y:  0, type: "curve", val: 0 },
+		0: { x:  0, y:  0, type: null, val: null },
 		1: { x:  1, y:  1, type: "curve", val: 0 },
 	},
 } );
