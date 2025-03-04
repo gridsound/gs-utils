@@ -327,6 +327,7 @@ function GSUsampleDotLine( dots, nb ) {
 	return dataFloat;
 }
 const _GSUsampleDotLine_fns = Object.freeze( {
+	hold: () => 0,
 	line: ( _, p ) => p,
 	curve: ( val, p ) => {
 		return val > 0
