@@ -300,6 +300,7 @@ function GSUsampleDotLine( dots, nb ) {
 		let dotI = 0;
 		let dotW = 0;
 		let dotH = 0;
+		let i2 = 0;
 
 		for ( let i = 0; i < nb; ++i ) {
 			while ( dotI < dataDots.length - 1 && ( !dotI || currX >= dataDots[ dotI ].x ) ) {
@@ -310,6 +311,7 @@ function GSUsampleDotLine( dots, nb ) {
 
 				const dotVal = ( !dot.type || dot.type === "curve" ? dot.val : Math.round( dot.val ) );
 
+				i2 = 0;
 				fn = (
 					!dotVal
 						? _GSUsampleDotLine_fns.line
@@ -318,7 +320,7 @@ function GSUsampleDotLine( dots, nb ) {
 			}
 
 			const p = GSUclampNum( ( currX - prevDot.x ) / dotW, 0, 1 );
-			const y = GSUclampNum( fn( p, i ), 0, 1 );
+			const y = GSUclampNum( fn( p, i2++ ), 0, 1 );
 
 			dataFloat[ i ] = [ currX, prevDot.y + dotH * y ];
 			currX += stepX;
