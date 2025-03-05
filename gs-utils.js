@@ -304,19 +304,21 @@ function GSUsampleDotLine( dots, nb ) {
 
 		for ( let i = 0; i < nb; ++i ) {
 			while ( dotI < dataDots.length - 1 && ( !dotI || currX >= dataDots[ dotI ].x ) ) {
+				i2 = 0;
 				prevDot = dataDots[ dotI ];
 				dot = dataDots[ ++dotI ];
 				dotW = ( dot.x - prevDot.x );
 				dotH = ( dot.y - prevDot.y );
 
 				const dotVal = ( !dot.type || dot.type === "curve" ? dot.val : Math.round( dot.val ) );
+				const dotVal2 = !dotVal && (
+					dot.type === "stair" ||
+					dot.type === "sineWave" ||
+					dot.type === "triangleWave" ||
+					dot.type === "squareWave"
+				) ? 1 : dotVal;
 
-				i2 = 0;
-				fn = (
-					!dotVal
-						? _GSUsampleDotLine_fns.line
-						: _GSUsampleDotLine_fns[ dot.type ] || _GSUsampleDotLine_fns.line
-				).bind( null, dotVal );
+				fn = ( _GSUsampleDotLine_fns[ dot.type ] || _GSUsampleDotLine_fns.line ).bind( null, dotVal2 );
 			}
 
 			const p = GSUclampNum( ( currX - prevDot.x ) / dotW, 0, 1 );
