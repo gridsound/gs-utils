@@ -338,7 +338,7 @@ const _GSUsampleDotLine_fns = Object.freeze( {
 	},
 	stair: ( val, p, i ) => {
 		const nbStairsAbs = Math.abs( val );
-		const inv = val < 0;
+		const inv = val > 0;
 		const y = ( Math.floor( p / ( 1 / ( nbStairsAbs + inv ) ) ) + !inv ) * ( 1 / ( nbStairsAbs + !inv ) );
 
 		return i ? y : 0;
