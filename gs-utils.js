@@ -309,16 +309,10 @@ function GSUsampleDotLine( dots, nb ) {
 				dot = dataDots[ ++dotI ];
 				dotW = ( dot.x - prevDot.x );
 				dotH = ( dot.y - prevDot.y );
-
-				const dotVal = ( !dot.type || dot.type === "curve" ? dot.val : Math.round( dot.val ) );
-				const dotVal2 = !dotVal && (
-					dot.type === "stair" ||
-					dot.type === "sineWave" ||
-					dot.type === "triangleWave" ||
-					dot.type === "squareWave"
-				) ? 1 : dotVal;
-
-				fn = ( _GSUsampleDotLine_fns[ dot.type ] || _GSUsampleDotLine_fns.line ).bind( null, dotVal2 );
+				fn = (
+					_GSUsampleDotLine_fns[ dot.type ] ||
+					_GSUsampleDotLine_fns.line
+				).bind( null, _GSUsampleDotLine_calcDotVal( dot ) );
 			}
 
 			const p = GSUclampNum( ( currX - prevDot.x ) / dotW, 0, 1 );
@@ -330,6 +324,17 @@ function GSUsampleDotLine( dots, nb ) {
 	}
 	return dataFloat;
 }
+function _GSUsampleDotLine_calcDotVal( dot ) {
+	const dotVal = ( !dot.type || dot.type.endsWith( "urve" ) ? dot.val : Math.round( dot.val ) );
+	const dotVal2 = !dotVal && (
+		dot.type === "stair" ||
+		dot.type === "sineWave" ||
+		dot.type === "triangleWave" ||
+		dot.type === "squareWave"
+	) ? 1 : dotVal;
+
+	return dotVal2;
+}
 const _GSUsampleDotLine_fns = Object.freeze( {
 	hold: () => 0,
 	line: ( _, p ) => p,
@@ -337,6 +342,11 @@ const _GSUsampleDotLine_fns = Object.freeze( {
 		return val > 0
 			? 1 - ( ( 1 - p ) ** ( val + 1 ) )
 			: p ** -( val - 1 );
+	},
+	doubleCurve: ( val, p ) => {
+		return p > .5
+			? _GSUsampleDotLine_fns.curve( val, ( p - .5 ) * 2 ) / 2 + .5
+			: _GSUsampleDotLine_fns.curve( -val, p * 2 ) / 2;
 	},
 	stair: ( val, p, i ) => {
 		const nbStairsAbs = Math.abs( val );
