@@ -78,6 +78,15 @@ GSUsetModel( "envDetune", {
 	sustain: 0,
 	release: .1,
 } );
+GSUsetModel( "envLowpass", {
+	toggle: false,
+	attack: 0,
+	hold: 0,
+	decay: 1,
+	sustain: 0,
+	release: 0,
+	q: 1,
+} );
 GSUsetModel( "lfo", {
 	toggle: false,
 	type: "sine",
@@ -112,6 +121,7 @@ GSUsetModel( "synth", {
 	envs: {
 		gain: GSUgetModel( "envGain" ),
 		detune: GSUgetModel( "envDetune" ),
+		lowpass: GSUgetModel( "envLowpass" ),
 	},
 	lfos: {
 		gain: GSUgetModel( "lfo" ),
