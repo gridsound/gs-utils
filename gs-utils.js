@@ -287,13 +287,15 @@ function _GSUlineFindY( ptA, ptB, x ) {
 }
 
 // .............................................................................
-function GSUsampleDotLine( dots, nb ) {
+function GSUsampleDotLine( dots, nb, xstart, xend ) {
 	const dataDots = Object.values( dots ).sort( ( a, b ) => a.x - b.x );
 	const dataFloat = GSUnewArray( nb, 0 );
 
 	if ( dataDots.length > 1 ) {
-		const stepX = ( dataDots.at( -1 ).x - dataDots[ 0 ].x ) / ( nb - 1 );
-		let currX = dataDots[ 0 ].x;
+		const xa = xstart ?? dataDots[ 0 ].x;
+		const xb = xend ?? dataDots.at( -1 ).x;
+		const stepX = ( xb - xa ) / ( nb - 1 );
+		let currX = xa;
 		let fn = null;
 		let dot = null;
 		let prevDot = null;
