@@ -55,6 +55,17 @@ function _GSUreduce( obj, fn, val ) {
 	}
 	return val2;
 }
+function GSUsome( obj, fn ) {
+	if ( obj?.some ) {
+		return obj.some( fn );
+	}
+	for ( const k in obj ) {
+		if ( fn( obj[ k ], k, obj ) ) {
+			return true;
+		}
+	}
+	return false;
+}
 
 // .............................................................................
 function GSUnewArray( l, fn ) {

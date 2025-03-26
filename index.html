@@ -134,7 +134,7 @@ test( "GSUisEqual.y", GSUisEqual( [ 0, [ 1, 2 ] ], [ 0, [ 1, 3 ] ] ),           
 test( "GSUisEqual.z", GSUisEqual( [ 0, [ 1, { a: 2 } ] ], [ 0, [ 1, { a: 3 } ] ] ), false );
 test( "GSUisEqual.A", GSUisEqual( [ 0, [ 1, { a: 2 } ] ], [ 0, [ 1, { b: 2 } ] ] ), false );
 
-// GSUforEach/reduce ...........................................................
+// GSUforEach ..................................................................
 const objFE = { a: 10, b: 20 };
 const arrFE = [ 10, 20 ];
 let resFE;
@@ -151,7 +151,8 @@ test( "GSUforEach.7", resFE, "a:10:true:b:20:true:" );
 resFE = "";
 GSUforEach( arrFE, ( val, key, obj ) => { resFE += `${ key }:${ val }:${ obj === arrFE }:` } );
 test( "GSUforEach.8", resFE, "0:10:true:1:20:true:" );
-// ....................................
+
+// GSUreduce ...................................................................
 const fnSum = ( sum, n, i ) => sum + n + i;
 test( "GSUreduce.0", GSUreduce( NaN,                     null,  0 ), 0 );
 test( "GSUreduce.1", GSUreduce( null,                    null,  0 ), 0 );
@@ -163,6 +164,22 @@ test( "GSUreduce.6", GSUreduce( [],                      fnSum, 0 ), 0 );
 test( "GSUreduce.7", GSUreduce( {},                      fnSum, 0 ), 0 );
 test( "GSUreduce.8", GSUreduce( [ 10, 20, 30 ],          fnSum, 0 ), 63 );
 test( "GSUreduce.9", GSUreduce( { a: 10, b: 20, c: 30 }, fnSum, 0 ), "10a20b30c" );
+
+// GSUsome .....................................................................
+const fnSome21 = n => n === 21;
+test( "GSUsome.0", GSUsome( NaN,             null     ), false );
+test( "GSUsome.1", GSUsome( null,            null     ), false );
+test( "GSUsome.2", GSUsome( true,            null     ), false );
+test( "GSUsome.3", GSUsome( false,           null     ), false );
+test( "GSUsome.4", GSUsome( undefined,       null     ), false );
+test( "GSUsome.5", GSUsome( GSUnoop,         null     ), false );
+test( "GSUsome.6", GSUsome( [],              fnSome21 ), false );
+test( "GSUsome.7", GSUsome( {},              fnSome21 ), false );
+test( "GSUsome.8", GSUsome( [ 0, 1,  2 ],    fnSome21 ), false );
+test( "GSUsome.9", GSUsome( { a: 0, b:  1 }, fnSome21 ), false );
+test( "GSUsome.a", GSUsome( [ 21 ],          fnSome21 ), true  );
+test( "GSUsome.b", GSUsome( [ 0, 1, 21 ],    fnSome21 ), true  );
+test( "GSUsome.c", GSUsome( { a: 0, b: 21 }, fnSome21 ), true  );
 
 // .............................................................................
 test( "GSUeaseInCirc.0", GSUeaseInCirc( 0 ),      0 );
