@@ -14,6 +14,16 @@ function GSUHztoX( x ) {
 }
 
 // .............................................................................
+function GSUsetValueAtTime( audioParam, val, when ) {
+	audioParam.cancelScheduledValues( when );
+	audioParam.setValueAtTime( val, when );
+}
+function GSUsetValueCurveAtTime( audioParam, arr, when, dur ) {
+	audioParam.cancelScheduledValues( when );
+	audioParam.setValueCurveAtTime( new Float32Array( arr ), when, dur );
+}
+
+// .............................................................................
 function GSUhashBufferV1( u8buf ) {
 	const hash = new Uint8Array( 19 );
 	const len = `${ u8buf.length }`.padStart( 9, "0" );
