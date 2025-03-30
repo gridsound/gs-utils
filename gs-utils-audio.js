@@ -20,7 +20,7 @@ function GSUsetValueAtTime( audioParam, val, when ) {
 }
 function GSUsetValueCurveAtTime( audioParam, arr, when, dur ) {
 	audioParam.cancelScheduledValues( when );
-	audioParam.setValueCurveAtTime( new Float32Array( arr ), when, dur );
+	audioParam.setValueCurveAtTime( new Float32Array( arr ), when, Math.max( .00001, dur ) );
 }
 
 // .............................................................................
