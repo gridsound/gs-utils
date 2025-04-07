@@ -230,6 +230,19 @@ test( "GSUarrayFrom.1", GSUarrayFrom( arrEmpty ),      arrEmpty );
 test( "GSUarrayFrom.2", GSUarrayFrom( objEmpty )[ 0 ], objEmpty );
 // test( "GSUarrayFrom.2", GSUarrayFrom( 21 )[ 0 ], 21 );
 
+// GSUarrayRemove ..............................................................
+const arrRm = [ 1, 2, 3, 4, 5 ];
+testStrict( "GSUarrayRemove.0", GSUarrayRemove( arrRm, 3 ), arrRm );
+test( "GSUarrayRemove.1", arrRm, [ 1, 2, 4, 5 ] );
+test( "GSUarrayRemove.2", GSUarrayRemove( [], 1          ), [] );
+test( "GSUarrayRemove.3", GSUarrayRemove( []             ), [] );
+test( "GSUarrayRemove.4", GSUarrayRemove( [ 1 ], 1       ), [] );
+test( "GSUarrayRemove.6", GSUarrayRemove( [ 1, 1, 1 ], 1 ), [] );
+test( "GSUarrayRemove.5", GSUarrayRemove( [ 1 ]                           ), [ 1 ] );
+test( "GSUarrayRemove.7", GSUarrayRemove( [ 2, 1, 1, 1, 3 ], 1            ), [ 2, 3 ] );
+test( "GSUarrayRemove.8", GSUarrayRemove( [ 2, 1, 1, 1, 3 ], x => x === 1 ), [ 2, 3 ] );
+test( "GSUarrayRemove.9", GSUarrayRemove( [ 1, 2 ], GSUnoop               ), [ 1, 2 ] );
+
 // GSUisEmpty ..................................................................
 test( "GSUisEmpty.0", GSUisEmpty( {} ),               true );
 test( "GSUisEmpty.1", GSUisEmpty( [] ),               true );

@@ -91,6 +91,18 @@ function GSUarrayLength( arr, len, fn ) {
 	}
 	return arr;
 }
+function GSUarrayRemove( arr, fn ) {
+	const fn2 = typeof fn === "function" ? fn : Object.is.bind( null, fn );
+
+	for ( let i = 0; i < arr.length; ) {
+		if ( fn2( arr[ i ] ) ) {
+			arr.splice( i, 1 );
+		} else {
+			++i;
+		}
+	}
+	return arr;
+}
 
 // .............................................................................
 function GSUdebounce( fn, ms ) {
