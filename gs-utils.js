@@ -179,7 +179,7 @@ function GSUsplitInts( str, del = " " ) {
 	return str && GSUisStr( str ) ? str.split( del ).map( n => n | 0 ) : [];
 }
 function GSUsum( arr ) {
-	return arr.reduce( ( sum, n ) => sum + n, 0 );
+	return arr.reduce( ( sum, n ) => sum + +n, 0 ) || 0;
 }
 function GSUavg( arr ) {
 	return GSUsum( arr ) / arr.length || 0;
