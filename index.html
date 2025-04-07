@@ -393,21 +393,30 @@ test( "GSUroundNum.d", GSUroundNum( Math.PI, 6 ), 3.141593 );
 test( "GSUuuid.0", GSUuuid().length, 36 );
 
 // GSUsum ......................................................................
-test( "GSUsum.0", GSUsum( [] ),                    0 );
-test( "GSUsum.1", GSUsum( [ 7 ] ),                 7 );
-test( "GSUsum.2", GSUsum( [ 1, 2, 3, 4, 5, 6 ] ), 21 );
+test( "GSUsum.0", GSUsum(),                    0 );
+test( "GSUsum.1", GSUsum( NaN ),               0 );
+test( "GSUsum.2", GSUsum( 0 ),                 0 );
+test( "GSUsum.3", GSUsum( 7 ),                 7 );
+test( "GSUsum.4", GSUsum( 1, 2, 3, 4, 5, 6 ), 21 );
 
 // GSUavg ......................................................................
-test( "GSUavg.0", GSUavg( [] ),               0 );
-test( "GSUavg.1", GSUavg( [ -10, 15 ] ),      2.5 );
-test( "GSUavg.2", GSUavg( [  10, 20 ] ),     15 );
-test( "GSUavg.3", GSUavg( [  10, 20, 30 ] ), 20 );
+test( "GSUavg.0", GSUavg(),               0 );
+test( "GSUavg.1", GSUavg( NaN ),          0 );
+test( "GSUavg.2", GSUavg( null ),         0 );
+test( "GSUavg.3", GSUavg( undefined ),    0 );
+test( "GSUavg.4", GSUavg( 21 ),          21 );
+test( "GSUavg.5", GSUavg( 21, NaN ),      0 );
+test( "GSUavg.6", GSUavg( 0, "42" ),     21 );
+test( "GSUavg.7", GSUavg( "21", "63" ),  42 );
+test( "GSUavg.8", GSUavg( -10, 15 ),      2.5 );
+test( "GSUavg.9", GSUavg(  10, 20 ),     15 );
+test( "GSUavg.a", GSUavg(  10, 20, 30 ), 20 );
 
 // GSUstack ....................................................................
-test( "GSUstack.0", GSUsum( GSUstack( [ 5 ],       2 ) ), 2 );
-test( "GSUstack.1", GSUsum( GSUstack( [ 2, 5 ],    7 ) ), 9 );
-test( "GSUstack.2", GSUsum( GSUstack( [ 5, 7 ],    3 ) ), 8 );
-test( "GSUstack.3", GSUsum( GSUstack( [ 1, 2, 3 ], 4 ) ), 7 );
+test( "GSUstack.0", GSUsum( ...GSUstack( [ 5 ],       2 ) ), 2 );
+test( "GSUstack.1", GSUsum( ...GSUstack( [ 2, 5 ],    7 ) ), 9 );
+test( "GSUstack.2", GSUsum( ...GSUstack( [ 5, 7 ],    3 ) ), 8 );
+test( "GSUstack.3", GSUsum( ...GSUstack( [ 1, 2, 3 ], 4 ) ), 7 );
 
 // GSUuniqueName ...............................................................
 test( "GSUuniqueName.0", GSUuniqueName( "foo",      [] ),                                "foo" );
