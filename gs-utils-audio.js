@@ -14,9 +14,7 @@ function GSUHztoX( x ) {
 }
 
 // .............................................................................
-function GSUformatWaveCustomName( synthId, oscId ) {
-	return `custom.s${ synthId }.o${ oscId }`;
-}
+function GSUformatWavetableName( synthId, oscId )    { return `custom.s${ synthId }.o${ oscId }`; }
 
 // .............................................................................
 function GSUsetValueAtTime( audioParam, val, when ) {
