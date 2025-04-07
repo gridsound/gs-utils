@@ -135,6 +135,9 @@ function GSUisEmpty( o ) {
 function GSUtrim2( str ) {
 	return str?.trim?.().replace( /\s+/ug, " " ) || "";
 }
+function GSUcountChar( str, c ) {
+	return Math.max( 0, str?.split?.( c ).length - 1 ) || 0;
+}
 
 // .............................................................................
 function GSUeaseInCirc( n, pow = 2 ) {

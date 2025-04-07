@@ -262,6 +262,24 @@ test( "GSUtrim2.a", GSUtrim2( undefined ), "" );
 test( "GSUtrim2.b", GSUtrim2( {} ),        "" );
 test( "GSUtrim2.c", GSUtrim2( [] ),        "" );
 
+// GSUcountChar ................................................................
+test( "GSUcountChar.0", GSUcountChar(),                      0 );
+test( "GSUcountChar.1", GSUcountChar( "", "" ),              0 );
+test( "GSUcountChar.2", GSUcountChar( null ),                0 );
+test( "GSUcountChar.3", GSUcountChar( true ),                0 );
+test( "GSUcountChar.4", GSUcountChar( undefined ),           0 );
+test( "GSUcountChar.5", GSUcountChar( "" ),                  0 );
+test( "GSUcountChar.6", GSUcountChar( "", NaN ),             0 );
+test( "GSUcountChar.7", GSUcountChar( "", null ),            0 );
+test( "GSUcountChar.8", GSUcountChar( "", true ),            0 );
+test( "GSUcountChar.9", GSUcountChar( "", false ),           0 );
+test( "GSUcountChar.a", GSUcountChar( "", undefined ),       0 );
+test( "GSUcountChar.b", GSUcountChar( "", "." ),             0 );
+test( "GSUcountChar.c", GSUcountChar( "asd", null ),         0 );
+test( "GSUcountChar.d", GSUcountChar( ".", "." ),            1 );
+test( "GSUcountChar.e", GSUcountChar( "...", "." ),          3 );
+test( "GSUcountChar.f", GSUcountChar( "asd.zxc..qwe", "." ), 3 );
+
 // GSUsignNum ..................................................................
 test( "GSUsignNum.0", GSUsignNum( +0 ),    "+0" );
 test( "GSUsignNum.1", GSUsignNum( -0 ),    "+0" );
