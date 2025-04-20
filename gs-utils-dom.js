@@ -263,3 +263,19 @@ function GSUunobserveSizeOf( el, fn ) {
 		}
 	}
 }
+
+// .............................................................................
+function GSUscrollIntoViewX( el, par ) {
+	if ( el && par ) {
+		const elBCR = el.getBoundingClientRect();
+		const parBCR = par.getBoundingClientRect();
+		const elX = elBCR.x - parBCR.x;
+		const diff = elX + elBCR.width - parBCR.width;
+
+		if ( elX < 0 ) {
+			par.scrollLeft += elX;
+		} else if ( diff > 0 ) {
+			par.scrollLeft += diff;
+		}
+	}
+}
