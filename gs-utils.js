@@ -18,13 +18,11 @@ function GSUisEqual( a, b ) {
 	if ( !GSUisObj( a ) || !GSUisObj( b ) ) {
 		return Object.is( a, b );
 	}
-	return GSUisArr( a ) === GSUisArr( b ) && _GSUisEqual( a, b ) && _GSUisEqual( b, a )
+	return GSUisArr( a ) === GSUisArr( b ) && _GSUisEqual( a, b ) && _GSUisEqual( b, a );
 }
 function _GSUisEqual( a, b ) {
 	for ( const i in a ) {
-		const eq = GSUisEqual( a[ i ], b[ i ] );
-
-		if ( eq === false ) {
+		if ( !GSUisEqual( a[ i ], b[ i ] ) ) {
 			return false;
 		}
 	}
@@ -158,6 +156,11 @@ function GSUeaseInCirc( n, pow = 2 ) {
 function GSUeaseOutCirc( n, pow = 2 ) {
 	return Math.sqrt( 1 - ( n - 1 ) ** pow );
 }
+
+// .............................................................................
+function GSUMround( val, step = 1 ) { return Math.round( val / step ) * step; }
+function GSUMfloor( val, step = 1 ) { return Math.floor( val / step ) * step; }
+function GSUMceil(  val, step = 1 ) { return Math.ceil(  val / step ) * step; }
 
 // .............................................................................
 function GSUlogN( x, y ) {
