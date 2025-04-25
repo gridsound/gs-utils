@@ -115,6 +115,22 @@ GSUsetModel( "oscillator", {
 	unisondetune: .2,
 	unisonblend: .33,
 } );
+GSUsetModel( "wavetable", {
+	waves: {
+		0: {
+			index: 0,
+			curve: {
+				0: { x:  0, y:  0, type: null, val: null },
+				1: { x:  1, y:  0, type: "curve", val: 0 },
+			},
+		},
+	},
+	wtCurveDuration: 1,
+	wtCurve: {
+		0: { x:  0, y:  0, type: null, val: null },
+		1: { x:  1, y:  1, type: "curve", val: 0 },
+	},
+} );
 GSUsetModel( "synth", {
 	name: "synth",
 	dest: "main",
