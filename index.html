@@ -227,6 +227,28 @@
 	test( "GSUisEqual.B", GSUisEqual( new Map(), new Map() ), true );
 	// test( "GSUisEqual.C", GSUisEqual( new Map( [ 21 ] ), new Map( [ 21 ] ) ), true );
 
+	// GSUdotProp ..................................................................
+	test( "GSUdotProp.0", GSUdotProp( null,      ""    ), undefined );
+	test( "GSUdotProp.1", GSUdotProp( null,      "a"   ), undefined );
+	test( "GSUdotProp.2", GSUdotProp( undefined, ""    ), undefined );
+	test( "GSUdotProp.3", GSUdotProp( true,      ""    ), undefined );
+	test( "GSUdotProp.4", GSUdotProp( true,      "a"   ), undefined );
+	test( "GSUdotProp.5", GSUdotProp( true,      "a.b" ), undefined );
+	test( "GSUdotProp.6", GSUdotProp( false,     "a"   ), undefined );
+	test( "GSUdotProp.7", GSUdotProp( {}, "" ),      undefined );
+	test( "GSUdotProp.8", GSUdotProp( {}, "a" ),     undefined );
+	test( "GSUdotProp.9", GSUdotProp( {}, "a.b" ),   undefined );
+	test( "GSUdotProp.a", GSUdotProp( {}, "a.b.c" ), undefined );
+	test( "GSUdotProp.b", GSUdotProp( { a: 1 }, "a" ),   1 );
+	test( "GSUdotProp.c", GSUdotProp( { a: 1 }, "b" ),   undefined );
+	test( "GSUdotProp.d", GSUdotProp( { a: 1 }, "b.c" ), undefined );
+	test( "GSUdotProp.e", GSUdotProp( { a: { b: 2 } }, "a.b"   ), 2 );
+	test( "GSUdotProp.f", GSUdotProp( { a: { b: 2 } }, "a.c"   ), undefined );
+	test( "GSUdotProp.g", GSUdotProp( { a: { b: 2 } }, "a.c.d" ), undefined );
+	test( "GSUdotProp.h", GSUdotProp( { a: { b: [ 3    ] } }, "a.b.0" ), 3 );
+	test( "GSUdotProp.i", GSUdotProp( { a: { b: [ 3, 4 ] } }, "a.b.1" ), 4 );
+	test( "GSUdotProp.j", GSUdotProp( { a: { b: [ 3, 4 ] } }, "a.b.2" ), undefined );
+
 	// GSUforEach ..................................................................
 	const objFE = { a: 10, b: 20 };
 	const arrFE = [ 10, 20 ];

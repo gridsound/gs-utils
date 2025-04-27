@@ -14,6 +14,11 @@ function GSUnoopFalse() {
 }
 
 // .............................................................................
+function GSUdotProp( obj, path ) {
+	return path.split( "." ).reduce( ( obj, p ) => obj?.[ p ], obj );
+}
+
+// .............................................................................
 function GSUisEqual( a, b ) {
 	if ( !GSUisObj( a ) || !GSUisObj( b ) ) {
 		return Object.is( a, b );
