@@ -158,6 +158,7 @@ function GSUeaseOutCirc( n, pow = 2 ) {
 }
 
 // .............................................................................
+function GSUMathApprox( n, x, diff ) { return GSUinRange( n, x - diff, x + diff ); }
 function GSUMathRound( val, step = 1 ) { return Math.round( val / step ) * step; }
 function GSUMathFloor( val, step = 1 ) { return Math.floor( val / step ) * step; }
 function GSUMathCeil(  val, step = 1 ) { return Math.ceil(  val / step ) * step; }
@@ -174,9 +175,6 @@ function GSUinRange( n, min, max ) {
 	return min < max
 		? min <= n && n <= max
 		: max <= n && n <= min;
-}
-function GSUapproxEqual( n, x, diff ) {
-	return GSUinRange( n, x - diff, x + diff );
 }
 function GSUroundNum( val, dec = 0 ) {
 	return GSUisNum( val )

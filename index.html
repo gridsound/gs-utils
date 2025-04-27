@@ -29,6 +29,29 @@
 <!-- ..... GSUMath ......................................................... -->
 <!-- ....................................................................... -->
 <script>
+	// ..... GSUMathApprox .....................................................
+		test( "GSUMathApprox.0", GSUMathApprox(   0,     0,  0 ),  true );
+		test( "GSUMathApprox.1", GSUMathApprox(  -0,    -0,  0 ),  true );
+		test( "GSUMathApprox.2", GSUMathApprox(  21,    21,  0 ),  true );
+		test( "GSUMathApprox.3", GSUMathApprox(  20.9,  21, .1 ),  true );
+		test( "GSUMathApprox.4", GSUMathApprox(  21.1,  21, .1 ),  true );
+		test( "GSUMathApprox.5", GSUMathApprox(  80,   100, 20 ),  true );
+		test( "GSUMathApprox.6", GSUMathApprox( 120,   100, 20 ),  true );
+		test( "GSUMathApprox.7", GSUMathApprox( 120.1, 100, 20 ),  false );
+		test( "GSUMathApprox.8", GSUMathApprox(  79.9, 100, 20 ),  false );
+		test( "GSUMathApprox.9", GSUMathApprox(  21.1,  21,  0 ),  false );
+		test( "GSUMathApprox.a", GSUMathApprox(  20.8,  21, .1 ),  false );
+		test( "GSUMathApprox.b", GSUMathApprox(  21.2,  21, .1 ),  false );
+		test( "GSUMathApprox.c", GSUMathApprox(  -21,    -21,  0 ), true );
+		test( "GSUMathApprox.d", GSUMathApprox(  -20.9,  -21, .1 ), true );
+		test( "GSUMathApprox.e", GSUMathApprox(  -21.1,  -21, .1 ), true );
+		test( "GSUMathApprox.f", GSUMathApprox(  -80,   -100, 20 ), true );
+		test( "GSUMathApprox.g", GSUMathApprox( -120,   -100, 20 ), true );
+		test( "GSUMathApprox.h", GSUMathApprox( -120.1, -100, 20 ), false );
+		test( "GSUMathApprox.i", GSUMathApprox(  -79.9, -100, 20 ), false );
+		test( "GSUMathApprox.j", GSUMathApprox(  -21.1,  -21,  0 ), false );
+		test( "GSUMathApprox.k", GSUMathApprox(  -20.8,  -21, .1 ), false );
+		test( "GSUMathApprox.l", GSUMathApprox(  -21.2,  -21, .1 ), false );
 	// ..... GSUMathRound ......................................................
 		test( "GSUMathRound.0", GSUMathRound(), NaN );
 		test( "GSUMathRound.1", GSUMathRound( 0, 0 ), NaN );
@@ -441,30 +464,6 @@
 	test( "GSUclampNum.9", GSUclampNum( -29, -20, -30 ), -29 );
 	test( "GSUclampNum.a", GSUclampNum( -30, -20, -30 ), -30 );
 	test( "GSUclampNum.b", GSUclampNum( -31, -20, -30 ), -30 );
-
-	// GSUapproxEqual ..............................................................
-	test( "GSUapproxEqual.0", GSUapproxEqual(   0,     0,  0 ),  true );
-	test( "GSUapproxEqual.1", GSUapproxEqual(  -0,    -0,  0 ),  true );
-	test( "GSUapproxEqual.2", GSUapproxEqual(  21,    21,  0 ),  true );
-	test( "GSUapproxEqual.3", GSUapproxEqual(  20.9,  21, .1 ),  true );
-	test( "GSUapproxEqual.4", GSUapproxEqual(  21.1,  21, .1 ),  true );
-	test( "GSUapproxEqual.5", GSUapproxEqual(  80,   100, 20 ),  true );
-	test( "GSUapproxEqual.6", GSUapproxEqual( 120,   100, 20 ),  true );
-	test( "GSUapproxEqual.7", GSUapproxEqual( 120.1, 100, 20 ),  false );
-	test( "GSUapproxEqual.8", GSUapproxEqual(  79.9, 100, 20 ),  false );
-	test( "GSUapproxEqual.9", GSUapproxEqual(  21.1,  21,  0 ),  false );
-	test( "GSUapproxEqual.a", GSUapproxEqual(  20.8,  21, .1 ),  false );
-	test( "GSUapproxEqual.b", GSUapproxEqual(  21.2,  21, .1 ),  false );
-	test( "GSUapproxEqual.c", GSUapproxEqual(  -21,    -21,  0 ), true );
-	test( "GSUapproxEqual.d", GSUapproxEqual(  -20.9,  -21, .1 ), true );
-	test( "GSUapproxEqual.e", GSUapproxEqual(  -21.1,  -21, .1 ), true );
-	test( "GSUapproxEqual.f", GSUapproxEqual(  -80,   -100, 20 ), true );
-	test( "GSUapproxEqual.g", GSUapproxEqual( -120,   -100, 20 ), true );
-	test( "GSUapproxEqual.h", GSUapproxEqual( -120.1, -100, 20 ), false );
-	test( "GSUapproxEqual.i", GSUapproxEqual(  -79.9, -100, 20 ), false );
-	test( "GSUapproxEqual.j", GSUapproxEqual(  -21.1,  -21,  0 ), false );
-	test( "GSUapproxEqual.k", GSUapproxEqual(  -20.8,  -21, .1 ), false );
-	test( "GSUapproxEqual.l", GSUapproxEqual(  -21.2,  -21, .1 ), false );
 
 	// GSUroundNum .................................................................
 	test( "GSUroundNum.0", GSUroundNum( null ),       0 );
