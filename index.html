@@ -228,28 +228,30 @@
 	// test( "GSUisEqual.C", GSUisEqual( new Map( [ 21 ] ), new Map( [ 21 ] ) ), true );
 
 	// GSUdotProp ..................................................................
-	test( "GSUdotProp.0", GSUdotProp( null,      ""    ), undefined );
-	test( "GSUdotProp.1", GSUdotProp( null,      "a"   ), undefined );
-	test( "GSUdotProp.2", GSUdotProp( undefined, ""    ), undefined );
-	test( "GSUdotProp.3", GSUdotProp( true,      ""    ), undefined );
-	test( "GSUdotProp.4", GSUdotProp( true,      "a"   ), undefined );
-	test( "GSUdotProp.5", GSUdotProp( true,      "a.b" ), undefined );
-	test( "GSUdotProp.6", GSUdotProp( false,     "a"   ), undefined );
-	test( "GSUdotProp.7", GSUdotProp( {}, "" ),      undefined );
-	test( "GSUdotProp.8", GSUdotProp( {}, "a" ),     undefined );
-	test( "GSUdotProp.9", GSUdotProp( {}, "a.b" ),   undefined );
-	test( "GSUdotProp.a", GSUdotProp( {}, "a.b.c" ), undefined );
-	test( "GSUdotProp.b", GSUdotProp( { a: 1 }, "a" ),   1 );
-	test( "GSUdotProp.c", GSUdotProp( { a: 1 }, "b" ),   undefined );
-	test( "GSUdotProp.d", GSUdotProp( { a: 1 }, "b.c" ), undefined );
-	test( "GSUdotProp.e", GSUdotProp( { a: { b: 2 } }, "a.b"   ), 2 );
-	test( "GSUdotProp.f", GSUdotProp( { a: { b: 2 } }, "a.c"   ), undefined );
-	test( "GSUdotProp.g", GSUdotProp( { a: { b: 2 } }, "a.c.d" ), undefined );
-	test( "GSUdotProp.h", GSUdotProp( { a: { b: [ 3    ] } }, "a.b.0" ), 3 );
-	test( "GSUdotProp.i", GSUdotProp( { a: { b: [ 3, 4 ] } }, "a.b.1" ), 4 );
-	test( "GSUdotProp.j", GSUdotProp( { a: { b: [ 3, 4 ] } }, "a.b.2" ), undefined );
-	test( "GSUdotProp.k", GSUdotProp( {},               "a" ), undefined );
-	test( "GSUdotProp.l", GSUdotProp( { a: undefined }, "a" ), GSUdotProp_undefined );
+	const objDotProp = {};
+	testStrict( "GSUdotProp.0", GSUdotProp( objDotProp ), objDotProp );
+	testStrict( "GSUdotProp.1", GSUdotProp( objDotProp, "" ), objDotProp );
+	test( "GSUdotProp.2", GSUdotProp( null,       "" ), null );
+	test( "GSUdotProp.3", GSUdotProp( true,       "" ), true );
+	test( "GSUdotProp.4", GSUdotProp( null,      "a"   ), undefined );
+	test( "GSUdotProp.5", GSUdotProp( undefined, ""    ), undefined );
+	test( "GSUdotProp.6", GSUdotProp( true,      "a"   ), undefined );
+	test( "GSUdotProp.7", GSUdotProp( true,      "a.b" ), undefined );
+	test( "GSUdotProp.8", GSUdotProp( false,     "a"   ), undefined );
+	test( "GSUdotProp.9", GSUdotProp( {}, "a" ),     undefined );
+	test( "GSUdotProp.a", GSUdotProp( {}, "a.b" ),   undefined );
+	test( "GSUdotProp.b", GSUdotProp( {}, "a.b.c" ), undefined );
+	test( "GSUdotProp.c", GSUdotProp( { a: 1 }, "a" ),   1 );
+	test( "GSUdotProp.d", GSUdotProp( { a: 1 }, "b" ),   undefined );
+	test( "GSUdotProp.e", GSUdotProp( { a: 1 }, "b.c" ), undefined );
+	test( "GSUdotProp.f", GSUdotProp( { a: { b: 2 } }, "a.b"   ), 2 );
+	test( "GSUdotProp.g", GSUdotProp( { a: { b: 2 } }, "a.c"   ), undefined );
+	test( "GSUdotProp.h", GSUdotProp( { a: { b: 2 } }, "a.c.d" ), undefined );
+	test( "GSUdotProp.i", GSUdotProp( { a: { b: [ 3    ] } }, "a.b.0" ), 3 );
+	test( "GSUdotProp.j", GSUdotProp( { a: { b: [ 3, 4 ] } }, "a.b.1" ), 4 );
+	test( "GSUdotProp.k", GSUdotProp( { a: { b: [ 3, 4 ] } }, "a.b.2" ), undefined );
+	test( "GSUdotProp.l", GSUdotProp( {},               "a" ), undefined );
+	test( "GSUdotProp.m", GSUdotProp( { a: undefined }, "a" ), GSUdotProp_undefined );
 
 	// GSUforEach ..................................................................
 	const objFE = { a: 10, b: 20 };

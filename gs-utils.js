@@ -16,7 +16,7 @@ function GSUnoopFalse() {
 // .............................................................................
 const GSUdotProp_undefined = Symbol();
 function GSUdotProp( obj, path ) {
-	return path.split( "." ).reduce( ( obj, p ) => (
+	return !path ? obj : path.split( "." ).reduce( ( obj, p ) => (
 		!GSUisObj( obj ) || !( p in obj )
 			? undefined
 			: obj[ p ] === undefined
