@@ -275,59 +275,59 @@ test( "GSUtrim2.a", GSUtrim2( undefined ), "" );
 test( "GSUtrim2.b", GSUtrim2( {} ),        "" );
 test( "GSUtrim2.c", GSUtrim2( [] ),        "" );
 
-// GSUMround ...................................................................
-test( "GSUMround.0", GSUMround(), NaN );
-test( "GSUMround.1", GSUMround( 0, 0 ), NaN );
-test( "GSUMround.2", GSUMround( 1, 0 ), NaN );
-test( "GSUMround.3", GSUMround( 0 ), 0 );
-test( "GSUMround.4", GSUMround( Math.PI    ), 3 );
-test( "GSUMround.5", GSUMround( Math.PI, 1 ), 3 );
-test( "GSUMround.6", GSUMround( Math.PI, 2 ), 4 );
-test( "GSUMround.7", GSUMround( Math.PI, 3 ), 3 );
-test( "GSUMround.8", GSUMround(  1.10, .25 ),  1 );
-test( "GSUMround.9", GSUMround(  1.25, .25 ),  1.25 );
-test( "GSUMround.a", GSUMround(  1.26, .25 ),  1.25 );
-test( "GSUMround.b", GSUMround(  1.24, .25 ),  1.25 );
-test( "GSUMround.c", GSUMround( -1.10, .25 ), -1 );
-test( "GSUMround.d", GSUMround( -1.25, .25 ), -1.25 );
-test( "GSUMround.e", GSUMround( -1.26, .25 ), -1.25 );
-test( "GSUMround.f", GSUMround( -1.24, .25 ), -1.25 );
+// GSUMathRound ................................................................
+test( "GSUMathRound.0", GSUMathRound(), NaN );
+test( "GSUMathRound.1", GSUMathRound( 0, 0 ), NaN );
+test( "GSUMathRound.2", GSUMathRound( 1, 0 ), NaN );
+test( "GSUMathRound.3", GSUMathRound( 0 ), 0 );
+test( "GSUMathRound.4", GSUMathRound( Math.PI    ), 3 );
+test( "GSUMathRound.5", GSUMathRound( Math.PI, 1 ), 3 );
+test( "GSUMathRound.6", GSUMathRound( Math.PI, 2 ), 4 );
+test( "GSUMathRound.7", GSUMathRound( Math.PI, 3 ), 3 );
+test( "GSUMathRound.8", GSUMathRound(  1.10, .25 ),  1 );
+test( "GSUMathRound.9", GSUMathRound(  1.25, .25 ),  1.25 );
+test( "GSUMathRound.a", GSUMathRound(  1.26, .25 ),  1.25 );
+test( "GSUMathRound.b", GSUMathRound(  1.24, .25 ),  1.25 );
+test( "GSUMathRound.c", GSUMathRound( -1.10, .25 ), -1 );
+test( "GSUMathRound.d", GSUMathRound( -1.25, .25 ), -1.25 );
+test( "GSUMathRound.e", GSUMathRound( -1.26, .25 ), -1.25 );
+test( "GSUMathRound.f", GSUMathRound( -1.24, .25 ), -1.25 );
 
-// GSUMfloor ...................................................................
-test( "GSUMfloor.0", GSUMfloor(), NaN );
-test( "GSUMfloor.1", GSUMfloor( 0, 0 ), NaN );
-test( "GSUMfloor.2", GSUMfloor( 1, 0 ), NaN );
-test( "GSUMfloor.3", GSUMfloor( 0 ), 0 );
-test( "GSUMfloor.4", GSUMfloor( Math.PI    ), 3 );
-test( "GSUMfloor.5", GSUMfloor( Math.PI, 1 ), 3 );
-test( "GSUMfloor.6", GSUMfloor( Math.PI, 2 ), 2 );
-test( "GSUMfloor.7", GSUMfloor( Math.PI, 3 ), 3 );
-test( "GSUMfloor.8", GSUMfloor(  1.10, .25 ),  1 );
-test( "GSUMfloor.9", GSUMfloor(  1.25, .25 ),  1.25 );
-test( "GSUMfloor.a", GSUMfloor(  1.26, .25 ),  1.25 );
-test( "GSUMfloor.b", GSUMfloor(  1.24, .25 ),  1 );
-test( "GSUMfloor.c", GSUMfloor( -1.10, .25 ), -1.25 );
-test( "GSUMfloor.d", GSUMfloor( -1.25, .25 ), -1.25 );
-test( "GSUMfloor.e", GSUMfloor( -1.26, .25 ), -1.50 );
-test( "GSUMfloor.f", GSUMfloor( -1.24, .25 ), -1.25 );
+// GSUMathFloor ................................................................
+test( "GSUMathFloor.0", GSUMathFloor(), NaN );
+test( "GSUMathFloor.1", GSUMathFloor( 0, 0 ), NaN );
+test( "GSUMathFloor.2", GSUMathFloor( 1, 0 ), NaN );
+test( "GSUMathFloor.3", GSUMathFloor( 0 ), 0 );
+test( "GSUMathFloor.4", GSUMathFloor( Math.PI    ), 3 );
+test( "GSUMathFloor.5", GSUMathFloor( Math.PI, 1 ), 3 );
+test( "GSUMathFloor.6", GSUMathFloor( Math.PI, 2 ), 2 );
+test( "GSUMathFloor.7", GSUMathFloor( Math.PI, 3 ), 3 );
+test( "GSUMathFloor.8", GSUMathFloor(  1.10, .25 ),  1 );
+test( "GSUMathFloor.9", GSUMathFloor(  1.25, .25 ),  1.25 );
+test( "GSUMathFloor.a", GSUMathFloor(  1.26, .25 ),  1.25 );
+test( "GSUMathFloor.b", GSUMathFloor(  1.24, .25 ),  1 );
+test( "GSUMathFloor.c", GSUMathFloor( -1.10, .25 ), -1.25 );
+test( "GSUMathFloor.d", GSUMathFloor( -1.25, .25 ), -1.25 );
+test( "GSUMathFloor.e", GSUMathFloor( -1.26, .25 ), -1.50 );
+test( "GSUMathFloor.f", GSUMathFloor( -1.24, .25 ), -1.25 );
 
-// GSUMceil ...................................................................
-test( "GSUMceil.0", GSUMceil(), NaN );
-test( "GSUMceil.1", GSUMceil( 0, 0 ), NaN );
-test( "GSUMceil.2", GSUMceil( 1, 0 ), NaN );
-test( "GSUMceil.3", GSUMceil( 0 ), 0 );
-test( "GSUMceil.4", GSUMceil( Math.PI    ), 4 );
-test( "GSUMceil.5", GSUMceil( Math.PI, 1 ), 4 );
-test( "GSUMceil.6", GSUMceil( Math.PI, 2 ), 4 );
-test( "GSUMceil.7", GSUMceil( Math.PI, 3 ), 6 );
-test( "GSUMceil.8", GSUMceil(  1.10, .25 ),  1.25 );
-test( "GSUMceil.9", GSUMceil(  1.25, .25 ),  1.25 );
-test( "GSUMceil.a", GSUMceil(  1.26, .25 ),  1.50 );
-test( "GSUMceil.b", GSUMceil(  1.24, .25 ),  1.25 );
-test( "GSUMceil.c", GSUMceil( -1.10, .25 ), -1 );
-test( "GSUMceil.d", GSUMceil( -1.25, .25 ), -1.25 );
-test( "GSUMceil.e", GSUMceil( -1.26, .25 ), -1.25 );
-test( "GSUMceil.f", GSUMceil( -1.24, .25 ), -1 );
+// GSUMathCeil .................................................................
+test( "GSUMathCeil.0", GSUMathCeil(), NaN );
+test( "GSUMathCeil.1", GSUMathCeil( 0, 0 ), NaN );
+test( "GSUMathCeil.2", GSUMathCeil( 1, 0 ), NaN );
+test( "GSUMathCeil.3", GSUMathCeil( 0 ), 0 );
+test( "GSUMathCeil.4", GSUMathCeil( Math.PI    ), 4 );
+test( "GSUMathCeil.5", GSUMathCeil( Math.PI, 1 ), 4 );
+test( "GSUMathCeil.6", GSUMathCeil( Math.PI, 2 ), 4 );
+test( "GSUMathCeil.7", GSUMathCeil( Math.PI, 3 ), 6 );
+test( "GSUMathCeil.8", GSUMathCeil(  1.10, .25 ),  1.25 );
+test( "GSUMathCeil.9", GSUMathCeil(  1.25, .25 ),  1.25 );
+test( "GSUMathCeil.a", GSUMathCeil(  1.26, .25 ),  1.50 );
+test( "GSUMathCeil.b", GSUMathCeil(  1.24, .25 ),  1.25 );
+test( "GSUMathCeil.c", GSUMathCeil( -1.10, .25 ), -1 );
+test( "GSUMathCeil.d", GSUMathCeil( -1.25, .25 ), -1.25 );
+test( "GSUMathCeil.e", GSUMathCeil( -1.26, .25 ), -1.25 );
+test( "GSUMathCeil.f", GSUMathCeil( -1.24, .25 ), -1 );
 
 // GSUcountChar ................................................................
 test( "GSUcountChar.0", GSUcountChar(),                      0 );

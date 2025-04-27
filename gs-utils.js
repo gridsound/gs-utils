@@ -158,9 +158,9 @@ function GSUeaseOutCirc( n, pow = 2 ) {
 }
 
 // .............................................................................
-function GSUMround( val, step = 1 ) { return Math.round( val / step ) * step; }
-function GSUMfloor( val, step = 1 ) { return Math.floor( val / step ) * step; }
-function GSUMceil(  val, step = 1 ) { return Math.ceil(  val / step ) * step; }
+function GSUMathRound( val, step = 1 ) { return Math.round( val / step ) * step; }
+function GSUMathFloor( val, step = 1 ) { return Math.floor( val / step ) * step; }
+function GSUMathCeil(  val, step = 1 ) { return Math.ceil(  val / step ) * step; }
 
 // .............................................................................
 function GSUlogN( x, y ) {
