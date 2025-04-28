@@ -252,6 +252,7 @@
 	test( "GSUdotProp.k", GSUdotProp( { a: { b: [ 3, 4 ] } }, "a.b.2" ), undefined );
 	test( "GSUdotProp.l", GSUdotProp( {},               "a" ), undefined );
 	test( "GSUdotProp.m", GSUdotProp( { a: undefined }, "a" ), GSUdotProp_undefined );
+	test( "GSUdotProp.n", GSUdotProp( { a: 1 }, ".a" ), 1 );
 
 	// GSUforEach ..................................................................
 	const objFE = { a: 10, b: 20 };
