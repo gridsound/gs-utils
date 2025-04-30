@@ -11,6 +11,11 @@ function GSUdefineElement( name, clazz ) {
 }
 
 // .............................................................................
+function GSUdomIsCustomElement( el ) {
+	return el?.tagName.includes( "-" );
+}
+
+// .............................................................................
 function GSUunselectText() {
 	window.getSelection().removeAllRanges();
 }
