@@ -16,8 +16,8 @@ function GSUHztoX( x ) {
 // .............................................................................
 function GSUformatWavetableName( synthId, oscId )    { return `custom.s${ synthId }.o${ oscId }`; }
 function GSUformatWaveName( synthId, oscId, waveId ) { return `custom.s${ synthId }.o${ oscId }.${ waveId }`; }
-function GSUisWavetableName( name ) { return name.startsWith( "custom.s" ) && GSUcountChar( name, "." ) === 2; }
-function GSUisWaveName( name )      { return name.startsWith( "custom.s" ) && GSUcountChar( name, "." ) === 3; }
+function GSUisWavetableName( name ) { return GSUisStr( name ) && name.startsWith( "custom.s" ) && GSUcountChar( name, "." ) === 2; }
+function GSUisWaveName( name )      { return GSUisStr( name ) && name.startsWith( "custom.s" ) && GSUcountChar( name, "." ) === 3; }
 
 // .............................................................................
 function GSUsetValueAtTime( audioParam, val, when ) {
