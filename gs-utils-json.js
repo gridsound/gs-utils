@@ -51,7 +51,7 @@ function GSUdiffObjects( a, b ) {
 		const newval = av === bv ? undefined :
 			typeof bv !== "object" || bv === null ? bv :
 			typeof av !== "object" || av === null
-				? Object.freeze( GSUjsonCopy( bv ) )
+				? GSUjsonCopy( bv )
 				: GSUdiffObjects( av, bv );
 
 		if ( newval !== undefined ) {
@@ -67,7 +67,7 @@ function GSUdiffObjects( a, b ) {
 			diff[ ak ] = undefined;
 		}
 	} );
-	return empty ? undefined : Object.freeze( diff );
+	return empty ? undefined : diff;
 }
 
 function GSUdiffAssign( a, b ) {
