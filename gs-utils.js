@@ -146,6 +146,7 @@ function GSUisArr( a ) { return Array.isArray( a ); }
 function GSUisStr( n ) { return typeof n === "string"; }
 function GSUisFun( n ) { return typeof n === "function"; }
 function GSUisNum( n ) { return typeof n === "number" && !Number.isNaN( n ); }
+function GSUisInt( n ) { return GSUisNum( n ) && n === Math.round( n ); }
 function GSUisEmpty( o ) {
 	for ( const a in o ) {
 		return false;

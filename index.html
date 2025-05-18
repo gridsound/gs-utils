@@ -167,9 +167,27 @@
 	test( "GSUisNum.8", GSUisNum( [] ),        false );
 	test( "GSUisNum.9", GSUisNum( "" ),        false );
 	test( "GSUisNum.a", GSUisNum( 0 ),         true );
-	test( "GSUisNum.b", GSUisNum( 21.5 ),      true );
-	test( "GSUisNum.c", GSUisNum( "21" ),      false );
-	test( "GSUisNum.d", GSUisNum( "abc" ),     false );
+	test( "GSUisNum.b", GSUisNum( 21 ),        true );
+	test( "GSUisNum.c", GSUisNum( 21.5 ),      true );
+	test( "GSUisNum.d", GSUisNum( "21" ),      false );
+	test( "GSUisNum.e", GSUisNum( "abc" ),     false );
+
+	// GSUisInt ....................................................................
+	test( "GSUisInt.0", GSUisInt(),            false );
+	test( "GSUisInt.1", GSUisInt( NaN ),       false );
+	test( "GSUisInt.2", GSUisInt( null ),      false );
+	test( "GSUisInt.3", GSUisInt( true ),      false );
+	test( "GSUisInt.4", GSUisInt( false ),     false );
+	test( "GSUisInt.5", GSUisInt( undefined ), false );
+	test( "GSUisInt.6", GSUisInt( GSUnoop ),   false );
+	test( "GSUisInt.7", GSUisInt( {} ),        false );
+	test( "GSUisInt.8", GSUisInt( [] ),        false );
+	test( "GSUisInt.9", GSUisInt( "" ),        false );
+	test( "GSUisInt.a", GSUisInt( 0 ),         true );
+	test( "GSUisInt.b", GSUisInt( 21 ),        true );
+	test( "GSUisInt.c", GSUisInt( 21.5 ),      false );
+	test( "GSUisInt.d", GSUisInt( "21" ),      false );
+	test( "GSUisInt.e", GSUisInt( "abc" ),     false );
 
 	// GSUisFun ....................................................................
 	test( "GSUisFun.0", GSUisFun(),            false );
