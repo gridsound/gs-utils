@@ -171,11 +171,13 @@ function GSUeaseOutCirc( n, pow = 2 ) {
 }
 
 // .............................................................................
-function GSUMathApprox( n, x, diff ) { return GSUinRange( n, x - diff, x + diff ); }
-function GSUMathRound( val, step = 1 ) { return Math.round( val / step ) * step; }
-function GSUMathFloor( val, step = 1 ) { return Math.floor( val / step ) * step; }
-function GSUMathCeil(  val, step = 1 ) { return Math.ceil(  val / step ) * step; }
-function GSUMathLogN( x, y ) { return Math.log( y ) / Math.log( x ); }
+// ..... GSUmath ...............................................................
+// .............................................................................
+function GSUmathApprox( n, x, diff ) { return GSUinRange( n, x - diff, x + diff ); }
+function GSUmathRound( val, step = 1 ) { return Math.round( val / step ) * step; }
+function GSUmathFloor( val, step = 1 ) { return Math.floor( val / step ) * step; }
+function GSUmathCeil(  val, step = 1 ) { return Math.ceil(  val / step ) * step; }
+function GSUmathLogN( x, y ) { return Math.log( y ) / Math.log( x ); }
 
 // .............................................................................
 function GSUsignNum( n ) {

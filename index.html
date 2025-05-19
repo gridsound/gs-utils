@@ -147,86 +147,86 @@
 </script>
 
 <!-- ....................................................................... -->
-<!-- ..... GSUMath ......................................................... -->
+<!-- ..... GSUmath ......................................................... -->
 <!-- ....................................................................... -->
 <script>
-	// ..... GSUMathApprox .....................................................
-		test( "GSUMathApprox.0", GSUMathApprox(   0,     0,  0 ),  true );
-		test( "GSUMathApprox.1", GSUMathApprox(  -0,    -0,  0 ),  true );
-		test( "GSUMathApprox.2", GSUMathApprox(  21,    21,  0 ),  true );
-		test( "GSUMathApprox.3", GSUMathApprox(  20.9,  21, .1 ),  true );
-		test( "GSUMathApprox.4", GSUMathApprox(  21.1,  21, .1 ),  true );
-		test( "GSUMathApprox.5", GSUMathApprox(  80,   100, 20 ),  true );
-		test( "GSUMathApprox.6", GSUMathApprox( 120,   100, 20 ),  true );
-		test( "GSUMathApprox.7", GSUMathApprox( 120.1, 100, 20 ),  false );
-		test( "GSUMathApprox.8", GSUMathApprox(  79.9, 100, 20 ),  false );
-		test( "GSUMathApprox.9", GSUMathApprox(  21.1,  21,  0 ),  false );
-		test( "GSUMathApprox.a", GSUMathApprox(  20.8,  21, .1 ),  false );
-		test( "GSUMathApprox.b", GSUMathApprox(  21.2,  21, .1 ),  false );
-		test( "GSUMathApprox.c", GSUMathApprox(  -21,    -21,  0 ), true );
-		test( "GSUMathApprox.d", GSUMathApprox(  -20.9,  -21, .1 ), true );
-		test( "GSUMathApprox.e", GSUMathApprox(  -21.1,  -21, .1 ), true );
-		test( "GSUMathApprox.f", GSUMathApprox(  -80,   -100, 20 ), true );
-		test( "GSUMathApprox.g", GSUMathApprox( -120,   -100, 20 ), true );
-		test( "GSUMathApprox.h", GSUMathApprox( -120.1, -100, 20 ), false );
-		test( "GSUMathApprox.i", GSUMathApprox(  -79.9, -100, 20 ), false );
-		test( "GSUMathApprox.j", GSUMathApprox(  -21.1,  -21,  0 ), false );
-		test( "GSUMathApprox.k", GSUMathApprox(  -20.8,  -21, .1 ), false );
-		test( "GSUMathApprox.l", GSUMathApprox(  -21.2,  -21, .1 ), false );
-	// ..... GSUMathRound ......................................................
-		test( "GSUMathRound.0", GSUMathRound(), NaN );
-		test( "GSUMathRound.1", GSUMathRound( 0, 0 ), NaN );
-		test( "GSUMathRound.2", GSUMathRound( 1, 0 ), NaN );
-		test( "GSUMathRound.3", GSUMathRound( 0 ), 0 );
-		test( "GSUMathRound.4", GSUMathRound( Math.PI    ), 3 );
-		test( "GSUMathRound.5", GSUMathRound( Math.PI, 1 ), 3 );
-		test( "GSUMathRound.6", GSUMathRound( Math.PI, 2 ), 4 );
-		test( "GSUMathRound.7", GSUMathRound( Math.PI, 3 ), 3 );
-		test( "GSUMathRound.8", GSUMathRound(  1.10, .25 ),  1 );
-		test( "GSUMathRound.9", GSUMathRound(  1.25, .25 ),  1.25 );
-		test( "GSUMathRound.a", GSUMathRound(  1.26, .25 ),  1.25 );
-		test( "GSUMathRound.b", GSUMathRound(  1.24, .25 ),  1.25 );
-		test( "GSUMathRound.c", GSUMathRound( -1.10, .25 ), -1 );
-		test( "GSUMathRound.d", GSUMathRound( -1.25, .25 ), -1.25 );
-		test( "GSUMathRound.e", GSUMathRound( -1.26, .25 ), -1.25 );
-		test( "GSUMathRound.f", GSUMathRound( -1.24, .25 ), -1.25 );
-	// ..... GSUMathFloor ......................................................
-		test( "GSUMathFloor.0", GSUMathFloor(), NaN );
-		test( "GSUMathFloor.1", GSUMathFloor( 0, 0 ), NaN );
-		test( "GSUMathFloor.2", GSUMathFloor( 1, 0 ), NaN );
-		test( "GSUMathFloor.3", GSUMathFloor( 0 ), 0 );
-		test( "GSUMathFloor.4", GSUMathFloor( Math.PI    ), 3 );
-		test( "GSUMathFloor.5", GSUMathFloor( Math.PI, 1 ), 3 );
-		test( "GSUMathFloor.6", GSUMathFloor( Math.PI, 2 ), 2 );
-		test( "GSUMathFloor.7", GSUMathFloor( Math.PI, 3 ), 3 );
-		test( "GSUMathFloor.8", GSUMathFloor(  1.10, .25 ),  1 );
-		test( "GSUMathFloor.9", GSUMathFloor(  1.25, .25 ),  1.25 );
-		test( "GSUMathFloor.a", GSUMathFloor(  1.26, .25 ),  1.25 );
-		test( "GSUMathFloor.b", GSUMathFloor(  1.24, .25 ),  1 );
-		test( "GSUMathFloor.c", GSUMathFloor( -1.10, .25 ), -1.25 );
-		test( "GSUMathFloor.d", GSUMathFloor( -1.25, .25 ), -1.25 );
-		test( "GSUMathFloor.e", GSUMathFloor( -1.26, .25 ), -1.50 );
-		test( "GSUMathFloor.f", GSUMathFloor( -1.24, .25 ), -1.25 );
-	// ..... GSUMathCeil .......................................................
-		test( "GSUMathCeil.0", GSUMathCeil(), NaN );
-		test( "GSUMathCeil.1", GSUMathCeil( 0, 0 ), NaN );
-		test( "GSUMathCeil.2", GSUMathCeil( 1, 0 ), NaN );
-		test( "GSUMathCeil.3", GSUMathCeil( 0 ), 0 );
-		test( "GSUMathCeil.4", GSUMathCeil( Math.PI    ), 4 );
-		test( "GSUMathCeil.5", GSUMathCeil( Math.PI, 1 ), 4 );
-		test( "GSUMathCeil.6", GSUMathCeil( Math.PI, 2 ), 4 );
-		test( "GSUMathCeil.7", GSUMathCeil( Math.PI, 3 ), 6 );
-		test( "GSUMathCeil.8", GSUMathCeil(  1.10, .25 ),  1.25 );
-		test( "GSUMathCeil.9", GSUMathCeil(  1.25, .25 ),  1.25 );
-		test( "GSUMathCeil.a", GSUMathCeil(  1.26, .25 ),  1.50 );
-		test( "GSUMathCeil.b", GSUMathCeil(  1.24, .25 ),  1.25 );
-		test( "GSUMathCeil.c", GSUMathCeil( -1.10, .25 ), -1 );
-		test( "GSUMathCeil.d", GSUMathCeil( -1.25, .25 ), -1.25 );
-		test( "GSUMathCeil.e", GSUMathCeil( -1.26, .25 ), -1.25 );
-		test( "GSUMathCeil.f", GSUMathCeil( -1.24, .25 ), -1 );
-	// ..... GSUMathLogN .......................................................
-		test( "GSUMathLogN.0", GSUroundNum( GSUMathLogN( 10, 1000 ), 8 ), 3 );
-		test( "GSUMathLogN.1", GSUroundNum( GSUMathLogN( 2, 1024 ), 8 ), 10 );
+	// ..... GSUmathApprox .....................................................
+		test( "GSUmathApprox.0", GSUmathApprox(   0,     0,  0 ),  true );
+		test( "GSUmathApprox.1", GSUmathApprox(  -0,    -0,  0 ),  true );
+		test( "GSUmathApprox.2", GSUmathApprox(  21,    21,  0 ),  true );
+		test( "GSUmathApprox.3", GSUmathApprox(  20.9,  21, .1 ),  true );
+		test( "GSUmathApprox.4", GSUmathApprox(  21.1,  21, .1 ),  true );
+		test( "GSUmathApprox.5", GSUmathApprox(  80,   100, 20 ),  true );
+		test( "GSUmathApprox.6", GSUmathApprox( 120,   100, 20 ),  true );
+		test( "GSUmathApprox.7", GSUmathApprox( 120.1, 100, 20 ),  false );
+		test( "GSUmathApprox.8", GSUmathApprox(  79.9, 100, 20 ),  false );
+		test( "GSUmathApprox.9", GSUmathApprox(  21.1,  21,  0 ),  false );
+		test( "GSUmathApprox.a", GSUmathApprox(  20.8,  21, .1 ),  false );
+		test( "GSUmathApprox.b", GSUmathApprox(  21.2,  21, .1 ),  false );
+		test( "GSUmathApprox.c", GSUmathApprox(  -21,    -21,  0 ), true );
+		test( "GSUmathApprox.d", GSUmathApprox(  -20.9,  -21, .1 ), true );
+		test( "GSUmathApprox.e", GSUmathApprox(  -21.1,  -21, .1 ), true );
+		test( "GSUmathApprox.f", GSUmathApprox(  -80,   -100, 20 ), true );
+		test( "GSUmathApprox.g", GSUmathApprox( -120,   -100, 20 ), true );
+		test( "GSUmathApprox.h", GSUmathApprox( -120.1, -100, 20 ), false );
+		test( "GSUmathApprox.i", GSUmathApprox(  -79.9, -100, 20 ), false );
+		test( "GSUmathApprox.j", GSUmathApprox(  -21.1,  -21,  0 ), false );
+		test( "GSUmathApprox.k", GSUmathApprox(  -20.8,  -21, .1 ), false );
+		test( "GSUmathApprox.l", GSUmathApprox(  -21.2,  -21, .1 ), false );
+	// ..... GSUmathRound ......................................................
+		test( "GSUmathRound.0", GSUmathRound(), NaN );
+		test( "GSUmathRound.1", GSUmathRound( 0, 0 ), NaN );
+		test( "GSUmathRound.2", GSUmathRound( 1, 0 ), NaN );
+		test( "GSUmathRound.3", GSUmathRound( 0 ), 0 );
+		test( "GSUmathRound.4", GSUmathRound( Math.PI    ), 3 );
+		test( "GSUmathRound.5", GSUmathRound( Math.PI, 1 ), 3 );
+		test( "GSUmathRound.6", GSUmathRound( Math.PI, 2 ), 4 );
+		test( "GSUmathRound.7", GSUmathRound( Math.PI, 3 ), 3 );
+		test( "GSUmathRound.8", GSUmathRound(  1.10, .25 ),  1 );
+		test( "GSUmathRound.9", GSUmathRound(  1.25, .25 ),  1.25 );
+		test( "GSUmathRound.a", GSUmathRound(  1.26, .25 ),  1.25 );
+		test( "GSUmathRound.b", GSUmathRound(  1.24, .25 ),  1.25 );
+		test( "GSUmathRound.c", GSUmathRound( -1.10, .25 ), -1 );
+		test( "GSUmathRound.d", GSUmathRound( -1.25, .25 ), -1.25 );
+		test( "GSUmathRound.e", GSUmathRound( -1.26, .25 ), -1.25 );
+		test( "GSUmathRound.f", GSUmathRound( -1.24, .25 ), -1.25 );
+	// ..... GSUmathFloor ......................................................
+		test( "GSUmathFloor.0", GSUmathFloor(), NaN );
+		test( "GSUmathFloor.1", GSUmathFloor( 0, 0 ), NaN );
+		test( "GSUmathFloor.2", GSUmathFloor( 1, 0 ), NaN );
+		test( "GSUmathFloor.3", GSUmathFloor( 0 ), 0 );
+		test( "GSUmathFloor.4", GSUmathFloor( Math.PI    ), 3 );
+		test( "GSUmathFloor.5", GSUmathFloor( Math.PI, 1 ), 3 );
+		test( "GSUmathFloor.6", GSUmathFloor( Math.PI, 2 ), 2 );
+		test( "GSUmathFloor.7", GSUmathFloor( Math.PI, 3 ), 3 );
+		test( "GSUmathFloor.8", GSUmathFloor(  1.10, .25 ),  1 );
+		test( "GSUmathFloor.9", GSUmathFloor(  1.25, .25 ),  1.25 );
+		test( "GSUmathFloor.a", GSUmathFloor(  1.26, .25 ),  1.25 );
+		test( "GSUmathFloor.b", GSUmathFloor(  1.24, .25 ),  1 );
+		test( "GSUmathFloor.c", GSUmathFloor( -1.10, .25 ), -1.25 );
+		test( "GSUmathFloor.d", GSUmathFloor( -1.25, .25 ), -1.25 );
+		test( "GSUmathFloor.e", GSUmathFloor( -1.26, .25 ), -1.50 );
+		test( "GSUmathFloor.f", GSUmathFloor( -1.24, .25 ), -1.25 );
+	// ..... GSUmathCeil .......................................................
+		test( "GSUmathCeil.0", GSUmathCeil(), NaN );
+		test( "GSUmathCeil.1", GSUmathCeil( 0, 0 ), NaN );
+		test( "GSUmathCeil.2", GSUmathCeil( 1, 0 ), NaN );
+		test( "GSUmathCeil.3", GSUmathCeil( 0 ), 0 );
+		test( "GSUmathCeil.4", GSUmathCeil( Math.PI    ), 4 );
+		test( "GSUmathCeil.5", GSUmathCeil( Math.PI, 1 ), 4 );
+		test( "GSUmathCeil.6", GSUmathCeil( Math.PI, 2 ), 4 );
+		test( "GSUmathCeil.7", GSUmathCeil( Math.PI, 3 ), 6 );
+		test( "GSUmathCeil.8", GSUmathCeil(  1.10, .25 ),  1.25 );
+		test( "GSUmathCeil.9", GSUmathCeil(  1.25, .25 ),  1.25 );
+		test( "GSUmathCeil.a", GSUmathCeil(  1.26, .25 ),  1.50 );
+		test( "GSUmathCeil.b", GSUmathCeil(  1.24, .25 ),  1.25 );
+		test( "GSUmathCeil.c", GSUmathCeil( -1.10, .25 ), -1 );
+		test( "GSUmathCeil.d", GSUmathCeil( -1.25, .25 ), -1.25 );
+		test( "GSUmathCeil.e", GSUmathCeil( -1.26, .25 ), -1.25 );
+		test( "GSUmathCeil.f", GSUmathCeil( -1.24, .25 ), -1 );
+	// ..... GSUmathLogN .......................................................
+		test( "GSUmathLogN.0", GSUroundNum( GSUmathLogN( 10, 1000 ), 8 ), 3 );
+		test( "GSUmathLogN.1", GSUroundNum( GSUmathLogN( 2, 1024 ), 8 ), 10 );
 </script>
 
 <!-- ....................................................................... -->
@@ -757,7 +757,6 @@
 	test( "GSUsampleDotLine.a", GSUsampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2, .5,   1  ), [ [ .5,  .5  ], [  1,   1  ] ] );
 	test( "GSUsampleDotLine.b", GSUsampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2,  0,  .5  ), [ [  0,   0  ], [ .5,  .5  ] ] );
 	test( "GSUsampleDotLine.c", GSUsampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2, .25, .75 ), [ [ .25, .25 ], [ .75, .75 ] ] );
-
 </script>
 
 <!-- ....................................................................... -->
