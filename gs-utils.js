@@ -139,12 +139,14 @@ function GSUthrottle( fn, ms ) {
 	};
 }
 
-// GSUisXxxxx
+// .............................................................................
+// ..... GSUisXxx ..............................................................
 // .............................................................................
 function GSUisObj( o ) { return o !== null && typeof o === "object"; }
 function GSUisArr( a ) { return Array.isArray( a ); }
 function GSUisStr( n ) { return typeof n === "string"; }
 function GSUisFun( n ) { return typeof n === "function"; }
+function GSUisBoo( n ) { return typeof n === "boolean"; }
 function GSUisNum( n ) { return typeof n === "number" && !Number.isNaN( n ); }
 function GSUisInt( n ) { return GSUisNum( n ) && n === Math.round( n ); }
 function GSUisEmpty( o ) {

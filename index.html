@@ -324,13 +324,13 @@
 <!-- ..... GSUxxxx ......................................................... -->
 <!-- ....................................................................... -->
 <script>
-	// GSUnoop .....................................................................
+	// GSUnoop .................................................................
 	test( "GSUnoop.0",      GSUnoop(),            undefined );
 	test( "GSUnoop.1",      GSUnoop( 1 ),         undefined );
 	test( "GSUnoopFalse.0", GSUnoopFalse(),       false     );
 	test( "GSUnoopFalse.1", GSUnoopFalse( true ), false     );
 
-	// GSUisObj ....................................................................
+	// GSUisObj ................................................................
 	test( "GSUisObj.0", GSUisObj(),            false );
 	test( "GSUisObj.1", GSUisObj( NaN ),       false );
 	test( "GSUisObj.2", GSUisObj( null ),      false );
@@ -343,7 +343,7 @@
 	test( "GSUisObj.9", GSUisObj( 21 ),        false );
 	test( "GSUisObj.a", GSUisObj( "abc" ),     false );
 
-	// GSUisArr ....................................................................
+	// GSUisArr ................................................................
 	test( "GSUisArr.0", GSUisArr( [] ),        true );
 	test( "GSUisArr.1", GSUisArr( [ 0 ] ),     true );
 	test( "GSUisArr.2", GSUisArr( {} ),        false );
@@ -354,7 +354,7 @@
 	test( "GSUisArr.7", GSUisArr( true ),      false );
 	test( "GSUisArr.8", GSUisArr( GSUnoop ),   false );
 
-	// GSUisStr ....................................................................
+	// GSUisStr ................................................................
 	test( "GSUisStr.0", GSUisStr(),            false );
 	test( "GSUisStr.1", GSUisStr( NaN ),       false );
 	test( "GSUisStr.2", GSUisStr( null ),      false );
@@ -367,7 +367,7 @@
 	test( "GSUisStr.a", GSUisStr( "" ),        true );
 	test( "GSUisStr.b", GSUisStr( "0" ),       true );
 
-	// GSUisNum ....................................................................
+	// GSUisNum ................................................................
 	test( "GSUisNum.0", GSUisNum(),            false );
 	test( "GSUisNum.1", GSUisNum( NaN ),       false );
 	test( "GSUisNum.2", GSUisNum( null ),      false );
@@ -384,7 +384,7 @@
 	test( "GSUisNum.d", GSUisNum( "21" ),      false );
 	test( "GSUisNum.e", GSUisNum( "abc" ),     false );
 
-	// GSUisInt ....................................................................
+	// GSUisInt ................................................................
 	test( "GSUisInt.0", GSUisInt(),            false );
 	test( "GSUisInt.1", GSUisInt( NaN ),       false );
 	test( "GSUisInt.2", GSUisInt( null ),      false );
@@ -401,7 +401,20 @@
 	test( "GSUisInt.d", GSUisInt( "21" ),      false );
 	test( "GSUisInt.e", GSUisInt( "abc" ),     false );
 
-	// GSUisFun ....................................................................
+	// GSUisBoo ................................................................
+	test( "GSUisBoo.0", GSUisBoo( true ),      true );
+	test( "GSUisBoo.1", GSUisBoo( false ),     true );
+	test( "GSUisBoo.2", GSUisBoo( {} ),        false );
+	test( "GSUisBoo.3", GSUisBoo( [] ),        false );
+	test( "GSUisBoo.4", GSUisBoo( "" ),        false );
+	test( "GSUisBoo.5", GSUisBoo( 0 ),         false );
+	test( "GSUisBoo.6", GSUisBoo( 21 ),        false );
+	test( "GSUisBoo.7", GSUisBoo( NaN ),       false );
+	test( "GSUisBoo.8", GSUisBoo( null ),      false );
+	test( "GSUisBoo.9", GSUisBoo( undefined ), false );
+	test( "GSUisBoo.a", GSUisBoo( GSUnoop ),   false );
+
+	// GSUisFun ................................................................
 	test( "GSUisFun.0", GSUisFun(),            false );
 	test( "GSUisFun.1", GSUisFun( NaN ),       false );
 	test( "GSUisFun.2", GSUisFun( null ),      false );
@@ -416,7 +429,7 @@
 	test( "GSUisFun.b", GSUisFun( GSUnoop ),   true );
 	test( "GSUisFun.c", GSUisFun( () => {} ),  true );
 
-	// GSUisEqual ..................................................................
+	// GSUisEqual ..............................................................
 	test( "GSUisEqual.0", GSUisEqual( 0, 0 ),                 true );
 	test( "GSUisEqual.1", GSUisEqual( 1, 1 ),                 true );
 	test( "GSUisEqual.2", GSUisEqual( true, true ),           true );
@@ -457,7 +470,7 @@
 	test( "GSUisEqual.B", GSUisEqual( new Map(), new Map() ), true );
 	// test( "GSUisEqual.C", GSUisEqual( new Map( [ 21 ] ), new Map( [ 21 ] ) ), true );
 
-	// GSUdotProp ..................................................................
+	// GSUdotProp ..............................................................
 	const objDotProp = {};
 	testStrict( "GSUdotProp.0", GSUdotProp( objDotProp ), objDotProp );
 	testStrict( "GSUdotProp.1", GSUdotProp( objDotProp, "" ), objDotProp );
@@ -484,7 +497,7 @@
 	test( "GSUdotProp.m", GSUdotProp( { a: undefined }, "a" ), GSUdotProp_undefined );
 	test( "GSUdotProp.n", GSUdotProp( { a: 1 }, ".a" ), 1 );
 
-	// GSUforEach ..................................................................
+	// GSUforEach ..............................................................
 	const objFE = { a: 10, b: 20 };
 	const arrFE = [ 10, 20 ];
 	let resFE;
@@ -502,7 +515,7 @@
 	GSUforEach( arrFE, ( val, key, obj ) => { resFE += `${ key }:${ val }:${ obj === arrFE }:` } );
 	test( "GSUforEach.8", resFE, "0:10:true:1:20:true:" );
 
-	// GSUreduce ...................................................................
+	// GSUreduce ...............................................................
 	const fnSum = ( sum, n, i ) => sum + n + i;
 	test( "GSUreduce.0", GSUreduce( NaN,                     null,  0 ), 0 );
 	test( "GSUreduce.1", GSUreduce( null,                    null,  0 ), 0 );
@@ -515,7 +528,7 @@
 	test( "GSUreduce.8", GSUreduce( [ 10, 20, 30 ],          fnSum, 0 ), 63 );
 	test( "GSUreduce.9", GSUreduce( { a: 10, b: 20, c: 30 }, fnSum, 0 ), "10a20b30c" );
 
-	// GSUsome .....................................................................
+	// GSUsome .................................................................
 	const fnSome21 = n => n === 21;
 	test( "GSUsome.0", GSUsome( NaN,             null     ), false );
 	test( "GSUsome.1", GSUsome( null,            null     ), false );
@@ -531,19 +544,19 @@
 	test( "GSUsome.b", GSUsome( [ 0, 1, 21 ],    fnSome21 ), true  );
 	test( "GSUsome.c", GSUsome( { a: 0, b: 21 }, fnSome21 ), true  );
 
-	// GSUHztoX ....................................................................
+	// GSUHztoX ................................................................
 	test( "GSUHztoX.0", GSUroundNum( GSUHztoX( GSUXtoHz( .5 ) ), 8 ), .5 );
 	test( "GSUHztoX.1", GSUHztoX( 1 ), 1 );
 	test( "GSUHztoX.2", GSUXtoHz( 1 ), 1 );
 
-	// GSUnewArray .................................................................
+	// GSUnewArray .............................................................
 	test( "GSUnewArray.0", GSUnewArray( 0 ),        [] );
 	test( "GSUnewArray.1", GSUnewArray( 1 ).length,  1 );
 	test( "GSUnewArray.2", GSUnewArray( 2 ).length,  2 );
 	test( "GSUnewArray.3", GSUnewArray( 3, 7 ),      [ 7, 7, 7 ] );
 	test( "GSUnewArray.4", GSUnewArray( 3, i => i ), [ 0, 1, 2 ] );
 
-	// GSUarrayFrom ................................................................
+	// GSUarrayFrom ............................................................
 	const objEmpty = {};
 	const arrEmpty = [];
 	const arr123 = [ 1, 2, 3 ];
@@ -552,7 +565,7 @@
 	test( "GSUarrayFrom.2", GSUarrayFrom( objEmpty )[ 0 ], objEmpty );
 	// test( "GSUarrayFrom.2", GSUarrayFrom( 21 )[ 0 ], 21 );
 
-	// GSUarrayRemove ..............................................................
+	// GSUarrayRemove ..........................................................
 	const arrRm = [ 1, 2, 3, 4, 5 ];
 	testStrict( "GSUarrayRemove.0", GSUarrayRemove( arrRm, 3 ), arrRm );
 	test( "GSUarrayRemove.1", arrRm, [ 1, 2, 4, 5 ] );
@@ -582,7 +595,7 @@
 	test( "GSUisEmpty.d", GSUisEmpty( true ),             true );
 	test( "GSUisEmpty.e", GSUisEmpty( false ),            true );
 
-	// GSUtrim2 ....................................................................
+	// GSUtrim2 ................................................................
 	test( "GSUtrim2.0", GSUtrim2( "" ),                "" );
 	test( "GSUtrim2.1", GSUtrim2( "a" ),               "a" );
 	test( "GSUtrim2.2", GSUtrim2( "a b c" ),           "a b c" );
@@ -597,7 +610,7 @@
 	test( "GSUtrim2.b", GSUtrim2( {} ),        "" );
 	test( "GSUtrim2.c", GSUtrim2( [] ),        "" );
 
-	// GSUcountChar ................................................................
+	// GSUcountChar ............................................................
 	test( "GSUcountChar.0", GSUcountChar(),                      0 );
 	test( "GSUcountChar.1", GSUcountChar( "", "" ),              0 );
 	test( "GSUcountChar.2", GSUcountChar( null ),                0 );
