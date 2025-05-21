@@ -1,10 +1,10 @@
 "use strict";
 
-function GSUfft( signal ) {
+function GSUmathFFT( signal ) {
 	let complexSignal = {};
 
 	if ( signal.real === undefined || signal.imag === undefined ) {
-		complexSignal = GSUfftConstructComplexArray_( signal );
+		complexSignal = _GSUmathFFT_constructComplexArray( signal );
 	} else {
 		complexSignal.real = signal.real.slice();
 		complexSignal.imag = signal.imag.slice();
@@ -14,13 +14,13 @@ function GSUfft( signal ) {
 	const logN = Math.log2( N );
 
 	if ( Math.round( logN ) !== logN ) {
-		throw new Error( "GSUfft: Input size must be a power of 2." );
+		throw new Error( `GSUmathFFT: Input size must be a power of 2. ${ N } :: ${ logN } !== ${ Math.round( logN ) }` );
 	}
 	if ( complexSignal.real.length !== complexSignal.imag.length ) {
-		throw new Error( "GSUfft: Real and imaginary components must have the same length." );
+		throw new Error( "GSUmathFFT: Real and imaginary components must have the same length." );
 	}
 
-	const bitReversedIndices = GSUfftBitReverseArray_( N );
+	const bitReversedIndices = _GSUmathFFT_bitReverseArray( N );
 
 	// sort array
 	const ordered = {
@@ -43,7 +43,7 @@ function GSUfft( signal ) {
 
 		// find twiddle factors
 		for ( let k = 0; k < currN / 2; ++k ) {
-			const twiddle = GSUfftEuler_(k, currN);
+			const twiddle = _GSUmathFFT_euler(k, currN);
 
 			// on each block of FT, implement the butterfly diagram
 			for ( let m = 0; m < N / currN; ++m ) {
@@ -59,13 +59,13 @@ function GSUfft( signal ) {
 					imag: complexSignal.imag[ currOddIndex ],
 				};
 
-				const odd = GSUfftMultiply_( twiddle, currOddIndexSample );
+				const odd = _GSUmathFFT_multiply( twiddle, currOddIndexSample );
 
-				const subtractionResult = GSUfftSubtract_( currEvenIndexSample, odd );
+				const subtractionResult = _GSUmathFFT_subtract( currEvenIndexSample, odd );
 				complexSignal.real[ currOddIndex ] = subtractionResult.real;
 				complexSignal.imag[ currOddIndex ] = subtractionResult.imag;
 
-				const additionResult = GSUfftAdd_( odd, currEvenIndexSample );
+				const additionResult = _GSUmathFFT_add( odd, currEvenIndexSample );
 				complexSignal.real[ currEvenIndex ] = additionResult.real;
 				complexSignal.imag[ currEvenIndex ] = additionResult.imag;
 			}
@@ -75,9 +75,9 @@ function GSUfft( signal ) {
 }
 
 // .............................................................................
-function GSUifft( signal ) {
+function GSUmathIFFT( signal ) {
 	if ( !signal.real || !signal.imag ) {
-		throw new Error( "GSUifft: only accepts a complex input." );
+		throw new Error( "GSUmathIFFT: only accepts a complex input." );
 	}
 
 	const N = signal.real.length;
@@ -92,13 +92,13 @@ function GSUifft( signal ) {
 			real: signal.real[ i ],
 			imag: signal.imag[ i ],
 		};
-		const conjugateSample = GSUfftConj_( currentSample );
+		const conjugateSample = _GSUmathFFT_conj( currentSample );
 
 		complexSignal.real[ i ] = conjugateSample.real;
 		complexSignal.imag[ i ] = conjugateSample.imag;
 	}
 
-	const X = GSUfft( complexSignal );
+	const X = GSUmathFFT( complexSignal );
 
 	complexSignal.real = X.real.map( val => val / N );
 	complexSignal.imag = X.imag.map( val => val / N );
@@ -106,7 +106,7 @@ function GSUifft( signal ) {
 }
 
 // .............................................................................
-function GSUfftConstructComplexArray_( signal ) {
+function _GSUmathFFT_constructComplexArray( signal ) {
 	const real = signal.real
 		? signal.real.slice()
 		: signal.slice();
@@ -116,7 +116,7 @@ function GSUfftConstructComplexArray_( signal ) {
 		imag: GSUnewArray( real.length, 0 ),
 	};
 }
-function GSUfftBitReverseArray_( N ) {
+function _GSUmathFFT_bitReverseArray( N ) {
 	const maxBinaryLength = ( N - 1 ).toString( 2 ).length; // get the binary length of the largest index.
 	const templateBinary = "0".repeat( maxBinaryLength ); // create a template binary of that length.
 	const reversed = {};
@@ -132,25 +132,25 @@ function GSUfftBitReverseArray_( N ) {
 	}
 	return reversed;
 }
-function GSUfftMultiply_( a, b ) {
+function _GSUmathFFT_multiply( a, b ) {
 	return {
 		real: a.real * b.real - a.imag * b.imag,
 		imag: a.real * b.imag + a.imag * b.real,
 	};
 }
-function GSUfftAdd_( a, b ) {
+function _GSUmathFFT_add( a, b ) {
 	return {
 		real: a.real + b.real,
 		imag: a.imag + b.imag,
 	};
 }
-function GSUfftSubtract_( a, b ) {
+function _GSUmathFFT_subtract( a, b ) {
 	return {
 		real: a.real - b.real,
 		imag: a.imag - b.imag,
 	};
 }
-function GSUfftEuler_( kn, N ) {
+function _GSUmathFFT_euler( kn, N ) {
 	const x = -2 * Math.PI * kn / N;
 
 	return {
@@ -158,7 +158,7 @@ function GSUfftEuler_( kn, N ) {
 		imag: Math.sin( x ),
 	};
 }
-function GSUfftConj_( a ) {
+function _GSUmathFFT_conj( a ) {
 	a.imag *= -1;
 	return a;
 }
