@@ -328,6 +328,22 @@
 		test( "GSUmathLineFindY_5", GSUmathLineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 25 ), 2.5 );
 		test( "GSUmathLineFindY_6", GSUmathLineFindY( { x: -10, y:  1 }, { x: 10, y: 2 },  0 ), 1.5 );
 		test( "GSUmathLineFindY_7", GSUmathLineFindY( { x: -10, y: -1 }, { x: 10, y: 1 },  0 ), 0   );
+	// ..... GSUmathSampleDotLine ..............................................
+		test( "GSUmathSampleDotLine_0", GSUmathSampleDotLine( [ { x:  0, y:  0 }, { x: 1, y: 1 } ], 2 ), [ [  0,  0 ], [     1,     1 ] ] );
+		test( "GSUmathSampleDotLine_1", GSUmathSampleDotLine( [ { x: -1, y: -1 }, { x: 1, y: 1 } ], 2 ), [ [ -1, -1 ], [     1,     1 ] ] );
+		test( "GSUmathSampleDotLine_2", GSUmathSampleDotLine( [ { x:  0, y:  0 }, { x: 1, y: 1 } ], 3 ), [ [  0,  0 ], [    .5,    .5 ], [     1,     1 ] ] );
+		test( "GSUmathSampleDotLine_3", GSUmathSampleDotLine( [ { x:  0, y:  0 }, { x: 1, y: 1 } ], 4 ), [ [  0,  0 ], [ 1 / 3, 1 / 3 ], [ 2 / 3, 2 / 3 ], [ 1, 1 ] ] );
+
+		test( "GSUmathSampleDotLine_4", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: .5, y: 3 }, { x: 1, y: 0 } ], 2 ), [ [  0,  0 ], [     1, 0 ] ] );
+		test( "GSUmathSampleDotLine_5", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: .5, y: 3 }, { x: 1, y: 0 } ], 3 ), [ [  0,  0 ], [    .5, 3 ], [     1, 0 ] ] );
+		test( "GSUmathSampleDotLine_6", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: .5, y: 3 }, { x: 1, y: 0 } ], 4 ), [ [  0,  0 ], [ 1 / 3, 2 ], [ 2 / 3, 2 ], [ 1, 0 ] ] );
+		test( "GSUmathSampleDotLine_7", GSUmathSampleDotLine( [ { x: -3, y: 0 }, { x: 0,  y: 3 }, { x: 3, y: 0 } ], 4 ), [ [ -3,  0 ], [    -1, 2 ], [     1, 2 ], [ 3, 0 ] ] );
+
+		test( "GSUmathSampleDotLine_8", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2,  0       ), [ [  0,   0  ], [  1,   1  ] ] );
+		test( "GSUmathSampleDotLine_9", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2,  0,   1  ), [ [  0,   0  ], [  1,   1  ] ] );
+		test( "GSUmathSampleDotLine_a", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2, .5,   1  ), [ [ .5,  .5  ], [  1,   1  ] ] );
+		test( "GSUmathSampleDotLine_b", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2,  0,  .5  ), [ [  0,   0  ], [ .5,  .5  ] ] );
+		test( "GSUmathSampleDotLine_c", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2, .25, .75 ), [ [ .25, .25 ], [ .75, .75 ] ] );
 </script>
 
 <!-- ....................................................................... -->
@@ -745,23 +761,6 @@
 	test( "GSUsetModel.n", GSUgetModel( "foo", [] ), { a: 1 } );
 	test( "GSUsetModel.o", GSUgetModel( "foo", { b: 2, c: 3, a: 21 } ), { a: 21 } );
 	test( "GSUsetModel.p", GSUgetModel( "foo", document.body ), { a: 1 } );
-
-	// GSUsampleDotLine ............................................................
-	test( "GSUsampleDotLine.0", GSUsampleDotLine( [ { x:  0, y:  0 }, { x: 1, y: 1 } ], 2 ), [ [  0,  0 ], [     1,     1 ] ] );
-	test( "GSUsampleDotLine.1", GSUsampleDotLine( [ { x: -1, y: -1 }, { x: 1, y: 1 } ], 2 ), [ [ -1, -1 ], [     1,     1 ] ] );
-	test( "GSUsampleDotLine.2", GSUsampleDotLine( [ { x:  0, y:  0 }, { x: 1, y: 1 } ], 3 ), [ [  0,  0 ], [    .5,    .5 ], [     1,     1 ] ] );
-	test( "GSUsampleDotLine.3", GSUsampleDotLine( [ { x:  0, y:  0 }, { x: 1, y: 1 } ], 4 ), [ [  0,  0 ], [ 1 / 3, 1 / 3 ], [ 2 / 3, 2 / 3 ], [ 1, 1 ] ] );
-
-	test( "GSUsampleDotLine.4", GSUsampleDotLine( [ { x:  0, y: 0 }, { x: .5, y: 3 }, { x: 1, y: 0 } ], 2 ), [ [  0,  0 ], [     1, 0 ] ] );
-	test( "GSUsampleDotLine.5", GSUsampleDotLine( [ { x:  0, y: 0 }, { x: .5, y: 3 }, { x: 1, y: 0 } ], 3 ), [ [  0,  0 ], [    .5, 3 ], [     1, 0 ] ] );
-	test( "GSUsampleDotLine.6", GSUsampleDotLine( [ { x:  0, y: 0 }, { x: .5, y: 3 }, { x: 1, y: 0 } ], 4 ), [ [  0,  0 ], [ 1 / 3, 2 ], [ 2 / 3, 2 ], [ 1, 0 ] ] );
-	test( "GSUsampleDotLine.7", GSUsampleDotLine( [ { x: -3, y: 0 }, { x: 0,  y: 3 }, { x: 3, y: 0 } ], 4 ), [ [ -3,  0 ], [    -1, 2 ], [     1, 2 ], [ 3, 0 ] ] );
-
-	test( "GSUsampleDotLine.8", GSUsampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2,  0       ), [ [  0,   0  ], [  1,   1  ] ] );
-	test( "GSUsampleDotLine.9", GSUsampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2,  0,   1  ), [ [  0,   0  ], [  1,   1  ] ] );
-	test( "GSUsampleDotLine.a", GSUsampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2, .5,   1  ), [ [ .5,  .5  ], [  1,   1  ] ] );
-	test( "GSUsampleDotLine.b", GSUsampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2,  0,  .5  ), [ [  0,   0  ], [ .5,  .5  ] ] );
-	test( "GSUsampleDotLine.c", GSUsampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2, .25, .75 ), [ [ .25, .25 ], [ .75, .75 ] ] );
 </script>
 
 <!-- ....................................................................... -->
