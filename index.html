@@ -151,82 +151,173 @@
 <!-- ....................................................................... -->
 <script>
 	// ..... GSUmathApprox .....................................................
-		test( "GSUmathApprox.0", GSUmathApprox(   0,     0,  0 ),  true );
-		test( "GSUmathApprox.1", GSUmathApprox(  -0,    -0,  0 ),  true );
-		test( "GSUmathApprox.2", GSUmathApprox(  21,    21,  0 ),  true );
-		test( "GSUmathApprox.3", GSUmathApprox(  20.9,  21, .1 ),  true );
-		test( "GSUmathApprox.4", GSUmathApprox(  21.1,  21, .1 ),  true );
-		test( "GSUmathApprox.5", GSUmathApprox(  80,   100, 20 ),  true );
-		test( "GSUmathApprox.6", GSUmathApprox( 120,   100, 20 ),  true );
-		test( "GSUmathApprox.7", GSUmathApprox( 120.1, 100, 20 ),  false );
-		test( "GSUmathApprox.8", GSUmathApprox(  79.9, 100, 20 ),  false );
-		test( "GSUmathApprox.9", GSUmathApprox(  21.1,  21,  0 ),  false );
-		test( "GSUmathApprox.a", GSUmathApprox(  20.8,  21, .1 ),  false );
-		test( "GSUmathApprox.b", GSUmathApprox(  21.2,  21, .1 ),  false );
-		test( "GSUmathApprox.c", GSUmathApprox(  -21,    -21,  0 ), true );
-		test( "GSUmathApprox.d", GSUmathApprox(  -20.9,  -21, .1 ), true );
-		test( "GSUmathApprox.e", GSUmathApprox(  -21.1,  -21, .1 ), true );
-		test( "GSUmathApprox.f", GSUmathApprox(  -80,   -100, 20 ), true );
-		test( "GSUmathApprox.g", GSUmathApprox( -120,   -100, 20 ), true );
-		test( "GSUmathApprox.h", GSUmathApprox( -120.1, -100, 20 ), false );
-		test( "GSUmathApprox.i", GSUmathApprox(  -79.9, -100, 20 ), false );
-		test( "GSUmathApprox.j", GSUmathApprox(  -21.1,  -21,  0 ), false );
-		test( "GSUmathApprox.k", GSUmathApprox(  -20.8,  -21, .1 ), false );
-		test( "GSUmathApprox.l", GSUmathApprox(  -21.2,  -21, .1 ), false );
+		test( "GSUmathApprox_0", GSUmathApprox(   0,     0,  0 ),  true );
+		test( "GSUmathApprox_1", GSUmathApprox(  -0,    -0,  0 ),  true );
+		test( "GSUmathApprox_2", GSUmathApprox(  21,    21,  0 ),  true );
+		test( "GSUmathApprox_3", GSUmathApprox(  20.9,  21, .1 ),  true );
+		test( "GSUmathApprox_4", GSUmathApprox(  21.1,  21, .1 ),  true );
+		test( "GSUmathApprox_5", GSUmathApprox(  80,   100, 20 ),  true );
+		test( "GSUmathApprox_6", GSUmathApprox( 120,   100, 20 ),  true );
+		test( "GSUmathApprox_7", GSUmathApprox( 120.1, 100, 20 ),  false );
+		test( "GSUmathApprox_8", GSUmathApprox(  79.9, 100, 20 ),  false );
+		test( "GSUmathApprox_9", GSUmathApprox(  21.1,  21,  0 ),  false );
+		test( "GSUmathApprox_a", GSUmathApprox(  20.8,  21, .1 ),  false );
+		test( "GSUmathApprox_b", GSUmathApprox(  21.2,  21, .1 ),  false );
+		test( "GSUmathApprox_c", GSUmathApprox(  -21,    -21,  0 ), true );
+		test( "GSUmathApprox_d", GSUmathApprox(  -20.9,  -21, .1 ), true );
+		test( "GSUmathApprox_e", GSUmathApprox(  -21.1,  -21, .1 ), true );
+		test( "GSUmathApprox_f", GSUmathApprox(  -80,   -100, 20 ), true );
+		test( "GSUmathApprox_g", GSUmathApprox( -120,   -100, 20 ), true );
+		test( "GSUmathApprox_h", GSUmathApprox( -120.1, -100, 20 ), false );
+		test( "GSUmathApprox_i", GSUmathApprox(  -79.9, -100, 20 ), false );
+		test( "GSUmathApprox_j", GSUmathApprox(  -21.1,  -21,  0 ), false );
+		test( "GSUmathApprox_k", GSUmathApprox(  -20.8,  -21, .1 ), false );
+		test( "GSUmathApprox_l", GSUmathApprox(  -21.2,  -21, .1 ), false );
 	// ..... GSUmathRound ......................................................
-		test( "GSUmathRound.0", GSUmathRound(), NaN );
-		test( "GSUmathRound.1", GSUmathRound( 0, 0 ), NaN );
-		test( "GSUmathRound.2", GSUmathRound( 1, 0 ), NaN );
-		test( "GSUmathRound.3", GSUmathRound( 0 ), 0 );
-		test( "GSUmathRound.4", GSUmathRound( Math.PI    ), 3 );
-		test( "GSUmathRound.5", GSUmathRound( Math.PI, 1 ), 3 );
-		test( "GSUmathRound.6", GSUmathRound( Math.PI, 2 ), 4 );
-		test( "GSUmathRound.7", GSUmathRound( Math.PI, 3 ), 3 );
-		test( "GSUmathRound.8", GSUmathRound(  1.10, .25 ),  1 );
-		test( "GSUmathRound.9", GSUmathRound(  1.25, .25 ),  1.25 );
-		test( "GSUmathRound.a", GSUmathRound(  1.26, .25 ),  1.25 );
-		test( "GSUmathRound.b", GSUmathRound(  1.24, .25 ),  1.25 );
-		test( "GSUmathRound.c", GSUmathRound( -1.10, .25 ), -1 );
-		test( "GSUmathRound.d", GSUmathRound( -1.25, .25 ), -1.25 );
-		test( "GSUmathRound.e", GSUmathRound( -1.26, .25 ), -1.25 );
-		test( "GSUmathRound.f", GSUmathRound( -1.24, .25 ), -1.25 );
+		test( "GSUmathRound_0", GSUmathRound(), NaN );
+		test( "GSUmathRound_1", GSUmathRound( 0, 0 ), NaN );
+		test( "GSUmathRound_2", GSUmathRound( 1, 0 ), NaN );
+		test( "GSUmathRound_3", GSUmathRound( 0 ), 0 );
+		test( "GSUmathRound_4", GSUmathRound( Math.PI    ), 3 );
+		test( "GSUmathRound_5", GSUmathRound( Math.PI, 1 ), 3 );
+		test( "GSUmathRound_6", GSUmathRound( Math.PI, 2 ), 4 );
+		test( "GSUmathRound_7", GSUmathRound( Math.PI, 3 ), 3 );
+		test( "GSUmathRound_8", GSUmathRound(  1.10, .25 ),  1 );
+		test( "GSUmathRound_9", GSUmathRound(  1.25, .25 ),  1.25 );
+		test( "GSUmathRound_a", GSUmathRound(  1.26, .25 ),  1.25 );
+		test( "GSUmathRound_b", GSUmathRound(  1.24, .25 ),  1.25 );
+		test( "GSUmathRound_c", GSUmathRound( -1.10, .25 ), -1 );
+		test( "GSUmathRound_d", GSUmathRound( -1.25, .25 ), -1.25 );
+		test( "GSUmathRound_e", GSUmathRound( -1.26, .25 ), -1.25 );
+		test( "GSUmathRound_f", GSUmathRound( -1.24, .25 ), -1.25 );
 	// ..... GSUmathFloor ......................................................
-		test( "GSUmathFloor.0", GSUmathFloor(), NaN );
-		test( "GSUmathFloor.1", GSUmathFloor( 0, 0 ), NaN );
-		test( "GSUmathFloor.2", GSUmathFloor( 1, 0 ), NaN );
-		test( "GSUmathFloor.3", GSUmathFloor( 0 ), 0 );
-		test( "GSUmathFloor.4", GSUmathFloor( Math.PI    ), 3 );
-		test( "GSUmathFloor.5", GSUmathFloor( Math.PI, 1 ), 3 );
-		test( "GSUmathFloor.6", GSUmathFloor( Math.PI, 2 ), 2 );
-		test( "GSUmathFloor.7", GSUmathFloor( Math.PI, 3 ), 3 );
-		test( "GSUmathFloor.8", GSUmathFloor(  1.10, .25 ),  1 );
-		test( "GSUmathFloor.9", GSUmathFloor(  1.25, .25 ),  1.25 );
-		test( "GSUmathFloor.a", GSUmathFloor(  1.26, .25 ),  1.25 );
-		test( "GSUmathFloor.b", GSUmathFloor(  1.24, .25 ),  1 );
-		test( "GSUmathFloor.c", GSUmathFloor( -1.10, .25 ), -1.25 );
-		test( "GSUmathFloor.d", GSUmathFloor( -1.25, .25 ), -1.25 );
-		test( "GSUmathFloor.e", GSUmathFloor( -1.26, .25 ), -1.50 );
-		test( "GSUmathFloor.f", GSUmathFloor( -1.24, .25 ), -1.25 );
+		test( "GSUmathFloor_0", GSUmathFloor(), NaN );
+		test( "GSUmathFloor_1", GSUmathFloor( 0, 0 ), NaN );
+		test( "GSUmathFloor_2", GSUmathFloor( 1, 0 ), NaN );
+		test( "GSUmathFloor_3", GSUmathFloor( 0 ), 0 );
+		test( "GSUmathFloor_4", GSUmathFloor( Math.PI    ), 3 );
+		test( "GSUmathFloor_5", GSUmathFloor( Math.PI, 1 ), 3 );
+		test( "GSUmathFloor_6", GSUmathFloor( Math.PI, 2 ), 2 );
+		test( "GSUmathFloor_7", GSUmathFloor( Math.PI, 3 ), 3 );
+		test( "GSUmathFloor_8", GSUmathFloor(  1.10, .25 ),  1 );
+		test( "GSUmathFloor_9", GSUmathFloor(  1.25, .25 ),  1.25 );
+		test( "GSUmathFloor_a", GSUmathFloor(  1.26, .25 ),  1.25 );
+		test( "GSUmathFloor_b", GSUmathFloor(  1.24, .25 ),  1 );
+		test( "GSUmathFloor_c", GSUmathFloor( -1.10, .25 ), -1.25 );
+		test( "GSUmathFloor_d", GSUmathFloor( -1.25, .25 ), -1.25 );
+		test( "GSUmathFloor_e", GSUmathFloor( -1.26, .25 ), -1.50 );
+		test( "GSUmathFloor_f", GSUmathFloor( -1.24, .25 ), -1.25 );
 	// ..... GSUmathCeil .......................................................
-		test( "GSUmathCeil.0", GSUmathCeil(), NaN );
-		test( "GSUmathCeil.1", GSUmathCeil( 0, 0 ), NaN );
-		test( "GSUmathCeil.2", GSUmathCeil( 1, 0 ), NaN );
-		test( "GSUmathCeil.3", GSUmathCeil( 0 ), 0 );
-		test( "GSUmathCeil.4", GSUmathCeil( Math.PI    ), 4 );
-		test( "GSUmathCeil.5", GSUmathCeil( Math.PI, 1 ), 4 );
-		test( "GSUmathCeil.6", GSUmathCeil( Math.PI, 2 ), 4 );
-		test( "GSUmathCeil.7", GSUmathCeil( Math.PI, 3 ), 6 );
-		test( "GSUmathCeil.8", GSUmathCeil(  1.10, .25 ),  1.25 );
-		test( "GSUmathCeil.9", GSUmathCeil(  1.25, .25 ),  1.25 );
-		test( "GSUmathCeil.a", GSUmathCeil(  1.26, .25 ),  1.50 );
-		test( "GSUmathCeil.b", GSUmathCeil(  1.24, .25 ),  1.25 );
-		test( "GSUmathCeil.c", GSUmathCeil( -1.10, .25 ), -1 );
-		test( "GSUmathCeil.d", GSUmathCeil( -1.25, .25 ), -1.25 );
-		test( "GSUmathCeil.e", GSUmathCeil( -1.26, .25 ), -1.25 );
-		test( "GSUmathCeil.f", GSUmathCeil( -1.24, .25 ), -1 );
+		test( "GSUmathCeil_0", GSUmathCeil(), NaN );
+		test( "GSUmathCeil_1", GSUmathCeil( 0, 0 ), NaN );
+		test( "GSUmathCeil_2", GSUmathCeil( 1, 0 ), NaN );
+		test( "GSUmathCeil_3", GSUmathCeil( 0 ), 0 );
+		test( "GSUmathCeil_4", GSUmathCeil( Math.PI    ), 4 );
+		test( "GSUmathCeil_5", GSUmathCeil( Math.PI, 1 ), 4 );
+		test( "GSUmathCeil_6", GSUmathCeil( Math.PI, 2 ), 4 );
+		test( "GSUmathCeil_7", GSUmathCeil( Math.PI, 3 ), 6 );
+		test( "GSUmathCeil_8", GSUmathCeil(  1.10, .25 ),  1.25 );
+		test( "GSUmathCeil_9", GSUmathCeil(  1.25, .25 ),  1.25 );
+		test( "GSUmathCeil_a", GSUmathCeil(  1.26, .25 ),  1.50 );
+		test( "GSUmathCeil_b", GSUmathCeil(  1.24, .25 ),  1.25 );
+		test( "GSUmathCeil_c", GSUmathCeil( -1.10, .25 ), -1 );
+		test( "GSUmathCeil_d", GSUmathCeil( -1.25, .25 ), -1.25 );
+		test( "GSUmathCeil_e", GSUmathCeil( -1.26, .25 ), -1.25 );
+		test( "GSUmathCeil_f", GSUmathCeil( -1.24, .25 ), -1 );
 	// ..... GSUmathLogN .......................................................
-		test( "GSUmathLogN.0", GSUroundNum( GSUmathLogN( 10, 1000 ), 8 ), 3 );
-		test( "GSUmathLogN.1", GSUroundNum( GSUmathLogN( 2, 1024 ), 8 ), 10 );
+		test( "GSUmathLogN_0", GSUroundNum( GSUmathLogN( 10, 1000 ), 8 ), 3 );
+		test( "GSUmathLogN_1", GSUroundNum( GSUmathLogN( 2, 1024 ), 8 ), 10 );
+	// ..... GSUmathSum ........................................................
+		test( "GSUmathSum_0", GSUmathSum(),                    0 );
+		test( "GSUmathSum_1", GSUmathSum( NaN ),               0 );
+		test( "GSUmathSum_2", GSUmathSum( 0 ),                 0 );
+		test( "GSUmathSum_3", GSUmathSum( 7 ),                 7 );
+		test( "GSUmathSum_4", GSUmathSum( 1, 2, 3, 4, 5, 6 ), 21 );
+	// ..... GSUmathAvg ........................................................
+		test( "GSUmathAvg_0", GSUmathAvg(),               0 );
+		test( "GSUmathAvg_1", GSUmathAvg( NaN ),          0 );
+		test( "GSUmathAvg_2", GSUmathAvg( null ),         0 );
+		test( "GSUmathAvg_3", GSUmathAvg( undefined ),    0 );
+		test( "GSUmathAvg_4", GSUmathAvg( 21 ),          21 );
+		test( "GSUmathAvg_5", GSUmathAvg( 21, NaN ),      0 );
+		test( "GSUmathAvg_6", GSUmathAvg( 0, "42" ),     21 );
+		test( "GSUmathAvg_7", GSUmathAvg( "21", "63" ),  42 );
+		test( "GSUmathAvg_8", GSUmathAvg( -10, 15 ),      2.5 );
+		test( "GSUmathAvg_9", GSUmathAvg(  10, 20 ),     15 );
+		test( "GSUmathAvg_a", GSUmathAvg(  10, 20, 30 ), 20 );
+	// ..... GSUmathStack ......................................................
+		test( "GSUmathStack_0", GSUmathSum( ...GSUmathStack( [ 5 ],       2 ) ), 2 );
+		test( "GSUmathStack_1", GSUmathSum( ...GSUmathStack( [ 2, 5 ],    7 ) ), 9 );
+		test( "GSUmathStack_2", GSUmathSum( ...GSUmathStack( [ 5, 7 ],    3 ) ), 8 );
+		test( "GSUmathStack_3", GSUmathSum( ...GSUmathStack( [ 1, 2, 3 ], 4 ) ), 7 );
+	// ..... GSUmathSign .......................................................
+		test( "GSUmathSign_0", GSUmathSign( +0 ),    "+0" );
+		test( "GSUmathSign_1", GSUmathSign( -0 ),    "+0" );
+		test( "GSUmathSign_2", GSUmathSign(  1 ),    "+1" );
+		test( "GSUmathSign_3", GSUmathSign( -1 ),    "-1" );
+		test( "GSUmathSign_4", GSUmathSign( .009 ),  "+0.009" );
+		test( "GSUmathSign_5", GSUmathSign( -.009 ), "-0.009" );
+	// ..... GSUmathInRange ....................................................
+		test( "GSUmathInRange_0", GSUmathInRange(   0,   0,   1 ), true );
+		test( "GSUmathInRange_1", GSUmathInRange(  20,  20,  22 ), true );
+		test( "GSUmathInRange_2", GSUmathInRange(  21,  20,  22 ), true );
+		test( "GSUmathInRange_3", GSUmathInRange(  22,  20,  22 ), true );
+		test( "GSUmathInRange_4", GSUmathInRange(  20,  22,  20 ), true );
+		test( "GSUmathInRange_5", GSUmathInRange(  21,  22,  20 ), true );
+		test( "GSUmathInRange_6", GSUmathInRange(  22,  22,  20 ), true );
+		test( "GSUmathInRange_7", GSUmathInRange( -20, -20, -22 ), true );
+		test( "GSUmathInRange_8", GSUmathInRange( -21, -20, -22 ), true );
+		test( "GSUmathInRange_9", GSUmathInRange( -22, -20, -22 ), true );
+		test( "GSUmathInRange_a", GSUmathInRange( -20, -22, -20 ), true );
+		test( "GSUmathInRange_b", GSUmathInRange( -21, -22, -20 ), true );
+		test( "GSUmathInRange_c", GSUmathInRange( -22, -22, -20 ), true );
+		test( "GSUmathInRange_d", GSUmathInRange(  .1,   0,   0 ), false );
+		test( "GSUmathInRange_e", GSUmathInRange( -.1,   0,   0 ), false );
+		test( "GSUmathInRange_f", GSUmathInRange(   2,   0,   1 ), false );
+		test( "GSUmathInRange_g", GSUmathInRange(  -1,   0,   1 ), false );
+		test( "GSUmathInRange_h", GSUmathInRange( -.001, 0,   1 ), false );
+		test( "GSUmathInRange_i", GSUmathInRange( 1.001, 0,   1 ), false );
+		test( "GSUmathInRange_j", GSUmathInRange( undefined, -Infinity, Infinity ), false );
+		test( "GSUmathInRange_k", GSUmathInRange( NaN,       -Infinity, Infinity ), false );
+		test( "GSUmathInRange_l", GSUmathInRange( null,      -Infinity, Infinity ), false );
+		test( "GSUmathInRange_m", GSUmathInRange( "-0.5",    -Infinity, Infinity ), true );
+		test( "GSUmathInRange_n", GSUmathInRange( "0",       -Infinity, Infinity ), true );
+		test( "GSUmathInRange_o", GSUmathInRange( "21",      -Infinity, Infinity ), true );
+		test( "GSUmathInRange_p", GSUmathInRange( "a",       -Infinity, Infinity ), false );
+		test( "GSUmathInRange_q", GSUmathInRange( "",        -Infinity, Infinity ), false );
+		test( "GSUmathInRange_r", GSUmathInRange( false,     -Infinity, Infinity ), false );
+		test( "GSUmathInRange_s", GSUmathInRange( true,      -Infinity, Infinity ), false );
+	// ..... GSUmathClamp ......................................................
+		test( "GSUmathClamp_0", GSUmathClamp(  19,  20,  30 ),  20 );
+		test( "GSUmathClamp_1", GSUmathClamp(  20,  20,  30 ),  20 );
+		test( "GSUmathClamp_2", GSUmathClamp(  21,  20,  30 ),  21 );
+		test( "GSUmathClamp_3", GSUmathClamp(  29,  20,  30 ),  29 );
+		test( "GSUmathClamp_4", GSUmathClamp(  30,  20,  30 ),  30 );
+		test( "GSUmathClamp_5", GSUmathClamp(  31,  20,  30 ),  30 );
+		test( "GSUmathClamp_6", GSUmathClamp( -19, -20, -30 ), -20 );
+		test( "GSUmathClamp_7", GSUmathClamp( -20, -20, -30 ), -20 );
+		test( "GSUmathClamp_8", GSUmathClamp( -21, -20, -30 ), -21 );
+		test( "GSUmathClamp_9", GSUmathClamp( -29, -20, -30 ), -29 );
+		test( "GSUmathClamp_a", GSUmathClamp( -30, -20, -30 ), -30 );
+		test( "GSUmathClamp_b", GSUmathClamp( -31, -20, -30 ), -30 );
+	// ..... GSUmathEaseInCirc .................................................
+		test( "GSUmathEaseInCirc_0", GSUmathEaseInCirc( 0 ),      0 );
+		test( "GSUmathEaseInCirc_1", GSUmathEaseInCirc( 1 ),      1 );
+		test( "GSUmathEaseInCirc_2", GSUmathEaseInCirc( .25 ),    .031754163448145745 );
+		test( "GSUmathEaseInCirc_3", GSUmathEaseInCirc( .5 ),     .1339745962155614 );
+		test( "GSUmathEaseInCirc_4", GSUmathEaseInCirc( .75 ),    .3385621722338523 );
+		test( "GSUmathEaseInCirc_5", GSUmathEaseInCirc( .25, 2 ), .031754163448145745 );
+		test( "GSUmathEaseInCirc_6", GSUmathEaseInCirc( .25, 3 ), .007843258350778481 );
+		test( "GSUmathEaseInCirc_7", GSUmathEaseInCirc( .25, 4 ), .001955036083043038 );
+	// ..... GSUmathEaseOutCirc ................................................
+		test( "GSUmathEaseOutCirc_0", GSUmathEaseOutCirc( 0 ),      0 );
+		test( "GSUmathEaseOutCirc_1", GSUmathEaseOutCirc( 1 ),      1 );
+		test( "GSUmathEaseOutCirc_2", GSUmathEaseOutCirc( .25 ),    .6614378277661477 );
+		test( "GSUmathEaseOutCirc_3", GSUmathEaseOutCirc( .5 ),     .8660254037844386 );
+		test( "GSUmathEaseOutCirc_4", GSUmathEaseOutCirc( .75 ),    .9682458365518543 );
+		test( "GSUmathEaseOutCirc_5", GSUmathEaseOutCirc( .25, 2 ), .6614378277661477 );
+		test( "GSUmathEaseOutCirc_6", GSUmathEaseOutCirc( .25, 3 ), 1.192424001771182 ); // ???
+		test( "GSUmathEaseOutCirc_7", GSUmathEaseOutCirc( .25, 4 ), .8267972847076845 );
 </script>
 
 <!-- ....................................................................... -->
@@ -440,26 +531,6 @@
 	test( "GSUsome.b", GSUsome( [ 0, 1, 21 ],    fnSome21 ), true  );
 	test( "GSUsome.c", GSUsome( { a: 0, b: 21 }, fnSome21 ), true  );
 
-	// GSUeaseInCirc ...............................................................
-	test( "GSUeaseInCirc.0", GSUeaseInCirc( 0 ),      0 );
-	test( "GSUeaseInCirc.1", GSUeaseInCirc( 1 ),      1 );
-	test( "GSUeaseInCirc.2", GSUeaseInCirc( .25 ),    .031754163448145745 );
-	test( "GSUeaseInCirc.3", GSUeaseInCirc( .5 ),     .1339745962155614 );
-	test( "GSUeaseInCirc.4", GSUeaseInCirc( .75 ),    .3385621722338523 );
-	test( "GSUeaseInCirc.5", GSUeaseInCirc( .25, 2 ), .031754163448145745 );
-	test( "GSUeaseInCirc.6", GSUeaseInCirc( .25, 3 ), .007843258350778481 );
-	test( "GSUeaseInCirc.7", GSUeaseInCirc( .25, 4 ), .001955036083043038 );
-
-	// GSUeaseOutCirc ..............................................................
-	test( "GSUeaseOutCirc.0", GSUeaseOutCirc( 0 ),      0 );
-	test( "GSUeaseOutCirc.1", GSUeaseOutCirc( 1 ),      1 );
-	test( "GSUeaseOutCirc.2", GSUeaseOutCirc( .25 ),    .6614378277661477 );
-	test( "GSUeaseOutCirc.3", GSUeaseOutCirc( .5 ),     .8660254037844386 );
-	test( "GSUeaseOutCirc.4", GSUeaseOutCirc( .75 ),    .9682458365518543 );
-	test( "GSUeaseOutCirc.5", GSUeaseOutCirc( .25, 2 ), .6614378277661477 );
-	test( "GSUeaseOutCirc.6", GSUeaseOutCirc( .25, 3 ), 1.192424001771182 ); // ???
-	test( "GSUeaseOutCirc.7", GSUeaseOutCirc( .25, 4 ), .8267972847076845 );
-
 	// GSUHztoX ....................................................................
 	test( "GSUHztoX.0", GSUroundNum( GSUHztoX( GSUXtoHz( .5 ) ), 8 ), .5 );
 	test( "GSUHztoX.1", GSUHztoX( 1 ), 1 );
@@ -544,14 +615,6 @@
 	test( "GSUcountChar.e", GSUcountChar( "...", "." ),          3 );
 	test( "GSUcountChar.f", GSUcountChar( "asd.zxc..qwe", "." ), 3 );
 
-	// GSUsignNum ..................................................................
-	test( "GSUsignNum.0", GSUsignNum( +0 ),    "+0" );
-	test( "GSUsignNum.1", GSUsignNum( -0 ),    "+0" );
-	test( "GSUsignNum.2", GSUsignNum(  1 ),    "+1" );
-	test( "GSUsignNum.3", GSUsignNum( -1 ),    "-1" );
-	test( "GSUsignNum.4", GSUsignNum( .009 ),  "+0.009" );
-	test( "GSUsignNum.5", GSUsignNum( -.009 ), "-0.009" );
-
 	// GSUsplitNums ................................................................
 	test( "GSUsplitNums.0", GSUsplitNums( 21        ), [] );
 	test( "GSUsplitNums.1", GSUsplitNums( NaN       ), [] );
@@ -586,51 +649,6 @@
 	test( "GSUsplitInts.d", GSUsplitInts( "1/2//3",     "/" ), [ 1, 2, 0, 3 ] );
 	test( "GSUsplitInts.e", GSUsplitInts( "//",         "/" ), [ 0, 0, 0 ] );
 
-	// GSUinRange ..................................................................
-	test( "GSUinRange.0", GSUinRange(   0,   0,   1 ), true );
-	test( "GSUinRange.1", GSUinRange(  20,  20,  22 ), true );
-	test( "GSUinRange.2", GSUinRange(  21,  20,  22 ), true );
-	test( "GSUinRange.3", GSUinRange(  22,  20,  22 ), true );
-	test( "GSUinRange.4", GSUinRange(  20,  22,  20 ), true );
-	test( "GSUinRange.5", GSUinRange(  21,  22,  20 ), true );
-	test( "GSUinRange.6", GSUinRange(  22,  22,  20 ), true );
-	test( "GSUinRange.7", GSUinRange( -20, -20, -22 ), true );
-	test( "GSUinRange.8", GSUinRange( -21, -20, -22 ), true );
-	test( "GSUinRange.9", GSUinRange( -22, -20, -22 ), true );
-	test( "GSUinRange.a", GSUinRange( -20, -22, -20 ), true );
-	test( "GSUinRange.b", GSUinRange( -21, -22, -20 ), true );
-	test( "GSUinRange.c", GSUinRange( -22, -22, -20 ), true );
-	test( "GSUinRange.d", GSUinRange(  .1,   0,   0 ), false );
-	test( "GSUinRange.e", GSUinRange( -.1,   0,   0 ), false );
-	test( "GSUinRange.f", GSUinRange(   2,   0,   1 ), false );
-	test( "GSUinRange.g", GSUinRange(  -1,   0,   1 ), false );
-	test( "GSUinRange.h", GSUinRange( -.001, 0,   1 ), false );
-	test( "GSUinRange.i", GSUinRange( 1.001, 0,   1 ), false );
-	test( "GSUinRange.j", GSUinRange( undefined, -Infinity, Infinity ), false );
-	test( "GSUinRange.k", GSUinRange( NaN,       -Infinity, Infinity ), false );
-	test( "GSUinRange.l", GSUinRange( null,      -Infinity, Infinity ), false );
-	test( "GSUinRange.m", GSUinRange( "-0.5",    -Infinity, Infinity ), true );
-	test( "GSUinRange.n", GSUinRange( "0",       -Infinity, Infinity ), true );
-	test( "GSUinRange.o", GSUinRange( "21",      -Infinity, Infinity ), true );
-	test( "GSUinRange.p", GSUinRange( "a",       -Infinity, Infinity ), false );
-	test( "GSUinRange.q", GSUinRange( "",        -Infinity, Infinity ), false );
-	test( "GSUinRange.r", GSUinRange( false,     -Infinity, Infinity ), false );
-	test( "GSUinRange.s", GSUinRange( true,      -Infinity, Infinity ), false );
-
-	// GSUclampNum .................................................................
-	test( "GSUclampNum.0", GSUclampNum(  19,  20,  30 ),  20 );
-	test( "GSUclampNum.1", GSUclampNum(  20,  20,  30 ),  20 );
-	test( "GSUclampNum.2", GSUclampNum(  21,  20,  30 ),  21 );
-	test( "GSUclampNum.3", GSUclampNum(  29,  20,  30 ),  29 );
-	test( "GSUclampNum.4", GSUclampNum(  30,  20,  30 ),  30 );
-	test( "GSUclampNum.5", GSUclampNum(  31,  20,  30 ),  30 );
-	test( "GSUclampNum.6", GSUclampNum( -19, -20, -30 ), -20 );
-	test( "GSUclampNum.7", GSUclampNum( -20, -20, -30 ), -20 );
-	test( "GSUclampNum.8", GSUclampNum( -21, -20, -30 ), -21 );
-	test( "GSUclampNum.9", GSUclampNum( -29, -20, -30 ), -29 );
-	test( "GSUclampNum.a", GSUclampNum( -30, -20, -30 ), -30 );
-	test( "GSUclampNum.b", GSUclampNum( -31, -20, -30 ), -30 );
-
 	// GSUroundNum .................................................................
 	test( "GSUroundNum.0", GSUroundNum( null ),       0 );
 	test( "GSUroundNum.1", GSUroundNum( true ),       1 );
@@ -656,32 +674,6 @@
 
 	// GSUuuid .....................................................................
 	test( "GSUuuid.0", GSUuuid().length, 36 );
-
-	// GSUsum ......................................................................
-	test( "GSUsum.0", GSUsum(),                    0 );
-	test( "GSUsum.1", GSUsum( NaN ),               0 );
-	test( "GSUsum.2", GSUsum( 0 ),                 0 );
-	test( "GSUsum.3", GSUsum( 7 ),                 7 );
-	test( "GSUsum.4", GSUsum( 1, 2, 3, 4, 5, 6 ), 21 );
-
-	// GSUavg ......................................................................
-	test( "GSUavg.0", GSUavg(),               0 );
-	test( "GSUavg.1", GSUavg( NaN ),          0 );
-	test( "GSUavg.2", GSUavg( null ),         0 );
-	test( "GSUavg.3", GSUavg( undefined ),    0 );
-	test( "GSUavg.4", GSUavg( 21 ),          21 );
-	test( "GSUavg.5", GSUavg( 21, NaN ),      0 );
-	test( "GSUavg.6", GSUavg( 0, "42" ),     21 );
-	test( "GSUavg.7", GSUavg( "21", "63" ),  42 );
-	test( "GSUavg.8", GSUavg( -10, 15 ),      2.5 );
-	test( "GSUavg.9", GSUavg(  10, 20 ),     15 );
-	test( "GSUavg.a", GSUavg(  10, 20, 30 ), 20 );
-
-	// GSUstack ....................................................................
-	test( "GSUstack.0", GSUsum( ...GSUstack( [ 5 ],       2 ) ), 2 );
-	test( "GSUstack.1", GSUsum( ...GSUstack( [ 2, 5 ],    7 ) ), 9 );
-	test( "GSUstack.2", GSUsum( ...GSUstack( [ 5, 7 ],    3 ) ), 8 );
-	test( "GSUstack.3", GSUsum( ...GSUstack( [ 1, 2, 3 ], 4 ) ), 7 );
 
 	// GSUuniqueName ...............................................................
 	test( "GSUuniqueName.0", GSUuniqueName( "foo",      [] ),                                "foo" );

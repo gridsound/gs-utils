@@ -163,27 +163,29 @@ function GSUcountChar( str, c ) {
 }
 
 // .............................................................................
-function GSUeaseInCirc( n, pow = 2 ) {
-	return 1 - Math.sqrt( 1 - n ** pow );
-}
-function GSUeaseOutCirc( n, pow = 2 ) {
-	return Math.sqrt( 1 - ( n - 1 ) ** pow );
-}
-
-// .............................................................................
 // ..... GSUmath ...............................................................
 // .............................................................................
-function GSUmathApprox( n, x, diff ) { return GSUinRange( n, x - diff, x + diff ); }
+function GSUmathEaseInCirc( n, pow = 2 ) { return 1 - Math.sqrt( 1 - n ** pow ); }
+function GSUmathEaseOutCirc( n, pow = 2 ) { return Math.sqrt( 1 - ( n - 1 ) ** pow ); }
+function GSUmathApprox( n, x, diff ) { return GSUmathInRange( n, x - diff, x + diff ); }
 function GSUmathRound( val, step = 1 ) { return Math.round( val / step ) * step; }
 function GSUmathFloor( val, step = 1 ) { return Math.floor( val / step ) * step; }
 function GSUmathCeil(  val, step = 1 ) { return Math.ceil(  val / step ) * step; }
 function GSUmathLogN( x, y ) { return Math.log( y ) / Math.log( x ); }
-
-// .............................................................................
-function GSUsignNum( n ) {
-	return n >= 0 ? `+${ n }` : `${ n }`;
+function GSUmathSum( ...arr ) { return arr.reduce( ( sum, n ) => sum + +n, 0 ) || 0; }
+function GSUmathAvg( ...arr ) { return GSUmathSum( ...arr ) / arr.length || 0; }
+function GSUmathSign( n ) { return n >= 0 ? `+${ n }` : `${ n }`; }
+function GSUmathStack( arr, x ) {
+	arr.pop();
+	arr.unshift( x );
+	return arr;
 }
-function GSUinRange( n, min, max ) {
+function GSUmathClamp( n, min, max ) {
+	return min < max
+		? Math.max( min, Math.min( n || 0, max ) )
+		: Math.max( max, Math.min( n || 0, min ) );
+}
+function GSUmathInRange( n, min, max ) {
 	if ( n === "" || ( !GSUisStr( n ) && !GSUisNum( n ) ) ) {
 		return false;
 	}
@@ -191,32 +193,18 @@ function GSUinRange( n, min, max ) {
 		? min <= n && n <= max
 		: max <= n && n <= min;
 }
+
+// .............................................................................
 function GSUroundNum( val, dec = 0 ) {
 	return GSUisNum( val )
 		? +val.toFixed( dec )
 		: val?.map?.( n => +n.toFixed( dec ) ) || +val || 0;
-}
-function GSUclampNum( n, min, max ) {
-	return min < max
-		? Math.max( min, Math.min( n || 0, max ) )
-		: Math.max( max, Math.min( n || 0, min ) );
 }
 function GSUsplitNums( str, del = " " ) {
 	return str && GSUisStr( str ) ? str.split( del ).map( n => +n || 0 ) : [];
 }
 function GSUsplitInts( str, del = " " ) {
 	return str && GSUisStr( str ) ? str.split( del ).map( n => n | 0 ) : [];
-}
-function GSUsum( ...arr ) {
-	return arr.reduce( ( sum, n ) => sum + +n, 0 ) || 0;
-}
-function GSUavg( ...arr ) {
-	return GSUsum( ...arr ) / arr.length || 0;
-}
-function GSUstack( arr, x ) {
-	arr.pop();
-	arr.unshift( x );
-	return arr;
 }
 function GSUsplitSeconds( sec ) {
 	const m = `${ sec / 60 | 0 }`;
@@ -254,7 +242,7 @@ function GSUuuid() {
 
 	uuid[ 14 ] = "4";
 	uuid[ 19 ] = ( 8 + rnd[ 19 ] % 4 ).toString( 16 );
-	uuid[ 8 ] =
+	uuid[  8 ] =
 	uuid[ 13 ] =
 	uuid[ 18 ] =
 	uuid[ 23 ] = "-";
@@ -357,8 +345,8 @@ function GSUsampleDotLine( dots, nb, xstart, xend ) {
 				).bind( null, _GSUsampleDotLine_calcDotVal( dot ) );
 			}
 
-			const p = GSUclampNum( ( currX - prevDot.x ) / dotW, 0, 1 );
-			const y = GSUclampNum( fn( p, i2++ ), 0, 1 );
+			const p = GSUmathClamp( ( currX - prevDot.x ) / dotW, 0, 1 );
+			const y = GSUmathClamp( fn( p, i2++ ), 0, 1 );
 
 			dataFloat[ i ] = [ currX, prevDot.y + dotH * y ];
 			currX += stepX;
