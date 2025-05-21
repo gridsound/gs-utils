@@ -319,6 +319,15 @@
 		test( "GSUmathEaseOutCirc_5", GSUmathEaseOutCirc( .25, 2 ), .6614378277661477 );
 		test( "GSUmathEaseOutCirc_6", GSUmathEaseOutCirc( .25, 3 ), 1.192424001771182 ); // ???
 		test( "GSUmathEaseOutCirc_7", GSUmathEaseOutCirc( .25, 4 ), .8267972847076845 );
+	// ..... GSUmathLineFindY ..................................................
+		test( "GSUmathLineFindY_0", GSUmathLineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 15 ), 1.5 );
+		test( "GSUmathLineFindY_1", GSUmathLineFindY( { x:  20, y:  2 }, { x: 10, y: 1 }, 15 ), 1.5 );
+		test( "GSUmathLineFindY_2", GSUmathLineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 10 ), 1   );
+		test( "GSUmathLineFindY_3", GSUmathLineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 20 ), 2   );
+		test( "GSUmathLineFindY_4", GSUmathLineFindY( { x:  10, y:  1 }, { x: 20, y: 2 },  5 ),  .5 );
+		test( "GSUmathLineFindY_5", GSUmathLineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 25 ), 2.5 );
+		test( "GSUmathLineFindY_6", GSUmathLineFindY( { x: -10, y:  1 }, { x: 10, y: 2 },  0 ), 1.5 );
+		test( "GSUmathLineFindY_7", GSUmathLineFindY( { x: -10, y: -1 }, { x: 10, y: 1 },  0 ), 0   );
 </script>
 
 <!-- ....................................................................... -->
@@ -736,16 +745,6 @@
 	test( "GSUsetModel.n", GSUgetModel( "foo", [] ), { a: 1 } );
 	test( "GSUsetModel.o", GSUgetModel( "foo", { b: 2, c: 3, a: 21 } ), { a: 21 } );
 	test( "GSUsetModel.p", GSUgetModel( "foo", document.body ), { a: 1 } );
-
-	// GSUlineFindY ................................................................
-	test( "GSUlineFindY.0", GSUlineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 15 ), 1.5 );
-	test( "GSUlineFindY.1", GSUlineFindY( { x:  20, y:  2 }, { x: 10, y: 1 }, 15 ), 1.5 );
-	test( "GSUlineFindY.2", GSUlineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 10 ), 1   );
-	test( "GSUlineFindY.3", GSUlineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 20 ), 2   );
-	test( "GSUlineFindY.4", GSUlineFindY( { x:  10, y:  1 }, { x: 20, y: 2 },  5 ),  .5 );
-	test( "GSUlineFindY.5", GSUlineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 25 ), 2.5 );
-	test( "GSUlineFindY.6", GSUlineFindY( { x: -10, y:  1 }, { x: 10, y: 2 },  0 ), 1.5 );
-	test( "GSUlineFindY.7", GSUlineFindY( { x: -10, y: -1 }, { x: 10, y: 1 },  0 ), 0   );
 
 	// GSUsampleDotLine ............................................................
 	test( "GSUsampleDotLine.0", GSUsampleDotLine( [ { x:  0, y:  0 }, { x: 1, y: 1 } ], 2 ), [ [  0,  0 ], [     1,     1 ] ] );

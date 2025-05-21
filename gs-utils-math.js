@@ -55,3 +55,17 @@ function _GSUmathRealImagToXY( a, b, t ) {
 		return val + ai * Math.cos( tmp ) + b[ i ] * Math.sin( tmp );
 	}, 0 );
 }
+
+// .............................................................................
+function GSUmathLineFindY( ptA, ptB, x ) {
+	return ptA.x < ptB.x
+		? _GSUmathLineFindY( ptA, ptB, x )
+		: _GSUmathLineFindY( ptB, ptA, x );
+}
+function _GSUmathLineFindY( ptA, ptB, x ) {
+	const w = ptB.x - ptA.x;
+	const h = ptB.y - ptA.y;
+	const xx = x - ptA.x;
+
+	return xx / w * h + ptA.y;
+}

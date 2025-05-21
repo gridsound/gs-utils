@@ -253,20 +253,6 @@ function GSUgetModel( id, obj ) {
 }
 
 // .............................................................................
-function GSUlineFindY( ptA, ptB, x ) {
-	return ptA.x < ptB.x
-		? _GSUlineFindY( ptA, ptB, x )
-		: _GSUlineFindY( ptB, ptA, x );
-}
-function _GSUlineFindY( ptA, ptB, x ) {
-	const w = ptB.x - ptA.x;
-	const h = ptB.y - ptA.y;
-	const xx = x - ptA.x;
-
-	return xx / w * h + ptA.y;
-}
-
-// .............................................................................
 function GSUsampleDotLine( dots, nb, xstart, xend ) {
 	const dataDots = Object.values( dots ).sort( ( a, b ) => a.x - b.x );
 	const dataFloat = GSUnewArray( nb, 0 );
