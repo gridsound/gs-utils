@@ -174,6 +174,28 @@
 		test( "GSUmathApprox_j", GSUmathApprox(  -21.1,  -21,  0 ), false );
 		test( "GSUmathApprox_k", GSUmathApprox(  -20.8,  -21, .1 ), false );
 		test( "GSUmathApprox_l", GSUmathApprox(  -21.2,  -21, .1 ), false );
+	// GSUmathFix .................................................................
+		test( "GSUmathFix_0", GSUmathFix( null ),       0 );
+		test( "GSUmathFix_1", GSUmathFix( true ),       1 );
+		test( "GSUmathFix_2", GSUmathFix( false ),      0 );
+		test( "GSUmathFix_3", GSUmathFix( undefined ),  0 );
+		test( "GSUmathFix_4", GSUmathFix( GSUnoop ),    0 );
+		test( "GSUmathFix_5", GSUmathFix(   0 ),        0 );
+		test( "GSUmathFix_6", GSUmathFix(  21 ),       21 );
+		test( "GSUmathFix_7", GSUmathFix(  21.1 ),     21 );
+		test( "GSUmathFix_8", GSUmathFix(  21.9 ),     22 );
+		test( "GSUmathFix_9", GSUmathFix( -21.9 ),    -22 );
+		test( "GSUmathFix_a", GSUmathFix( -21.1 ),    -21 );
+		test( "GSUmathFix_b", GSUmathFix( Math.PI, 1 ), 3.1 );
+		test( "GSUmathFix_c", GSUmathFix( Math.PI, 3 ), 3.142 );
+		test( "GSUmathFix_d", GSUmathFix( Math.PI, 6 ), 3.141593 );
+		test( "GSUmathFix_e", GSUmathFix( [] ), [] );
+		test( "GSUmathFix_f", GSUmathFix( [], 1 ), [] );
+		test( "GSUmathFix_g", GSUmathFix( [ Math.PI ] ), [ 3 ] );
+		test( "GSUmathFix_h", GSUmathFix( [ Math.PI ], 0 ), [ 3 ] );
+		test( "GSUmathFix_i", GSUmathFix( [ Math.PI ], 1 ), [ 3.1 ] );
+		test( "GSUmathFix_j", GSUmathFix( [ Math.PI ], 6 ), [ 3.141593 ] );
+		test( "GSUmathFix_k", GSUmathFix( [ Math.PI, .123456 ], 2 ), [ 3.14, .12 ] );
 	// ..... GSUmathRound ......................................................
 		test( "GSUmathRound_0", GSUmathRound(), NaN );
 		test( "GSUmathRound_1", GSUmathRound( 0, 0 ), NaN );
@@ -226,8 +248,8 @@
 		test( "GSUmathCeil_e", GSUmathCeil( -1.26, .25 ), -1.25 );
 		test( "GSUmathCeil_f", GSUmathCeil( -1.24, .25 ), -1 );
 	// ..... GSUmathLogN .......................................................
-		test( "GSUmathLogN_0", GSUroundNum( GSUmathLogN( 10, 1000 ), 8 ), 3 );
-		test( "GSUmathLogN_1", GSUroundNum( GSUmathLogN( 2, 1024 ), 8 ), 10 );
+		test( "GSUmathLogN_0", GSUmathFix( GSUmathLogN( 10, 1000 ), 8 ), 3 );
+		test( "GSUmathLogN_1", GSUmathFix( GSUmathLogN( 2, 1024 ), 8 ), 10 );
 	// ..... GSUmathSum ........................................................
 		test( "GSUmathSum_0", GSUmathSum(),                    0 );
 		test( "GSUmathSum_1", GSUmathSum( NaN ),               0 );
@@ -571,7 +593,7 @@
 	test( "GSUsome.c", GSUsome( { a: 0, b: 21 }, fnSome21 ), true  );
 
 	// GSUHztoX ................................................................
-	test( "GSUHztoX.0", GSUroundNum( GSUHztoX( GSUXtoHz( .5 ) ), 8 ), .5 );
+	test( "GSUHztoX.0", GSUmathFix( GSUHztoX( GSUXtoHz( .5 ) ), 8 ), .5 );
 	test( "GSUHztoX.1", GSUHztoX( 1 ), 1 );
 	test( "GSUHztoX.2", GSUXtoHz( 1 ), 1 );
 
@@ -687,29 +709,6 @@
 	test( "GSUsplitInts.c", GSUsplitInts( "1/2/foo",    "/" ), [ 1, 2, 0 ] );
 	test( "GSUsplitInts.d", GSUsplitInts( "1/2//3",     "/" ), [ 1, 2, 0, 3 ] );
 	test( "GSUsplitInts.e", GSUsplitInts( "//",         "/" ), [ 0, 0, 0 ] );
-
-	// GSUroundNum .................................................................
-	test( "GSUroundNum.0", GSUroundNum( null ),       0 );
-	test( "GSUroundNum.1", GSUroundNum( true ),       1 );
-	test( "GSUroundNum.2", GSUroundNum( false ),      0 );
-	test( "GSUroundNum.3", GSUroundNum( undefined ),  0 );
-	test( "GSUroundNum.4", GSUroundNum( GSUnoop ),    0 );
-	test( "GSUroundNum.5", GSUroundNum(   0 ),        0 );
-	test( "GSUroundNum.6", GSUroundNum(  21 ),       21 );
-	test( "GSUroundNum.7", GSUroundNum(  21.1 ),     21 );
-	test( "GSUroundNum.8", GSUroundNum(  21.9 ),     22 );
-	test( "GSUroundNum.9", GSUroundNum( -21.9 ),    -22 );
-	test( "GSUroundNum.a", GSUroundNum( -21.1 ),    -21 );
-	test( "GSUroundNum.b", GSUroundNum( Math.PI, 1 ), 3.1 );
-	test( "GSUroundNum.c", GSUroundNum( Math.PI, 3 ), 3.142 );
-	test( "GSUroundNum.d", GSUroundNum( Math.PI, 6 ), 3.141593 );
-	test( "GSUroundNum.e", GSUroundNum( [] ), [] );
-	test( "GSUroundNum.f", GSUroundNum( [], 1 ), [] );
-	test( "GSUroundNum.g", GSUroundNum( [ Math.PI ] ), [ 3 ] );
-	test( "GSUroundNum.h", GSUroundNum( [ Math.PI ], 0 ), [ 3 ] );
-	test( "GSUroundNum.i", GSUroundNum( [ Math.PI ], 1 ), [ 3.1 ] );
-	test( "GSUroundNum.j", GSUroundNum( [ Math.PI ], 6 ), [ 3.141593 ] );
-	test( "GSUroundNum.k", GSUroundNum( [ Math.PI, .123456 ], 2 ), [ 3.14, .12 ] );
 
 	// GSUuuid .....................................................................
 	test( "GSUuuid.0", GSUuuid().length, 36 );

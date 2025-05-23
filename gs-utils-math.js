@@ -9,6 +9,11 @@ function GSUmathEaseOutCirc( n, pow = 2 ) { return Math.sqrt( 1 - ( n - 1 ) ** p
 function GSUmathRound( val, step = 1 ) { return Math.round( val / step ) * step; }
 function GSUmathFloor( val, step = 1 ) { return Math.floor( val / step ) * step; }
 function GSUmathCeil(  val, step = 1 ) { return Math.ceil(  val / step ) * step; }
+function GSUmathFix( val, dec = 0 ) {
+	return GSUisNum( val )
+		? +val.toFixed( dec )
+		: val?.map?.( n => +n.toFixed( dec ) ) || +val || 0;
+}
 
 // .............................................................................
 function GSUmathSum( ...arr ) { return arr.reduce( ( sum, n ) => sum + +n, 0 ) || 0; }

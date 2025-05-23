@@ -165,11 +165,6 @@ function GSUcountChar( str, c ) {
 }
 
 // .............................................................................
-function GSUroundNum( val, dec = 0 ) {
-	return GSUisNum( val )
-		? +val.toFixed( dec )
-		: val?.map?.( n => +n.toFixed( dec ) ) || +val || 0;
-}
 function GSUsplitNums( str, del = " " ) {
 	return str && GSUisStr( str ) ? str.split( del ).map( n => +n || 0 ) : [];
 }
