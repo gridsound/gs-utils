@@ -76,6 +76,11 @@ function _GSUmathLineFindY( ptA, ptB, x ) {
 }
 
 // .............................................................................
+function GSUmathDotLineGetYFromX( type, val, p ) {
+	const val2 = _GSUmathSampleDotLine_calcDotVal( type, val );
+
+	return _GSUmathSampleDotLine_fns[ type ]( val2, p, 1 );
+}
 function GSUmathSampleDotLine( dots, nb, xstart, xend ) {
 	const dataDots = Object.values( dots ).sort( ( a, b ) => a.x - b.x );
 	const dataFloat = GSUnewArray( nb, 0 );
@@ -87,6 +92,7 @@ function GSUmathSampleDotLine( dots, nb, xstart, xend ) {
 		let currX = xa;
 		let fn = null;
 		let dot = null;
+		let type = null;
 		let prevDot = null;
 		let dotI = 0;
 		let dotW = 0;
@@ -98,12 +104,10 @@ function GSUmathSampleDotLine( dots, nb, xstart, xend ) {
 				i2 = 0;
 				prevDot = dataDots[ dotI ];
 				dot = dataDots[ ++dotI ];
-				dotW = ( dot.x - prevDot.x );
-				dotH = ( dot.y - prevDot.y );
-				fn = (
-					_GSUmathSampleDotLine_fns[ dot.type ] ||
-					_GSUmathSampleDotLine_fns.line
-				).bind( null, _GSUmathSampleDotLine_calcDotVal( dot ) );
+				type = dot.type in _GSUmathSampleDotLine_fns ? dot.type : "line";
+				dotW = dot.x - prevDot.x;
+				dotH = dot.y - prevDot.y;
+				fn = _GSUmathSampleDotLine_fns[ type ].bind( null, _GSUmathSampleDotLine_calcDotVal( type, dot.val ) );
 			}
 
 			const p = GSUmathClamp( ( currX - prevDot.x ) / dotW, 0, 1 );
@@ -115,13 +119,13 @@ function GSUmathSampleDotLine( dots, nb, xstart, xend ) {
 	}
 	return dataFloat;
 }
-function _GSUmathSampleDotLine_calcDotVal( dot ) {
-	const dotVal = ( !dot.type || dot.type.endsWith( "urve" ) ? dot.val : Math.round( dot.val ) );
+function _GSUmathSampleDotLine_calcDotVal( type, val ) {
+	const dotVal = ( !type || type.endsWith( "urve" ) ? val : Math.round( val ) );
 	const dotVal2 = !dotVal && (
-		dot.type === "stair" ||
-		dot.type === "sineWave" ||
-		dot.type === "triangleWave" ||
-		dot.type === "squareWave"
+		type === "stair" ||
+		type === "sineWave" ||
+		type === "triangleWave" ||
+		type === "squareWave"
 	) ? 1 : dotVal;
 
 	return dotVal2;
