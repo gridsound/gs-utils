@@ -76,7 +76,7 @@ function _GSUmathLineFindY( ptA, ptB, x ) {
 }
 
 // .............................................................................
-function GSUmathDotLineGetYFromX( type, val, p ) {
+function GSUmathDotLineGetYFromDot( type, val, p ) {
 	const val2 = _GSUmathSampleDotLine_calcDotVal( type, val );
 
 	return GSUmathClamp( _GSUmathSampleDotLine_fns[ type ]( val2, p, 1 ), 0, 1 );
