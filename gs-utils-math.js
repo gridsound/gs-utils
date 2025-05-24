@@ -76,6 +76,31 @@ function _GSUmathLineFindY( ptA, ptB, x ) {
 }
 
 // .............................................................................
+function GSUmathDotLineGetYFromX( dots, x ) {
+	let a = null;
+	let b = null;
+
+	GSUforEach( dots, d => {
+		if ( GSUmathInRange( d.x, a?.x ?? -Infinity, x ) ) {
+			a = d;
+		}
+	} );
+	GSUforEach( dots, d => {
+		if ( GSUmathInRange( d.x, x, b?.x ?? Infinity ) ) {
+			b = d;
+		}
+	} );
+	if ( a && b ) {
+		const p = GSUmathClamp( ( x - a.x ) / ( b.x - a.x ), 0, 1 );
+		const y = GSUmathDotLineGetYFromDot( b.type, b.val, p );
+		const y2 = a.y < b.y ? y : 1 - y;
+		const yStart = Math.min( a.y, b.y );
+		const h = Math.abs( a.y - b.y );
+
+		return yStart + y2 * h;
+	}
+	return 0;
+}
 function GSUmathDotLineGetYFromDot( type, val, p ) {
 	const val2 = _GSUmathSampleDotLine_calcDotVal( type, val );
 
