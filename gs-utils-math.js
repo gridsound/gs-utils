@@ -79,7 +79,7 @@ function _GSUmathLineFindY( ptA, ptB, x ) {
 function GSUmathDotLineGetYFromX( type, val, p ) {
 	const val2 = _GSUmathSampleDotLine_calcDotVal( type, val );
 
-	return _GSUmathSampleDotLine_fns[ type ]( val2, p, 1 );
+	return GSUmathClamp( _GSUmathSampleDotLine_fns[ type ]( val2, p, 1 ), 0, 1 );
 }
 function GSUmathSampleDotLine( dots, nb, xstart, xend ) {
 	const dataDots = Object.values( dots ).sort( ( a, b ) => a.x - b.x );
