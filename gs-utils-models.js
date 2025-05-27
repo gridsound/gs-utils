@@ -164,6 +164,7 @@ GSUsetModel( "key", {
 	pan: 0,
 	highpass: 1,
 	lowpass: 1,
+	wtposCurves: {},
 	selected: false,
 } );
 
