@@ -20,26 +20,26 @@ function GSUclearTimeout( id ) { clearTimeout( id ); }
 function GSUclearInterval( id ) { clearInterval( id ); }
 
 // .............................................................................
-function GSUdebounce( fn, ms ) {
+function GSUdebounce( fn, sec ) {
 	let timeoutId;
 
 	return ( ...args ) => {
 		clearTimeout( timeoutId );
-		return timeoutId = setTimeout( () => fn( ...args ), ms );
+		return timeoutId = GSUsetTimeout( () => fn( ...args ), sec );
 	};
 }
 
-function GSUthrottle( fn, ms ) {
+function GSUthrottle( fn, sec ) {
 	let timeoutId;
 	let argsSaved;
 
 	return ( ...args ) => {
 		argsSaved = args;
 		if ( !timeoutId ) {
-			timeoutId = setTimeout( () => {
+			timeoutId = GSUsetTimeout( () => {
 				fn( ...argsSaved );
 				timeoutId = null;
-			}, ms );
+			}, sec );
 		}
 		return timeoutId;
 	};
