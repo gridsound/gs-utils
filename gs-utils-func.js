@@ -52,6 +52,8 @@ function GSUclearInterval( id ) {
 
 // .............................................................................
 function GSUdebounce( fn, sec ) {
+	___( fn, "function" );
+	___( sec, "number+" );
 	let timeoutId;
 
 	return ( ...args ) => {
@@ -61,6 +63,8 @@ function GSUdebounce( fn, sec ) {
 }
 
 function GSUthrottle( fn, sec ) {
+	___( fn, "function" );
+	___( sec, "number+" );
 	let timeoutId;
 	let argsSaved;
 
