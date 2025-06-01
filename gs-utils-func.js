@@ -24,7 +24,7 @@ function GSUdebounce( fn, sec ) {
 	let timeoutId;
 
 	return ( ...args ) => {
-		clearTimeout( timeoutId );
+		GSUclearTimeout( timeoutId );
 		return timeoutId = GSUsetTimeout( () => fn( ...args ), sec );
 	};
 }
