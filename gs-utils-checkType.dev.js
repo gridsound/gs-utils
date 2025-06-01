@@ -11,6 +11,7 @@ function _GSUcheckType( val, whatIf, ...args ) {
 		case "oneOf": return args[ 0 ].includes( val );
 		case "number": return GSUisNum( val );
 		case "integer": return GSUisInt( val );
+		case "number0+": return GSUisNum( val ) && GSUmathInRange( val, 0, Infinity );
 		case "numberBetween": return GSUisNum( val ) && GSUmathInRange( val, ...args );
 		case "integerBetween": return GSUisInt( val ) && GSUmathInRange( val, ...args );
 		case "string": return GSUisStr( val );
