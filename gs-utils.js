@@ -8,12 +8,6 @@ const GSUonSafari = navigator.userAgent.includes( "Safari" ) && !GSUonChrome;
 const GSUonFirefox = navigator.userAgent.includes( "Firefox" );
 
 // .............................................................................
-function GSUnoop() {}
-function GSUnoopFalse() {
-	return false;
-}
-
-// .............................................................................
 const GSUdotProp_undefined = Symbol();
 function GSUdotProp( obj, path ) {
 	return !path ? obj : path.split( "." ).filter( Boolean ).reduce( ( obj, p ) => (
@@ -78,6 +72,8 @@ function GSUsome( obj, fn ) {
 }
 
 // .............................................................................
+// ..... GSUarray ..............................................................
+// .............................................................................
 function GSUnewArray( l, fn ) {
 	return fn === undefined
 		? new Array( l )
@@ -112,31 +108,6 @@ function GSUarrayRemove( arr, fn ) {
 		}
 	}
 	return arr;
-}
-
-// .............................................................................
-function GSUdebounce( fn, ms ) {
-	let timeoutId;
-
-	return ( ...args ) => {
-		clearTimeout( timeoutId );
-		return timeoutId = setTimeout( () => fn( ...args ), ms );
-	};
-}
-function GSUthrottle( fn, ms ) {
-	let timeoutId;
-	let argsSaved;
-
-	return ( ...args ) => {
-		argsSaved = args;
-		if ( !timeoutId ) {
-			timeoutId = setTimeout( () => {
-				fn( ...argsSaved );
-				timeoutId = null;
-			}, ms );
-		}
-		return timeoutId;
-	};
 }
 
 // .............................................................................
