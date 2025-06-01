@@ -26,6 +26,24 @@
 			console.log( `testStrict:${ id }`, val, "!==", expected );
 		}
 	}
+	function testThrow( id, errorType, fn ) {
+		++tests;
+		try {
+			fn();
+		} catch ( e ) {
+			if ( errorType === _GSUcheckType_lastError ) {
+				++testsPassed;
+			} else {
+				console.log( `testThrow:${ id }`, _GSUcheckType_lastError, "!==", errorType );
+			}
+		}
+	}
+	let toWait = 0;
+	function wait( sec ) {
+		return new Promise( res => GSUsetTimeout( () => {
+			res();
+		}, sec ) ); 
+	}
 </script>
 
 <!-- ....................................................................... -->
@@ -367,6 +385,44 @@
 		test( "GSUmathSampleDotLine_a", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2, .5,   1  ), [ [ .5,  .5  ], [  1,   1  ] ] );
 		test( "GSUmathSampleDotLine_b", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2,  0,  .5  ), [ [  0,   0  ], [ .5,  .5  ] ] );
 		test( "GSUmathSampleDotLine_c", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2, .25, .75 ), [ [ .25, .25 ], [ .75, .75 ] ] );
+</script>
+
+<!-- ....................................................................... -->
+<!-- ..... GSUfunc ......................................................... -->
+<!-- ....................................................................... -->
+<script>
+	// ..... GSUsetIntervalLimit ...............................................
+		test( "GSUsetIntervalLimit_0", _GSUsetInterval_minMs, 0 );
+		test( "GSUsetIntervalLimit_1", GSUsetIntervalLimit( 1 ), 1_000 );
+		testThrow( "GSUsetIntervalLimit_2", "number0+", () => GSUsetIntervalLimit( NaN ) );
+		testThrow( "GSUsetIntervalLimit_3", "number0+", () => GSUsetIntervalLimit( -1 ) );
+		testThrow( "GSUsetIntervalLimit_4", "number0+", () => GSUsetIntervalLimit( false ) );
+		testThrow( "GSUsetIntervalLimit_5", "number0+", () => GSUsetIntervalLimit( true ) );
+		test( "GSUsetIntervalLimit_6", _GSUsetInterval_minMs, 1_000 );
+
+	// ..... GSUsetTimeout .....................................................
+		++toWait;
+		( async function () {
+			let timeoutId = null;
+			let timeoutInc = 0;
+			const fn = () => ++timeoutInc;
+
+			timeoutId = GSUsetTimeout( fn, .05 );
+			test( "GSUsetTimeout_0", GSUisInt( timeoutId ) && timeoutId > 0, true );
+			test( "GSUsetTimeout_1", timeoutInc, 0 ); await wait( .045 );
+			test( "GSUsetTimeout_2", timeoutInc, 0 ); await wait( .005 + .02 );
+			test( "GSUsetTimeout_3", timeoutInc, 1 );
+			timeoutId = GSUsetTimeout( fn, 0 );
+			test( "GSUsetTimeout_4", timeoutId, null );
+			test( "GSUsetTimeout_5", timeoutInc, 2 );
+			testThrow( "GSUsetTimeout_6", "number0+", () => GSUsetTimeout( fn, -1 ) );
+			testThrow( "GSUsetTimeout_7", "number0+", () => GSUsetTimeout( fn, NaN ) );
+			test( "GSUsetTimeout_8", timeoutInc, 2 );
+			timeoutId = GSUsetTimeout( fn, .01 );
+			GSUclearTimeout( timeoutId ); await wait( .02 );
+			test( "GSUsetTimeout_9", timeoutInc, 2 );
+			--toWait;
+		} )();
 </script>
 
 <!-- ....................................................................... -->
@@ -768,4 +824,10 @@
 <!-- ....................................................................... -->
 <script>
 	console.log( `${ testsPassed } / ${ tests }` );
+	const interId = setInterval( () => {
+		console.log( `${ testsPassed } / ${ tests }` );
+		if ( toWait === 0 ) {
+			clearInterval( interId );
+		}
+	}, 50 );
 </script>
