@@ -13,11 +13,31 @@ function GSUsetTimeout( fn, sec ) {
 }
 
 function GSUsetInterval( fn, sec ) {
-	return setInterval( fn, sec * 1000 | 0 );
+	const ms = sec * 1000 | 0;
+
+	if ( ms ) {
+		return setInterval( fn, ms );
+	}
+
+	const obj = Object.seal( { $id: null } );
+	const fn2 = () => {
+		fn();
+		obj.$id = requestAnimationFrame( fn2 );
+	};
+
+	fn2();
+	return obj;
 }
 
-function GSUclearTimeout( id ) { clearTimeout( id ); }
-function GSUclearInterval( id ) { clearInterval( id ); }
+function GSUclearTimeout( id ) {
+	clearTimeout( id );
+}
+
+function GSUclearInterval( id ) {
+	GSUisObj( id )
+		? cancelAnimationFrame( id.$id )
+		: clearInterval( id );
+}
 
 // .............................................................................
 function GSUdebounce( fn, sec ) {
