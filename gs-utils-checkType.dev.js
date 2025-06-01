@@ -1,8 +1,8 @@
 "use strict";
 
-function GSUcheckType( val, whatIf, ...args ) {
+function ___( val, whatIf, ...args ) {
 	if ( !_GSUcheckType( val, whatIf, ...args ) ) {
-		console.error( `GSUcheckType: ${ val } should be "${ whatIf }"`, args );
+		console.error( `type error: ${ val } should be "${ whatIf }"`, args );
 	}
 }
 

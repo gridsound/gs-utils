@@ -1,3 +1,3 @@
 "use strict";
 
-function GSUcheckType() {}
+function ___() {}
