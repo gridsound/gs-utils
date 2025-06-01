@@ -1,8 +1,13 @@
 "use strict";
 
+let _GSUcheckType_lastError = null;
+
 function ___( val, whatIf, ...args ) {
-	if ( !_GSUcheckType( val, whatIf, ...args ) ) {
-		console.error( `type error: ${ val } should be "${ whatIf }"`, args );
+	if ( _GSUcheckType( val, whatIf, ...args ) ) {
+		_GSUcheckType_lastError = null;
+	} else {
+		_GSUcheckType_lastError = whatIf;
+		throw new Error( `\`${ val }\` (typeof ${ typeof val }) should be "${ whatIf }" ${ args.join( ", " ) }` );
 	}
 }
 
