@@ -12,8 +12,14 @@ function GSUsetTimeout( fn, sec ) {
 		: ( fn(), null );
 }
 
+let _GSUsetInterval_minMs = 0;
+
+function GSUsetIntervalLimit( sec ) {
+	_GSUsetInterval_minMs = sec * 1000 | 0;
+}
+
 function GSUsetInterval( fn, sec ) {
-	const ms = sec * 1000 | 0;
+	const ms = Math.max( _GSUsetInterval_minMs, sec * 1000 | 0 );
 
 	if ( ms ) {
 		return setInterval( fn, ms );
