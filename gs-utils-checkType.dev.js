@@ -12,26 +12,32 @@ function ___( val, whatIf, ...args ) {
 }
 
 function _GSUcheckType( val, whatIf, ...args ) {
-	switch ( whatIf ) {
-		case "oneOf": return args[ 0 ].includes( val );
-		case "integer": return GSUisInt( val );
-		case "integer+": return GSUisInt( val ) && val > 0;
-		case "integer-": return GSUisInt( val ) && val < 0;
-		case "integer0+": return GSUisInt( val ) && val >= 0;
-		case "integer0-": return GSUisInt( val ) && val <= 0;
-		case "number": return GSUisNum( val );
-		case "number+": return GSUisNum( val ) && val > 0;
-		case "number-": return GSUisNum( val ) && val < 0;
-		case "number0+": return GSUisNum( val ) && val >= 0;
-		case "number0-": return GSUisNum( val ) && val <= 0;
-		case "numberBetween": return GSUisNum( val ) && GSUmathInRange( val, ...args );
-		case "integerBetween": return GSUisInt( val ) && GSUmathInRange( val, ...args );
-		case "string": return GSUisStr( val );
-		case "function": return GSUisFun( val );
-		case "array": return GSUisArr( val );
-		case "object": return GSUisObj( val ) && !GSUisArr( val );
-		case "arrayOfNumber": return GSUisArr( val ) && val.every( GSUisNum );
-		case "arrayOfInteger": return GSUisArr( val ) && val.every( GSUisInt );
+	const arr = whatIf.split( "-" );
+
+	if (
+		( val === 0           && arr.includes( "0"    ) ) ||
+		( val === null        && arr.includes( "null" ) ) ||
+		( Number.isNaN( val ) && arr.includes( "NaN"  ) )
+	) {
+		return true;
 	}
-	return false;
+	switch ( arr[ 0 ] ) {
+		case "oneOf":          return args[ 0 ].includes( val );
+		case "array":          if ( !GSUisArr( val )                           ) { return false; } break;
+		case "object":         if ( !GSUisObj( val ) || GSUisArr( val )        ) { return false; } break;
+		case "string":         if ( !GSUisStr( val )                           ) { return false; } break;
+		case "number":         if ( !GSUisNum( val )                           ) { return false; } break;
+		case "integer":        if ( !GSUisInt( val )                           ) { return false; } break;
+		case "function":       if ( !GSUisFun( val )                           ) { return false; } break;
+		case "arrayOfNumber":  if ( !GSUisArr( val ) || !val.every( GSUisNum ) ) { return false; } break;
+		case "arrayOfInteger": if ( !GSUisArr( val ) || !val.every( GSUisInt ) ) { return false; } break;
+	}
+	if (
+		( arr.includes( "positive" ) && val < 0 ) ||
+		( arr.includes( "negative" ) && val > 0 ) ||
+		( arr.includes( "inRange" ) && !GSUmathInRange( val, ...args ) )
+	) {
+		return false;
+	}
+	return true;
 }

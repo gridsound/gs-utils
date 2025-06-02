@@ -6,7 +6,7 @@ function GSUnoopFalse() { return false; }
 // .............................................................................
 function GSUsetTimeout( fn, sec ) {
 	___( fn, "function" );
-	___( sec, "number0+" );
+	___( sec, "number-positive-0" );
 	const ms = sec * 1000 | 0;
 
 	return ms
@@ -17,13 +17,13 @@ function GSUsetTimeout( fn, sec ) {
 let _GSUsetInterval_minMs = 0;
 
 function GSUsetIntervalLimit( sec ) {
-	___( sec, "number0+" );
+	___( sec, "number-positive-0" );
 	return _GSUsetInterval_minMs = sec * 1000 | 0;
 }
 
 function GSUsetInterval( fn, sec ) {
 	___( fn, "function" );
-	___( sec, "number0+" );
+	___( sec, "number-positive-0" );
 	const ms = Math.max( _GSUsetInterval_minMs, sec * 1000 | 0 );
 
 	if ( ms ) {
@@ -53,7 +53,7 @@ function GSUclearInterval( id ) {
 // .............................................................................
 function GSUdebounce( fn, sec ) {
 	___( fn, "function" );
-	___( sec, "number+" );
+	___( sec, "number-positive" );
 	let timeoutId;
 
 	return ( ...args ) => {
@@ -64,7 +64,7 @@ function GSUdebounce( fn, sec ) {
 
 function GSUthrottle( fn, sec ) {
 	___( fn, "function" );
-	___( sec, "number+" );
+	___( sec, "number-positive" );
 	let timeoutId;
 	let argsSaved;
 

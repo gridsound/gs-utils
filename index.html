@@ -64,6 +64,8 @@
 		test( "_GSUcheckType_0a", _GSUcheckType( false,     "number" ), false );
 		test( "_GSUcheckType_0b", _GSUcheckType( undefined, "number" ), false );
 		test( "_GSUcheckType_0c", _GSUcheckType( GSUnoop,   "number" ), false );
+		test( "_GSUcheckType_0d", _GSUcheckType( 0 / 0,     "number-NaN"  ), true );
+		test( "_GSUcheckType_0e", _GSUcheckType( null,      "number-null" ), true );
 	// ..... "integer" .........................................................
 		test( "_GSUcheckType_10", _GSUcheckType(   0,       "integer" ), true  );
 		test( "_GSUcheckType_11", _GSUcheckType(  21,       "integer" ), true  );
@@ -97,20 +99,20 @@
 		test( "_GSUcheckType_37", _GSUcheckType( true,      "string" ), false );
 		test( "_GSUcheckType_38", _GSUcheckType( false,     "string" ), false );
 		test( "_GSUcheckType_39", _GSUcheckType( undefined, "string" ), false );
-	// ..... "numberBetween" ...................................................
-		test( "_GSUcheckType_40", _GSUcheckType(  21.5, "numberBetween",  20,  22 ), true  );
-		test( "_GSUcheckType_41", _GSUcheckType(  21,   "numberBetween",  21,  21 ), true  );
-		test( "_GSUcheckType_42", _GSUcheckType( -21.5, "numberBetween", -20, -22 ), true  );
-		test( "_GSUcheckType_43", _GSUcheckType( -21,   "numberBetween", -22, -20 ), true  );
-		test( "_GSUcheckType_44", _GSUcheckType( -21,   "numberBetween", -21, -21 ), true  );
-		test( "_GSUcheckType_45", _GSUcheckType(  42,   "numberBetween",   0,  20 ), false );
-	// ..... "integerBetween" ..................................................
-		test( "_GSUcheckType_40", _GSUcheckType(  21,   "integerBetween",  21,  21 ), true  );
-		test( "_GSUcheckType_41", _GSUcheckType( -21,   "integerBetween", -22, -20 ), true  );
-		test( "_GSUcheckType_42", _GSUcheckType( -21,   "integerBetween", -21, -21 ), true  );
-		test( "_GSUcheckType_43", _GSUcheckType(  21.5, "integerBetween",  20,  22 ), false );
-		test( "_GSUcheckType_44", _GSUcheckType( -21.5, "integerBetween", -20, -22 ), false );
-		test( "_GSUcheckType_45", _GSUcheckType(  42,   "integerBetween",   0,  20 ), false );
+	// ..... "number-inRange" ..................................................
+		test( "_GSUcheckType_40", _GSUcheckType(  21.5, "number-inRange",  20,  22 ), true  );
+		test( "_GSUcheckType_41", _GSUcheckType(  21,   "number-inRange",  21,  21 ), true  );
+		test( "_GSUcheckType_42", _GSUcheckType( -21.5, "number-inRange", -20, -22 ), true  );
+		test( "_GSUcheckType_43", _GSUcheckType( -21,   "number-inRange", -22, -20 ), true  );
+		test( "_GSUcheckType_44", _GSUcheckType( -21,   "number-inRange", -21, -21 ), true  );
+		test( "_GSUcheckType_45", _GSUcheckType(  42,   "number-inRange",   0,  20 ), false );
+	// ..... "integer-inRange" .................................................
+		test( "_GSUcheckType_40", _GSUcheckType(  21,   "integer-inRange",  21,  21 ), true  );
+		test( "_GSUcheckType_41", _GSUcheckType( -21,   "integer-inRange", -22, -20 ), true  );
+		test( "_GSUcheckType_42", _GSUcheckType( -21,   "integer-inRange", -21, -21 ), true  );
+		test( "_GSUcheckType_43", _GSUcheckType(  21.5, "integer-inRange",  20,  22 ), false );
+		test( "_GSUcheckType_44", _GSUcheckType( -21.5, "integer-inRange", -20, -22 ), false );
+		test( "_GSUcheckType_45", _GSUcheckType(  42,   "integer-inRange",   0,  20 ), false );
 	// ..... "array" ...........................................................
 		test( "_GSUcheckType_50", _GSUcheckType( [],        "array" ), true  );
 		test( "_GSUcheckType_51", _GSUcheckType( [ 21 ],    "array" ), true  );
@@ -394,10 +396,10 @@
 	// ..... GSUsetIntervalLimit ...............................................
 		test( "GSUsetIntervalLimit_0", _GSUsetInterval_minMs, 0 );
 		test( "GSUsetIntervalLimit_1", GSUsetIntervalLimit( 1 ), 1_000 );
-		testThrow( "GSUsetIntervalLimit_2", "number0+", () => GSUsetIntervalLimit( NaN ) );
-		testThrow( "GSUsetIntervalLimit_3", "number0+", () => GSUsetIntervalLimit( -1 ) );
-		testThrow( "GSUsetIntervalLimit_4", "number0+", () => GSUsetIntervalLimit( false ) );
-		testThrow( "GSUsetIntervalLimit_5", "number0+", () => GSUsetIntervalLimit( true ) );
+		testThrow( "GSUsetIntervalLimit_2", "number-positive-0", () => GSUsetIntervalLimit( NaN ) );
+		testThrow( "GSUsetIntervalLimit_3", "number-positive-0", () => GSUsetIntervalLimit( -1 ) );
+		testThrow( "GSUsetIntervalLimit_4", "number-positive-0", () => GSUsetIntervalLimit( false ) );
+		testThrow( "GSUsetIntervalLimit_5", "number-positive-0", () => GSUsetIntervalLimit( true ) );
 		test( "GSUsetIntervalLimit_6", _GSUsetInterval_minMs, 1_000 );
 
 	// ..... GSUsetTimeout .....................................................
@@ -415,8 +417,8 @@
 			timeoutId = GSUsetTimeout( fn, 0 );
 			test( "GSUsetTimeout_4", timeoutId, null );
 			test( "GSUsetTimeout_5", timeoutInc, 2 );
-			testThrow( "GSUsetTimeout_6", "number0+", () => GSUsetTimeout( fn, -1 ) );
-			testThrow( "GSUsetTimeout_7", "number0+", () => GSUsetTimeout( fn, NaN ) );
+			testThrow( "GSUsetTimeout_6", "number-positive-0", () => GSUsetTimeout( fn, -1 ) );
+			testThrow( "GSUsetTimeout_7", "number-positive-0", () => GSUsetTimeout( fn, NaN ) );
 			test( "GSUsetTimeout_8", timeoutInc, 2 );
 			timeoutId = GSUsetTimeout( fn, .01 );
 			GSUclearTimeout( timeoutId ); await wait( .02 );
