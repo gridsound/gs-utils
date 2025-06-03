@@ -193,9 +193,11 @@ function GSUsetViewBoxWH( svg, w, h ) { GSUsetViewBox( svg, 0, 0, w, h ); }
 
 // .............................................................................
 function GSUgetStyle( el, prop ) {
-	return prop.startsWith( "--" )
-		? el.style.getPropertyValue( prop )
-		: el.style[ prop ];
+	return !prop
+		? getComputedStyle( el )
+		: prop.startsWith( "--" )
+			? el.style.getPropertyValue( prop )
+			: getComputedStyle( el )[ prop ];
 }
 function GSUsetStyle( el, prop, val ) {
 	GSUisStr( prop )
