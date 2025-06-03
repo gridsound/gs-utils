@@ -97,15 +97,16 @@ function GSUarrayLength( arr, len, fn ) {
 	return arr;
 }
 function GSUarrayRemove( arr, fn ) {
-	const fn2 = typeof fn === "function" ? fn : Object.is.bind( null, fn );
+	const fn2 = GSUisFun( fn ) ? fn : Object.is.bind( null, fn );
+	let i = 0;
+	let j = 0;
 
-	for ( let i = 0; i < arr.length; ) {
-		if ( fn2( arr[ i ] ) ) {
-			arr.splice( i, 1 );
-		} else {
-			++i;
+	for ( ; i < arr.length; ++i ) {
+		if ( !fn2( arr[ i ] ) ) {
+			arr[ j++ ] = arr[ i ];
 		}
 	}
+	arr.length = j;
 	return arr;
 }
 
