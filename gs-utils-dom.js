@@ -61,7 +61,7 @@ function GSUgetTemplate( tmpId, ...args ) {
 function GSUfindElements( root, graph ) {
 	return GSUisStr( graph )
 		? _GSUfindElementsStr( root, graph )
-		: Object.seal( Array.isArray( graph )
+		: Object.seal( GSUisArr( graph )
 			? _GSUfindElementsArr( root, graph )
 			: _GSUfindElementsObj( root, graph ) );
 }
@@ -80,11 +80,11 @@ function _GSUfindElementsStr( root, sel ) {
 	if ( sel.startsWith( "[]" ) ) {
 		const sel2 = sel.slice( 2 );
 
-		return !Array.isArray( root )
+		return !GSUisArr( root )
 			? _GSUfindElementsQueryAll( root, sel2 )
 			: root.map( r => _GSUfindElementsQueryAll( r, sel2 ) ).flat();
 	}
-	if ( Array.isArray( root ) ) {
+	if ( GSUisArr( root ) ) {
 		let el;
 
 		root.find( r => el = _GSUfindElementsQuery( r, sel ) );

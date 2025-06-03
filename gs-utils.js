@@ -82,8 +82,7 @@ function GSUnewArray( l, fn ) {
 			: Array.from( { length: l } ).fill( fn );
 }
 function GSUarrayFrom( a ) {
-	return Array.isArray( a ) ? a :
-		"length" in a ? Array.from( a ) : [ a ];
+	return GSUisArr( a ) ? a : "length" in a ? Array.from( a ) : [ a ];
 }
 function GSUarrayLength( arr, len, fn ) {
 	if ( arr.length !== len ) {
