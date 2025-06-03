@@ -393,6 +393,12 @@
 <!-- ..... GSUfunc ......................................................... -->
 <!-- ....................................................................... -->
 <script>
+	// ..... GSUnoop ...........................................................
+		test( "GSUnoop_0",      GSUnoop(),            undefined );
+		test( "GSUnoop_1",      GSUnoop( 1 ),         undefined );
+		test( "GSUnoopFalse_0", GSUnoopFalse(),       false     );
+		test( "GSUnoopFalse_1", GSUnoopFalse( true ), false     );
+
 	// ..... GSUsetIntervalLimit ...............................................
 		test( "GSUsetIntervalLimit_0", _GSUsetInterval_minMs, 0 );
 		test( "GSUsetIntervalLimit_1", GSUsetIntervalLimit( 1 ), 1_000 );
@@ -431,12 +437,6 @@
 <!-- ..... GSUxxxx ......................................................... -->
 <!-- ....................................................................... -->
 <script>
-	// GSUnoop .................................................................
-	test( "GSUnoop.0",      GSUnoop(),            undefined );
-	test( "GSUnoop.1",      GSUnoop( 1 ),         undefined );
-	test( "GSUnoopFalse.0", GSUnoopFalse(),       false     );
-	test( "GSUnoopFalse.1", GSUnoopFalse( true ), false     );
-
 	// GSUisObj ................................................................
 	test( "GSUisObj.0", GSUisObj(),            false );
 	test( "GSUisObj.1", GSUisObj( NaN ),       false );
