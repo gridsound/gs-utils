@@ -141,13 +141,16 @@ function _GSUcreateElement( ns, tag, attrObj, children ) {
 	return el;
 }
 function GSUcreateIcon( attr ) {
-	return GSUcreateElement( "i", { 
+	const attr2 = { 
 		...attr,
 		class: `gsuiIcon${ attr?.class ? ` ${ attr.class }` : "" }`,
 		"data-icon": attr?.icon || null,
 		"data-spin": attr?.spin ? "on" : null,
 		inert: true,
-	} );
+	};
+
+	delete attr2.icon;
+	return GSUcreateElement( "i", attr2 );
 }
 function GSUcreateA( attr, ...child ) { return GSUcreateElement( "a", { href: true, ...attr }, ...child ); }
 function GSUcreateDiv( attr, ...child ) { return GSUcreateElement( "div", attr, ...child ); }
