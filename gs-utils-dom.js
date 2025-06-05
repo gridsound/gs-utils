@@ -140,8 +140,16 @@ function _GSUcreateElement( ns, tag, attrObj, children ) {
 	el.append( ...children.flat( 1 ).filter( ch => Boolean( ch ) || Number.isFinite( ch ) ) );
 	return el;
 }
+function GSUcreateIcon( attr ) {
+	return GSUcreateElement( "i", { 
+		...attr,
+		class: `gsuiIcon${ attr?.class ? ` ${ attr.class }` : "" }`,
+		"data-icon": attr?.icon || null,
+		"data-spin": attr?.spin ? "on" : null,
+		inert: true,
+	} );
+}
 function GSUcreateA( attr, ...child ) { return GSUcreateElement( "a", { href: true, ...attr }, ...child ); }
-function GSUcreateI( attr, ...child ) { return GSUcreateElement( "i", attr, ...child ); }
 function GSUcreateDiv( attr, ...child ) { return GSUcreateElement( "div", attr, ...child ); }
 function GSUcreateAExt( attr, ...child ) { return GSUcreateA( { ...attr, target: "_blank", rel: "noopener" }, ...child ); }
 function GSUcreateSpan( attr, ...child ) { return GSUcreateElement( "span", attr, ...child ); }
