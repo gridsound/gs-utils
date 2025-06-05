@@ -152,13 +152,23 @@ function GSUcreateIcon( attr ) {
 	delete attr2.icon;
 	return GSUcreateElement( "i", attr2 );
 }
+function GSUcreateButton( attr, ...child ) {
+	const attr2 = {
+		type: "button",
+		...attr,
+		class: `${ attr?.class || "" }${ attr?.icon ? " gsuiIcon" : "" }` || null,
+		"data-icon": attr?.icon || null, 
+	};
+
+	delete attr2.icon;
+	return GSUcreateElement( "button", attr2, ...child );
+}
 function GSUcreateA( attr, ...child ) { return GSUcreateElement( "a", { href: true, ...attr }, ...child ); }
 function GSUcreateDiv( attr, ...child ) { return GSUcreateElement( "div", attr, ...child ); }
 function GSUcreateAExt( attr, ...child ) { return GSUcreateA( { ...attr, target: "_blank", rel: "noopener" }, ...child ); }
 function GSUcreateSpan( attr, ...child ) { return GSUcreateElement( "span", attr, ...child ); }
 function GSUcreateInput( attr, ...child ) { return GSUcreateElement( "input", attr, ...child ); }
 function GSUcreateLabel( attr, ...child ) { return GSUcreateElement( "label", attr, ...child ); }
-function GSUcreateButton( attr, ...child ) { return GSUcreateElement( "button", { type: "button", ...attr }, ...child ); }
 function GSUcreateSelect( attr, ...child ) { return GSUcreateElement( "select", attr, ...child ); }
 function GSUcreateOption( attr, child ) { return GSUcreateElement( "option", attr, child || attr?.value ); }
 
