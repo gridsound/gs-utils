@@ -457,7 +457,7 @@
 		testThrow( "GSUgetNewIds_7", "integer-positive", () => GSUgetNewIds( {}, -1   ) );
 		testThrow( "GSUgetNewIds_8", "integer-positive", () => GSUgetNewIds( {},  0   ) );
 		testThrow( "GSUgetNewIds_9", "integer-positive", () => GSUgetNewIds( {},  1.5 ) );
-	// ..... GSUgetLastOrder ......................................................
+	// ..... GSUgetLastOrder ...................................................
 		test( "GSUgetLastOrder_0", GSUgetLastOrder( {}                                   ),  0 );
 		test( "GSUgetLastOrder_1", GSUgetLastOrder( { 0: { order: 0 }                  } ),  1 );
 		test( "GSUgetLastOrder_2", GSUgetLastOrder( { 0: { order: 5 }                  } ),  6 );
@@ -467,6 +467,25 @@
 		testThrow( "GSUgetLastOrder_6", "object", () => GSUgetLastOrder() );
 		testThrow( "GSUgetLastOrder_7", "object", () => GSUgetLastOrder( [] ) );
 		testThrow( "GSUgetLastOrder_8", "object", () => GSUgetLastOrder( null ) );
+	// ..... GSUdeepCopy .......................................................
+		test( "GSUdeepCopy_0", GSUdeepCopy(  0 ),  0 );
+		test( "GSUdeepCopy_1", GSUdeepCopy( 21 ), 21 );
+		test( "GSUdeepCopy_2", GSUdeepCopy( NaN ), NaN );
+		test( "GSUdeepCopy_3", GSUdeepCopy( null ), null );
+		test( "GSUdeepCopy_4", GSUdeepCopy( true ), true );
+		test( "GSUdeepCopy_5", GSUdeepCopy( false ), false );
+		test( "GSUdeepCopy_6", GSUdeepCopy( undefined ), undefined );
+		test( "GSUdeepCopy_7", GSUdeepCopy( undefined ), undefined );
+		const deepCopyObj = {};
+		const deepCopyObj2 = GSUdeepCopy( deepCopyObj );
+		deepCopyObj2.foo = 21;
+		test( "GSUdeepCopy_8", deepCopyObj.foo, undefined );
+		const deepCopyObj3 = { a: 5, b: { c: 10 } };
+		const deepCopyObj4 = GSUdeepCopy( deepCopyObj3 );
+		deepCopyObj3.b.c = 20;
+		test( "GSUdeepCopy_9", deepCopyObj4.b.c, 10 );
+		test( "GSUdeepCopy_a", GSUdeepCopy( [] ), {} );
+		test( "GSUdeepCopy_b", GSUdeepCopy( [ 21 ] ), { 0: 21 } );
 </script>
 
 <!-- ....................................................................... -->
