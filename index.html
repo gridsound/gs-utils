@@ -48,7 +48,7 @@
 </script>
 
 <!-- ....................................................................... -->
-<!-- ..... GSUcheckType .................................................... -->
+<!-- ..... gs-utils-checkType .............................................. -->
 <!-- ....................................................................... -->
 <script>
 	// ..... "number" ..........................................................
@@ -170,7 +170,7 @@
 </script>
 
 <!-- ....................................................................... -->
-<!-- ..... GSUmath ......................................................... -->
+<!-- ..... gs-utils-math ................................................... -->
 <!-- ....................................................................... -->
 <script>
 	// ..... GSUmathApprox .....................................................
@@ -391,7 +391,7 @@
 </script>
 
 <!-- ....................................................................... -->
-<!-- ..... GSUfunc ......................................................... -->
+<!-- ..... gs-utils-func ................................................... -->
 <!-- ....................................................................... -->
 <script>
 	// ..... GSUnoop ...........................................................
@@ -399,7 +399,6 @@
 		test( "GSUnoop_1",      GSUnoop( 1 ),         undefined );
 		test( "GSUnoopFalse_0", GSUnoopFalse(),       false     );
 		test( "GSUnoopFalse_1", GSUnoopFalse( true ), false     );
-
 	// ..... GSUsetIntervalLimit ...............................................
 		test( "GSUsetIntervalLimit_0", _GSUsetInterval_minMs, 0 );
 		test( "GSUsetIntervalLimit_1", GSUsetIntervalLimit( 1 ), 1_000 );
@@ -408,7 +407,6 @@
 		testThrow( "GSUsetIntervalLimit_4", "number-positive-0", () => GSUsetIntervalLimit( false ) );
 		testThrow( "GSUsetIntervalLimit_5", "number-positive-0", () => GSUsetIntervalLimit( true ) );
 		test( "GSUsetIntervalLimit_6", _GSUsetInterval_minMs, 1_000 );
-
 	// ..... GSUsetTimeout .....................................................
 		++toWait;
 		( async function () {
@@ -432,6 +430,21 @@
 			test( "GSUsetTimeout_9", timeoutInc, 2 );
 			--toWait;
 		} )();
+</script>
+
+<!-- ....................................................................... -->
+<!-- ..... gs-utils-json ................................................... -->
+<!-- ....................................................................... -->
+<script>
+	// ..... GSUgetNewId .......................................................
+		test( "GSUgetNewId_0", GSUgetNewId( {} ), "0" );
+		test( "GSUgetNewId_1", GSUgetNewId( { 0: true  } ), "1" );
+		test( "GSUgetNewId_2", GSUgetNewId( { 0: false } ), "1" );
+		test( "GSUgetNewId_3", GSUgetNewId( { 0: false, 1: null } ), "2" );
+		test( "GSUgetNewId_4", GSUgetNewId( { 2: false, 1: null } ), "0" );
+		test( "GSUgetNewId_5", GSUgetNewId( { 0: false, 2: null } ), "1" );
+		testThrow( "GSUgetNewId_6", "object", () => GSUgetNewId() );
+		testThrow( "GSUgetNewId_7", "object", () => GSUgetNewId( [] ) );
 </script>
 
 <!-- ....................................................................... -->
