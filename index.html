@@ -475,17 +475,38 @@
 		test( "GSUdeepCopy_4", GSUdeepCopy( true ), true );
 		test( "GSUdeepCopy_5", GSUdeepCopy( false ), false );
 		test( "GSUdeepCopy_6", GSUdeepCopy( undefined ), undefined );
-		test( "GSUdeepCopy_7", GSUdeepCopy( undefined ), undefined );
-		const deepCopyObj = {};
-		const deepCopyObj2 = GSUdeepCopy( deepCopyObj );
-		deepCopyObj2.foo = 21;
-		test( "GSUdeepCopy_8", deepCopyObj.foo, undefined );
-		const deepCopyObj3 = { a: 5, b: { c: 10 } };
-		const deepCopyObj4 = GSUdeepCopy( deepCopyObj3 );
-		deepCopyObj3.b.c = 20;
-		test( "GSUdeepCopy_9", deepCopyObj4.b.c, 10 );
-		test( "GSUdeepCopy_a", GSUdeepCopy( [] ), {} );
-		test( "GSUdeepCopy_b", GSUdeepCopy( [ 21 ] ), { 0: 21 } );
+		const dC1 = {};
+		const dC2 = GSUdeepCopy( dC1 );
+		dC2.foo = 21;
+		test( "GSUdeepCopy_7", dC1.foo, undefined );
+		test( "GSUdeepCopy_8", dC1 !== dC2, true );
+		const dC3 = { a: 5, b: { c: 10 }, d: undefined };
+		const dC4 = GSUdeepCopy( dC3 );
+		dC3.b.c = 20;
+		test( "GSUdeepCopy_9", dC4.b.c, 10 );
+		test( "GSUdeepCopy_a", dC4.d, undefined );
+		test( "GSUdeepCopy_b", "d" in dC4, true );
+		test( "GSUdeepCopy_c", GSUdeepCopy( [] ), {} );
+		test( "GSUdeepCopy_d", GSUdeepCopy( [ 21 ] ), { 0: 21 } );
+	// ..... GSUdeepAssign .....................................................
+		test( "GSUdeepAssign_0", GSUdeepAssign(), undefined );
+		test( "GSUdeepAssign_1", GSUdeepAssign( 0 ), 0 );
+		test( "GSUdeepAssign_2", GSUdeepAssign( null ), null );
+		test( "GSUdeepAssign_3", GSUdeepAssign( undefined ), undefined );
+		const dA1 = {};
+		testStrict( "GSUdeepAssign_4", GSUdeepAssign( dA1, false ), dA1 );
+		testStrict( "GSUdeepAssign_5", GSUdeepAssign( dA1, { foo: 21 } ), dA1 );
+		test( "GSUdeepAssign_6", dA1.foo, 21 );
+		GSUdeepAssign( dA1, { foo: undefined, bar: undefined } );
+		test( "GSUdeepAssign_7", dA1.foo, undefined );
+		test( "GSUdeepAssign_8", dA1.bar, undefined );
+		test( "GSUdeepAssign_9", "foo" in dA1, true );
+		test( "GSUdeepAssign_a", "bar" in dA1, true );
+		const dA2 = { x: { y: { z: "z" } } };
+		GSUdeepAssign( dA1, dA2 );
+		test( "GSUdeepAssign_b", dA1.x.y.z, "z" );
+		dA2.x.y.z = "o";
+		test( "GSUdeepAssign_c", dA1.x.y.z, "z" );
 </script>
 
 <!-- ....................................................................... -->
