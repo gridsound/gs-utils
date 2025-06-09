@@ -507,6 +507,36 @@
 		test( "GSUdeepAssign_b", dA1.x.y.z, "z" );
 		dA2.x.y.z = "o";
 		test( "GSUdeepAssign_c", dA1.x.y.z, "z" );
+	// ..... GSUdeepFreeze .....................................................
+		test( "GSUdeepFreeze_0", GSUdeepFreeze( NaN ), NaN );
+		test( "GSUdeepFreeze_1", GSUdeepFreeze( null ), null );
+		test( "GSUdeepFreeze_2", GSUdeepFreeze( true ), true );
+		test( "GSUdeepFreeze_3", GSUdeepFreeze( false ), false );
+		test( "GSUdeepFreeze_4", GSUdeepFreeze( undefined ), undefined );
+		const dF1 = {};
+		const dF2 = [];
+		testStrict( "GSUdeepFreeze_5", GSUdeepFreeze( dF1 ), dF1 );
+		testStrict( "GSUdeepFreeze_6", GSUdeepFreeze( dF2 ), dF2 );
+		dF1.foo = 21;
+		try { dF2.push( "a" ); } catch ( e ) {}
+		testStrict( "GSUdeepFreeze_7", "foo" in dF1, false );
+		testStrict( "GSUdeepFreeze_8", dF2.length, 0 );
+		const dF3 = { a: 21, b: { c: 42 } };
+		testStrict( "GSUdeepFreeze_9", GSUdeepFreeze( dF3 ), dF3 );
+		dF3.a = 22;
+		test( "GSUdeepFreeze_a", dF3.a, 21 );
+		dF3.b.c = 43;
+		test( "GSUdeepFreeze_b", dF3.b.c, 42 );
+		const dF4 = { a: { b: 21 }, c: { d: 42 } };
+		testStrict( "GSUdeepFreeze_c", GSUdeepFreeze( dF4 ), dF4 );
+		dF4.zzz = 666;
+		dF4.a.b = 666;
+		dF4.c.d = 666;
+		test( "GSUdeepFreeze_d", "zzz" in dF4, false );
+		test( "GSUdeepFreeze_e", dF4.a.b, 21 );
+		test( "GSUdeepFreeze_f", dF4.c.d, 42 );
+		delete dF4.c;
+		test( "GSUdeepFreeze_g", dF4.c.d, 42 );
 </script>
 
 <!-- ....................................................................... -->
