@@ -537,6 +537,29 @@
 		test( "GSUdeepFreeze_f", dF4.c.d, 42 );
 		delete dF4.c;
 		test( "GSUdeepFreeze_g", dF4.c.d, 42 );
+	// ..... GSUdiffObjects ....................................................
+		test( "GSUdiffObjects_0", GSUdiffObjects( 0, 0 ), undefined );
+		test( "GSUdiffObjects_1", GSUdiffObjects( 1, 1 ), undefined );
+		test( "GSUdiffObjects_2", GSUdiffObjects( {}, {} ), undefined );
+		test( "GSUdiffObjects_3", GSUdiffObjects( [], [] ), undefined );
+		test( "GSUdiffObjects_4", GSUdiffObjects( true,  true  ), undefined );
+		test( "GSUdiffObjects_5", GSUdiffObjects( false, false ), undefined );
+		test( "GSUdiffObjects_6", GSUdiffObjects( [ 1    ], [ 1    ] ), undefined );
+		test( "GSUdiffObjects_7", GSUdiffObjects( [ 1, 2 ], [ 1, 2 ] ), undefined );
+		test( "GSUdiffObjects_8", GSUdiffObjects( { a: 1 },       { a: 1 }       ), undefined );
+		test( "GSUdiffObjects_9", GSUdiffObjects( { a: 1, b: 2 }, { a: 1, b: 2 } ), undefined );
+		test( "GSUdiffObjects_a", GSUdiffObjects( { a: 1, b: { c: 2 } }, { a: 1, b: { c: 2 } } ), undefined );
+		test( "GSUdiffObjects_b", GSUdiffObjects( { a: 1       }, {} ), { a: undefined               } );
+		test( "GSUdiffObjects_c", GSUdiffObjects( { a: 1, b: 2 }, {} ), { a: undefined, b: undefined } );
+		test( "GSUdiffObjects_d", GSUdiffObjects( {}, { a: 1 }       ), { a: 1       } );
+		test( "GSUdiffObjects_e", GSUdiffObjects( {}, { a: 1, b: 2 } ), { a: 1, b: 2 } );
+		test( "GSUdiffObjects_f", GSUdiffObjects( { a: 1 }, { a: 1, b: 2 } ), { b: 2 } );
+		test( "GSUdiffObjects_g", GSUdiffObjects( { a: 1, b: 2 }, { a: 1 } ), { b: undefined } );
+		test( "GSUdiffObjects_h", GSUdiffObjects( { a: 1, b: { c: 2       } }, { a: 2, b: { c: 2       } } ), { a: 2 } );
+		test( "GSUdiffObjects_i", GSUdiffObjects( { a: 1, b: { c: 2       } }, { a: 1, b: { c: 3       } } ), {       b: { c: 3       } } );
+		test( "GSUdiffObjects_j", GSUdiffObjects( { a: 1, b: { c: 2, d: 2 } }, { a: 1, b: { c: 3, d: 3 } } ), {       b: { c: 3, d: 3 } } );
+		test( "GSUdiffObjects_k", GSUdiffObjects( { a: 1, b: { c: 2, d: 2 } }, { a: 4, b: { c: 2, d: 3 } } ), { a: 4, b: {       d: 3 } } );
+		test( "GSUdiffObjects_l", GSUdiffObjects( { a: 1, b: { c: 2       } }, { a: 1, B: { c: 2       } } ), { b: undefined, B: { c: 2 } } );
 </script>
 
 <!-- ....................................................................... -->
