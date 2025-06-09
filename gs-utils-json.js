@@ -8,6 +8,20 @@ function GSUgetNewId( obj ) {
 	return `${ i }`;
 }
 
+function GSUgetNewIds( obj, nb ) {
+	___( obj, "object" );
+	___( nb, "integer-positive" );
+	const ids = [];
+	let i = 0;
+
+	for ( ; ids.length < nb; ++i ) {
+		if ( !( i in obj ) ) {
+			ids.push( `${ i }` );
+		}
+	}
+	return ids;
+}
+
 function GSUjsonCopy( o ) {
 	return JSON.parse( JSON.stringify( o ) );
 }

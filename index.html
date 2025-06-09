@@ -445,6 +445,17 @@
 		test( "GSUgetNewId_5", GSUgetNewId( { 0: false, 2: null } ), "1" );
 		testThrow( "GSUgetNewId_6", "object", () => GSUgetNewId() );
 		testThrow( "GSUgetNewId_7", "object", () => GSUgetNewId( [] ) );
+	// ..... GSUgetNewIds ......................................................
+		test( "GSUgetNewIds_0", GSUgetNewIds( {}, 1 ), [ "0" ] );
+		test( "GSUgetNewIds_1", GSUgetNewIds( {}, 2 ), [ "0", "1" ] );
+		test( "GSUgetNewIds_2", GSUgetNewIds( {}, 3 ), [ "0", "1", "2" ] );
+		test( "GSUgetNewIds_3", GSUgetNewIds( { 0: 0, 1: 1, 3: 3, 4: 4 }, 2 ), [ "2", "5" ] );
+		testThrow( "GSUgetNewIds_4", "object", () => GSUgetNewIds() );
+		testThrow( "GSUgetNewIds_5", "object", () => GSUgetNewIds( [] ) );
+		testThrow( "GSUgetNewIds_6", "integer-positive", () => GSUgetNewIds( {} ) );
+		testThrow( "GSUgetNewIds_7", "integer-positive", () => GSUgetNewIds( {}, -1   ) );
+		testThrow( "GSUgetNewIds_8", "integer-positive", () => GSUgetNewIds( {},  0   ) );
+		testThrow( "GSUgetNewIds_9", "integer-positive", () => GSUgetNewIds( {},  1.5 ) );
 </script>
 
 <!-- ....................................................................... -->
