@@ -22,6 +22,11 @@ function GSUgetNewIds( obj, nb ) {
 	return ids;
 }
 
+function GSUgetLastOrder( obj ) {
+	___( obj, "object" );
+	return GSUreduce( obj, ( max, item ) => Math.max( max, item.order || 0 ), -1 ) + 1;
+}
+
 function GSUjsonCopy( o ) {
 	return JSON.parse( JSON.stringify( o ) );
 }

@@ -456,6 +456,16 @@
 		testThrow( "GSUgetNewIds_7", "integer-positive", () => GSUgetNewIds( {}, -1   ) );
 		testThrow( "GSUgetNewIds_8", "integer-positive", () => GSUgetNewIds( {},  0   ) );
 		testThrow( "GSUgetNewIds_9", "integer-positive", () => GSUgetNewIds( {},  1.5 ) );
+	// ..... GSUgetLastOrder ......................................................
+		test( "GSUgetLastOrder_0", GSUgetLastOrder( {}                                   ),  0 );
+		test( "GSUgetLastOrder_1", GSUgetLastOrder( { 0: { order: 0 }                  } ),  1 );
+		test( "GSUgetLastOrder_2", GSUgetLastOrder( { 0: { order: 5 }                  } ),  6 );
+		test( "GSUgetLastOrder_3", GSUgetLastOrder( { 1: { order: 9 }, 2: { order: 3 } } ), 10 );
+		test( "GSUgetLastOrder_4", GSUgetLastOrder( { 1: {},           2: {}           } ),  1 );
+		test( "GSUgetLastOrder_5", GSUgetLastOrder( { 1: { order: 9 }, 2: {}           } ), 10 );
+		testThrow( "GSUgetLastOrder_6", "object", () => GSUgetLastOrder() );
+		testThrow( "GSUgetLastOrder_7", "object", () => GSUgetLastOrder( [] ) );
+		testThrow( "GSUgetLastOrder_8", "object", () => GSUgetLastOrder( null ) );
 </script>
 
 <!-- ....................................................................... -->
