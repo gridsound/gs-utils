@@ -35,8 +35,8 @@ function _GSUcheckType( val, whatIf, ...args ) {
 		case "arrayOfInteger": if ( !GSUisArr( val ) || !val.every( GSUisInt ) ) { return false; } break;
 	}
 	if (
-		( arr.includes( "positive" ) && val < 0 ) ||
-		( arr.includes( "negative" ) && val > 0 ) ||
+		( arr.includes( "positive" ) && val <= 0 ) ||
+		( arr.includes( "negative" ) && val >= 0 ) ||
 		( arr.includes( "inRange" ) && !GSUmathInRange( val, ...args ) )
 	) {
 		return false;
