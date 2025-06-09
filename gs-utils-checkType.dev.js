@@ -6,8 +6,10 @@ function ___( val, whatIf, ...args ) {
 	if ( _GSUcheckType( val, whatIf, ...args ) ) {
 		_GSUcheckType_lastError = null;
 	} else {
+		const valStr = GSUisNum( val ) || GSUisNaN( val ) ? val : JSON.stringify( val );
+
 		_GSUcheckType_lastError = whatIf;
-		throw new Error( `\`${ val }\` (typeof ${ typeof val }) should be "${ whatIf }" ${ args.join( ", " ) }` );
+		throw new Error( `\`${ valStr }\` (typeof ${ typeof val }) should be "${ whatIf }" ${ args.join( ", " ) }` );
 	}
 }
 
