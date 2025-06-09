@@ -213,7 +213,7 @@ function GSUgetModel( id, obj ) {
 	}
 	GSUforEach( obj, ( val, key ) => {
 		if ( key in mod ) {
-			mod[ key ] = val;
+			mod[ key ] = GSUdeepCopy( val );
 		}
 	} );
 	return Object.seal( mod );
