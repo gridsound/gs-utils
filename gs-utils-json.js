@@ -1,6 +1,7 @@
 "use strict";
 
 function GSUgetNewId( obj ) {
+	___( obj, "object" );
 	let i = 0;
 
 	for ( ; i in obj; ++i ) {}
