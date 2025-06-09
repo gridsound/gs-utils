@@ -30,6 +30,7 @@
 		++tests;
 		try {
 			fn();
+			console.log( `testThrow:${ id } should have thrown something` );
 		} catch ( e ) {
 			if ( errorType === _GSUcheckType_lastError ) {
 				++testsPassed;
