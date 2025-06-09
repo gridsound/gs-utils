@@ -560,6 +560,29 @@
 		test( "GSUdiffObjects_j", GSUdiffObjects( { a: 1, b: { c: 2, d: 2 } }, { a: 1, b: { c: 3, d: 3 } } ), {       b: { c: 3, d: 3 } } );
 		test( "GSUdiffObjects_k", GSUdiffObjects( { a: 1, b: { c: 2, d: 2 } }, { a: 4, b: { c: 2, d: 3 } } ), { a: 4, b: {       d: 3 } } );
 		test( "GSUdiffObjects_l", GSUdiffObjects( { a: 1, b: { c: 2       } }, { a: 1, B: { c: 2       } } ), { b: undefined, B: { c: 2 } } );
+	// ..... GSUdiffAssign .....................................................
+		test( "GSUdiffAssign_0", GSUdiffAssign( 0 ), 0 );
+		test( "GSUdiffAssign_1", GSUdiffAssign( 1 ), 1 );
+		test( "GSUdiffAssign_2", GSUdiffAssign( NaN ), NaN );
+		test( "GSUdiffAssign_3", GSUdiffAssign( null ), null );
+		test( "GSUdiffAssign_4", GSUdiffAssign( true ), true );
+		test( "GSUdiffAssign_5", GSUdiffAssign( false ), false );
+		test( "GSUdiffAssign_6", GSUdiffAssign( undefined ), undefined );
+		test( "GSUdiffAssign_7", GSUdiffAssign(), undefined );
+		const dfA1 = {};
+		testStrict( "GSUdiffAssign_8", GSUdiffAssign( dfA1 ), dfA1 );
+		testStrict( "GSUdiffAssign_9", GSUdiffAssign( dfA1, { a: 21 } ), dfA1 );
+		test( "GSUdiffAssign_a", dfA1.a, 21 );
+		GSUdiffAssign( dfA1, { a: 0 } );         test( "GSUdiffAssign_b", dfA1.a, 0 );
+		GSUdiffAssign( dfA1, { a: null } );      test( "GSUdiffAssign_c", dfA1.a, null );
+		GSUdiffAssign( dfA1, { a: undefined } ); test( "GSUdiffAssign_d", "a" in dfA1, false );
+		const dfA2 = { a: 1 };
+		GSUdiffAssign( dfA2, { b: 2 } );                       test( "GSUdiffAssign_e", dfA2, { a: 1, b: 2 } );
+		GSUdiffAssign( dfA2, { a: undefined, b: undefined } ); test( "GSUdiffAssign_f", dfA2, {} );
+		GSUdiffAssign( dfA2, { aa: { b: undefined, c: 1 } } ); test( "GSUdiffAssign_g", dfA2, { aa: { c: 1 } } );
+		GSUdiffAssign( dfA2, { aa: { c: { d: [ 1, 2 ] } } } ); test( "GSUdiffAssign_h", dfA2, { aa: { c: { d: [ 1, 2 ] } } } );
+		GSUdiffAssign( dfA2, { aa: { c: { d: [ 3 ] } } } );    test( "GSUdiffAssign_i", dfA2, { aa: { c: { d: [ 3, 2 ] } } } );
+		GSUdiffAssign( dfA2, { aa: undefined } );              test( "GSUdiffAssign_j", dfA2, {} );
 </script>
 
 <!-- ....................................................................... -->
