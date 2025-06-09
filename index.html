@@ -474,6 +474,20 @@
 	test( "GSUisStr.a", GSUisStr( "" ),        true );
 	test( "GSUisStr.b", GSUisStr( "0" ),       true );
 
+	// GSUisNaN ................................................................
+	test( "GSUisNaN.0", GSUisNaN( NaN ),       true );
+	test( "GSUisNaN.1", GSUisNaN( 0/0 ),       true );
+	test( "GSUisNaN.2", GSUisNaN(),            false );
+	test( "GSUisNaN.3", GSUisNaN( null ),      false );
+	test( "GSUisNaN.4", GSUisNaN( undefined ), false );
+	test( "GSUisNaN.5", GSUisNaN( GSUnoop ),   false );
+	test( "GSUisNaN.6", GSUisNaN( 0 ),         false );
+	test( "GSUisNaN.7", GSUisNaN( 1 ),         false );
+	test( "GSUisNaN.8", GSUisNaN( "a" ),       false );
+	test( "GSUisNaN.9", GSUisNaN( "21" ),      false );
+	test( "GSUisNaN.a", GSUisNaN( true ),      false );
+	test( "GSUisNaN.b", GSUisNaN( false ),     false );
+
 	// GSUisNum ................................................................
 	test( "GSUisNum.0", GSUisNum(),            false );
 	test( "GSUisNum.1", GSUisNum( NaN ),       false );

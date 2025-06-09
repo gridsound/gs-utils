@@ -183,7 +183,7 @@ function GSUgetAttributeNum( el, attr ) {
 	const val = el.getAttribute( attr );
 	const n = +val;
 
-	if ( Number.isNaN( n ) ) {
+	if ( GSUisNaN( n ) ) {
 		console.error( `GSUgetAttributeNum: ${ attr } is NaN (${ val })` );
 	}
 	return n;

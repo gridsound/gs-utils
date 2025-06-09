@@ -115,10 +115,11 @@ function GSUarrayRemove( arr, fn ) {
 // .............................................................................
 function GSUisObj( o ) { return o !== null && typeof o === "object"; }
 function GSUisArr( a ) { return Array.isArray( a ); }
+function GSUisNaN( n ) { return Number.isNaN( n ); }
 function GSUisStr( n ) { return typeof n === "string"; }
 function GSUisFun( n ) { return typeof n === "function"; }
 function GSUisBoo( n ) { return typeof n === "boolean"; }
-function GSUisNum( n ) { return typeof n === "number" && !Number.isNaN( n ); }
+function GSUisNum( n ) { return typeof n === "number" && !GSUisNaN( n ); }
 function GSUisInt( n ) { return GSUisNum( n ) && n === Math.round( n ); }
 function GSUisEmpty( o ) {
 	for ( const a in o ) {
