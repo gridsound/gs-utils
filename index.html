@@ -1,3 +1,4 @@
+<meta charset="utf-8"/>
 <script src="gs-utils.js"></script>
 <script src="gs-utils-func.js"></script>
 <script src="gs-utils-math.js"></script>
@@ -879,6 +880,9 @@
 		console.log( `${ testsPassed } / ${ tests }` );
 		if ( toWait === 0 ) {
 			clearInterval( interId );
+			if ( testsPassed === tests ) {
+				console.log( "✔️" );
+			}
 		}
 	}, 50 );
 </script>
