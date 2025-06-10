@@ -8,43 +8,48 @@
 <script>
 	function lg( a ) { return console.log( ...arguments ), a; }
 
-	let tests = 0;
-	let testsPassed = 0;
+	let nbTests = 0;
+	let nbTestsOk = 0;
+	let toWait = 0;
 
+	function wait( sec ) {
+		return new Promise( res => GSUsetTimeout( () => {
+			res();
+		}, sec ) ); 
+	}
+	async function tests( name, fn ) {
+		++toWait;
+		await fn( name );
+		--toWait;
+	}
 	function test( id, val, expected ) {
-		++tests;
+		++nbTests;
 		if ( GSUisEqual( val, expected ) ) {
-			++testsPassed;
+			++nbTestsOk;
 		} else {
 			console.log( `test:${ id }`, val, "!==", expected );
 		}
 	}
 	function testStrict( id, val, expected ) {
-		++tests;
+		++nbTests;
 		if ( val === expected ) {
-			++testsPassed;
+			++nbTestsOk;
 		} else {
 			console.log( `testStrict:${ id }`, val, "!==", expected );
 		}
 	}
 	function testThrow( id, errorType, fn ) {
-		++tests;
+		++nbTests;
 		try {
 			fn();
 			console.log( `testThrow:${ id } should have thrown something` );
 		} catch ( e ) {
 			if ( errorType === _GSUcheckType_lastError ) {
-				++testsPassed;
+				++nbTestsOk;
 			} else {
 				console.log( `testThrow:${ id }`, _GSUcheckType_lastError, "!==", errorType );
 			}
 		}
-	}
-	let toWait = 0;
-	function wait( sec ) {
-		return new Promise( res => GSUsetTimeout( () => {
-			res();
-		}, sec ) ); 
 	}
 </script>
 
@@ -1007,12 +1012,12 @@
 <!-- ..... results ......................................................... -->
 <!-- ....................................................................... -->
 <script>
-	console.log( `${ testsPassed } / ${ tests }` );
+	console.log( `${ nbTestsOk } / ${ nbTests }` );
 	const interId = setInterval( () => {
-		console.log( `${ testsPassed } / ${ tests }` );
+		console.log( `${ nbTestsOk } / ${ nbTests }` );
 		if ( toWait === 0 ) {
 			clearInterval( interId );
-			if ( testsPassed === tests ) {
+			if ( nbTestsOk === nbTests ) {
 				console.log( "✔️" );
 			}
 		}
