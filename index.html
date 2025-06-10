@@ -8,17 +8,17 @@
 <script>
 	function lg( a ) { return console.log( ...arguments ), a; }
 
+	let nbGroups = 0;
 	let nbTests = 0;
 	let nbTestsOk = 0;
 	let toWait = 0;
 
 	function wait( sec ) {
-		return new Promise( res => GSUsetTimeout( () => {
-			res();
-		}, sec ) ); 
+		return new Promise( res => GSUsetTimeout( res, sec ) ); 
 	}
 	async function tests( name, fn ) {
 		++toWait;
+		++nbGroups;
 		await fn( name );
 		--toWait;
 	}
@@ -57,969 +57,1024 @@
 <!-- ..... gs-utils-checkType .............................................. -->
 <!-- ....................................................................... -->
 <script>
-	// ..... "number" ..........................................................
-		test( "_GSUcheckType_00", _GSUcheckType(   0,       "number" ), true  );
-		test( "_GSUcheckType_01", _GSUcheckType(  21,       "number" ), true  );
-		test( "_GSUcheckType_02", _GSUcheckType( -21,       "number" ), true  );
-		test( "_GSUcheckType_03", _GSUcheckType(   1.5,     "number" ), true  );
-		test( "_GSUcheckType_04", _GSUcheckType(  -1.5,     "number" ), true  );
-		test( "_GSUcheckType_05", _GSUcheckType(  "0",      "number" ), false );
-		test( "_GSUcheckType_06", _GSUcheckType( "21",      "number" ), false );
-		test( "_GSUcheckType_07", _GSUcheckType( NaN,       "number" ), false );
-		test( "_GSUcheckType_08", _GSUcheckType( null,      "number" ), false );
-		test( "_GSUcheckType_09", _GSUcheckType( true,      "number" ), false );
-		test( "_GSUcheckType_0a", _GSUcheckType( false,     "number" ), false );
-		test( "_GSUcheckType_0b", _GSUcheckType( undefined, "number" ), false );
-		test( "_GSUcheckType_0c", _GSUcheckType( GSUnoop,   "number" ), false );
-		test( "_GSUcheckType_0d", _GSUcheckType( 0 / 0,     "number-NaN"  ), true );
-		test( "_GSUcheckType_0e", _GSUcheckType( null,      "number-null" ), true );
-	// ..... "integer" .........................................................
-		test( "_GSUcheckType_10", _GSUcheckType(   0,       "integer" ), true  );
-		test( "_GSUcheckType_11", _GSUcheckType(  21,       "integer" ), true  );
-		test( "_GSUcheckType_12", _GSUcheckType( -21,       "integer" ), true  );
-		test( "_GSUcheckType_13", _GSUcheckType(   1.5,     "integer" ), false );
-		test( "_GSUcheckType_14", _GSUcheckType(  -1.5,     "integer" ), false );
-		test( "_GSUcheckType_15", _GSUcheckType(  "0",      "integer" ), false );
-		test( "_GSUcheckType_16", _GSUcheckType( "21",      "integer" ), false );
-		test( "_GSUcheckType_17", _GSUcheckType( NaN,       "integer" ), false );
-		test( "_GSUcheckType_18", _GSUcheckType( null,      "integer" ), false );
-		test( "_GSUcheckType_19", _GSUcheckType( true,      "integer" ), false );
-		test( "_GSUcheckType_1a", _GSUcheckType( false,     "integer" ), false );
-		test( "_GSUcheckType_1b", _GSUcheckType( undefined, "integer" ), false );
-		test( "_GSUcheckType_1c", _GSUcheckType( GSUnoop,   "integer" ), false );
-	// ..... "function" ........................................................
-		test( "_GSUcheckType_20", _GSUcheckType( GSUnoop,      "function" ), true  );
-		test( "_GSUcheckType_21", _GSUcheckType( GSUnoopFalse, "function" ), true  );
-		test( "_GSUcheckType_22", _GSUcheckType( NaN,          "function" ), false );
-		test( "_GSUcheckType_23", _GSUcheckType( null,         "function" ), false );
-		test( "_GSUcheckType_24", _GSUcheckType( true,         "function" ), false );
-		test( "_GSUcheckType_25", _GSUcheckType( false,        "function" ), false );
-		test( "_GSUcheckType_26", _GSUcheckType( undefined,    "function" ), false );
-	// ..... "string" ..........................................................
-		test( "_GSUcheckType_30", _GSUcheckType( "",        "string" ), true  );
-		test( "_GSUcheckType_31", _GSUcheckType( "a",       "string" ), true  );
-		test( "_GSUcheckType_32", _GSUcheckType( "abc",     "string" ), true  );
-		test( "_GSUcheckType_33", _GSUcheckType( "0",       "string" ), true  );
-		test( "_GSUcheckType_34", _GSUcheckType( "21",      "string" ), true  );
-		test( "_GSUcheckType_35", _GSUcheckType( NaN,       "string" ), false );
-		test( "_GSUcheckType_36", _GSUcheckType( null,      "string" ), false );
-		test( "_GSUcheckType_37", _GSUcheckType( true,      "string" ), false );
-		test( "_GSUcheckType_38", _GSUcheckType( false,     "string" ), false );
-		test( "_GSUcheckType_39", _GSUcheckType( undefined, "string" ), false );
-	// ..... "number-inRange" ..................................................
-		test( "_GSUcheckType_40", _GSUcheckType(  21.5, "number-inRange",  20,  22 ), true  );
-		test( "_GSUcheckType_41", _GSUcheckType(  21,   "number-inRange",  21,  21 ), true  );
-		test( "_GSUcheckType_42", _GSUcheckType( -21.5, "number-inRange", -20, -22 ), true  );
-		test( "_GSUcheckType_43", _GSUcheckType( -21,   "number-inRange", -22, -20 ), true  );
-		test( "_GSUcheckType_44", _GSUcheckType( -21,   "number-inRange", -21, -21 ), true  );
-		test( "_GSUcheckType_45", _GSUcheckType(  42,   "number-inRange",   0,  20 ), false );
-	// ..... "integer-inRange" .................................................
-		test( "_GSUcheckType_40", _GSUcheckType(  21,   "integer-inRange",  21,  21 ), true  );
-		test( "_GSUcheckType_41", _GSUcheckType( -21,   "integer-inRange", -22, -20 ), true  );
-		test( "_GSUcheckType_42", _GSUcheckType( -21,   "integer-inRange", -21, -21 ), true  );
-		test( "_GSUcheckType_43", _GSUcheckType(  21.5, "integer-inRange",  20,  22 ), false );
-		test( "_GSUcheckType_44", _GSUcheckType( -21.5, "integer-inRange", -20, -22 ), false );
-		test( "_GSUcheckType_45", _GSUcheckType(  42,   "integer-inRange",   0,  20 ), false );
-	// ..... "array" ...........................................................
-		test( "_GSUcheckType_50", _GSUcheckType( [],        "array" ), true  );
-		test( "_GSUcheckType_51", _GSUcheckType( [ 21 ],    "array" ), true  );
-		test( "_GSUcheckType_52", _GSUcheckType( {},        "array" ), false );
-		test( "_GSUcheckType_53", _GSUcheckType( NaN,       "array" ), false );
-		test( "_GSUcheckType_54", _GSUcheckType( null,      "array" ), false );
-		test( "_GSUcheckType_55", _GSUcheckType( true,      "array" ), false );
-		test( "_GSUcheckType_56", _GSUcheckType( false,     "array" ), false );
-		test( "_GSUcheckType_57", _GSUcheckType( undefined, "array" ), false );
-	// ..... "object" ...........................................................
-		test( "_GSUcheckType_60", _GSUcheckType( {},        "object" ), true  );
-		test( "_GSUcheckType_61", _GSUcheckType( [],        "object" ), false );
-		test( "_GSUcheckType_62", _GSUcheckType( [ 21 ],    "object" ), false );
-		test( "_GSUcheckType_63", _GSUcheckType( NaN,       "object" ), false );
-		test( "_GSUcheckType_64", _GSUcheckType( null,      "object" ), false );
-		test( "_GSUcheckType_65", _GSUcheckType( true,      "object" ), false );
-		test( "_GSUcheckType_66", _GSUcheckType( false,     "object" ), false );
-		test( "_GSUcheckType_67", _GSUcheckType( undefined, "object" ), false );
-	// ..... "arrayOfNumber" ...................................................
-		test( "_GSUcheckType_70", _GSUcheckType( [],            "arrayOfNumber" ), true  );
-		test( "_GSUcheckType_71", _GSUcheckType( [ 1 ],         "arrayOfNumber" ), true  );
-		test( "_GSUcheckType_72", _GSUcheckType( [ 1, 2 ],      "arrayOfNumber" ), true  );
-		test( "_GSUcheckType_73", _GSUcheckType( [ 1, 2, 3.5 ], "arrayOfNumber" ), true  );
-		test( "_GSUcheckType_74", _GSUcheckType( [ 1, 2, "" ],  "arrayOfNumber" ), false );
-		test( "_GSUcheckType_75", _GSUcheckType( "123",         "arrayOfNumber" ), false );
-		test( "_GSUcheckType_76", _GSUcheckType( GSUnoop,       "arrayOfNumber" ), false );
-		test( "_GSUcheckType_77", _GSUcheckType( NaN,           "arrayOfNumber" ), false );
-		test( "_GSUcheckType_78", _GSUcheckType( null,          "arrayOfNumber" ), false );
-		test( "_GSUcheckType_79", _GSUcheckType( true,          "arrayOfNumber" ), false );
-		test( "_GSUcheckType_7a", _GSUcheckType( false,         "arrayOfNumber" ), false );
-		test( "_GSUcheckType_7b", _GSUcheckType( undefined,     "arrayOfNumber" ), false );
-	// ..... "arrayOfInteger" ..................................................
-		test( "_GSUcheckType_80", _GSUcheckType( [],            "arrayOfInteger" ), true  );
-		test( "_GSUcheckType_81", _GSUcheckType( [ 1 ],         "arrayOfInteger" ), true  );
-		test( "_GSUcheckType_82", _GSUcheckType( [ 1, 2 ],      "arrayOfInteger" ), true  );
-		test( "_GSUcheckType_83", _GSUcheckType( [ 1, 2, 3.5 ], "arrayOfInteger" ), false );
-		test( "_GSUcheckType_84", _GSUcheckType( [ 1, 2, "" ],  "arrayOfInteger" ), false );
-		test( "_GSUcheckType_85", _GSUcheckType( "123",         "arrayOfInteger" ), false );
-		test( "_GSUcheckType_86", _GSUcheckType( GSUnoop,       "arrayOfInteger" ), false );
-		test( "_GSUcheckType_87", _GSUcheckType( NaN,           "arrayOfInteger" ), false );
-		test( "_GSUcheckType_88", _GSUcheckType( null,          "arrayOfInteger" ), false );
-		test( "_GSUcheckType_89", _GSUcheckType( true,          "arrayOfInteger" ), false );
-		test( "_GSUcheckType_8a", _GSUcheckType( false,         "arrayOfInteger" ), false );
-		test( "_GSUcheckType_8b", _GSUcheckType( undefined,     "arrayOfInteger" ), false );
-	// ..... "oneOf" ...........................................................
-		test( "_GSUcheckType_90", _GSUcheckType(  0,      "oneOf", [ 0, 21 ]    ), true  );
-		test( "_GSUcheckType_91", _GSUcheckType( 21,      "oneOf", [ 0, 21 ]    ), true  );
-		test( "_GSUcheckType_92", _GSUcheckType( null,    "oneOf", [ null ]     ), true  );
-		test( "_GSUcheckType_93", _GSUcheckType( "42",    "oneOf", [ 41, "42" ] ), true  );
-		test( "_GSUcheckType_94", _GSUcheckType( GSUnoop, "oneOf", [ GSUnoop ]  ), true  );
-		test( "_GSUcheckType_95", _GSUcheckType( 10,      "oneOf", [ 0, 21 ]    ), false );
-		test( "_GSUcheckType_96", _GSUcheckType( "21",    "oneOf", [ 0, 21 ]    ), false );
-		test( "_GSUcheckType_97", _GSUcheckType( "21",    "oneOf", [ 0, 21 ]    ), false );
+	tests( "GSUcheckType:number", () => {
+		test( "checkType_00", _GSUcheckType(   0,       "number" ), true  );
+		test( "checkType_01", _GSUcheckType(  21,       "number" ), true  );
+		test( "checkType_02", _GSUcheckType( -21,       "number" ), true  );
+		test( "checkType_03", _GSUcheckType(   1.5,     "number" ), true  );
+		test( "checkType_04", _GSUcheckType(  -1.5,     "number" ), true  );
+		test( "checkType_05", _GSUcheckType(  "0",      "number" ), false );
+		test( "checkType_06", _GSUcheckType( "21",      "number" ), false );
+		test( "checkType_07", _GSUcheckType( NaN,       "number" ), false );
+		test( "checkType_08", _GSUcheckType( null,      "number" ), false );
+		test( "checkType_09", _GSUcheckType( true,      "number" ), false );
+		test( "checkType_0a", _GSUcheckType( false,     "number" ), false );
+		test( "checkType_0b", _GSUcheckType( undefined, "number" ), false );
+		test( "checkType_0c", _GSUcheckType( GSUnoop,   "number" ), false );
+		test( "checkType_0d", _GSUcheckType( 0 / 0,     "number-NaN"  ), true );
+		test( "checkType_0e", _GSUcheckType( null,      "number-null" ), true );
+	} );
+	tests( "GSUcheckType:integer", () => {
+		test( "checkType_10", _GSUcheckType(   0,       "integer" ), true  );
+		test( "checkType_11", _GSUcheckType(  21,       "integer" ), true  );
+		test( "checkType_12", _GSUcheckType( -21,       "integer" ), true  );
+		test( "checkType_13", _GSUcheckType(   1.5,     "integer" ), false );
+		test( "checkType_14", _GSUcheckType(  -1.5,     "integer" ), false );
+		test( "checkType_15", _GSUcheckType(  "0",      "integer" ), false );
+		test( "checkType_16", _GSUcheckType( "21",      "integer" ), false );
+		test( "checkType_17", _GSUcheckType( NaN,       "integer" ), false );
+		test( "checkType_18", _GSUcheckType( null,      "integer" ), false );
+		test( "checkType_19", _GSUcheckType( true,      "integer" ), false );
+		test( "checkType_1a", _GSUcheckType( false,     "integer" ), false );
+		test( "checkType_1b", _GSUcheckType( undefined, "integer" ), false );
+		test( "checkType_1c", _GSUcheckType( GSUnoop,   "integer" ), false );
+	} );
+	tests( "GSUcheckType:function", () => {
+		test( "checkType_20", _GSUcheckType( GSUnoop,      "function" ), true  );
+		test( "checkType_21", _GSUcheckType( GSUnoopFalse, "function" ), true  );
+		test( "checkType_22", _GSUcheckType( NaN,          "function" ), false );
+		test( "checkType_23", _GSUcheckType( null,         "function" ), false );
+		test( "checkType_24", _GSUcheckType( true,         "function" ), false );
+		test( "checkType_25", _GSUcheckType( false,        "function" ), false );
+		test( "checkType_26", _GSUcheckType( undefined,    "function" ), false );
+	} );
+	tests( "GSUcheckType:string", () => {
+		test( "checkType_30", _GSUcheckType( "",        "string" ), true  );
+		test( "checkType_31", _GSUcheckType( "a",       "string" ), true  );
+		test( "checkType_32", _GSUcheckType( "abc",     "string" ), true  );
+		test( "checkType_33", _GSUcheckType( "0",       "string" ), true  );
+		test( "checkType_34", _GSUcheckType( "21",      "string" ), true  );
+		test( "checkType_35", _GSUcheckType( NaN,       "string" ), false );
+		test( "checkType_36", _GSUcheckType( null,      "string" ), false );
+		test( "checkType_37", _GSUcheckType( true,      "string" ), false );
+		test( "checkType_38", _GSUcheckType( false,     "string" ), false );
+		test( "checkType_39", _GSUcheckType( undefined, "string" ), false );
+	} );
+	tests( "GSUcheckType:number-inRange", () => {
+		test( "checkType_40", _GSUcheckType(  21.5, "number-inRange",  20,  22 ), true  );
+		test( "checkType_41", _GSUcheckType(  21,   "number-inRange",  21,  21 ), true  );
+		test( "checkType_42", _GSUcheckType( -21.5, "number-inRange", -20, -22 ), true  );
+		test( "checkType_43", _GSUcheckType( -21,   "number-inRange", -22, -20 ), true  );
+		test( "checkType_44", _GSUcheckType( -21,   "number-inRange", -21, -21 ), true  );
+		test( "checkType_45", _GSUcheckType(  42,   "number-inRange",   0,  20 ), false );
+	} );
+	tests( "GSUcheckType:integer-inRange", () => {
+		test( "checkType_40", _GSUcheckType(  21,   "integer-inRange",  21,  21 ), true  );
+		test( "checkType_41", _GSUcheckType( -21,   "integer-inRange", -22, -20 ), true  );
+		test( "checkType_42", _GSUcheckType( -21,   "integer-inRange", -21, -21 ), true  );
+		test( "checkType_43", _GSUcheckType(  21.5, "integer-inRange",  20,  22 ), false );
+		test( "checkType_44", _GSUcheckType( -21.5, "integer-inRange", -20, -22 ), false );
+		test( "checkType_45", _GSUcheckType(  42,   "integer-inRange",   0,  20 ), false );
+	} );
+	tests( "GSUcheckType:array", () => {
+		test( "checkType_50", _GSUcheckType( [],        "array" ), true  );
+		test( "checkType_51", _GSUcheckType( [ 21 ],    "array" ), true  );
+		test( "checkType_52", _GSUcheckType( {},        "array" ), false );
+		test( "checkType_53", _GSUcheckType( NaN,       "array" ), false );
+		test( "checkType_54", _GSUcheckType( null,      "array" ), false );
+		test( "checkType_55", _GSUcheckType( true,      "array" ), false );
+		test( "checkType_56", _GSUcheckType( false,     "array" ), false );
+		test( "checkType_57", _GSUcheckType( undefined, "array" ), false );
+	} );
+	tests( "GSUcheckType:object", () => {
+		test( "checkType_60", _GSUcheckType( {},        "object" ), true  );
+		test( "checkType_61", _GSUcheckType( [],        "object" ), false );
+		test( "checkType_62", _GSUcheckType( [ 21 ],    "object" ), false );
+		test( "checkType_63", _GSUcheckType( NaN,       "object" ), false );
+		test( "checkType_64", _GSUcheckType( null,      "object" ), false );
+		test( "checkType_65", _GSUcheckType( true,      "object" ), false );
+		test( "checkType_66", _GSUcheckType( false,     "object" ), false );
+		test( "checkType_67", _GSUcheckType( undefined, "object" ), false );
+	} );
+	tests( "GSUcheckType:arrayOfNumber", () => {
+		test( "checkType_70", _GSUcheckType( [],            "arrayOfNumber" ), true  );
+		test( "checkType_71", _GSUcheckType( [ 1 ],         "arrayOfNumber" ), true  );
+		test( "checkType_72", _GSUcheckType( [ 1, 2 ],      "arrayOfNumber" ), true  );
+		test( "checkType_73", _GSUcheckType( [ 1, 2, 3.5 ], "arrayOfNumber" ), true  );
+		test( "checkType_74", _GSUcheckType( [ 1, 2, "" ],  "arrayOfNumber" ), false );
+		test( "checkType_75", _GSUcheckType( "123",         "arrayOfNumber" ), false );
+		test( "checkType_76", _GSUcheckType( GSUnoop,       "arrayOfNumber" ), false );
+		test( "checkType_77", _GSUcheckType( NaN,           "arrayOfNumber" ), false );
+		test( "checkType_78", _GSUcheckType( null,          "arrayOfNumber" ), false );
+		test( "checkType_79", _GSUcheckType( true,          "arrayOfNumber" ), false );
+		test( "checkType_7a", _GSUcheckType( false,         "arrayOfNumber" ), false );
+		test( "checkType_7b", _GSUcheckType( undefined,     "arrayOfNumber" ), false );
+	} );
+	tests( "GSUcheckType:arrayOfInteger", () => {
+		test( "checkType_80", _GSUcheckType( [],            "arrayOfInteger" ), true  );
+		test( "checkType_81", _GSUcheckType( [ 1 ],         "arrayOfInteger" ), true  );
+		test( "checkType_82", _GSUcheckType( [ 1, 2 ],      "arrayOfInteger" ), true  );
+		test( "checkType_83", _GSUcheckType( [ 1, 2, 3.5 ], "arrayOfInteger" ), false );
+		test( "checkType_84", _GSUcheckType( [ 1, 2, "" ],  "arrayOfInteger" ), false );
+		test( "checkType_85", _GSUcheckType( "123",         "arrayOfInteger" ), false );
+		test( "checkType_86", _GSUcheckType( GSUnoop,       "arrayOfInteger" ), false );
+		test( "checkType_87", _GSUcheckType( NaN,           "arrayOfInteger" ), false );
+		test( "checkType_88", _GSUcheckType( null,          "arrayOfInteger" ), false );
+		test( "checkType_89", _GSUcheckType( true,          "arrayOfInteger" ), false );
+		test( "checkType_8a", _GSUcheckType( false,         "arrayOfInteger" ), false );
+		test( "checkType_8b", _GSUcheckType( undefined,     "arrayOfInteger" ), false );
+	} );
+	tests( "GSUcheckType:oneOf", () => {
+		test( "checkType_90", _GSUcheckType(  0,      "oneOf", [ 0, 21 ]    ), true  );
+		test( "checkType_91", _GSUcheckType( 21,      "oneOf", [ 0, 21 ]    ), true  );
+		test( "checkType_92", _GSUcheckType( null,    "oneOf", [ null ]     ), true  );
+		test( "checkType_93", _GSUcheckType( "42",    "oneOf", [ 41, "42" ] ), true  );
+		test( "checkType_94", _GSUcheckType( GSUnoop, "oneOf", [ GSUnoop ]  ), true  );
+		test( "checkType_95", _GSUcheckType( 10,      "oneOf", [ 0, 21 ]    ), false );
+		test( "checkType_96", _GSUcheckType( "21",    "oneOf", [ 0, 21 ]    ), false );
+		test( "checkType_97", _GSUcheckType( "21",    "oneOf", [ 0, 21 ]    ), false );
+	} );
 </script>
 
 <!-- ....................................................................... -->
 <!-- ..... gs-utils-math ................................................... -->
 <!-- ....................................................................... -->
 <script>
-	// ..... GSUmathApprox .....................................................
-		test( "GSUmathApprox_0", GSUmathApprox(   0,     0,  0 ),  true );
-		test( "GSUmathApprox_1", GSUmathApprox(  -0,    -0,  0 ),  true );
-		test( "GSUmathApprox_2", GSUmathApprox(  21,    21,  0 ),  true );
-		test( "GSUmathApprox_3", GSUmathApprox(  20.9,  21, .1 ),  true );
-		test( "GSUmathApprox_4", GSUmathApprox(  21.1,  21, .1 ),  true );
-		test( "GSUmathApprox_5", GSUmathApprox(  80,   100, 20 ),  true );
-		test( "GSUmathApprox_6", GSUmathApprox( 120,   100, 20 ),  true );
-		test( "GSUmathApprox_7", GSUmathApprox( 120.1, 100, 20 ),  false );
-		test( "GSUmathApprox_8", GSUmathApprox(  79.9, 100, 20 ),  false );
-		test( "GSUmathApprox_9", GSUmathApprox(  21.1,  21,  0 ),  false );
-		test( "GSUmathApprox_a", GSUmathApprox(  20.8,  21, .1 ),  false );
-		test( "GSUmathApprox_b", GSUmathApprox(  21.2,  21, .1 ),  false );
-		test( "GSUmathApprox_c", GSUmathApprox(  -21,    -21,  0 ), true );
-		test( "GSUmathApprox_d", GSUmathApprox(  -20.9,  -21, .1 ), true );
-		test( "GSUmathApprox_e", GSUmathApprox(  -21.1,  -21, .1 ), true );
-		test( "GSUmathApprox_f", GSUmathApprox(  -80,   -100, 20 ), true );
-		test( "GSUmathApprox_g", GSUmathApprox( -120,   -100, 20 ), true );
-		test( "GSUmathApprox_h", GSUmathApprox( -120.1, -100, 20 ), false );
-		test( "GSUmathApprox_i", GSUmathApprox(  -79.9, -100, 20 ), false );
-		test( "GSUmathApprox_j", GSUmathApprox(  -21.1,  -21,  0 ), false );
-		test( "GSUmathApprox_k", GSUmathApprox(  -20.8,  -21, .1 ), false );
-		test( "GSUmathApprox_l", GSUmathApprox(  -21.2,  -21, .1 ), false );
-	// GSUmathFix .................................................................
-		test( "GSUmathFix_0", GSUmathFix( null ),       0 );
-		test( "GSUmathFix_1", GSUmathFix( true ),       1 );
-		test( "GSUmathFix_2", GSUmathFix( false ),      0 );
-		test( "GSUmathFix_3", GSUmathFix( undefined ),  0 );
-		test( "GSUmathFix_4", GSUmathFix( GSUnoop ),    0 );
-		test( "GSUmathFix_5", GSUmathFix(   0 ),        0 );
-		test( "GSUmathFix_6", GSUmathFix(  21 ),       21 );
-		test( "GSUmathFix_7", GSUmathFix(  21.1 ),     21 );
-		test( "GSUmathFix_8", GSUmathFix(  21.9 ),     22 );
-		test( "GSUmathFix_9", GSUmathFix( -21.9 ),    -22 );
-		test( "GSUmathFix_a", GSUmathFix( -21.1 ),    -21 );
-		test( "GSUmathFix_b", GSUmathFix( Math.PI, 1 ), 3.1 );
-		test( "GSUmathFix_c", GSUmathFix( Math.PI, 3 ), 3.142 );
-		test( "GSUmathFix_d", GSUmathFix( Math.PI, 6 ), 3.141593 );
-		test( "GSUmathFix_e", GSUmathFix( [] ), [] );
-		test( "GSUmathFix_f", GSUmathFix( [], 1 ), [] );
-		test( "GSUmathFix_g", GSUmathFix( [ Math.PI ] ), [ 3 ] );
-		test( "GSUmathFix_h", GSUmathFix( [ Math.PI ], 0 ), [ 3 ] );
-		test( "GSUmathFix_i", GSUmathFix( [ Math.PI ], 1 ), [ 3.1 ] );
-		test( "GSUmathFix_j", GSUmathFix( [ Math.PI ], 6 ), [ 3.141593 ] );
-		test( "GSUmathFix_k", GSUmathFix( [ Math.PI, .123456 ], 2 ), [ 3.14, .12 ] );
-	// ..... GSUmathRound ......................................................
-		test( "GSUmathRound_0", GSUmathRound(), NaN );
-		test( "GSUmathRound_1", GSUmathRound( 0, 0 ), NaN );
-		test( "GSUmathRound_2", GSUmathRound( 1, 0 ), NaN );
-		test( "GSUmathRound_3", GSUmathRound( 0 ), 0 );
-		test( "GSUmathRound_4", GSUmathRound( Math.PI    ), 3 );
-		test( "GSUmathRound_5", GSUmathRound( Math.PI, 1 ), 3 );
-		test( "GSUmathRound_6", GSUmathRound( Math.PI, 2 ), 4 );
-		test( "GSUmathRound_7", GSUmathRound( Math.PI, 3 ), 3 );
-		test( "GSUmathRound_8", GSUmathRound(  1.10, .25 ),  1 );
-		test( "GSUmathRound_9", GSUmathRound(  1.25, .25 ),  1.25 );
-		test( "GSUmathRound_a", GSUmathRound(  1.26, .25 ),  1.25 );
-		test( "GSUmathRound_b", GSUmathRound(  1.24, .25 ),  1.25 );
-		test( "GSUmathRound_c", GSUmathRound( -1.10, .25 ), -1 );
-		test( "GSUmathRound_d", GSUmathRound( -1.25, .25 ), -1.25 );
-		test( "GSUmathRound_e", GSUmathRound( -1.26, .25 ), -1.25 );
-		test( "GSUmathRound_f", GSUmathRound( -1.24, .25 ), -1.25 );
-	// ..... GSUmathFloor ......................................................
-		test( "GSUmathFloor_0", GSUmathFloor(), NaN );
-		test( "GSUmathFloor_1", GSUmathFloor( 0, 0 ), NaN );
-		test( "GSUmathFloor_2", GSUmathFloor( 1, 0 ), NaN );
-		test( "GSUmathFloor_3", GSUmathFloor( 0 ), 0 );
-		test( "GSUmathFloor_4", GSUmathFloor( Math.PI    ), 3 );
-		test( "GSUmathFloor_5", GSUmathFloor( Math.PI, 1 ), 3 );
-		test( "GSUmathFloor_6", GSUmathFloor( Math.PI, 2 ), 2 );
-		test( "GSUmathFloor_7", GSUmathFloor( Math.PI, 3 ), 3 );
-		test( "GSUmathFloor_8", GSUmathFloor(  1.10, .25 ),  1 );
-		test( "GSUmathFloor_9", GSUmathFloor(  1.25, .25 ),  1.25 );
-		test( "GSUmathFloor_a", GSUmathFloor(  1.26, .25 ),  1.25 );
-		test( "GSUmathFloor_b", GSUmathFloor(  1.24, .25 ),  1 );
-		test( "GSUmathFloor_c", GSUmathFloor( -1.10, .25 ), -1.25 );
-		test( "GSUmathFloor_d", GSUmathFloor( -1.25, .25 ), -1.25 );
-		test( "GSUmathFloor_e", GSUmathFloor( -1.26, .25 ), -1.50 );
-		test( "GSUmathFloor_f", GSUmathFloor( -1.24, .25 ), -1.25 );
-	// ..... GSUmathCeil .......................................................
-		test( "GSUmathCeil_0", GSUmathCeil(), NaN );
-		test( "GSUmathCeil_1", GSUmathCeil( 0, 0 ), NaN );
-		test( "GSUmathCeil_2", GSUmathCeil( 1, 0 ), NaN );
-		test( "GSUmathCeil_3", GSUmathCeil( 0 ), 0 );
-		test( "GSUmathCeil_4", GSUmathCeil( Math.PI    ), 4 );
-		test( "GSUmathCeil_5", GSUmathCeil( Math.PI, 1 ), 4 );
-		test( "GSUmathCeil_6", GSUmathCeil( Math.PI, 2 ), 4 );
-		test( "GSUmathCeil_7", GSUmathCeil( Math.PI, 3 ), 6 );
-		test( "GSUmathCeil_8", GSUmathCeil(  1.10, .25 ),  1.25 );
-		test( "GSUmathCeil_9", GSUmathCeil(  1.25, .25 ),  1.25 );
-		test( "GSUmathCeil_a", GSUmathCeil(  1.26, .25 ),  1.50 );
-		test( "GSUmathCeil_b", GSUmathCeil(  1.24, .25 ),  1.25 );
-		test( "GSUmathCeil_c", GSUmathCeil( -1.10, .25 ), -1 );
-		test( "GSUmathCeil_d", GSUmathCeil( -1.25, .25 ), -1.25 );
-		test( "GSUmathCeil_e", GSUmathCeil( -1.26, .25 ), -1.25 );
-		test( "GSUmathCeil_f", GSUmathCeil( -1.24, .25 ), -1 );
-	// ..... GSUmathLogN .......................................................
-		test( "GSUmathLogN_0", GSUmathFix( GSUmathLogN( 10, 1000 ), 8 ), 3 );
-		test( "GSUmathLogN_1", GSUmathFix( GSUmathLogN( 2, 1024 ), 8 ), 10 );
-	// ..... GSUmathSum ........................................................
-		test( "GSUmathSum_0", GSUmathSum(),                    0 );
-		test( "GSUmathSum_1", GSUmathSum( NaN ),               0 );
-		test( "GSUmathSum_2", GSUmathSum( 0 ),                 0 );
-		test( "GSUmathSum_3", GSUmathSum( 7 ),                 7 );
-		test( "GSUmathSum_4", GSUmathSum( 1, 2, 3, 4, 5, 6 ), 21 );
-	// ..... GSUmathAvg ........................................................
-		test( "GSUmathAvg_0", GSUmathAvg(),               0 );
-		test( "GSUmathAvg_1", GSUmathAvg( NaN ),          0 );
-		test( "GSUmathAvg_2", GSUmathAvg( null ),         0 );
-		test( "GSUmathAvg_3", GSUmathAvg( undefined ),    0 );
-		test( "GSUmathAvg_4", GSUmathAvg( 21 ),          21 );
-		test( "GSUmathAvg_5", GSUmathAvg( 21, NaN ),      0 );
-		test( "GSUmathAvg_6", GSUmathAvg( 0, "42" ),     21 );
-		test( "GSUmathAvg_7", GSUmathAvg( "21", "63" ),  42 );
-		test( "GSUmathAvg_8", GSUmathAvg( -10, 15 ),      2.5 );
-		test( "GSUmathAvg_9", GSUmathAvg(  10, 20 ),     15 );
-		test( "GSUmathAvg_a", GSUmathAvg(  10, 20, 30 ), 20 );
-	// ..... GSUmathStack ......................................................
-		test( "GSUmathStack_0", GSUmathSum( ...GSUmathStack( [ 5 ],       2 ) ), 2 );
-		test( "GSUmathStack_1", GSUmathSum( ...GSUmathStack( [ 2, 5 ],    7 ) ), 9 );
-		test( "GSUmathStack_2", GSUmathSum( ...GSUmathStack( [ 5, 7 ],    3 ) ), 8 );
-		test( "GSUmathStack_3", GSUmathSum( ...GSUmathStack( [ 1, 2, 3 ], 4 ) ), 7 );
-	// ..... GSUmathSign .......................................................
-		test( "GSUmathSign_0", GSUmathSign( +0 ),    "+0" );
-		test( "GSUmathSign_1", GSUmathSign( -0 ),    "+0" );
-		test( "GSUmathSign_2", GSUmathSign(  1 ),    "+1" );
-		test( "GSUmathSign_3", GSUmathSign( -1 ),    "-1" );
-		test( "GSUmathSign_4", GSUmathSign( .009 ),  "+0.009" );
-		test( "GSUmathSign_5", GSUmathSign( -.009 ), "-0.009" );
-	// ..... GSUmathInRange ....................................................
-		test( "GSUmathInRange_0", GSUmathInRange(   0,   0,   1 ), true );
-		test( "GSUmathInRange_1", GSUmathInRange(  20,  20,  22 ), true );
-		test( "GSUmathInRange_2", GSUmathInRange(  21,  20,  22 ), true );
-		test( "GSUmathInRange_3", GSUmathInRange(  22,  20,  22 ), true );
-		test( "GSUmathInRange_4", GSUmathInRange(  20,  22,  20 ), true );
-		test( "GSUmathInRange_5", GSUmathInRange(  21,  22,  20 ), true );
-		test( "GSUmathInRange_6", GSUmathInRange(  22,  22,  20 ), true );
-		test( "GSUmathInRange_7", GSUmathInRange( -20, -20, -22 ), true );
-		test( "GSUmathInRange_8", GSUmathInRange( -21, -20, -22 ), true );
-		test( "GSUmathInRange_9", GSUmathInRange( -22, -20, -22 ), true );
-		test( "GSUmathInRange_a", GSUmathInRange( -20, -22, -20 ), true );
-		test( "GSUmathInRange_b", GSUmathInRange( -21, -22, -20 ), true );
-		test( "GSUmathInRange_c", GSUmathInRange( -22, -22, -20 ), true );
-		test( "GSUmathInRange_d", GSUmathInRange(  .1,   0,   0 ), false );
-		test( "GSUmathInRange_e", GSUmathInRange( -.1,   0,   0 ), false );
-		test( "GSUmathInRange_f", GSUmathInRange(   2,   0,   1 ), false );
-		test( "GSUmathInRange_g", GSUmathInRange(  -1,   0,   1 ), false );
-		test( "GSUmathInRange_h", GSUmathInRange( -.001, 0,   1 ), false );
-		test( "GSUmathInRange_i", GSUmathInRange( 1.001, 0,   1 ), false );
-		test( "GSUmathInRange_j", GSUmathInRange( undefined, -Infinity, Infinity ), false );
-		test( "GSUmathInRange_k", GSUmathInRange( NaN,       -Infinity, Infinity ), false );
-		test( "GSUmathInRange_l", GSUmathInRange( null,      -Infinity, Infinity ), false );
-		test( "GSUmathInRange_m", GSUmathInRange( "-0.5",    -Infinity, Infinity ), true );
-		test( "GSUmathInRange_n", GSUmathInRange( "0",       -Infinity, Infinity ), true );
-		test( "GSUmathInRange_o", GSUmathInRange( "21",      -Infinity, Infinity ), true );
-		test( "GSUmathInRange_p", GSUmathInRange( "a",       -Infinity, Infinity ), false );
-		test( "GSUmathInRange_q", GSUmathInRange( "",        -Infinity, Infinity ), false );
-		test( "GSUmathInRange_r", GSUmathInRange( false,     -Infinity, Infinity ), false );
-		test( "GSUmathInRange_s", GSUmathInRange( true,      -Infinity, Infinity ), false );
-	// ..... GSUmathClamp ......................................................
-		test( "GSUmathClamp_0", GSUmathClamp(  19,  20,  30 ),  20 );
-		test( "GSUmathClamp_1", GSUmathClamp(  20,  20,  30 ),  20 );
-		test( "GSUmathClamp_2", GSUmathClamp(  21,  20,  30 ),  21 );
-		test( "GSUmathClamp_3", GSUmathClamp(  29,  20,  30 ),  29 );
-		test( "GSUmathClamp_4", GSUmathClamp(  30,  20,  30 ),  30 );
-		test( "GSUmathClamp_5", GSUmathClamp(  31,  20,  30 ),  30 );
-		test( "GSUmathClamp_6", GSUmathClamp( -19, -20, -30 ), -20 );
-		test( "GSUmathClamp_7", GSUmathClamp( -20, -20, -30 ), -20 );
-		test( "GSUmathClamp_8", GSUmathClamp( -21, -20, -30 ), -21 );
-		test( "GSUmathClamp_9", GSUmathClamp( -29, -20, -30 ), -29 );
-		test( "GSUmathClamp_a", GSUmathClamp( -30, -20, -30 ), -30 );
-		test( "GSUmathClamp_b", GSUmathClamp( -31, -20, -30 ), -30 );
-	// ..... GSUmathEaseInCirc .................................................
-		test( "GSUmathEaseInCirc_0", GSUmathEaseInCirc( 0 ),      0 );
-		test( "GSUmathEaseInCirc_1", GSUmathEaseInCirc( 1 ),      1 );
-		test( "GSUmathEaseInCirc_2", GSUmathEaseInCirc( .25 ),    .031754163448145745 );
-		test( "GSUmathEaseInCirc_3", GSUmathEaseInCirc( .5 ),     .1339745962155614 );
-		test( "GSUmathEaseInCirc_4", GSUmathEaseInCirc( .75 ),    .3385621722338523 );
-		test( "GSUmathEaseInCirc_5", GSUmathEaseInCirc( .25, 2 ), .031754163448145745 );
-		test( "GSUmathEaseInCirc_6", GSUmathEaseInCirc( .25, 3 ), .007843258350778481 );
-		test( "GSUmathEaseInCirc_7", GSUmathEaseInCirc( .25, 4 ), .001955036083043038 );
-	// ..... GSUmathEaseOutCirc ................................................
-		test( "GSUmathEaseOutCirc_0", GSUmathEaseOutCirc( 0 ),      0 );
-		test( "GSUmathEaseOutCirc_1", GSUmathEaseOutCirc( 1 ),      1 );
-		test( "GSUmathEaseOutCirc_2", GSUmathEaseOutCirc( .25 ),    .6614378277661477 );
-		test( "GSUmathEaseOutCirc_3", GSUmathEaseOutCirc( .5 ),     .8660254037844386 );
-		test( "GSUmathEaseOutCirc_4", GSUmathEaseOutCirc( .75 ),    .9682458365518543 );
-		test( "GSUmathEaseOutCirc_5", GSUmathEaseOutCirc( .25, 2 ), .6614378277661477 );
-		test( "GSUmathEaseOutCirc_6", GSUmathEaseOutCirc( .25, 3 ), 1.192424001771182 ); // ???
-		test( "GSUmathEaseOutCirc_7", GSUmathEaseOutCirc( .25, 4 ), .8267972847076845 );
-	// ..... GSUmathLineFindY ..................................................
-		test( "GSUmathLineFindY_0", GSUmathLineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 15 ), 1.5 );
-		test( "GSUmathLineFindY_1", GSUmathLineFindY( { x:  20, y:  2 }, { x: 10, y: 1 }, 15 ), 1.5 );
-		test( "GSUmathLineFindY_2", GSUmathLineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 10 ), 1   );
-		test( "GSUmathLineFindY_3", GSUmathLineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 20 ), 2   );
-		test( "GSUmathLineFindY_4", GSUmathLineFindY( { x:  10, y:  1 }, { x: 20, y: 2 },  5 ),  .5 );
-		test( "GSUmathLineFindY_5", GSUmathLineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 25 ), 2.5 );
-		test( "GSUmathLineFindY_6", GSUmathLineFindY( { x: -10, y:  1 }, { x: 10, y: 2 },  0 ), 1.5 );
-		test( "GSUmathLineFindY_7", GSUmathLineFindY( { x: -10, y: -1 }, { x: 10, y: 1 },  0 ), 0   );
-	// ..... GSUmathSampleDotLine ..............................................
-		test( "GSUmathSampleDotLine_0", GSUmathSampleDotLine( [ { x:  0, y:  0 }, { x: 1, y: 1 } ], 2 ), [ [  0,  0 ], [     1,     1 ] ] );
-		test( "GSUmathSampleDotLine_1", GSUmathSampleDotLine( [ { x: -1, y: -1 }, { x: 1, y: 1 } ], 2 ), [ [ -1, -1 ], [     1,     1 ] ] );
-		test( "GSUmathSampleDotLine_2", GSUmathSampleDotLine( [ { x:  0, y:  0 }, { x: 1, y: 1 } ], 3 ), [ [  0,  0 ], [    .5,    .5 ], [     1,     1 ] ] );
-		test( "GSUmathSampleDotLine_3", GSUmathSampleDotLine( [ { x:  0, y:  0 }, { x: 1, y: 1 } ], 4 ), [ [  0,  0 ], [ 1 / 3, 1 / 3 ], [ 2 / 3, 2 / 3 ], [ 1, 1 ] ] );
+	tests( "GSUmathApprox", () => {
+		test( "mathApprox_0", GSUmathApprox(   0,     0,  0 ),  true );
+		test( "mathApprox_1", GSUmathApprox(  -0,    -0,  0 ),  true );
+		test( "mathApprox_2", GSUmathApprox(  21,    21,  0 ),  true );
+		test( "mathApprox_3", GSUmathApprox(  20.9,  21, .1 ),  true );
+		test( "mathApprox_4", GSUmathApprox(  21.1,  21, .1 ),  true );
+		test( "mathApprox_5", GSUmathApprox(  80,   100, 20 ),  true );
+		test( "mathApprox_6", GSUmathApprox( 120,   100, 20 ),  true );
+		test( "mathApprox_7", GSUmathApprox( 120.1, 100, 20 ),  false );
+		test( "mathApprox_8", GSUmathApprox(  79.9, 100, 20 ),  false );
+		test( "mathApprox_9", GSUmathApprox(  21.1,  21,  0 ),  false );
+		test( "mathApprox_a", GSUmathApprox(  20.8,  21, .1 ),  false );
+		test( "mathApprox_b", GSUmathApprox(  21.2,  21, .1 ),  false );
+		test( "mathApprox_c", GSUmathApprox(  -21,    -21,  0 ), true );
+		test( "mathApprox_d", GSUmathApprox(  -20.9,  -21, .1 ), true );
+		test( "mathApprox_e", GSUmathApprox(  -21.1,  -21, .1 ), true );
+		test( "mathApprox_f", GSUmathApprox(  -80,   -100, 20 ), true );
+		test( "mathApprox_g", GSUmathApprox( -120,   -100, 20 ), true );
+		test( "mathApprox_h", GSUmathApprox( -120.1, -100, 20 ), false );
+		test( "mathApprox_i", GSUmathApprox(  -79.9, -100, 20 ), false );
+		test( "mathApprox_j", GSUmathApprox(  -21.1,  -21,  0 ), false );
+		test( "mathApprox_k", GSUmathApprox(  -20.8,  -21, .1 ), false );
+		test( "mathApprox_l", GSUmathApprox(  -21.2,  -21, .1 ), false );
+	} );
+	tests( "GSUmathFix", () => {
+		test( "mathFix_0", GSUmathFix( null ),       0 );
+		test( "mathFix_1", GSUmathFix( true ),       1 );
+		test( "mathFix_2", GSUmathFix( false ),      0 );
+		test( "mathFix_3", GSUmathFix( undefined ),  0 );
+		test( "mathFix_4", GSUmathFix( GSUnoop ),    0 );
+		test( "mathFix_5", GSUmathFix(   0 ),        0 );
+		test( "mathFix_6", GSUmathFix(  21 ),       21 );
+		test( "mathFix_7", GSUmathFix(  21.1 ),     21 );
+		test( "mathFix_8", GSUmathFix(  21.9 ),     22 );
+		test( "mathFix_9", GSUmathFix( -21.9 ),    -22 );
+		test( "mathFix_a", GSUmathFix( -21.1 ),    -21 );
+		test( "mathFix_b", GSUmathFix( Math.PI, 1 ), 3.1 );
+		test( "mathFix_c", GSUmathFix( Math.PI, 3 ), 3.142 );
+		test( "mathFix_d", GSUmathFix( Math.PI, 6 ), 3.141593 );
+		test( "mathFix_e", GSUmathFix( [] ), [] );
+		test( "mathFix_f", GSUmathFix( [], 1 ), [] );
+		test( "mathFix_g", GSUmathFix( [ Math.PI ] ), [ 3 ] );
+		test( "mathFix_h", GSUmathFix( [ Math.PI ], 0 ), [ 3 ] );
+		test( "mathFix_i", GSUmathFix( [ Math.PI ], 1 ), [ 3.1 ] );
+		test( "mathFix_j", GSUmathFix( [ Math.PI ], 6 ), [ 3.141593 ] );
+		test( "mathFix_k", GSUmathFix( [ Math.PI, .123456 ], 2 ), [ 3.14, .12 ] );
+	} );
+	tests( "GSUmathRound", () => {
+		test( "mathRound_0", GSUmathRound(), NaN );
+		test( "mathRound_1", GSUmathRound( 0, 0 ), NaN );
+		test( "mathRound_2", GSUmathRound( 1, 0 ), NaN );
+		test( "mathRound_3", GSUmathRound( 0 ), 0 );
+		test( "mathRound_4", GSUmathRound( Math.PI    ), 3 );
+		test( "mathRound_5", GSUmathRound( Math.PI, 1 ), 3 );
+		test( "mathRound_6", GSUmathRound( Math.PI, 2 ), 4 );
+		test( "mathRound_7", GSUmathRound( Math.PI, 3 ), 3 );
+		test( "mathRound_8", GSUmathRound(  1.10, .25 ),  1 );
+		test( "mathRound_9", GSUmathRound(  1.25, .25 ),  1.25 );
+		test( "mathRound_a", GSUmathRound(  1.26, .25 ),  1.25 );
+		test( "mathRound_b", GSUmathRound(  1.24, .25 ),  1.25 );
+		test( "mathRound_c", GSUmathRound( -1.10, .25 ), -1 );
+		test( "mathRound_d", GSUmathRound( -1.25, .25 ), -1.25 );
+		test( "mathRound_e", GSUmathRound( -1.26, .25 ), -1.25 );
+		test( "mathRound_f", GSUmathRound( -1.24, .25 ), -1.25 );
+	} );
+	tests( "GSUmathFloor", () => {
+		test( "mathFloor_0", GSUmathFloor(), NaN );
+		test( "mathFloor_1", GSUmathFloor( 0, 0 ), NaN );
+		test( "mathFloor_2", GSUmathFloor( 1, 0 ), NaN );
+		test( "mathFloor_3", GSUmathFloor( 0 ), 0 );
+		test( "mathFloor_4", GSUmathFloor( Math.PI    ), 3 );
+		test( "mathFloor_5", GSUmathFloor( Math.PI, 1 ), 3 );
+		test( "mathFloor_6", GSUmathFloor( Math.PI, 2 ), 2 );
+		test( "mathFloor_7", GSUmathFloor( Math.PI, 3 ), 3 );
+		test( "mathFloor_8", GSUmathFloor(  1.10, .25 ),  1 );
+		test( "mathFloor_9", GSUmathFloor(  1.25, .25 ),  1.25 );
+		test( "mathFloor_a", GSUmathFloor(  1.26, .25 ),  1.25 );
+		test( "mathFloor_b", GSUmathFloor(  1.24, .25 ),  1 );
+		test( "mathFloor_c", GSUmathFloor( -1.10, .25 ), -1.25 );
+		test( "mathFloor_d", GSUmathFloor( -1.25, .25 ), -1.25 );
+		test( "mathFloor_e", GSUmathFloor( -1.26, .25 ), -1.50 );
+		test( "mathFloor_f", GSUmathFloor( -1.24, .25 ), -1.25 );
+	} );
+	tests( "GSUmathCeil", () => {
+		test( "mathCeil_0", GSUmathCeil(), NaN );
+		test( "mathCeil_1", GSUmathCeil( 0, 0 ), NaN );
+		test( "mathCeil_2", GSUmathCeil( 1, 0 ), NaN );
+		test( "mathCeil_3", GSUmathCeil( 0 ), 0 );
+		test( "mathCeil_4", GSUmathCeil( Math.PI    ), 4 );
+		test( "mathCeil_5", GSUmathCeil( Math.PI, 1 ), 4 );
+		test( "mathCeil_6", GSUmathCeil( Math.PI, 2 ), 4 );
+		test( "mathCeil_7", GSUmathCeil( Math.PI, 3 ), 6 );
+		test( "mathCeil_8", GSUmathCeil(  1.10, .25 ),  1.25 );
+		test( "mathCeil_9", GSUmathCeil(  1.25, .25 ),  1.25 );
+		test( "mathCeil_a", GSUmathCeil(  1.26, .25 ),  1.50 );
+		test( "mathCeil_b", GSUmathCeil(  1.24, .25 ),  1.25 );
+		test( "mathCeil_c", GSUmathCeil( -1.10, .25 ), -1 );
+		test( "mathCeil_d", GSUmathCeil( -1.25, .25 ), -1.25 );
+		test( "mathCeil_e", GSUmathCeil( -1.26, .25 ), -1.25 );
+		test( "mathCeil_f", GSUmathCeil( -1.24, .25 ), -1 );
+	} );
+	tests( "GSUmathLogN", () => {
+		test( "mathLogN_0", GSUmathFix( GSUmathLogN( 10, 1000 ), 8 ), 3 );
+		test( "mathLogN_1", GSUmathFix( GSUmathLogN( 2, 1024 ), 8 ), 10 );
+	} );
+	tests( "GSUmathSum", () => {
+		test( "mathSum_0", GSUmathSum(),                    0 );
+		test( "mathSum_1", GSUmathSum( NaN ),               0 );
+		test( "mathSum_2", GSUmathSum( 0 ),                 0 );
+		test( "mathSum_3", GSUmathSum( 7 ),                 7 );
+		test( "mathSum_4", GSUmathSum( 1, 2, 3, 4, 5, 6 ), 21 );
+	} );
+	tests( "GSUmathAvg", () => {
+		test( "mathAvg_0", GSUmathAvg(),               0 );
+		test( "mathAvg_1", GSUmathAvg( NaN ),          0 );
+		test( "mathAvg_2", GSUmathAvg( null ),         0 );
+		test( "mathAvg_3", GSUmathAvg( undefined ),    0 );
+		test( "mathAvg_4", GSUmathAvg( 21 ),          21 );
+		test( "mathAvg_5", GSUmathAvg( 21, NaN ),      0 );
+		test( "mathAvg_6", GSUmathAvg( 0, "42" ),     21 );
+		test( "mathAvg_7", GSUmathAvg( "21", "63" ),  42 );
+		test( "mathAvg_8", GSUmathAvg( -10, 15 ),      2.5 );
+		test( "mathAvg_9", GSUmathAvg(  10, 20 ),     15 );
+		test( "mathAvg_a", GSUmathAvg(  10, 20, 30 ), 20 );
+	} );
+	tests( "GSUmathStack", () => {
+		test( "mathStack_0", GSUmathSum( ...GSUmathStack( [ 5 ],       2 ) ), 2 );
+		test( "mathStack_1", GSUmathSum( ...GSUmathStack( [ 2, 5 ],    7 ) ), 9 );
+		test( "mathStack_2", GSUmathSum( ...GSUmathStack( [ 5, 7 ],    3 ) ), 8 );
+		test( "mathStack_3", GSUmathSum( ...GSUmathStack( [ 1, 2, 3 ], 4 ) ), 7 );
+	} );
+	tests( "GSUmathSign", () => {
+		test( "mathSign_0", GSUmathSign( +0 ),    "+0" );
+		test( "mathSign_1", GSUmathSign( -0 ),    "+0" );
+		test( "mathSign_2", GSUmathSign(  1 ),    "+1" );
+		test( "mathSign_3", GSUmathSign( -1 ),    "-1" );
+		test( "mathSign_4", GSUmathSign( .009 ),  "+0.009" );
+		test( "mathSign_5", GSUmathSign( -.009 ), "-0.009" );
+	} );
+	tests( "GSUmathInRange", () => {
+		test( "mathInRange_0", GSUmathInRange(   0,   0,   1 ), true );
+		test( "mathInRange_1", GSUmathInRange(  20,  20,  22 ), true );
+		test( "mathInRange_2", GSUmathInRange(  21,  20,  22 ), true );
+		test( "mathInRange_3", GSUmathInRange(  22,  20,  22 ), true );
+		test( "mathInRange_4", GSUmathInRange(  20,  22,  20 ), true );
+		test( "mathInRange_5", GSUmathInRange(  21,  22,  20 ), true );
+		test( "mathInRange_6", GSUmathInRange(  22,  22,  20 ), true );
+		test( "mathInRange_7", GSUmathInRange( -20, -20, -22 ), true );
+		test( "mathInRange_8", GSUmathInRange( -21, -20, -22 ), true );
+		test( "mathInRange_9", GSUmathInRange( -22, -20, -22 ), true );
+		test( "mathInRange_a", GSUmathInRange( -20, -22, -20 ), true );
+		test( "mathInRange_b", GSUmathInRange( -21, -22, -20 ), true );
+		test( "mathInRange_c", GSUmathInRange( -22, -22, -20 ), true );
+		test( "mathInRange_d", GSUmathInRange(  .1,   0,   0 ), false );
+		test( "mathInRange_e", GSUmathInRange( -.1,   0,   0 ), false );
+		test( "mathInRange_f", GSUmathInRange(   2,   0,   1 ), false );
+		test( "mathInRange_g", GSUmathInRange(  -1,   0,   1 ), false );
+		test( "mathInRange_h", GSUmathInRange( -.001, 0,   1 ), false );
+		test( "mathInRange_i", GSUmathInRange( 1.001, 0,   1 ), false );
+		test( "mathInRange_j", GSUmathInRange( undefined, -Infinity, Infinity ), false );
+		test( "mathInRange_k", GSUmathInRange( NaN,       -Infinity, Infinity ), false );
+		test( "mathInRange_l", GSUmathInRange( null,      -Infinity, Infinity ), false );
+		test( "mathInRange_m", GSUmathInRange( "-0.5",    -Infinity, Infinity ), true );
+		test( "mathInRange_n", GSUmathInRange( "0",       -Infinity, Infinity ), true );
+		test( "mathInRange_o", GSUmathInRange( "21",      -Infinity, Infinity ), true );
+		test( "mathInRange_p", GSUmathInRange( "a",       -Infinity, Infinity ), false );
+		test( "mathInRange_q", GSUmathInRange( "",        -Infinity, Infinity ), false );
+		test( "mathInRange_r", GSUmathInRange( false,     -Infinity, Infinity ), false );
+		test( "mathInRange_s", GSUmathInRange( true,      -Infinity, Infinity ), false );
+	} );
+	tests( "GSUmathClamp", () => {
+		test( "mathClamp_0", GSUmathClamp(  19,  20,  30 ),  20 );
+		test( "mathClamp_1", GSUmathClamp(  20,  20,  30 ),  20 );
+		test( "mathClamp_2", GSUmathClamp(  21,  20,  30 ),  21 );
+		test( "mathClamp_3", GSUmathClamp(  29,  20,  30 ),  29 );
+		test( "mathClamp_4", GSUmathClamp(  30,  20,  30 ),  30 );
+		test( "mathClamp_5", GSUmathClamp(  31,  20,  30 ),  30 );
+		test( "mathClamp_6", GSUmathClamp( -19, -20, -30 ), -20 );
+		test( "mathClamp_7", GSUmathClamp( -20, -20, -30 ), -20 );
+		test( "mathClamp_8", GSUmathClamp( -21, -20, -30 ), -21 );
+		test( "mathClamp_9", GSUmathClamp( -29, -20, -30 ), -29 );
+		test( "mathClamp_a", GSUmathClamp( -30, -20, -30 ), -30 );
+		test( "mathClamp_b", GSUmathClamp( -31, -20, -30 ), -30 );
+	} );
+	tests( "GSUmathEaseInCirc", () => {
+		test( "mathEaseInCirc_0", GSUmathEaseInCirc( 0 ),      0 );
+		test( "mathEaseInCirc_1", GSUmathEaseInCirc( 1 ),      1 );
+		test( "mathEaseInCirc_2", GSUmathEaseInCirc( .25 ),    .031754163448145745 );
+		test( "mathEaseInCirc_3", GSUmathEaseInCirc( .5 ),     .1339745962155614 );
+		test( "mathEaseInCirc_4", GSUmathEaseInCirc( .75 ),    .3385621722338523 );
+		test( "mathEaseInCirc_5", GSUmathEaseInCirc( .25, 2 ), .031754163448145745 );
+		test( "mathEaseInCirc_6", GSUmathEaseInCirc( .25, 3 ), .007843258350778481 );
+		test( "mathEaseInCirc_7", GSUmathEaseInCirc( .25, 4 ), .001955036083043038 );
+	} );
+	tests( "GSUmathEaseOutCirc", () => {
+		test( "mathEaseOutCirc_0", GSUmathEaseOutCirc( 0 ),      0 );
+		test( "mathEaseOutCirc_1", GSUmathEaseOutCirc( 1 ),      1 );
+		test( "mathEaseOutCirc_2", GSUmathEaseOutCirc( .25 ),    .6614378277661477 );
+		test( "mathEaseOutCirc_3", GSUmathEaseOutCirc( .5 ),     .8660254037844386 );
+		test( "mathEaseOutCirc_4", GSUmathEaseOutCirc( .75 ),    .9682458365518543 );
+		test( "mathEaseOutCirc_5", GSUmathEaseOutCirc( .25, 2 ), .6614378277661477 );
+		test( "mathEaseOutCirc_6", GSUmathEaseOutCirc( .25, 3 ), 1.192424001771182 ); // ???
+		test( "mathEaseOutCirc_7", GSUmathEaseOutCirc( .25, 4 ), .8267972847076845 );
+	} );
+	tests( "GSUmathLineFindY", () => {
+		test( "mathLineFindY_0", GSUmathLineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 15 ), 1.5 );
+		test( "mathLineFindY_1", GSUmathLineFindY( { x:  20, y:  2 }, { x: 10, y: 1 }, 15 ), 1.5 );
+		test( "mathLineFindY_2", GSUmathLineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 10 ), 1   );
+		test( "mathLineFindY_3", GSUmathLineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 20 ), 2   );
+		test( "mathLineFindY_4", GSUmathLineFindY( { x:  10, y:  1 }, { x: 20, y: 2 },  5 ),  .5 );
+		test( "mathLineFindY_5", GSUmathLineFindY( { x:  10, y:  1 }, { x: 20, y: 2 }, 25 ), 2.5 );
+		test( "mathLineFindY_6", GSUmathLineFindY( { x: -10, y:  1 }, { x: 10, y: 2 },  0 ), 1.5 );
+		test( "mathLineFindY_7", GSUmathLineFindY( { x: -10, y: -1 }, { x: 10, y: 1 },  0 ), 0   );
+	} );
+	tests( "GSUmathSampleDotLine", () => {
+		test( "mathSampleDotLine_0", GSUmathSampleDotLine( [ { x:  0, y:  0 }, { x: 1, y: 1 } ], 2 ), [ [  0,  0 ], [     1,     1 ] ] );
+		test( "mathSampleDotLine_1", GSUmathSampleDotLine( [ { x: -1, y: -1 }, { x: 1, y: 1 } ], 2 ), [ [ -1, -1 ], [     1,     1 ] ] );
+		test( "mathSampleDotLine_2", GSUmathSampleDotLine( [ { x:  0, y:  0 }, { x: 1, y: 1 } ], 3 ), [ [  0,  0 ], [    .5,    .5 ], [     1,     1 ] ] );
+		test( "mathSampleDotLine_3", GSUmathSampleDotLine( [ { x:  0, y:  0 }, { x: 1, y: 1 } ], 4 ), [ [  0,  0 ], [ 1 / 3, 1 / 3 ], [ 2 / 3, 2 / 3 ], [ 1, 1 ] ] );
 
-		test( "GSUmathSampleDotLine_4", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: .5, y: 3 }, { x: 1, y: 0 } ], 2 ), [ [  0,  0 ], [     1, 0 ] ] );
-		test( "GSUmathSampleDotLine_5", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: .5, y: 3 }, { x: 1, y: 0 } ], 3 ), [ [  0,  0 ], [    .5, 3 ], [     1, 0 ] ] );
-		test( "GSUmathSampleDotLine_6", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: .5, y: 3 }, { x: 1, y: 0 } ], 4 ), [ [  0,  0 ], [ 1 / 3, 2 ], [ 2 / 3, 2 ], [ 1, 0 ] ] );
-		test( "GSUmathSampleDotLine_7", GSUmathSampleDotLine( [ { x: -3, y: 0 }, { x: 0,  y: 3 }, { x: 3, y: 0 } ], 4 ), [ [ -3,  0 ], [    -1, 2 ], [     1, 2 ], [ 3, 0 ] ] );
+		test( "mathSampleDotLine_4", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: .5, y: 3 }, { x: 1, y: 0 } ], 2 ), [ [  0,  0 ], [     1, 0 ] ] );
+		test( "mathSampleDotLine_5", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: .5, y: 3 }, { x: 1, y: 0 } ], 3 ), [ [  0,  0 ], [    .5, 3 ], [     1, 0 ] ] );
+		test( "mathSampleDotLine_6", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: .5, y: 3 }, { x: 1, y: 0 } ], 4 ), [ [  0,  0 ], [ 1 / 3, 2 ], [ 2 / 3, 2 ], [ 1, 0 ] ] );
+		test( "mathSampleDotLine_7", GSUmathSampleDotLine( [ { x: -3, y: 0 }, { x: 0,  y: 3 }, { x: 3, y: 0 } ], 4 ), [ [ -3,  0 ], [    -1, 2 ], [     1, 2 ], [ 3, 0 ] ] );
 
-		test( "GSUmathSampleDotLine_8", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2,  0       ), [ [  0,   0  ], [  1,   1  ] ] );
-		test( "GSUmathSampleDotLine_9", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2,  0,   1  ), [ [  0,   0  ], [  1,   1  ] ] );
-		test( "GSUmathSampleDotLine_a", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2, .5,   1  ), [ [ .5,  .5  ], [  1,   1  ] ] );
-		test( "GSUmathSampleDotLine_b", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2,  0,  .5  ), [ [  0,   0  ], [ .5,  .5  ] ] );
-		test( "GSUmathSampleDotLine_c", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2, .25, .75 ), [ [ .25, .25 ], [ .75, .75 ] ] );
+		test( "mathSampleDotLine_8", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2,  0       ), [ [  0,   0  ], [  1,   1  ] ] );
+		test( "mathSampleDotLine_9", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2,  0,   1  ), [ [  0,   0  ], [  1,   1  ] ] );
+		test( "mathSampleDotLine_a", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2, .5,   1  ), [ [ .5,  .5  ], [  1,   1  ] ] );
+		test( "mathSampleDotLine_b", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2,  0,  .5  ), [ [  0,   0  ], [ .5,  .5  ] ] );
+		test( "mathSampleDotLine_c", GSUmathSampleDotLine( [ { x:  0, y: 0 }, { x: 1, y: 1 } ], 2, .25, .75 ), [ [ .25, .25 ], [ .75, .75 ] ] );
+	} );
 </script>
 
 <!-- ....................................................................... -->
 <!-- ..... gs-utils-func ................................................... -->
 <!-- ....................................................................... -->
 <script>
-	// ..... GSUnoop ...........................................................
-		test( "GSUnoop_0",      GSUnoop(),            undefined );
-		test( "GSUnoop_1",      GSUnoop( 1 ),         undefined );
-		test( "GSUnoopFalse_0", GSUnoopFalse(),       false     );
-		test( "GSUnoopFalse_1", GSUnoopFalse( true ), false     );
-	// ..... GSUsetIntervalLimit ...............................................
-		test( "GSUsetIntervalLimit_0", _GSUsetInterval_minMs, 0 );
-		test( "GSUsetIntervalLimit_1", GSUsetIntervalLimit( 1 ), 1_000 );
-		testThrow( "GSUsetIntervalLimit_2", "number-positive-0", () => GSUsetIntervalLimit( NaN ) );
-		testThrow( "GSUsetIntervalLimit_3", "number-positive-0", () => GSUsetIntervalLimit( -1 ) );
-		testThrow( "GSUsetIntervalLimit_4", "number-positive-0", () => GSUsetIntervalLimit( false ) );
-		testThrow( "GSUsetIntervalLimit_5", "number-positive-0", () => GSUsetIntervalLimit( true ) );
-		test( "GSUsetIntervalLimit_6", _GSUsetInterval_minMs, 1_000 );
-	// ..... GSUsetTimeout .....................................................
-		++toWait;
-		( async function () {
-			let timeoutId = null;
-			let timeoutInc = 0;
-			const fn = () => ++timeoutInc;
+	tests( "GSUnoop", () => {
+		test( "noop_0",      GSUnoop(),            undefined );
+		test( "noop_1",      GSUnoop( 1 ),         undefined );
+		test( "noopFalse_0", GSUnoopFalse(),       false     );
+		test( "noopFalse_1", GSUnoopFalse( true ), false     );
+	} );
+	tests( "GSUsetIntervalLimit", () => {
+		test( "setIntervalLimit_0", _GSUsetInterval_minMs, 0 );
+		test( "setIntervalLimit_1", GSUsetIntervalLimit( 1 ), 1_000 );
+		testThrow( "setIntervalLimit_2", "number-positive-0", () => GSUsetIntervalLimit( NaN ) );
+		testThrow( "setIntervalLimit_3", "number-positive-0", () => GSUsetIntervalLimit( -1 ) );
+		testThrow( "setIntervalLimit_4", "number-positive-0", () => GSUsetIntervalLimit( false ) );
+		testThrow( "setIntervalLimit_5", "number-positive-0", () => GSUsetIntervalLimit( true ) );
+		test( "setIntervalLimit_6", _GSUsetInterval_minMs, 1_000 );
+	} );
+	tests( "GSUsetTimeout", async () => {
+		let timeoutId = null;
+		let timeoutInc = 0;
+		const fn = () => ++timeoutInc;
 
-			timeoutId = GSUsetTimeout( fn, .05 );
-			test( "GSUsetTimeout_0", GSUisInt( timeoutId ) && timeoutId > 0, true );
-			test( "GSUsetTimeout_1", timeoutInc, 0 ); await wait( .045 );
-			test( "GSUsetTimeout_2", timeoutInc, 0 ); await wait( .005 + .02 );
-			test( "GSUsetTimeout_3", timeoutInc, 1 );
-			timeoutId = GSUsetTimeout( fn, 0 );
-			test( "GSUsetTimeout_4", timeoutId, null );
-			test( "GSUsetTimeout_5", timeoutInc, 2 );
-			testThrow( "GSUsetTimeout_6", "number-positive-0", () => GSUsetTimeout( fn, -1 ) );
-			testThrow( "GSUsetTimeout_7", "number-positive-0", () => GSUsetTimeout( fn, NaN ) );
-			test( "GSUsetTimeout_8", timeoutInc, 2 );
-			timeoutId = GSUsetTimeout( fn, .01 );
-			GSUclearTimeout( timeoutId ); await wait( .02 );
-			test( "GSUsetTimeout_9", timeoutInc, 2 );
-			--toWait;
-		} )();
+		timeoutId = GSUsetTimeout( fn, .05 );
+		test( "setTimeout_0", GSUisInt( timeoutId ) && timeoutId > 0, true );
+		test( "setTimeout_1", timeoutInc, 0 ); await wait( .045 );
+		test( "setTimeout_2", timeoutInc, 0 ); await wait( .005 + .02 );
+		test( "setTimeout_3", timeoutInc, 1 );
+		timeoutId = GSUsetTimeout( fn, 0 );
+		test( "setTimeout_4", timeoutId, null );
+		test( "setTimeout_5", timeoutInc, 2 );
+		testThrow( "setTimeout_6", "number-positive-0", () => GSUsetTimeout( fn, -1 ) );
+		testThrow( "setTimeout_7", "number-positive-0", () => GSUsetTimeout( fn, NaN ) );
+		test( "setTimeout_8", timeoutInc, 2 );
+		timeoutId = GSUsetTimeout( fn, .01 );
+		GSUclearTimeout( timeoutId ); await wait( .02 );
+		test( "setTimeout_9", timeoutInc, 2 );
+	} );
 </script>
 
 <!-- ....................................................................... -->
 <!-- ..... gs-utils-json ................................................... -->
 <!-- ....................................................................... -->
 <script>
-	// ..... GSUgetNewId .......................................................
-		test( "GSUgetNewId_0", GSUgetNewId( {} ), "0" );
-		test( "GSUgetNewId_1", GSUgetNewId( { 0: true  } ), "1" );
-		test( "GSUgetNewId_2", GSUgetNewId( { 0: false } ), "1" );
-		test( "GSUgetNewId_3", GSUgetNewId( { 0: false, 1: null } ), "2" );
-		test( "GSUgetNewId_4", GSUgetNewId( { 2: false, 1: null } ), "0" );
-		test( "GSUgetNewId_5", GSUgetNewId( { 0: false, 2: null } ), "1" );
-		testThrow( "GSUgetNewId_6", "object", () => GSUgetNewId() );
-		testThrow( "GSUgetNewId_7", "object", () => GSUgetNewId( [] ) );
-	// ..... GSUgetNewIds ......................................................
-		test( "GSUgetNewIds_0", GSUgetNewIds( {}, 1 ), [ "0" ] );
-		test( "GSUgetNewIds_1", GSUgetNewIds( {}, 2 ), [ "0", "1" ] );
-		test( "GSUgetNewIds_2", GSUgetNewIds( {}, 3 ), [ "0", "1", "2" ] );
-		test( "GSUgetNewIds_3", GSUgetNewIds( { 0: 0, 1: 1, 3: 3, 4: 4 }, 2 ), [ "2", "5" ] );
-		testThrow( "GSUgetNewIds_4", "object", () => GSUgetNewIds() );
-		testThrow( "GSUgetNewIds_5", "object", () => GSUgetNewIds( [] ) );
-		testThrow( "GSUgetNewIds_6", "integer-positive", () => GSUgetNewIds( {} ) );
-		testThrow( "GSUgetNewIds_7", "integer-positive", () => GSUgetNewIds( {}, -1   ) );
-		testThrow( "GSUgetNewIds_8", "integer-positive", () => GSUgetNewIds( {},  0   ) );
-		testThrow( "GSUgetNewIds_9", "integer-positive", () => GSUgetNewIds( {},  1.5 ) );
-	// ..... GSUgetLastOrder ...................................................
-		test( "GSUgetLastOrder_0", GSUgetLastOrder( {}                                   ),  0 );
-		test( "GSUgetLastOrder_1", GSUgetLastOrder( { 0: { order: 0 }                  } ),  1 );
-		test( "GSUgetLastOrder_2", GSUgetLastOrder( { 0: { order: 5 }                  } ),  6 );
-		test( "GSUgetLastOrder_3", GSUgetLastOrder( { 1: { order: 9 }, 2: { order: 3 } } ), 10 );
-		test( "GSUgetLastOrder_4", GSUgetLastOrder( { 1: {},           2: {}           } ),  1 );
-		test( "GSUgetLastOrder_5", GSUgetLastOrder( { 1: { order: 9 }, 2: {}           } ), 10 );
-		testThrow( "GSUgetLastOrder_6", "object", () => GSUgetLastOrder() );
-		testThrow( "GSUgetLastOrder_7", "object", () => GSUgetLastOrder( [] ) );
-		testThrow( "GSUgetLastOrder_8", "object", () => GSUgetLastOrder( null ) );
-	// ..... GSUdeepCopy .......................................................
-		test( "GSUdeepCopy_0", GSUdeepCopy(  0 ),  0 );
-		test( "GSUdeepCopy_1", GSUdeepCopy( 21 ), 21 );
-		test( "GSUdeepCopy_2", GSUdeepCopy( NaN ), NaN );
-		test( "GSUdeepCopy_3", GSUdeepCopy( null ), null );
-		test( "GSUdeepCopy_4", GSUdeepCopy( true ), true );
-		test( "GSUdeepCopy_5", GSUdeepCopy( false ), false );
-		test( "GSUdeepCopy_6", GSUdeepCopy( undefined ), undefined );
-		const dC1 = {};
-		const dC2 = GSUdeepCopy( dC1 );
-		dC2.foo = 21;
-		test( "GSUdeepCopy_7", dC1.foo, undefined );
-		test( "GSUdeepCopy_8", dC1 !== dC2, true );
-		const dC3 = { a: 5, b: { c: 10 }, d: undefined };
-		const dC4 = GSUdeepCopy( dC3 );
-		dC3.b.c = 20;
-		test( "GSUdeepCopy_9", dC4.b.c, 10 );
-		test( "GSUdeepCopy_a", dC4.d, undefined );
-		test( "GSUdeepCopy_b", "d" in dC4, true );
-		test( "GSUdeepCopy_c", GSUdeepCopy( [] ), {} );
-		test( "GSUdeepCopy_d", GSUdeepCopy( [ 21 ] ), { 0: 21 } );
-	// ..... GSUdeepAssign .....................................................
-		test( "GSUdeepAssign_0", GSUdeepAssign(), undefined );
-		test( "GSUdeepAssign_1", GSUdeepAssign( 0 ), 0 );
-		test( "GSUdeepAssign_2", GSUdeepAssign( null ), null );
-		test( "GSUdeepAssign_3", GSUdeepAssign( undefined ), undefined );
-		const dA1 = {};
-		testStrict( "GSUdeepAssign_4", GSUdeepAssign( dA1, false ), dA1 );
-		testStrict( "GSUdeepAssign_5", GSUdeepAssign( dA1, { foo: 21 } ), dA1 );
-		test( "GSUdeepAssign_6", dA1.foo, 21 );
-		GSUdeepAssign( dA1, { foo: undefined, bar: undefined } );
-		test( "GSUdeepAssign_7", dA1.foo, undefined );
-		test( "GSUdeepAssign_8", dA1.bar, undefined );
-		test( "GSUdeepAssign_9", "foo" in dA1, true );
-		test( "GSUdeepAssign_a", "bar" in dA1, true );
-		const dA2 = { x: { y: { z: "z" } } };
-		GSUdeepAssign( dA1, dA2 );
-		test( "GSUdeepAssign_b", dA1.x.y.z, "z" );
-		dA2.x.y.z = "o";
-		test( "GSUdeepAssign_c", dA1.x.y.z, "z" );
-	// ..... GSUdeepFreeze .....................................................
-		test( "GSUdeepFreeze_0", GSUdeepFreeze( NaN ), NaN );
-		test( "GSUdeepFreeze_1", GSUdeepFreeze( null ), null );
-		test( "GSUdeepFreeze_2", GSUdeepFreeze( true ), true );
-		test( "GSUdeepFreeze_3", GSUdeepFreeze( false ), false );
-		test( "GSUdeepFreeze_4", GSUdeepFreeze( undefined ), undefined );
-		const dF1 = {};
-		const dF2 = [];
-		testStrict( "GSUdeepFreeze_5", GSUdeepFreeze( dF1 ), dF1 );
-		testStrict( "GSUdeepFreeze_6", GSUdeepFreeze( dF2 ), dF2 );
-		dF1.foo = 21;
-		try { dF2.push( "a" ); } catch ( e ) {}
-		testStrict( "GSUdeepFreeze_7", "foo" in dF1, false );
-		testStrict( "GSUdeepFreeze_8", dF2.length, 0 );
-		const dF3 = { a: 21, b: { c: 42 } };
-		testStrict( "GSUdeepFreeze_9", GSUdeepFreeze( dF3 ), dF3 );
-		dF3.a = 22;
-		test( "GSUdeepFreeze_a", dF3.a, 21 );
-		dF3.b.c = 43;
-		test( "GSUdeepFreeze_b", dF3.b.c, 42 );
-		const dF4 = { a: { b: 21 }, c: { d: 42 } };
-		testStrict( "GSUdeepFreeze_c", GSUdeepFreeze( dF4 ), dF4 );
-		dF4.zzz = 666;
-		dF4.a.b = 666;
-		dF4.c.d = 666;
-		test( "GSUdeepFreeze_d", "zzz" in dF4, false );
-		test( "GSUdeepFreeze_e", dF4.a.b, 21 );
-		test( "GSUdeepFreeze_f", dF4.c.d, 42 );
-		delete dF4.c;
-		test( "GSUdeepFreeze_g", dF4.c.d, 42 );
-	// ..... GSUdiffObjects ....................................................
-		test( "GSUdiffObjects_0", GSUdiffObjects( 0, 0 ), undefined );
-		test( "GSUdiffObjects_1", GSUdiffObjects( 1, 1 ), undefined );
-		test( "GSUdiffObjects_2", GSUdiffObjects( {}, {} ), undefined );
-		test( "GSUdiffObjects_3", GSUdiffObjects( [], [] ), undefined );
-		test( "GSUdiffObjects_4", GSUdiffObjects( true,  true  ), undefined );
-		test( "GSUdiffObjects_5", GSUdiffObjects( false, false ), undefined );
-		test( "GSUdiffObjects_6", GSUdiffObjects( [ 1    ], [ 1    ] ), undefined );
-		test( "GSUdiffObjects_7", GSUdiffObjects( [ 1, 2 ], [ 1, 2 ] ), undefined );
-		test( "GSUdiffObjects_8", GSUdiffObjects( { a: 1 },       { a: 1 }       ), undefined );
-		test( "GSUdiffObjects_9", GSUdiffObjects( { a: 1, b: 2 }, { a: 1, b: 2 } ), undefined );
-		test( "GSUdiffObjects_a", GSUdiffObjects( { a: 1, b: { c: 2 } }, { a: 1, b: { c: 2 } } ), undefined );
-		test( "GSUdiffObjects_b", GSUdiffObjects( { a: 1       }, {} ), { a: undefined               } );
-		test( "GSUdiffObjects_c", GSUdiffObjects( { a: 1, b: 2 }, {} ), { a: undefined, b: undefined } );
-		test( "GSUdiffObjects_d", GSUdiffObjects( {}, { a: 1 }       ), { a: 1       } );
-		test( "GSUdiffObjects_e", GSUdiffObjects( {}, { a: 1, b: 2 } ), { a: 1, b: 2 } );
-		test( "GSUdiffObjects_f", GSUdiffObjects( { a: 1 }, { a: 1, b: 2 } ), { b: 2 } );
-		test( "GSUdiffObjects_g", GSUdiffObjects( { a: 1, b: 2 }, { a: 1 } ), { b: undefined } );
-		test( "GSUdiffObjects_h", GSUdiffObjects( { a: 1, b: { c: 2       } }, { a: 2, b: { c: 2       } } ), { a: 2 } );
-		test( "GSUdiffObjects_i", GSUdiffObjects( { a: 1, b: { c: 2       } }, { a: 1, b: { c: 3       } } ), {       b: { c: 3       } } );
-		test( "GSUdiffObjects_j", GSUdiffObjects( { a: 1, b: { c: 2, d: 2 } }, { a: 1, b: { c: 3, d: 3 } } ), {       b: { c: 3, d: 3 } } );
-		test( "GSUdiffObjects_k", GSUdiffObjects( { a: 1, b: { c: 2, d: 2 } }, { a: 4, b: { c: 2, d: 3 } } ), { a: 4, b: {       d: 3 } } );
-		test( "GSUdiffObjects_l", GSUdiffObjects( { a: 1, b: { c: 2       } }, { a: 1, B: { c: 2       } } ), { b: undefined, B: { c: 2 } } );
-	// ..... GSUdiffAssign .....................................................
-		test( "GSUdiffAssign_0", GSUdiffAssign( 0 ), 0 );
-		test( "GSUdiffAssign_1", GSUdiffAssign( 1 ), 1 );
-		test( "GSUdiffAssign_2", GSUdiffAssign( NaN ), NaN );
-		test( "GSUdiffAssign_3", GSUdiffAssign( null ), null );
-		test( "GSUdiffAssign_4", GSUdiffAssign( true ), true );
-		test( "GSUdiffAssign_5", GSUdiffAssign( false ), false );
-		test( "GSUdiffAssign_6", GSUdiffAssign( undefined ), undefined );
-		test( "GSUdiffAssign_7", GSUdiffAssign(), undefined );
-		const dfA1 = {};
-		testStrict( "GSUdiffAssign_8", GSUdiffAssign( dfA1 ), dfA1 );
-		testStrict( "GSUdiffAssign_9", GSUdiffAssign( dfA1, { a: 21 } ), dfA1 );
-		test( "GSUdiffAssign_a", dfA1.a, 21 );
-		GSUdiffAssign( dfA1, { a: 0 } );         test( "GSUdiffAssign_b", dfA1.a, 0 );
-		GSUdiffAssign( dfA1, { a: null } );      test( "GSUdiffAssign_c", dfA1.a, null );
-		GSUdiffAssign( dfA1, { a: undefined } ); test( "GSUdiffAssign_d", "a" in dfA1, false );
-		const dfA2 = { a: 1 };
-		GSUdiffAssign( dfA2, { b: 2 } );                       test( "GSUdiffAssign_e", dfA2, { a: 1, b: 2 } );
-		GSUdiffAssign( dfA2, { a: undefined, b: undefined } ); test( "GSUdiffAssign_f", dfA2, {} );
-		GSUdiffAssign( dfA2, { aa: { b: undefined, c: 1 } } ); test( "GSUdiffAssign_g", dfA2, { aa: { c: 1 } } );
-		GSUdiffAssign( dfA2, { aa: { c: { d: [ 1, 2 ] } } } ); test( "GSUdiffAssign_h", dfA2, { aa: { c: { d: [ 1, 2 ] } } } );
-		GSUdiffAssign( dfA2, { aa: { c: { d: [ 3 ] } } } );    test( "GSUdiffAssign_i", dfA2, { aa: { c: { d: [ 3, 2 ] } } } );
-		GSUdiffAssign( dfA2, { aa: undefined } );              test( "GSUdiffAssign_j", dfA2, {} );
-	// ..... GSUcomposeUndo ....................................................
-		const cU = {
+	tests( "GSUgetNewId", () => {
+		test( "getNewId_0", GSUgetNewId( {} ), "0" );
+		test( "getNewId_1", GSUgetNewId( { 0: true  } ), "1" );
+		test( "getNewId_2", GSUgetNewId( { 0: false } ), "1" );
+		test( "getNewId_3", GSUgetNewId( { 0: false, 1: null } ), "2" );
+		test( "getNewId_4", GSUgetNewId( { 2: false, 1: null } ), "0" );
+		test( "getNewId_5", GSUgetNewId( { 0: false, 2: null } ), "1" );
+		testThrow( "getNewId_6", "object", () => GSUgetNewId() );
+		testThrow( "getNewId_7", "object", () => GSUgetNewId( [] ) );
+	} );
+	tests( "GSUgetNewIds", () => {
+		test( "getNewIds_0", GSUgetNewIds( {}, 1 ), [ "0" ] );
+		test( "getNewIds_1", GSUgetNewIds( {}, 2 ), [ "0", "1" ] );
+		test( "getNewIds_2", GSUgetNewIds( {}, 3 ), [ "0", "1", "2" ] );
+		test( "getNewIds_3", GSUgetNewIds( { 0: 0, 1: 1, 3: 3, 4: 4 }, 2 ), [ "2", "5" ] );
+		testThrow( "getNewIds_4", "object", () => GSUgetNewIds() );
+		testThrow( "getNewIds_5", "object", () => GSUgetNewIds( [] ) );
+		testThrow( "getNewIds_6", "integer-positive", () => GSUgetNewIds( {} ) );
+		testThrow( "getNewIds_7", "integer-positive", () => GSUgetNewIds( {}, -1   ) );
+		testThrow( "getNewIds_8", "integer-positive", () => GSUgetNewIds( {},  0   ) );
+		testThrow( "getNewIds_9", "integer-positive", () => GSUgetNewIds( {},  1.5 ) );
+	} );
+	tests( "GSUgetLastOrder", () => {
+		test( "getLastOrder_0", GSUgetLastOrder( {}                                   ),  0 );
+		test( "getLastOrder_1", GSUgetLastOrder( { 0: { order: 0 }                  } ),  1 );
+		test( "getLastOrder_2", GSUgetLastOrder( { 0: { order: 5 }                  } ),  6 );
+		test( "getLastOrder_3", GSUgetLastOrder( { 1: { order: 9 }, 2: { order: 3 } } ), 10 );
+		test( "getLastOrder_4", GSUgetLastOrder( { 1: {},           2: {}           } ),  1 );
+		test( "getLastOrder_5", GSUgetLastOrder( { 1: { order: 9 }, 2: {}           } ), 10 );
+		testThrow( "getLastOrder_6", "object", () => GSUgetLastOrder() );
+		testThrow( "getLastOrder_7", "object", () => GSUgetLastOrder( [] ) );
+		testThrow( "getLastOrder_8", "object", () => GSUgetLastOrder( null ) );
+	} );
+	tests( "GSUdeepCopy", () => {
+		test( "deepCopy_0", GSUdeepCopy(  0 ),  0 );
+		test( "deepCopy_1", GSUdeepCopy( 21 ), 21 );
+		test( "deepCopy_2", GSUdeepCopy( NaN ), NaN );
+		test( "deepCopy_3", GSUdeepCopy( null ), null );
+		test( "deepCopy_4", GSUdeepCopy( true ), true );
+		test( "deepCopy_5", GSUdeepCopy( false ), false );
+		test( "deepCopy_6", GSUdeepCopy( undefined ), undefined );
+
+		const obj1 = {};
+		const obj2 = GSUdeepCopy( obj1 );
+		obj2.foo = 21;
+		test( "deepCopy_7", obj1.foo, undefined );
+		test( "deepCopy_8", obj1 !== obj2, true );
+
+		const obj3 = { a: 5, b: { c: 10 }, d: undefined };
+		const obj4 = GSUdeepCopy( obj3 );
+		obj3.b.c = 20;
+		test( "deepCopy_9", obj4.b.c, 10 );
+		test( "deepCopy_a", obj4.d, undefined );
+		test( "deepCopy_b", "d" in obj4, true );
+		test( "deepCopy_c", GSUdeepCopy( [] ), {} );
+		test( "deepCopy_d", GSUdeepCopy( [ 21 ] ), { 0: 21 } );
+	} );
+	tests( "GSUdeepAssign", () => {
+		test( "deepAssign_0", GSUdeepAssign(), undefined );
+		test( "deepAssign_1", GSUdeepAssign( 0 ), 0 );
+		test( "deepAssign_2", GSUdeepAssign( null ), null );
+		test( "deepAssign_3", GSUdeepAssign( undefined ), undefined );
+
+		const obj1 = {};
+		testStrict( "deepAssign_4", GSUdeepAssign( obj1, false ), obj1 );
+		testStrict( "deepAssign_5", GSUdeepAssign( obj1, { foo: 21 } ), obj1 );
+		test( "deepAssign_6", obj1.foo, 21 );
+		GSUdeepAssign( obj1, { foo: undefined, bar: undefined } );
+		test( "deepAssign_7", obj1.foo, undefined );
+		test( "deepAssign_8", obj1.bar, undefined );
+		test( "deepAssign_9", "foo" in obj1, true );
+		test( "deepAssign_a", "bar" in obj1, true );
+
+		const obj2 = { x: { y: { z: "z" } } };
+		GSUdeepAssign( obj1, obj2 );
+		test( "deepAssign_b", obj1.x.y.z, "z" );
+		obj2.x.y.z = "o";
+		test( "deepAssign_c", obj1.x.y.z, "z" );
+	} );
+	tests( "GSUdeepFreeze", () => {
+		test( "deepFreeze_0", GSUdeepFreeze( NaN ), NaN );
+		test( "deepFreeze_1", GSUdeepFreeze( null ), null );
+		test( "deepFreeze_2", GSUdeepFreeze( true ), true );
+		test( "deepFreeze_3", GSUdeepFreeze( false ), false );
+		test( "deepFreeze_4", GSUdeepFreeze( undefined ), undefined );
+
+		const obj1 = {};
+		const arr1 = [];
+		testStrict( "deepFreeze_5", GSUdeepFreeze( obj1 ), obj1 );
+		testStrict( "deepFreeze_6", GSUdeepFreeze( arr1 ), arr1 );
+		obj1.foo = 21;
+		try { arr1.push( "a" ); } catch ( e ) {}
+		testStrict( "deepFreeze_7", "foo" in obj1, false );
+		testStrict( "deepFreeze_8", arr1.length, 0 );
+
+		const obj2 = { a: 21, b: { c: 42 } };
+		testStrict( "deepFreeze_9", GSUdeepFreeze( obj2 ), obj2 );
+		obj2.a = 22;
+		test( "deepFreeze_a", obj2.a, 21 );
+		obj2.b.c = 43;
+		test( "deepFreeze_b", obj2.b.c, 42 );
+
+		const obj3 = { a: { b: 21 }, c: { d: 42 } };
+		testStrict( "deepFreeze_c", GSUdeepFreeze( obj3 ), obj3 );
+		obj3.zzz = 666;
+		obj3.a.b = 666;
+		obj3.c.d = 666;
+		test( "deepFreeze_d", "zzz" in obj3, false );
+		test( "deepFreeze_e", obj3.a.b, 21 );
+		test( "deepFreeze_f", obj3.c.d, 42 );
+		delete obj3.c;
+		test( "deepFreeze_g", obj3.c.d, 42 );
+	} );
+	tests( "GSUdiffObjects", () => {
+		test( "diffObjects_0", GSUdiffObjects( 0, 0 ), undefined );
+		test( "diffObjects_1", GSUdiffObjects( 1, 1 ), undefined );
+		test( "diffObjects_2", GSUdiffObjects( {}, {} ), undefined );
+		test( "diffObjects_3", GSUdiffObjects( [], [] ), undefined );
+		test( "diffObjects_4", GSUdiffObjects( true,  true  ), undefined );
+		test( "diffObjects_5", GSUdiffObjects( false, false ), undefined );
+		test( "diffObjects_6", GSUdiffObjects( [ 1    ], [ 1    ] ), undefined );
+		test( "diffObjects_7", GSUdiffObjects( [ 1, 2 ], [ 1, 2 ] ), undefined );
+		test( "diffObjects_8", GSUdiffObjects( { a: 1 },       { a: 1 }       ), undefined );
+		test( "diffObjects_9", GSUdiffObjects( { a: 1, b: 2 }, { a: 1, b: 2 } ), undefined );
+		test( "diffObjects_a", GSUdiffObjects( { a: 1, b: { c: 2 } }, { a: 1, b: { c: 2 } } ), undefined );
+		test( "diffObjects_b", GSUdiffObjects( { a: 1       }, {} ), { a: undefined               } );
+		test( "diffObjects_c", GSUdiffObjects( { a: 1, b: 2 }, {} ), { a: undefined, b: undefined } );
+		test( "diffObjects_d", GSUdiffObjects( {}, { a: 1 }       ), { a: 1       } );
+		test( "diffObjects_e", GSUdiffObjects( {}, { a: 1, b: 2 } ), { a: 1, b: 2 } );
+		test( "diffObjects_f", GSUdiffObjects( { a: 1 }, { a: 1, b: 2 } ), { b: 2 } );
+		test( "diffObjects_g", GSUdiffObjects( { a: 1, b: 2 }, { a: 1 } ), { b: undefined } );
+		test( "diffObjects_h", GSUdiffObjects( { a: 1, b: { c: 2       } }, { a: 2, b: { c: 2       } } ), { a: 2 } );
+		test( "diffObjects_i", GSUdiffObjects( { a: 1, b: { c: 2       } }, { a: 1, b: { c: 3       } } ), {       b: { c: 3       } } );
+		test( "diffObjects_j", GSUdiffObjects( { a: 1, b: { c: 2, d: 2 } }, { a: 1, b: { c: 3, d: 3 } } ), {       b: { c: 3, d: 3 } } );
+		test( "diffObjects_k", GSUdiffObjects( { a: 1, b: { c: 2, d: 2 } }, { a: 4, b: { c: 2, d: 3 } } ), { a: 4, b: {       d: 3 } } );
+		test( "diffObjects_l", GSUdiffObjects( { a: 1, b: { c: 2       } }, { a: 1, B: { c: 2       } } ), { b: undefined, B: { c: 2 } } );
+	} );
+	tests( "GSUdiffAssign", () => {
+		test( "diffAssign_0", GSUdiffAssign( 0 ), 0 );
+		test( "diffAssign_1", GSUdiffAssign( 1 ), 1 );
+		test( "diffAssign_2", GSUdiffAssign( NaN ), NaN );
+		test( "diffAssign_3", GSUdiffAssign( null ), null );
+		test( "diffAssign_4", GSUdiffAssign( true ), true );
+		test( "diffAssign_5", GSUdiffAssign( false ), false );
+		test( "diffAssign_6", GSUdiffAssign( undefined ), undefined );
+		test( "diffAssign_7", GSUdiffAssign(), undefined );
+
+		const obj1 = {};
+		testStrict( "diffAssign_8", GSUdiffAssign( obj1 ), obj1 );
+		testStrict( "diffAssign_9", GSUdiffAssign( obj1, { a: 21 } ), obj1 );
+		test( "diffAssign_a", obj1.a, 21 );
+		GSUdiffAssign( obj1, { a: 0 } );         test( "diffAssign_b", obj1.a, 0 );
+		GSUdiffAssign( obj1, { a: null } );      test( "diffAssign_c", obj1.a, null );
+		GSUdiffAssign( obj1, { a: undefined } ); test( "diffAssign_d", "a" in obj1, false );
+
+		const obj2 = { a: 1 };
+		GSUdiffAssign( obj2, { b: 2 } );                       test( "diffAssign_e", obj2, { a: 1, b: 2 } );
+		GSUdiffAssign( obj2, { a: undefined, b: undefined } ); test( "diffAssign_f", obj2, {} );
+		GSUdiffAssign( obj2, { aa: { b: undefined, c: 1 } } ); test( "diffAssign_g", obj2, { aa: { c: 1 } } );
+		GSUdiffAssign( obj2, { aa: { c: { d: [ 1, 2 ] } } } ); test( "diffAssign_h", obj2, { aa: { c: { d: [ 1, 2 ] } } } );
+		GSUdiffAssign( obj2, { aa: { c: { d: [ 3 ] } } } );    test( "diffAssign_i", obj2, { aa: { c: { d: [ 3, 2 ] } } } );
+		GSUdiffAssign( obj2, { aa: undefined } );              test( "diffAssign_j", obj2, {} );
+	} );
+	tests( "GSUcomposeUndo", () => {
+		const src = {
 			a: { aa: 1, ab: 2, ac: 3 },
 			b: { ba: 1, bb: 2, bc: 3 },
 			c: { ca: 1, cb: 2, cc: 3 },
 		};
-		test( "GSUcomposeUndo_0", GSUcomposeUndo( cU, {} ), {} );
-		test( "GSUcomposeUndo_0", GSUcomposeUndo( {}, { a: 1 } ), { a: undefined             } );
-		test( "GSUcomposeUndo_0", GSUcomposeUndo( { a: 1       }, { a: undefined             } ), { a: 1 } );
-		test( "GSUcomposeUndo_0", GSUcomposeUndo( { a: 1       }, { a: 2, b: 3               } ), { a: 1, b: undefined } );
-		test( "GSUcomposeUndo_0", GSUcomposeUndo( { a: 1, c: 4 }, { a: 2, b: 3, c: undefined } ), { a: 1, b: undefined, c: 4 } );
-		test( "GSUcomposeUndo_1", GSUcomposeUndo( cU, { a: { aa: undefined } } ), { a: { aa: 1               } } );
-		test( "GSUcomposeUndo_2", GSUcomposeUndo( cU, { a: { ad: 4         } } ), { a: { ad: undefined       } } );
-		test( "GSUcomposeUndo_3", GSUcomposeUndo( cU, { a: undefined         } ), { a: { aa: 1, ab: 2, ac: 3 } } );
+		test( "composeUndo_0", GSUcomposeUndo( src, {} ), {} );
+		test( "composeUndo_0", GSUcomposeUndo( {}, { a: 1 } ), { a: undefined             } );
+		test( "composeUndo_0", GSUcomposeUndo( { a: 1       }, { a: undefined             } ), { a: 1 } );
+		test( "composeUndo_0", GSUcomposeUndo( { a: 1       }, { a: 2, b: 3               } ), { a: 1, b: undefined } );
+		test( "composeUndo_0", GSUcomposeUndo( { a: 1, c: 4 }, { a: 2, b: 3, c: undefined } ), { a: 1, b: undefined, c: 4 } );
+		test( "composeUndo_1", GSUcomposeUndo( src, { a: { aa: undefined } } ), { a: { aa: 1               } } );
+		test( "composeUndo_2", GSUcomposeUndo( src, { a: { ad: 4         } } ), { a: { ad: undefined       } } );
+		test( "composeUndo_3", GSUcomposeUndo( src, { a: undefined         } ), { a: { aa: 1, ab: 2, ac: 3 } } );
+	} );
 </script>
 
 <!-- ....................................................................... -->
 <!-- ..... GSUxxxx ......................................................... -->
 <!-- ....................................................................... -->
 <script>
-	// GSUisObj ................................................................
-	test( "GSUisObj.0", GSUisObj(),            false );
-	test( "GSUisObj.1", GSUisObj( NaN ),       false );
-	test( "GSUisObj.2", GSUisObj( null ),      false );
-	test( "GSUisObj.3", GSUisObj( true ),      false );
-	test( "GSUisObj.4", GSUisObj( false ),     false );
-	test( "GSUisObj.5", GSUisObj( undefined ), false );
-	test( "GSUisObj.6", GSUisObj( GSUnoop ),   false );
-	test( "GSUisObj.7", GSUisObj( {} ),        true );
-	test( "GSUisObj.8", GSUisObj( [] ),        true );
-	test( "GSUisObj.9", GSUisObj( 21 ),        false );
-	test( "GSUisObj.a", GSUisObj( "abc" ),     false );
-
-	// GSUisArr ................................................................
-	test( "GSUisArr.0", GSUisArr( [] ),        true );
-	test( "GSUisArr.1", GSUisArr( [ 0 ] ),     true );
-	test( "GSUisArr.2", GSUisArr( {} ),        false );
-	test( "GSUisArr.3", GSUisArr( "abc" ),     false );
-	test( "GSUisArr.4", GSUisArr( "" ),        false );
-	test( "GSUisArr.5", GSUisArr( null ),      false );
-	test( "GSUisArr.6", GSUisArr( undefined ), false );
-	test( "GSUisArr.7", GSUisArr( true ),      false );
-	test( "GSUisArr.8", GSUisArr( GSUnoop ),   false );
-
-	// GSUisStr ................................................................
-	test( "GSUisStr.0", GSUisStr(),            false );
-	test( "GSUisStr.1", GSUisStr( NaN ),       false );
-	test( "GSUisStr.2", GSUisStr( null ),      false );
-	test( "GSUisStr.3", GSUisStr( true ),      false );
-	test( "GSUisStr.4", GSUisStr( false ),     false );
-	test( "GSUisStr.5", GSUisStr( undefined ), false );
-	test( "GSUisStr.7", GSUisStr( GSUnoop ),   false );
-	test( "GSUisStr.8", GSUisStr( {} ),        false );
-	test( "GSUisStr.9", GSUisStr( [] ),        false );
-	test( "GSUisStr.a", GSUisStr( "" ),        true );
-	test( "GSUisStr.b", GSUisStr( "0" ),       true );
-
-	// GSUisNaN ................................................................
-	test( "GSUisNaN.0", GSUisNaN( NaN ),       true );
-	test( "GSUisNaN.1", GSUisNaN( 0/0 ),       true );
-	test( "GSUisNaN.2", GSUisNaN(),            false );
-	test( "GSUisNaN.3", GSUisNaN( null ),      false );
-	test( "GSUisNaN.4", GSUisNaN( undefined ), false );
-	test( "GSUisNaN.5", GSUisNaN( GSUnoop ),   false );
-	test( "GSUisNaN.6", GSUisNaN( 0 ),         false );
-	test( "GSUisNaN.7", GSUisNaN( 1 ),         false );
-	test( "GSUisNaN.8", GSUisNaN( "a" ),       false );
-	test( "GSUisNaN.9", GSUisNaN( "21" ),      false );
-	test( "GSUisNaN.a", GSUisNaN( true ),      false );
-	test( "GSUisNaN.b", GSUisNaN( false ),     false );
-
-	// GSUisNum ................................................................
-	test( "GSUisNum.0", GSUisNum(),            false );
-	test( "GSUisNum.1", GSUisNum( NaN ),       false );
-	test( "GSUisNum.2", GSUisNum( null ),      false );
-	test( "GSUisNum.3", GSUisNum( true ),      false );
-	test( "GSUisNum.4", GSUisNum( false ),     false );
-	test( "GSUisNum.5", GSUisNum( undefined ), false );
-	test( "GSUisNum.6", GSUisNum( GSUnoop ),   false );
-	test( "GSUisNum.7", GSUisNum( {} ),        false );
-	test( "GSUisNum.8", GSUisNum( [] ),        false );
-	test( "GSUisNum.9", GSUisNum( "" ),        false );
-	test( "GSUisNum.a", GSUisNum( 0 ),         true );
-	test( "GSUisNum.b", GSUisNum( 21 ),        true );
-	test( "GSUisNum.c", GSUisNum( 21.5 ),      true );
-	test( "GSUisNum.d", GSUisNum( "21" ),      false );
-	test( "GSUisNum.e", GSUisNum( "abc" ),     false );
-
-	// GSUisInt ................................................................
-	test( "GSUisInt.0", GSUisInt(),            false );
-	test( "GSUisInt.1", GSUisInt( NaN ),       false );
-	test( "GSUisInt.2", GSUisInt( null ),      false );
-	test( "GSUisInt.3", GSUisInt( true ),      false );
-	test( "GSUisInt.4", GSUisInt( false ),     false );
-	test( "GSUisInt.5", GSUisInt( undefined ), false );
-	test( "GSUisInt.6", GSUisInt( GSUnoop ),   false );
-	test( "GSUisInt.7", GSUisInt( {} ),        false );
-	test( "GSUisInt.8", GSUisInt( [] ),        false );
-	test( "GSUisInt.9", GSUisInt( "" ),        false );
-	test( "GSUisInt.a", GSUisInt( 0 ),         true );
-	test( "GSUisInt.b", GSUisInt( 21 ),        true );
-	test( "GSUisInt.c", GSUisInt( 21.5 ),      false );
-	test( "GSUisInt.d", GSUisInt( "21" ),      false );
-	test( "GSUisInt.e", GSUisInt( "abc" ),     false );
-
-	// GSUisBoo ................................................................
-	test( "GSUisBoo.0", GSUisBoo( true ),      true );
-	test( "GSUisBoo.1", GSUisBoo( false ),     true );
-	test( "GSUisBoo.2", GSUisBoo( {} ),        false );
-	test( "GSUisBoo.3", GSUisBoo( [] ),        false );
-	test( "GSUisBoo.4", GSUisBoo( "" ),        false );
-	test( "GSUisBoo.5", GSUisBoo( 0 ),         false );
-	test( "GSUisBoo.6", GSUisBoo( 21 ),        false );
-	test( "GSUisBoo.7", GSUisBoo( NaN ),       false );
-	test( "GSUisBoo.8", GSUisBoo( null ),      false );
-	test( "GSUisBoo.9", GSUisBoo( undefined ), false );
-	test( "GSUisBoo.a", GSUisBoo( GSUnoop ),   false );
-
-	// GSUisFun ................................................................
-	test( "GSUisFun.0", GSUisFun(),            false );
-	test( "GSUisFun.1", GSUisFun( NaN ),       false );
-	test( "GSUisFun.2", GSUisFun( null ),      false );
-	test( "GSUisFun.3", GSUisFun( true ),      false );
-	test( "GSUisFun.4", GSUisFun( false ),     false );
-	test( "GSUisFun.5", GSUisFun( undefined ), false );
-	test( "GSUisFun.6", GSUisFun( {} ),        false );
-	test( "GSUisFun.7", GSUisFun( [] ),        false );
-	test( "GSUisFun.8", GSUisFun( "" ),        false );
-	test( "GSUisFun.9", GSUisFun( "21" ),      false );
-	test( "GSUisFun.a", GSUisFun( 0 ),         false );
-	test( "GSUisFun.b", GSUisFun( GSUnoop ),   true );
-	test( "GSUisFun.c", GSUisFun( () => {} ),  true );
-
-	// GSUisEqual ..............................................................
-	test( "GSUisEqual.0", GSUisEqual( 0, 0 ),                 true );
-	test( "GSUisEqual.1", GSUisEqual( 1, 1 ),                 true );
-	test( "GSUisEqual.2", GSUisEqual( true, true ),           true );
-	test( "GSUisEqual.3", GSUisEqual( false, false ),         true );
-	test( "GSUisEqual.4", GSUisEqual( NaN, NaN ),             true );
-	test( "GSUisEqual.5", GSUisEqual( null, null ),           true );
-	test( "GSUisEqual.6", GSUisEqual( undefined, undefined ), true );
-	test( "GSUisEqual.7", GSUisEqual( GSUnoop, GSUnoop ),     true );
-	test( "GSUisEqual.8", GSUisEqual( {}, {} ),                                     true );
-	test( "GSUisEqual.9", GSUisEqual( [], [] ),                                     true );
-	test( "GSUisEqual.a", GSUisEqual( [ 0 ], [ 0 ] ),                               true );
-	test( "GSUisEqual.b", GSUisEqual( [ 0, 1 ], [ 0, 1 ] ),                         true );
-	test( "GSUisEqual.c", GSUisEqual( [ 0, [ 1 ] ], [ 0, [ 1 ] ] ),                 true );
-	test( "GSUisEqual.d", GSUisEqual( [ [ 0 ], [ [ 1 ] ] ], [ [ 0 ], [ [ 1 ] ] ] ), true );
-	test( "GSUisEqual.e", GSUisEqual( [ 0, [ 1, {} ] ], [ 0, [ 1, {} ] ] ),         true );
-	test( "GSUisEqual.f", GSUisEqual( { a: 21 }, { a: 21 } ),                                                           true );
-	test( "GSUisEqual.g", GSUisEqual( { a: 21, b: NaN, c: 42 }, { a: 21, b: NaN, c: 42 } ),                             true );
-	test( "GSUisEqual.h", GSUisEqual( { a: [ 0, 1 ], b: NaN, c: 42 }, { a: [ 0, 1 ], b: NaN, c: 42 } ),                 true );
-	test( "GSUisEqual.i", GSUisEqual( { a: [ 0, 1 ], b: NaN, c: { aa: 42 } }, { a: [ 0, 1 ], b: NaN, c: { aa: 42 } } ), true );
-	test( "GSUisEqual.j", GSUisEqual( 0, "0" ),             false );
-	test( "GSUisEqual.k", GSUisEqual( 1, "1" ),             false );
-	test( "GSUisEqual.l", GSUisEqual( true, false ),        false );
-	test( "GSUisEqual.m", GSUisEqual( false, undefined ),   false );
-	test( "GSUisEqual.n", GSUisEqual( NaN, null ),          false );
-	test( "GSUisEqual.o", GSUisEqual( null, {} ),           false );
-	test( "GSUisEqual.p", GSUisEqual( undefined, null ),    false );
-	test( "GSUisEqual.q", GSUisEqual( {}, [] ),             false );
-	test( "GSUisEqual.r", GSUisEqual( [], "" ),             false );
-	test( "GSUisEqual.s", GSUisEqual( () => {}, () => {} ), false );
-	test( "GSUisEqual.t", GSUisEqual( [], [ 0 ] ),          false );
-	test( "GSUisEqual.u", GSUisEqual( [ 0 ], [] ),          false );
-	test( "GSUisEqual.v", GSUisEqual( {}, { a: 0 } ),       false );
-	test( "GSUisEqual.w", GSUisEqual( { a: 0 }, {} ),       false );
-	test( "GSUisEqual.x", GSUisEqual( [ 0, 1, 2 ], [ 0, 1, 3 ] ),                       false );
-	test( "GSUisEqual.y", GSUisEqual( [ 0, [ 1, 2 ] ], [ 0, [ 1, 3 ] ] ),               false );
-	test( "GSUisEqual.z", GSUisEqual( [ 0, [ 1, { a: 2 } ] ], [ 0, [ 1, { a: 3 } ] ] ), false );
-	test( "GSUisEqual.A", GSUisEqual( [ 0, [ 1, { a: 2 } ] ], [ 0, [ 1, { b: 2 } ] ] ), false );
-	test( "GSUisEqual.B", GSUisEqual( new Map(), new Map() ), true );
-	// test( "GSUisEqual.C", GSUisEqual( new Map( [ 21 ] ), new Map( [ 21 ] ) ), true );
-
-	// GSUdotProp ..............................................................
-	const objDotProp = {};
-	testStrict( "GSUdotProp.0", GSUdotProp( objDotProp ), objDotProp );
-	testStrict( "GSUdotProp.1", GSUdotProp( objDotProp, "" ), objDotProp );
-	test( "GSUdotProp.2", GSUdotProp( null,       "" ), null );
-	test( "GSUdotProp.3", GSUdotProp( true,       "" ), true );
-	test( "GSUdotProp.4", GSUdotProp( null,      "a"   ), undefined );
-	test( "GSUdotProp.5", GSUdotProp( undefined, ""    ), undefined );
-	test( "GSUdotProp.6", GSUdotProp( true,      "a"   ), undefined );
-	test( "GSUdotProp.7", GSUdotProp( true,      "a.b" ), undefined );
-	test( "GSUdotProp.8", GSUdotProp( false,     "a"   ), undefined );
-	test( "GSUdotProp.9", GSUdotProp( {}, "a" ),     undefined );
-	test( "GSUdotProp.a", GSUdotProp( {}, "a.b" ),   undefined );
-	test( "GSUdotProp.b", GSUdotProp( {}, "a.b.c" ), undefined );
-	test( "GSUdotProp.c", GSUdotProp( { a: 1 }, "a" ),   1 );
-	test( "GSUdotProp.d", GSUdotProp( { a: 1 }, "b" ),   undefined );
-	test( "GSUdotProp.e", GSUdotProp( { a: 1 }, "b.c" ), undefined );
-	test( "GSUdotProp.f", GSUdotProp( { a: { b: 2 } }, "a.b"   ), 2 );
-	test( "GSUdotProp.g", GSUdotProp( { a: { b: 2 } }, "a.c"   ), undefined );
-	test( "GSUdotProp.h", GSUdotProp( { a: { b: 2 } }, "a.c.d" ), undefined );
-	test( "GSUdotProp.i", GSUdotProp( { a: { b: [ 3    ] } }, "a.b.0" ), 3 );
-	test( "GSUdotProp.j", GSUdotProp( { a: { b: [ 3, 4 ] } }, "a.b.1" ), 4 );
-	test( "GSUdotProp.k", GSUdotProp( { a: { b: [ 3, 4 ] } }, "a.b.2" ), undefined );
-	test( "GSUdotProp.l", GSUdotProp( {},               "a" ), undefined );
-	test( "GSUdotProp.m", GSUdotProp( { a: undefined }, "a" ), GSUdotProp_undefined );
-	test( "GSUdotProp.n", GSUdotProp( { a: 1 }, ".a" ), 1 );
-
-	// GSUforEach ..............................................................
-	const objFE = { a: 10, b: 20 };
-	const arrFE = [ 10, 20 ];
-	let resFE;
-	testStrict( "GSUforEach.0", GSUforEach( objFE,     GSUnoop ), objFE );
-	testStrict( "GSUforEach.1", GSUforEach( arrFE,     GSUnoop ), arrFE );
-	testStrict( "GSUforEach.2", GSUforEach( null,      null    ), null );
-	testStrict( "GSUforEach.3", GSUforEach( false,     null    ), false );
-	testStrict( "GSUforEach.4", GSUforEach( undefined, null    ), undefined );
-	testStrict( "GSUforEach.5", GSUforEach( true,      null    ), true );
-	testStrict( "GSUforEach.6", GSUforEach( 21,        null    ), 21 );
-	resFE = "";
-	GSUforEach( objFE, ( val, key, obj ) => { resFE += `${ key }:${ val }:${ obj === objFE }:` } );
-	test( "GSUforEach.7", resFE, "a:10:true:b:20:true:" );
-	resFE = "";
-	GSUforEach( arrFE, ( val, key, obj ) => { resFE += `${ key }:${ val }:${ obj === arrFE }:` } );
-	test( "GSUforEach.8", resFE, "0:10:true:1:20:true:" );
-
-	// GSUreduce ...............................................................
-	const fnSum = ( sum, n, i ) => sum + n + i;
-	test( "GSUreduce.0", GSUreduce( NaN,                     null,  0 ), 0 );
-	test( "GSUreduce.1", GSUreduce( null,                    null,  0 ), 0 );
-	test( "GSUreduce.2", GSUreduce( true,                    null,  0 ), 0 );
-	test( "GSUreduce.3", GSUreduce( false,                   null,  0 ), 0 );
-	test( "GSUreduce.4", GSUreduce( undefined,               null,  0 ), 0 );
-	test( "GSUreduce.5", GSUreduce( GSUnoop,                 null,  0 ), 0 );
-	test( "GSUreduce.6", GSUreduce( [],                      fnSum, 0 ), 0 );
-	test( "GSUreduce.7", GSUreduce( {},                      fnSum, 0 ), 0 );
-	test( "GSUreduce.8", GSUreduce( [ 10, 20, 30 ],          fnSum, 0 ), 63 );
-	test( "GSUreduce.9", GSUreduce( { a: 10, b: 20, c: 30 }, fnSum, 0 ), "10a20b30c" );
-
-	// GSUsome .................................................................
-	const fnSome21 = n => n === 21;
-	test( "GSUsome.0", GSUsome( NaN,             null     ), false );
-	test( "GSUsome.1", GSUsome( null,            null     ), false );
-	test( "GSUsome.2", GSUsome( true,            null     ), false );
-	test( "GSUsome.3", GSUsome( false,           null     ), false );
-	test( "GSUsome.4", GSUsome( undefined,       null     ), false );
-	test( "GSUsome.5", GSUsome( GSUnoop,         null     ), false );
-	test( "GSUsome.6", GSUsome( [],              fnSome21 ), false );
-	test( "GSUsome.7", GSUsome( {},              fnSome21 ), false );
-	test( "GSUsome.8", GSUsome( [ 0, 1,  2 ],    fnSome21 ), false );
-	test( "GSUsome.9", GSUsome( { a: 0, b:  1 }, fnSome21 ), false );
-	test( "GSUsome.a", GSUsome( [ 21 ],          fnSome21 ), true  );
-	test( "GSUsome.b", GSUsome( [ 0, 1, 21 ],    fnSome21 ), true  );
-	test( "GSUsome.c", GSUsome( { a: 0, b: 21 }, fnSome21 ), true  );
-
-	// GSUHztoX ................................................................
-	test( "GSUHztoX.0", GSUmathFix( GSUHztoX( GSUXtoHz( .5 ) ), 8 ), .5 );
-	test( "GSUHztoX.1", GSUHztoX( 1 ), 1 );
-	test( "GSUHztoX.2", GSUXtoHz( 1 ), 1 );
-
-	// GSUnewArray .............................................................
-	test( "GSUnewArray.0", GSUnewArray( 0 ),        [] );
-	test( "GSUnewArray.1", GSUnewArray( 1 ).length,  1 );
-	test( "GSUnewArray.2", GSUnewArray( 2 ).length,  2 );
-	test( "GSUnewArray.3", GSUnewArray( 3, 7 ),      [ 7, 7, 7 ] );
-	test( "GSUnewArray.4", GSUnewArray( 3, i => i ), [ 0, 1, 2 ] );
-
-	// GSUarrayFrom ............................................................
-	const objEmpty = {};
-	const arrEmpty = [];
-	const arr123 = [ 1, 2, 3 ];
-	test( "GSUarrayFrom.0", GSUarrayFrom( arr123 ),        arr123 );
-	test( "GSUarrayFrom.1", GSUarrayFrom( arrEmpty ),      arrEmpty );
-	test( "GSUarrayFrom.2", GSUarrayFrom( objEmpty )[ 0 ], objEmpty );
-	// test( "GSUarrayFrom.2", GSUarrayFrom( 21 )[ 0 ], 21 );
-
-	// GSUarrayRemove ..........................................................
-	const arrRm = [ 1, 2, 3, 4, 5 ];
-	testStrict( "GSUarrayRemove.0", GSUarrayRemove( arrRm, 3 ), arrRm );
-	test( "GSUarrayRemove.1", arrRm, [ 1, 2, 4, 5 ] );
-	test( "GSUarrayRemove.2", GSUarrayRemove( [], 1          ), [] );
-	test( "GSUarrayRemove.3", GSUarrayRemove( []             ), [] );
-	test( "GSUarrayRemove.4", GSUarrayRemove( [ 1 ], 1       ), [] );
-	test( "GSUarrayRemove.6", GSUarrayRemove( [ 1, 1, 1 ], 1 ), [] );
-	test( "GSUarrayRemove.5", GSUarrayRemove( [ 1 ]                           ), [ 1 ] );
-	test( "GSUarrayRemove.7", GSUarrayRemove( [ 2, 1, 1, 1, 3 ], 1            ), [ 2, 3 ] );
-	test( "GSUarrayRemove.8", GSUarrayRemove( [ 2, 1, 1, 1, 3 ], x => x === 1 ), [ 2, 3 ] );
-	test( "GSUarrayRemove.9", GSUarrayRemove( [ 1, 2 ], GSUnoop               ), [ 1, 2 ] );
-
-	// GSUisEmpty ..................................................................
-	test( "GSUisEmpty.0", GSUisEmpty( {} ),               true );
-	test( "GSUisEmpty.1", GSUisEmpty( [] ),               true );
-	test( "GSUisEmpty.2", GSUisEmpty( "" ),               true );
-	test( "GSUisEmpty.3", GSUisEmpty( new Map() ),        true );
-	test( "GSUisEmpty.4", GSUisEmpty( new Set() ),        true );
-	test( "GSUisEmpty.5", GSUisEmpty( "0" ),                       false );
-	test( "GSUisEmpty.6", GSUisEmpty( [ 0 ] ),                     false );
-	test( "GSUisEmpty.7", GSUisEmpty( { a: null } ),               false );
-	test( "GSUisEmpty.8", GSUisEmpty( { a: undefined } ),          false );
-	test( "GSUisEmpty.9", GSUisEmpty( new Map( [ [ "a", 1 ] ] ) ), false );
-	test( "GSUisEmpty.a", GSUisEmpty( new Set( [ 21 ] ) ),         false );
-	test( "GSUisEmpty.b", GSUisEmpty( null ),             true );
-	test( "GSUisEmpty.c", GSUisEmpty( undefined ),        true );
-	test( "GSUisEmpty.d", GSUisEmpty( 21 ),               true );
-	test( "GSUisEmpty.e", GSUisEmpty( NaN ),              true );
-	test( "GSUisEmpty.f", GSUisEmpty( true ),             true );
-	test( "GSUisEmpty.g", GSUisEmpty( false ),            true );
-
-	// GSUtrim2 ................................................................
-	test( "GSUtrim2.0", GSUtrim2( "" ),                "" );
-	test( "GSUtrim2.1", GSUtrim2( "a" ),               "a" );
-	test( "GSUtrim2.2", GSUtrim2( "a b c" ),           "a b c" );
-	test( "GSUtrim2.3", GSUtrim2( "  a  b  c  " ),     "a b c" );
-	test( "GSUtrim2.4", GSUtrim2( " \t a  b\tc \t " ), "a b c" );
-	test( "GSUtrim2.5", GSUtrim2( 21 ),        "" );
-	test( "GSUtrim2.6", GSUtrim2( NaN ),       "" );
-	test( "GSUtrim2.7", GSUtrim2( true ),      "" );
-	test( "GSUtrim2.8", GSUtrim2( false ),     "" );
-	test( "GSUtrim2.9", GSUtrim2( null ),      "" );
-	test( "GSUtrim2.a", GSUtrim2( undefined ), "" );
-	test( "GSUtrim2.b", GSUtrim2( {} ),        "" );
-	test( "GSUtrim2.c", GSUtrim2( [] ),        "" );
-
-	// GSUcountChar ............................................................
-	test( "GSUcountChar.0", GSUcountChar(),                      0 );
-	test( "GSUcountChar.1", GSUcountChar( "", "" ),              0 );
-	test( "GSUcountChar.2", GSUcountChar( null ),                0 );
-	test( "GSUcountChar.3", GSUcountChar( true ),                0 );
-	test( "GSUcountChar.4", GSUcountChar( undefined ),           0 );
-	test( "GSUcountChar.5", GSUcountChar( "" ),                  0 );
-	test( "GSUcountChar.6", GSUcountChar( "", NaN ),             0 );
-	test( "GSUcountChar.7", GSUcountChar( "", null ),            0 );
-	test( "GSUcountChar.8", GSUcountChar( "", true ),            0 );
-	test( "GSUcountChar.9", GSUcountChar( "", false ),           0 );
-	test( "GSUcountChar.a", GSUcountChar( "", undefined ),       0 );
-	test( "GSUcountChar.b", GSUcountChar( "", "." ),             0 );
-	test( "GSUcountChar.c", GSUcountChar( "asd", null ),         0 );
-	test( "GSUcountChar.d", GSUcountChar( ".", "." ),            1 );
-	test( "GSUcountChar.e", GSUcountChar( "...", "." ),          3 );
-	test( "GSUcountChar.f", GSUcountChar( "asd.zxc..qwe", "." ), 3 );
-
-	// GSUsplitNums ................................................................
-	test( "GSUsplitNums.0", GSUsplitNums( 21        ), [] );
-	test( "GSUsplitNums.1", GSUsplitNums( NaN       ), [] );
-	test( "GSUsplitNums.2", GSUsplitNums( null      ), [] );
-	test( "GSUsplitNums.3", GSUsplitNums( true      ), [] );
-	test( "GSUsplitNums.4", GSUsplitNums( false     ), [] );
-	test( "GSUsplitNums.5", GSUsplitNums( undefined ), [] );
-	test( "GSUsplitNums.6", GSUsplitNums( GSUnoop   ), [] );
-	test( "GSUsplitNums.7", GSUsplitNums( ""        ), [] );
-	test( "GSUsplitNums.8", GSUsplitNums( "1"              ), [ 1 ] );
-	test( "GSUsplitNums.9", GSUsplitNums( "1 2 3"          ), [ 1, 2, 3 ] );
-	test( "GSUsplitNums.a", GSUsplitNums( "7",         "," ), [ 7 ] );
-	test( "GSUsplitNums.b", GSUsplitNums( "1/2/foo",   "/" ), [ 1, 2, 0 ] );
-	test( "GSUsplitNums.c", GSUsplitNums( "3/4",       "/" ), [ 3, 4 ] );
-	test( "GSUsplitNums.d", GSUsplitNums( "1.2/-3.14", "/" ), [ 1.2, -3.14 ] );
-	test( "GSUsplitNums.e", GSUsplitNums( "//",        "/" ), [ 0, 0, 0 ] );
-
-	// GSUsplitInts ................................................................
-	test( "GSUsplitInts.0", GSUsplitInts( 21        ), [] );
-	test( "GSUsplitInts.1", GSUsplitInts( NaN       ), [] );
-	test( "GSUsplitInts.2", GSUsplitInts( null      ), [] );
-	test( "GSUsplitInts.3", GSUsplitInts( true      ), [] );
-	test( "GSUsplitInts.4", GSUsplitInts( false     ), [] );
-	test( "GSUsplitInts.5", GSUsplitInts( undefined ), [] );
-	test( "GSUsplitInts.6", GSUsplitInts( GSUnoop   ), [] );
-	test( "GSUsplitInts.7", GSUsplitInts( ""        ), [] );
-	test( "GSUsplitInts.8", GSUsplitInts( "1",          "/" ), [ 1 ] );
-	test( "GSUsplitInts.9", GSUsplitInts( "1.5/3.15",   "/" ), [ 1, 3 ] );
-	test( "GSUsplitInts.a", GSUsplitInts( "-1.5/-3.15", "/" ), [ -1, -3 ] );
-	test( "GSUsplitInts.b", GSUsplitInts( "1/2",        "/" ), [ 1, 2 ] );
-	test( "GSUsplitInts.c", GSUsplitInts( "1/2/foo",    "/" ), [ 1, 2, 0 ] );
-	test( "GSUsplitInts.d", GSUsplitInts( "1/2//3",     "/" ), [ 1, 2, 0, 3 ] );
-	test( "GSUsplitInts.e", GSUsplitInts( "//",         "/" ), [ 0, 0, 0 ] );
-
-	// GSUuuid .....................................................................
-	test( "GSUuuid.0", GSUuuid().length, 36 );
-
-	// GSUuniqueName ...............................................................
-	test( "GSUuniqueName.0", GSUuniqueName( "foo",      [] ),                                "foo" );
-	test( "GSUuniqueName.1", GSUuniqueName( "foo",      [ "foo" ] ),                         "foo-2" );
-	test( "GSUuniqueName.2", GSUuniqueName( "foo",      [ "foo", "foo-2" ] ),                "foo-3" );
-	test( "GSUuniqueName.3", GSUuniqueName( "foo-2",    [ "foo", "foo-2" ] ),                "foo-3" );
-	test( "GSUuniqueName.4", GSUuniqueName( "foo-2",    [ "foo", "foo-3" ] ),                "foo-2" );
-	test( "GSUuniqueName.5", GSUuniqueName( "foo-2",    [ "foo", "foo-3", "foo-2" ] ),       "foo-4" );
-	test( "GSUuniqueName.6", GSUuniqueName( "foo-21-2", [ "foo", "foo-21-1", "foo-21-2" ] ), "foo-21-3" );
-
-	// GSUsplitSeconds .............................................................
-	test( "GSUsplitSeconds.0", GSUsplitSeconds(  0 ),       { m: "0", s: "00", ms: "000" } );
-	test( "GSUsplitSeconds.1", GSUsplitSeconds( 21 ),       { m: "0", s: "21", ms: "000" } );
-	test( "GSUsplitSeconds.2", GSUsplitSeconds( 60 ),       { m: "1", s: "00", ms: "000" } );
-	test( "GSUsplitSeconds.3", GSUsplitSeconds( 71 ),       { m: "1", s: "11", ms: "000" } );
-	test( "GSUsplitSeconds.4", GSUsplitSeconds( 71.12345 ), { m: "1", s: "11", ms: "123" } );
-
-	// GSUsetModel .................................................................
-	test( "GSUsetModel.0", GSUisEmpty( GSUmodels ), true );
-	test( "GSUsetModel.1", GSUgetModel( "foo" ), null );
-	test( "GSUsetModel.2", GSUgetModel(), null );
-	test( "GSUsetModel.3", GSUisEmpty( GSUmodels ), true );
-	test( "GSUsetModel.4", GSUsetModel( "foo", { a: 1 } ), undefined );
-	test( "GSUsetModel.5", GSUisEmpty( GSUmodels ), false );
-	test( "GSUsetModel.6", GSUgetModel( "foo" ), { a: 1 } );
-	test( "GSUsetModel.7", GSUgetModel( "foo", { a: 2 } ), { a: 2 } );
-	test( "GSUsetModel.8", GSUgetModel( "foo", { b: 2 } ).a, 1 );
-	test( "GSUsetModel.9", GSUgetModel( "foo", { b: 2 } ).b, undefined );
-	test( "GSUsetModel.a", GSUgetModel( "foo", { a: 3, b: 4 } ).a, 3 );
-	test( "GSUsetModel.b", GSUgetModel( "foo", { a: 3, b: 4 } ).b, undefined );
-	test( "GSUsetModel.c", GSUmodels.get( "foo" ), { a: 1 } );
-	test( "GSUsetModel.d", GSUmodels.get( "foo" ).a, 1 );
-	GSUmodels.get( "foo" ).a = 2;
-	test( "GSUsetModel.e", GSUmodels.get( "foo" ).a, 1 );
-	const myMod = GSUgetModel( "foo" );
-	myMod.a = 21;
-	test( "GSUsetModel.f", myMod.a, 21 );
-	myMod.b = 42;
-	test( "GSUsetModel.g", myMod.b, undefined );
-	test( "GSUsetModel.h", GSUgetModel( "foo", null ), { a: 1 } );
-	test( "GSUsetModel.i", GSUgetModel( "foo", undefined ), { a: 1 } );
-	test( "GSUsetModel.j", GSUgetModel( "foo", false ), { a: 1 } );
-	test( "GSUsetModel.k", GSUgetModel( "foo", true ), { a: 1 } );
-	test( "GSUsetModel.l", GSUgetModel( "foo", NaN ), { a: 1 } );
-	test( "GSUsetModel.m", GSUgetModel( "foo", "hello" ), { a: 1 } );
-	test( "GSUsetModel.n", GSUgetModel( "foo", [] ), { a: 1 } );
-	test( "GSUsetModel.o", GSUgetModel( "foo", { b: 2, c: 3, a: 21 } ), { a: 21 } );
-	test( "GSUsetModel.p", GSUgetModel( "foo", document.body ), { a: 1 } );
+	tests( "GSUisObj", () => {
+		test( "isObj.0", GSUisObj(),            false );
+		test( "isObj.1", GSUisObj( NaN ),       false );
+		test( "isObj.2", GSUisObj( null ),      false );
+		test( "isObj.3", GSUisObj( true ),      false );
+		test( "isObj.4", GSUisObj( false ),     false );
+		test( "isObj.5", GSUisObj( undefined ), false );
+		test( "isObj.6", GSUisObj( GSUnoop ),   false );
+		test( "isObj.7", GSUisObj( {} ),        true );
+		test( "isObj.8", GSUisObj( [] ),        true );
+		test( "isObj.9", GSUisObj( 21 ),        false );
+		test( "isObj.a", GSUisObj( "abc" ),     false );
+	} );
+	tests( "GSUisArr", () => {
+		test( "isArr.0", GSUisArr( [] ),        true );
+		test( "isArr.1", GSUisArr( [ 0 ] ),     true );
+		test( "isArr.2", GSUisArr( {} ),        false );
+		test( "isArr.3", GSUisArr( "abc" ),     false );
+		test( "isArr.4", GSUisArr( "" ),        false );
+		test( "isArr.5", GSUisArr( null ),      false );
+		test( "isArr.6", GSUisArr( undefined ), false );
+		test( "isArr.7", GSUisArr( true ),      false );
+		test( "isArr.8", GSUisArr( GSUnoop ),   false );
+	} );
+	tests( "GSUisStr", () => {
+		test( "isStr.0", GSUisStr(),            false );
+		test( "isStr.1", GSUisStr( NaN ),       false );
+		test( "isStr.2", GSUisStr( null ),      false );
+		test( "isStr.3", GSUisStr( true ),      false );
+		test( "isStr.4", GSUisStr( false ),     false );
+		test( "isStr.5", GSUisStr( undefined ), false );
+		test( "isStr.7", GSUisStr( GSUnoop ),   false );
+		test( "isStr.8", GSUisStr( {} ),        false );
+		test( "isStr.9", GSUisStr( [] ),        false );
+		test( "isStr.a", GSUisStr( "" ),        true );
+		test( "isStr.b", GSUisStr( "0" ),       true );
+	} );
+	tests( "GSUisNaN", () => {
+		test( "isNaN.0", GSUisNaN( NaN ),       true );
+		test( "isNaN.1", GSUisNaN( 0/0 ),       true );
+		test( "isNaN.2", GSUisNaN(),            false );
+		test( "isNaN.3", GSUisNaN( null ),      false );
+		test( "isNaN.4", GSUisNaN( undefined ), false );
+		test( "isNaN.5", GSUisNaN( GSUnoop ),   false );
+		test( "isNaN.6", GSUisNaN( 0 ),         false );
+		test( "isNaN.7", GSUisNaN( 1 ),         false );
+		test( "isNaN.8", GSUisNaN( "a" ),       false );
+		test( "isNaN.9", GSUisNaN( "21" ),      false );
+		test( "isNaN.a", GSUisNaN( true ),      false );
+		test( "isNaN.b", GSUisNaN( false ),     false );
+	} );
+	tests( "GSUisNum", () => {
+		test( "isNum.0", GSUisNum(),            false );
+		test( "isNum.1", GSUisNum( NaN ),       false );
+		test( "isNum.2", GSUisNum( null ),      false );
+		test( "isNum.3", GSUisNum( true ),      false );
+		test( "isNum.4", GSUisNum( false ),     false );
+		test( "isNum.5", GSUisNum( undefined ), false );
+		test( "isNum.6", GSUisNum( GSUnoop ),   false );
+		test( "isNum.7", GSUisNum( {} ),        false );
+		test( "isNum.8", GSUisNum( [] ),        false );
+		test( "isNum.9", GSUisNum( "" ),        false );
+		test( "isNum.a", GSUisNum( 0 ),         true );
+		test( "isNum.b", GSUisNum( 21 ),        true );
+		test( "isNum.c", GSUisNum( 21.5 ),      true );
+		test( "isNum.d", GSUisNum( "21" ),      false );
+		test( "isNum.e", GSUisNum( "abc" ),     false );
+	} );
+	tests( "GSUisInt", () => {
+		test( "isInt.0", GSUisInt(),            false );
+		test( "isInt.1", GSUisInt( NaN ),       false );
+		test( "isInt.2", GSUisInt( null ),      false );
+		test( "isInt.3", GSUisInt( true ),      false );
+		test( "isInt.4", GSUisInt( false ),     false );
+		test( "isInt.5", GSUisInt( undefined ), false );
+		test( "isInt.6", GSUisInt( GSUnoop ),   false );
+		test( "isInt.7", GSUisInt( {} ),        false );
+		test( "isInt.8", GSUisInt( [] ),        false );
+		test( "isInt.9", GSUisInt( "" ),        false );
+		test( "isInt.a", GSUisInt( 0 ),         true );
+		test( "isInt.b", GSUisInt( 21 ),        true );
+		test( "isInt.c", GSUisInt( 21.5 ),      false );
+		test( "isInt.d", GSUisInt( "21" ),      false );
+		test( "isInt.e", GSUisInt( "abc" ),     false );
+	} );
+	tests( "GSUisBoo", () => {
+		test( "isBoo.0", GSUisBoo( true ),      true );
+		test( "isBoo.1", GSUisBoo( false ),     true );
+		test( "isBoo.2", GSUisBoo( {} ),        false );
+		test( "isBoo.3", GSUisBoo( [] ),        false );
+		test( "isBoo.4", GSUisBoo( "" ),        false );
+		test( "isBoo.5", GSUisBoo( 0 ),         false );
+		test( "isBoo.6", GSUisBoo( 21 ),        false );
+		test( "isBoo.7", GSUisBoo( NaN ),       false );
+		test( "isBoo.8", GSUisBoo( null ),      false );
+		test( "isBoo.9", GSUisBoo( undefined ), false );
+		test( "isBoo.a", GSUisBoo( GSUnoop ),   false );
+	} );
+	tests( "GSUisFun", () => {
+		test( "isFun.0", GSUisFun(),            false );
+		test( "isFun.1", GSUisFun( NaN ),       false );
+		test( "isFun.2", GSUisFun( null ),      false );
+		test( "isFun.3", GSUisFun( true ),      false );
+		test( "isFun.4", GSUisFun( false ),     false );
+		test( "isFun.5", GSUisFun( undefined ), false );
+		test( "isFun.6", GSUisFun( {} ),        false );
+		test( "isFun.7", GSUisFun( [] ),        false );
+		test( "isFun.8", GSUisFun( "" ),        false );
+		test( "isFun.9", GSUisFun( "21" ),      false );
+		test( "isFun.a", GSUisFun( 0 ),         false );
+		test( "isFun.b", GSUisFun( GSUnoop ),   true );
+		test( "isFun.c", GSUisFun( () => {} ),  true );
+	} );
+	tests( "GSUisEqual", () => {
+		test( "isEqual.0", GSUisEqual( 0, 0 ),                 true );
+		test( "isEqual.1", GSUisEqual( 1, 1 ),                 true );
+		test( "isEqual.2", GSUisEqual( true, true ),           true );
+		test( "isEqual.3", GSUisEqual( false, false ),         true );
+		test( "isEqual.4", GSUisEqual( NaN, NaN ),             true );
+		test( "isEqual.5", GSUisEqual( null, null ),           true );
+		test( "isEqual.6", GSUisEqual( undefined, undefined ), true );
+		test( "isEqual.7", GSUisEqual( GSUnoop, GSUnoop ),     true );
+		test( "isEqual.8", GSUisEqual( {}, {} ),                                     true );
+		test( "isEqual.9", GSUisEqual( [], [] ),                                     true );
+		test( "isEqual.a", GSUisEqual( [ 0 ], [ 0 ] ),                               true );
+		test( "isEqual.b", GSUisEqual( [ 0, 1 ], [ 0, 1 ] ),                         true );
+		test( "isEqual.c", GSUisEqual( [ 0, [ 1 ] ], [ 0, [ 1 ] ] ),                 true );
+		test( "isEqual.d", GSUisEqual( [ [ 0 ], [ [ 1 ] ] ], [ [ 0 ], [ [ 1 ] ] ] ), true );
+		test( "isEqual.e", GSUisEqual( [ 0, [ 1, {} ] ], [ 0, [ 1, {} ] ] ),         true );
+		test( "isEqual.f", GSUisEqual( { a: 21 }, { a: 21 } ),                                                           true );
+		test( "isEqual.g", GSUisEqual( { a: 21, b: NaN, c: 42 }, { a: 21, b: NaN, c: 42 } ),                             true );
+		test( "isEqual.h", GSUisEqual( { a: [ 0, 1 ], b: NaN, c: 42 }, { a: [ 0, 1 ], b: NaN, c: 42 } ),                 true );
+		test( "isEqual.i", GSUisEqual( { a: [ 0, 1 ], b: NaN, c: { aa: 42 } }, { a: [ 0, 1 ], b: NaN, c: { aa: 42 } } ), true );
+		test( "isEqual.j", GSUisEqual( 0, "0" ),             false );
+		test( "isEqual.k", GSUisEqual( 1, "1" ),             false );
+		test( "isEqual.l", GSUisEqual( true, false ),        false );
+		test( "isEqual.m", GSUisEqual( false, undefined ),   false );
+		test( "isEqual.n", GSUisEqual( NaN, null ),          false );
+		test( "isEqual.o", GSUisEqual( null, {} ),           false );
+		test( "isEqual.p", GSUisEqual( undefined, null ),    false );
+		test( "isEqual.q", GSUisEqual( {}, [] ),             false );
+		test( "isEqual.r", GSUisEqual( [], "" ),             false );
+		test( "isEqual.s", GSUisEqual( () => {}, () => {} ), false );
+		test( "isEqual.t", GSUisEqual( [], [ 0 ] ),          false );
+		test( "isEqual.u", GSUisEqual( [ 0 ], [] ),          false );
+		test( "isEqual.v", GSUisEqual( {}, { a: 0 } ),       false );
+		test( "isEqual.w", GSUisEqual( { a: 0 }, {} ),       false );
+		test( "isEqual.x", GSUisEqual( [ 0, 1, 2 ], [ 0, 1, 3 ] ),                       false );
+		test( "isEqual.y", GSUisEqual( [ 0, [ 1, 2 ] ], [ 0, [ 1, 3 ] ] ),               false );
+		test( "isEqual.z", GSUisEqual( [ 0, [ 1, { a: 2 } ] ], [ 0, [ 1, { a: 3 } ] ] ), false );
+		test( "isEqual.A", GSUisEqual( [ 0, [ 1, { a: 2 } ] ], [ 0, [ 1, { b: 2 } ] ] ), false );
+		test( "isEqual.B", GSUisEqual( new Map(), new Map() ), true );
+		// test( "isEqual.C", GSUisEqual( new Map( [ 21 ] ), new Map( [ 21 ] ) ), true );
+	} );
+	tests( "GSUdotProp", () => {
+		const objDotProp = {};
+		testStrict( "dotProp.0", GSUdotProp( objDotProp ), objDotProp );
+		testStrict( "dotProp.1", GSUdotProp( objDotProp, "" ), objDotProp );
+		test( "dotProp.2", GSUdotProp( null,       "" ), null );
+		test( "dotProp.3", GSUdotProp( true,       "" ), true );
+		test( "dotProp.4", GSUdotProp( null,      "a"   ), undefined );
+		test( "dotProp.5", GSUdotProp( undefined, ""    ), undefined );
+		test( "dotProp.6", GSUdotProp( true,      "a"   ), undefined );
+		test( "dotProp.7", GSUdotProp( true,      "a.b" ), undefined );
+		test( "dotProp.8", GSUdotProp( false,     "a"   ), undefined );
+		test( "dotProp.9", GSUdotProp( {}, "a" ),     undefined );
+		test( "dotProp.a", GSUdotProp( {}, "a.b" ),   undefined );
+		test( "dotProp.b", GSUdotProp( {}, "a.b.c" ), undefined );
+		test( "dotProp.c", GSUdotProp( { a: 1 }, "a" ),   1 );
+		test( "dotProp.d", GSUdotProp( { a: 1 }, "b" ),   undefined );
+		test( "dotProp.e", GSUdotProp( { a: 1 }, "b.c" ), undefined );
+		test( "dotProp.f", GSUdotProp( { a: { b: 2 } }, "a.b"   ), 2 );
+		test( "dotProp.g", GSUdotProp( { a: { b: 2 } }, "a.c"   ), undefined );
+		test( "dotProp.h", GSUdotProp( { a: { b: 2 } }, "a.c.d" ), undefined );
+		test( "dotProp.i", GSUdotProp( { a: { b: [ 3    ] } }, "a.b.0" ), 3 );
+		test( "dotProp.j", GSUdotProp( { a: { b: [ 3, 4 ] } }, "a.b.1" ), 4 );
+		test( "dotProp.k", GSUdotProp( { a: { b: [ 3, 4 ] } }, "a.b.2" ), undefined );
+		test( "dotProp.l", GSUdotProp( {},               "a" ), undefined );
+		test( "dotProp.m", GSUdotProp( { a: undefined }, "a" ), GSUdotProp_undefined );
+		test( "dotProp.n", GSUdotProp( { a: 1 }, ".a" ), 1 );
+	} );
+	tests( "GSUforEach", () => {
+		const objFE = { a: 10, b: 20 };
+		const arrFE = [ 10, 20 ];
+		let resFE;
+		testStrict( "forEach.0", GSUforEach( objFE,     GSUnoop ), objFE );
+		testStrict( "forEach.1", GSUforEach( arrFE,     GSUnoop ), arrFE );
+		testStrict( "forEach.2", GSUforEach( null,      null    ), null );
+		testStrict( "forEach.3", GSUforEach( false,     null    ), false );
+		testStrict( "forEach.4", GSUforEach( undefined, null    ), undefined );
+		testStrict( "forEach.5", GSUforEach( true,      null    ), true );
+		testStrict( "forEach.6", GSUforEach( 21,        null    ), 21 );
+		resFE = "";
+		GSUforEach( objFE, ( val, key, obj ) => { resFE += `${ key }:${ val }:${ obj === objFE }:` } );
+		test( "forEach.7", resFE, "a:10:true:b:20:true:" );
+		resFE = "";
+		GSUforEach( arrFE, ( val, key, obj ) => { resFE += `${ key }:${ val }:${ obj === arrFE }:` } );
+		test( "forEach.8", resFE, "0:10:true:1:20:true:" );
+	} );
+	tests( "GSUreduce", () => {
+		const fnSum = ( sum, n, i ) => sum + n + i;
+		test( "reduce.0", GSUreduce( NaN,                     null,  0 ), 0 );
+		test( "reduce.1", GSUreduce( null,                    null,  0 ), 0 );
+		test( "reduce.2", GSUreduce( true,                    null,  0 ), 0 );
+		test( "reduce.3", GSUreduce( false,                   null,  0 ), 0 );
+		test( "reduce.4", GSUreduce( undefined,               null,  0 ), 0 );
+		test( "reduce.5", GSUreduce( GSUnoop,                 null,  0 ), 0 );
+		test( "reduce.6", GSUreduce( [],                      fnSum, 0 ), 0 );
+		test( "reduce.7", GSUreduce( {},                      fnSum, 0 ), 0 );
+		test( "reduce.8", GSUreduce( [ 10, 20, 30 ],          fnSum, 0 ), 63 );
+		test( "reduce.9", GSUreduce( { a: 10, b: 20, c: 30 }, fnSum, 0 ), "10a20b30c" );
+	} );
+	tests( "GSUsome", () => {
+		const fnSome21 = n => n === 21;
+		test( "some.0", GSUsome( NaN,             null     ), false );
+		test( "some.1", GSUsome( null,            null     ), false );
+		test( "some.2", GSUsome( true,            null     ), false );
+		test( "some.3", GSUsome( false,           null     ), false );
+		test( "some.4", GSUsome( undefined,       null     ), false );
+		test( "some.5", GSUsome( GSUnoop,         null     ), false );
+		test( "some.6", GSUsome( [],              fnSome21 ), false );
+		test( "some.7", GSUsome( {},              fnSome21 ), false );
+		test( "some.8", GSUsome( [ 0, 1,  2 ],    fnSome21 ), false );
+		test( "some.9", GSUsome( { a: 0, b:  1 }, fnSome21 ), false );
+		test( "some.a", GSUsome( [ 21 ],          fnSome21 ), true  );
+		test( "some.b", GSUsome( [ 0, 1, 21 ],    fnSome21 ), true  );
+		test( "some.c", GSUsome( { a: 0, b: 21 }, fnSome21 ), true  );
+	} );
+	tests( "GSUHztoX", () => {
+		test( "HztoX.0", GSUmathFix( GSUHztoX( GSUXtoHz( .5 ) ), 8 ), .5 );
+		test( "HztoX.1", GSUHztoX( 1 ), 1 );
+		test( "HztoX.2", GSUXtoHz( 1 ), 1 );
+	} );
+	tests( "GSUnewArray", () => {
+		test( "newArray.0", GSUnewArray( 0 ),        [] );
+		test( "newArray.1", GSUnewArray( 1 ).length,  1 );
+		test( "newArray.2", GSUnewArray( 2 ).length,  2 );
+		test( "newArray.3", GSUnewArray( 3, 7 ),      [ 7, 7, 7 ] );
+		test( "newArray.4", GSUnewArray( 3, i => i ), [ 0, 1, 2 ] );
+	} );
+	tests( "GSUarrayFrom", () => {
+		const objEmpty = {};
+		const arrEmpty = [];
+		const arr123 = [ 1, 2, 3 ];
+		test( "arrayFrom.0", GSUarrayFrom( arr123 ),        arr123 );
+		test( "arrayFrom.1", GSUarrayFrom( arrEmpty ),      arrEmpty );
+		test( "arrayFrom.2", GSUarrayFrom( objEmpty )[ 0 ], objEmpty );
+		// test( "arrayFrom.2", GSUarrayFrom( 21 )[ 0 ], 21 );
+	} );
+	tests( "GSUarrayRemove", () => {
+		const arrRm = [ 1, 2, 3, 4, 5 ];
+		testStrict( "arrayRemove.0", GSUarrayRemove( arrRm, 3 ), arrRm );
+		test( "arrayRemove.1", arrRm, [ 1, 2, 4, 5 ] );
+		test( "arrayRemove.2", GSUarrayRemove( [], 1          ), [] );
+		test( "arrayRemove.3", GSUarrayRemove( []             ), [] );
+		test( "arrayRemove.4", GSUarrayRemove( [ 1 ], 1       ), [] );
+		test( "arrayRemove.6", GSUarrayRemove( [ 1, 1, 1 ], 1 ), [] );
+		test( "arrayRemove.5", GSUarrayRemove( [ 1 ]                           ), [ 1 ] );
+		test( "arrayRemove.7", GSUarrayRemove( [ 2, 1, 1, 1, 3 ], 1            ), [ 2, 3 ] );
+		test( "arrayRemove.8", GSUarrayRemove( [ 2, 1, 1, 1, 3 ], x => x === 1 ), [ 2, 3 ] );
+		test( "arrayRemove.9", GSUarrayRemove( [ 1, 2 ], GSUnoop               ), [ 1, 2 ] );
+	} );
+	// tests( "GSUarrayInsertSort", () => {
+	// 	test( "arrayInsertSort.0", GSUarrayInsertSort( [ 10, 20, 30 ], 25, ( n, x ) => n - x ), [ 10, 20, 25, 30 ] );
+	// 	test( "arrayInsertSort.1", GSUarrayInsertSort( [ 10, 20, 30 ], 15, ( n, x ) => n - x ), [ 10, 15, 20, 30 ] );
+	// 	test( "arrayInsertSort.2", GSUarrayInsertSort( [ 10, 20, 30 ],  5, ( n, x ) => n - x ), [  5, 10, 20, 30 ] );
+	// 	test( "arrayInsertSort.3", GSUarrayInsertSort( [ 10, 20, 30 ], 99, ()       =>  1 ),    [ 99, 10, 20, 30 ] );
+	// 	test( "arrayInsertSort.4", GSUarrayInsertSort( [ 10, 20, 30 ], 99, ()       => -1 ),    [ 10, 20, 30, 99 ] );
+	// 	test( "arrayInsertSort.5", GSUarrayInsertSort( [ { x: 10 }, { x: 20 } ], { x: 15 }, ( a, b ) => a.x - b.x ), [ { x: 10 }, { x: 15 }, { x: 20 } ] );
+	// } );
+	tests( "GSUisEmpty", () => {
+		test( "isEmpty.0", GSUisEmpty( {} ),               true );
+		test( "isEmpty.1", GSUisEmpty( [] ),               true );
+		test( "isEmpty.2", GSUisEmpty( "" ),               true );
+		test( "isEmpty.3", GSUisEmpty( new Map() ),        true );
+		test( "isEmpty.4", GSUisEmpty( new Set() ),        true );
+		test( "isEmpty.5", GSUisEmpty( "0" ),                       false );
+		test( "isEmpty.6", GSUisEmpty( [ 0 ] ),                     false );
+		test( "isEmpty.7", GSUisEmpty( { a: null } ),               false );
+		test( "isEmpty.8", GSUisEmpty( { a: undefined } ),          false );
+		test( "isEmpty.9", GSUisEmpty( new Map( [ [ "a", 1 ] ] ) ), false );
+		test( "isEmpty.a", GSUisEmpty( new Set( [ 21 ] ) ),         false );
+		test( "isEmpty.b", GSUisEmpty( null ),             true );
+		test( "isEmpty.c", GSUisEmpty( undefined ),        true );
+		test( "isEmpty.d", GSUisEmpty( 21 ),               true );
+		test( "isEmpty.e", GSUisEmpty( NaN ),              true );
+		test( "isEmpty.f", GSUisEmpty( true ),             true );
+		test( "isEmpty.g", GSUisEmpty( false ),            true );
+	} );
+	tests( "GSUtrim2", () => {
+		test( "trim2.0", GSUtrim2( "" ),                "" );
+		test( "trim2.1", GSUtrim2( "a" ),               "a" );
+		test( "trim2.2", GSUtrim2( "a b c" ),           "a b c" );
+		test( "trim2.3", GSUtrim2( "  a  b  c  " ),     "a b c" );
+		test( "trim2.4", GSUtrim2( " \t a  b\tc \t " ), "a b c" );
+		test( "trim2.5", GSUtrim2( 21 ),        "" );
+		test( "trim2.6", GSUtrim2( NaN ),       "" );
+		test( "trim2.7", GSUtrim2( true ),      "" );
+		test( "trim2.8", GSUtrim2( false ),     "" );
+		test( "trim2.9", GSUtrim2( null ),      "" );
+		test( "trim2.a", GSUtrim2( undefined ), "" );
+		test( "trim2.b", GSUtrim2( {} ),        "" );
+		test( "trim2.c", GSUtrim2( [] ),        "" );
+	} );
+	tests( "GSUcountChar", () => {
+		test( "countChar.0", GSUcountChar(),                      0 );
+		test( "countChar.1", GSUcountChar( "", "" ),              0 );
+		test( "countChar.2", GSUcountChar( null ),                0 );
+		test( "countChar.3", GSUcountChar( true ),                0 );
+		test( "countChar.4", GSUcountChar( undefined ),           0 );
+		test( "countChar.5", GSUcountChar( "" ),                  0 );
+		test( "countChar.6", GSUcountChar( "", NaN ),             0 );
+		test( "countChar.7", GSUcountChar( "", null ),            0 );
+		test( "countChar.8", GSUcountChar( "", true ),            0 );
+		test( "countChar.9", GSUcountChar( "", false ),           0 );
+		test( "countChar.a", GSUcountChar( "", undefined ),       0 );
+		test( "countChar.b", GSUcountChar( "", "." ),             0 );
+		test( "countChar.c", GSUcountChar( "asd", null ),         0 );
+		test( "countChar.d", GSUcountChar( ".", "." ),            1 );
+		test( "countChar.e", GSUcountChar( "...", "." ),          3 );
+		test( "countChar.f", GSUcountChar( "asd.zxc..qwe", "." ), 3 );
+	} );
+	tests( "GSUsplitNums", () => {
+		test( "splitNums.0", GSUsplitNums( 21        ), [] );
+		test( "splitNums.1", GSUsplitNums( NaN       ), [] );
+		test( "splitNums.2", GSUsplitNums( null      ), [] );
+		test( "splitNums.3", GSUsplitNums( true      ), [] );
+		test( "splitNums.4", GSUsplitNums( false     ), [] );
+		test( "splitNums.5", GSUsplitNums( undefined ), [] );
+		test( "splitNums.6", GSUsplitNums( GSUnoop   ), [] );
+		test( "splitNums.7", GSUsplitNums( ""        ), [] );
+		test( "splitNums.8", GSUsplitNums( "1"              ), [ 1 ] );
+		test( "splitNums.9", GSUsplitNums( "1 2 3"          ), [ 1, 2, 3 ] );
+		test( "splitNums.a", GSUsplitNums( "7",         "," ), [ 7 ] );
+		test( "splitNums.b", GSUsplitNums( "1/2/foo",   "/" ), [ 1, 2, 0 ] );
+		test( "splitNums.c", GSUsplitNums( "3/4",       "/" ), [ 3, 4 ] );
+		test( "splitNums.d", GSUsplitNums( "1.2/-3.14", "/" ), [ 1.2, -3.14 ] );
+		test( "splitNums.e", GSUsplitNums( "//",        "/" ), [ 0, 0, 0 ] );
+	} );
+	tests( "GSUsplitInts", () => {
+		test( "splitInts.0", GSUsplitInts( 21        ), [] );
+		test( "splitInts.1", GSUsplitInts( NaN       ), [] );
+		test( "splitInts.2", GSUsplitInts( null      ), [] );
+		test( "splitInts.3", GSUsplitInts( true      ), [] );
+		test( "splitInts.4", GSUsplitInts( false     ), [] );
+		test( "splitInts.5", GSUsplitInts( undefined ), [] );
+		test( "splitInts.6", GSUsplitInts( GSUnoop   ), [] );
+		test( "splitInts.7", GSUsplitInts( ""        ), [] );
+		test( "splitInts.8", GSUsplitInts( "1",          "/" ), [ 1 ] );
+		test( "splitInts.9", GSUsplitInts( "1.5/3.15",   "/" ), [ 1, 3 ] );
+		test( "splitInts.a", GSUsplitInts( "-1.5/-3.15", "/" ), [ -1, -3 ] );
+		test( "splitInts.b", GSUsplitInts( "1/2",        "/" ), [ 1, 2 ] );
+		test( "splitInts.c", GSUsplitInts( "1/2/foo",    "/" ), [ 1, 2, 0 ] );
+		test( "splitInts.d", GSUsplitInts( "1/2//3",     "/" ), [ 1, 2, 0, 3 ] );
+		test( "splitInts.e", GSUsplitInts( "//",         "/" ), [ 0, 0, 0 ] );
+	} );
+	tests( "GSUuuid", () => {
+		test( "uuid.0", GSUuuid().length, 36 );
+	} );
+	tests( "GSUuniqueName", () => {
+		test( "uniqueName.0", GSUuniqueName( "foo",      [] ),                                "foo" );
+		test( "uniqueName.1", GSUuniqueName( "foo",      [ "foo" ] ),                         "foo-2" );
+		test( "uniqueName.2", GSUuniqueName( "foo",      [ "foo", "foo-2" ] ),                "foo-3" );
+		test( "uniqueName.3", GSUuniqueName( "foo-2",    [ "foo", "foo-2" ] ),                "foo-3" );
+		test( "uniqueName.4", GSUuniqueName( "foo-2",    [ "foo", "foo-3" ] ),                "foo-2" );
+		test( "uniqueName.5", GSUuniqueName( "foo-2",    [ "foo", "foo-3", "foo-2" ] ),       "foo-4" );
+		test( "uniqueName.6", GSUuniqueName( "foo-21-2", [ "foo", "foo-21-1", "foo-21-2" ] ), "foo-21-3" );
+	} );
+	tests( "GSUsplitSeconds", () => {
+		test( "splitSeconds.0", GSUsplitSeconds(  0 ),       { m: "0", s: "00", ms: "000" } );
+		test( "splitSeconds.1", GSUsplitSeconds( 21 ),       { m: "0", s: "21", ms: "000" } );
+		test( "splitSeconds.2", GSUsplitSeconds( 60 ),       { m: "1", s: "00", ms: "000" } );
+		test( "splitSeconds.3", GSUsplitSeconds( 71 ),       { m: "1", s: "11", ms: "000" } );
+		test( "splitSeconds.4", GSUsplitSeconds( 71.12345 ), { m: "1", s: "11", ms: "123" } );
+	} );
+	tests( "GSUsetModel", () => {
+		test( "setModel.0", GSUisEmpty( GSUmodels ), true );
+		test( "setModel.1", GSUgetModel( "foo" ), null );
+		test( "setModel.2", GSUgetModel(), null );
+		test( "setModel.3", GSUisEmpty( GSUmodels ), true );
+		test( "setModel.4", GSUsetModel( "foo", { a: 1 } ), undefined );
+		test( "setModel.5", GSUisEmpty( GSUmodels ), false );
+		test( "setModel.6", GSUgetModel( "foo" ), { a: 1 } );
+		test( "setModel.7", GSUgetModel( "foo", { a: 2 } ), { a: 2 } );
+		test( "setModel.8", GSUgetModel( "foo", { b: 2 } ).a, 1 );
+		test( "setModel.9", GSUgetModel( "foo", { b: 2 } ).b, undefined );
+		test( "setModel.a", GSUgetModel( "foo", { a: 3, b: 4 } ).a, 3 );
+		test( "setModel.b", GSUgetModel( "foo", { a: 3, b: 4 } ).b, undefined );
+		test( "setModel.c", GSUmodels.get( "foo" ), { a: 1 } );
+		test( "setModel.d", GSUmodels.get( "foo" ).a, 1 );
+		GSUmodels.get( "foo" ).a = 2;
+		test( "setModel.e", GSUmodels.get( "foo" ).a, 1 );
+		const myMod = GSUgetModel( "foo" );
+		myMod.a = 21;
+		test( "setModel.f", myMod.a, 21 );
+		myMod.b = 42;
+		test( "setModel.g", myMod.b, undefined );
+		test( "setModel.h", GSUgetModel( "foo", null ), { a: 1 } );
+		test( "setModel.i", GSUgetModel( "foo", undefined ), { a: 1 } );
+		test( "setModel.j", GSUgetModel( "foo", false ), { a: 1 } );
+		test( "setModel.k", GSUgetModel( "foo", true ), { a: 1 } );
+		test( "setModel.l", GSUgetModel( "foo", NaN ), { a: 1 } );
+		test( "setModel.m", GSUgetModel( "foo", "hello" ), { a: 1 } );
+		test( "setModel.n", GSUgetModel( "foo", [] ), { a: 1 } );
+		test( "setModel.o", GSUgetModel( "foo", { b: 2, c: 3, a: 21 } ), { a: 21 } );
+		test( "setModel.p", GSUgetModel( "foo", document.body ), { a: 1 } );
+	} );
 </script>
 
 <!-- ....................................................................... -->
 <!-- ..... results ......................................................... -->
 <!-- ....................................................................... -->
 <script>
-	console.log( `${ nbTestsOk } / ${ nbTests }` );
-	const interId = setInterval( () => {
-		console.log( `${ nbTestsOk } / ${ nbTests }` );
+	function resultFrame() {
+		console.log( `${ nbGroups } : ${ nbTestsOk } / ${ nbTests }` );
 		if ( toWait === 0 ) {
 			clearInterval( interId );
 			if ( nbTestsOk === nbTests ) {
 				console.log( "✔️" );
 			}
 		}
-	}, 50 );
+	}
+
+	resultFrame();
+	const interId = setInterval( resultFrame, 50 );
 </script>
