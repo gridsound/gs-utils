@@ -856,17 +856,19 @@
 	test( "GSUisEmpty.1", GSUisEmpty( [] ),               true );
 	test( "GSUisEmpty.2", GSUisEmpty( "" ),               true );
 	test( "GSUisEmpty.3", GSUisEmpty( new Map() ),        true );
-	test( "GSUisEmpty.4", GSUisEmpty( "0" ),                       false );
-	test( "GSUisEmpty.5", GSUisEmpty( [ 0 ] ),                     false );
-	test( "GSUisEmpty.6", GSUisEmpty( { a: null } ),               false );
-	test( "GSUisEmpty.7", GSUisEmpty( { a: undefined } ),          false );
-	test( "GSUisEmpty.8", GSUisEmpty( new Map( [ [ "a", 1 ] ] ) ), false );
-	test( "GSUisEmpty.9", GSUisEmpty( null ),             true );
-	test( "GSUisEmpty.a", GSUisEmpty( undefined ),        true );
-	test( "GSUisEmpty.b", GSUisEmpty( 21 ),               true );
-	test( "GSUisEmpty.c", GSUisEmpty( NaN ),              true );
-	test( "GSUisEmpty.d", GSUisEmpty( true ),             true );
-	test( "GSUisEmpty.e", GSUisEmpty( false ),            true );
+	test( "GSUisEmpty.4", GSUisEmpty( new Set() ),        true );
+	test( "GSUisEmpty.5", GSUisEmpty( "0" ),                       false );
+	test( "GSUisEmpty.6", GSUisEmpty( [ 0 ] ),                     false );
+	test( "GSUisEmpty.7", GSUisEmpty( { a: null } ),               false );
+	test( "GSUisEmpty.8", GSUisEmpty( { a: undefined } ),          false );
+	test( "GSUisEmpty.9", GSUisEmpty( new Map( [ [ "a", 1 ] ] ) ), false );
+	test( "GSUisEmpty.a", GSUisEmpty( new Set( [ 21 ] ) ),         false );
+	test( "GSUisEmpty.b", GSUisEmpty( null ),             true );
+	test( "GSUisEmpty.c", GSUisEmpty( undefined ),        true );
+	test( "GSUisEmpty.d", GSUisEmpty( 21 ),               true );
+	test( "GSUisEmpty.e", GSUisEmpty( NaN ),              true );
+	test( "GSUisEmpty.f", GSUisEmpty( true ),             true );
+	test( "GSUisEmpty.g", GSUisEmpty( false ),            true );
 
 	// GSUtrim2 ................................................................
 	test( "GSUtrim2.0", GSUtrim2( "" ),                "" );
