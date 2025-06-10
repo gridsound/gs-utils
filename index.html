@@ -583,6 +583,20 @@
 		GSUdiffAssign( dfA2, { aa: { c: { d: [ 1, 2 ] } } } ); test( "GSUdiffAssign_h", dfA2, { aa: { c: { d: [ 1, 2 ] } } } );
 		GSUdiffAssign( dfA2, { aa: { c: { d: [ 3 ] } } } );    test( "GSUdiffAssign_i", dfA2, { aa: { c: { d: [ 3, 2 ] } } } );
 		GSUdiffAssign( dfA2, { aa: undefined } );              test( "GSUdiffAssign_j", dfA2, {} );
+	// ..... GSUcomposeUndo ....................................................
+		const cU = {
+			a: { aa: 1, ab: 2, ac: 3 },
+			b: { ba: 1, bb: 2, bc: 3 },
+			c: { ca: 1, cb: 2, cc: 3 },
+		};
+		test( "GSUcomposeUndo_0", GSUcomposeUndo( cU, {} ), {} );
+		test( "GSUcomposeUndo_0", GSUcomposeUndo( {}, { a: 1 } ), { a: undefined             } );
+		test( "GSUcomposeUndo_0", GSUcomposeUndo( { a: 1       }, { a: undefined             } ), { a: 1 } );
+		test( "GSUcomposeUndo_0", GSUcomposeUndo( { a: 1       }, { a: 2, b: 3               } ), { a: 1, b: undefined } );
+		test( "GSUcomposeUndo_0", GSUcomposeUndo( { a: 1, c: 4 }, { a: 2, b: 3, c: undefined } ), { a: 1, b: undefined, c: 4 } );
+		test( "GSUcomposeUndo_1", GSUcomposeUndo( cU, { a: { aa: undefined } } ), { a: { aa: 1               } } );
+		test( "GSUcomposeUndo_2", GSUcomposeUndo( cU, { a: { ad: 4         } } ), { a: { ad: undefined       } } );
+		test( "GSUcomposeUndo_3", GSUcomposeUndo( cU, { a: undefined         } ), { a: { aa: 1, ab: 2, ac: 3 } } );
 </script>
 
 <!-- ....................................................................... -->
