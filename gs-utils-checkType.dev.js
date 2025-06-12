@@ -25,6 +25,7 @@ function _GSUcheckType( val, whatIf, ...args ) {
 	}
 	switch ( arr[ 0 ] ) {
 		case "oneOf":          return args[ 0 ].includes( val );
+		case "objay":          if ( !GSUisObj( val )                           ) { return false; } break;
 		case "array":          if ( !GSUisArr( val )                           ) { return false; } break;
 		case "object":         if ( !GSUisObj( val ) || GSUisArr( val )        ) { return false; } break;
 		case "string":         if ( !GSUisStr( val )                           ) { return false; } break;
