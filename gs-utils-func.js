@@ -9,7 +9,7 @@ function GSUsetTimeout( fn, sec ) {
 	___( sec, "number-positive-0" );
 	const ms = sec * 1000 | 0;
 
-	return ms
+	return ms > 0
 		? setTimeout( fn, ms )
 		: ( fn(), null );
 }
