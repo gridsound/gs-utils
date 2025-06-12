@@ -16,6 +16,28 @@ function GSUdomIsCustomElement( el ) {
 }
 
 // .............................................................................
+function GSUdomBCR( el ) {
+	const bcr = el?.getBoundingClientRect() || null;
+
+	if ( bcr ) {
+		bcr.w = bcr.width;
+		bcr.h = bcr.height;
+	}
+	return bcr;
+}
+function GSUdomBCRxy( el ) {
+	const bcr = GSUdomBCR( el );
+
+	return [ bcr?.x || 0, bcr?.y || 0 ];
+}
+function GSUdomBCRwh( el ) {
+	return [ el?.clientWidth || 0, el?.clientHeight || 0 ];
+}
+function GSUdomBCRxywh( el ) {
+	return [ ...GSUdomBCRxy( el ), ...GSUdomBCRwh( el ) ];
+}
+
+// .............................................................................
 function GSUunselectText() {
 	window.getSelection().removeAllRanges();
 }
@@ -295,10 +317,10 @@ function GSUunobserveSizeOf( el, fn ) {
 // .............................................................................
 function GSUscrollIntoViewX( el, par ) {
 	if ( el && par ) {
-		const elBCR = el.getBoundingClientRect();
-		const parBCR = par.getBoundingClientRect();
+		const elBCR = GSUdomBCR( el );
+		const parBCR = GSUdomBCR( par );
 		const elX = elBCR.x - parBCR.x;
-		const diff = elX + elBCR.width - parBCR.width;
+		const diff = elX + elBCR.w - parBCR.w;
 
 		if ( elX < 0 ) {
 			par.scrollLeft += elX;

@@ -1,5 +1,9 @@
 <meta charset="utf-8"/>
+<body>
+	<div id="square1" style="width: 32px; height: 18px; background: #0005;"></div>
+</body>
 <script src="gs-utils.js"></script>
+<script src="gs-utils-dom.js"></script>
 <script src="gs-utils-func.js"></script>
 <script src="gs-utils-math.js"></script>
 <script src="gs-utils-json.js"></script>
@@ -656,6 +660,36 @@
 		test( "composeUndo_1", GSUcomposeUndo( src, { a: { aa: undefined } } ), { a: { aa: 1               } } );
 		test( "composeUndo_2", GSUcomposeUndo( src, { a: { ad: 4         } } ), { a: { ad: undefined       } } );
 		test( "composeUndo_3", GSUcomposeUndo( src, { a: undefined         } ), { a: { aa: 1, ab: 2, ac: 3 } } );
+	} );
+</script>
+
+<!-- ....................................................................... -->
+<!-- ..... gs-utils-dom .................................................... -->
+<!-- ....................................................................... -->
+<script>
+	const elSquare = document.querySelector( "#square1" );
+	const squareBCR = elSquare.getBoundingClientRect();
+
+	tests( "GSUdomBCR", () => {
+		const squareBCR2 = GSUdeepCopy( squareBCR );
+
+		squareBCR2.w = squareBCR2.width;
+		squareBCR2.h = squareBCR2.height;
+		test( "domBCR_0", GSUdomBCR( null ),      null );
+		test( "domBCR_1", GSUdomBCR( undefined ), null );
+		test( "domBCR_2", GSUdomBCR( elSquare ),  squareBCR2 );
+	} );
+	tests( "GSUdomBCRxy", () => {
+		test( "domBCRxy_0", GSUdomBCRxy( null ),     [ 0, 0 ] );
+		test( "domBCRxy_1", GSUdomBCRxy( elSquare ), [ squareBCR.x, squareBCR.y ] );
+	} );
+	tests( "GSUdomBCRwh", () => {
+		test( "domBCRwh_0", GSUdomBCRwh( null ),     [ 0, 0 ] );
+		test( "domBCRwh_1", GSUdomBCRwh( elSquare ), [ squareBCR.width, squareBCR.height ] );
+	} );
+	tests( "GSUdomBCRxywh", () => {
+		test( "domBCRxywh_0", GSUdomBCRxywh( null ),     [ 0, 0, 0, 0 ] );
+		test( "domBCRxywh_1", GSUdomBCRxywh( elSquare ), [ squareBCR.x, squareBCR.y, squareBCR.width, squareBCR.height ] );
 	} );
 </script>
 
