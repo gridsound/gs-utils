@@ -307,3 +307,18 @@ function GSUscrollIntoViewX( el, par ) {
 		}
 	}
 }
+
+// .............................................................................
+function GSUdomIsScrollable( el ) {
+	___( el, "element" );
+	const ov = GSUgetStyle( el, "overflow" );
+
+	return ov === "auto" || ov === "scroll";
+}
+function GSUdomClosestScrollable( el ) {
+	___( el, "element" );
+	let par = el;
+
+	while ( ( par = par.parentNode ) && !GSUdomIsScrollable( par ) ) {}
+	return par;
+}
