@@ -503,14 +503,14 @@
 	} );
 	tests( "GSUgetLastOrder", () => {
 		test( "getLastOrder_0", GSUgetLastOrder( {}                                   ),  0 );
-		test( "getLastOrder_1", GSUgetLastOrder( { 0: { order: 0 }                  } ),  1 );
-		test( "getLastOrder_2", GSUgetLastOrder( { 0: { order: 5 }                  } ),  6 );
-		test( "getLastOrder_3", GSUgetLastOrder( { 1: { order: 9 }, 2: { order: 3 } } ), 10 );
-		test( "getLastOrder_4", GSUgetLastOrder( { 1: {},           2: {}           } ),  1 );
-		test( "getLastOrder_5", GSUgetLastOrder( { 1: { order: 9 }, 2: {}           } ), 10 );
-		testThrow( "getLastOrder_6", "object", () => GSUgetLastOrder() );
-		testThrow( "getLastOrder_7", "object", () => GSUgetLastOrder( [] ) );
-		testThrow( "getLastOrder_8", "object", () => GSUgetLastOrder( null ) );
+		test( "getLastOrder_1", GSUgetLastOrder( []                                   ),  0 );
+		test( "getLastOrder_2", GSUgetLastOrder( { 0: { order: 0 }                  } ),  1 );
+		test( "getLastOrder_3", GSUgetLastOrder( { 0: { order: 5 }                  } ),  6 );
+		test( "getLastOrder_4", GSUgetLastOrder( { 1: { order: 9 }, 2: { order: 3 } } ), 10 );
+		test( "getLastOrder_5", GSUgetLastOrder( { 1: {},           2: {}           } ),  1 );
+		test( "getLastOrder_6", GSUgetLastOrder( { 1: { order: 9 }, 2: {}           } ), 10 );
+		testThrow( "getLastOrder_7", "objay", () => GSUgetLastOrder() );
+		testThrow( "getLastOrder_8", "objay", () => GSUgetLastOrder( null ) );
 	} );
 	tests( "GSUdeepCopy", () => {
 		test( "deepCopy_0", GSUdeepCopy(  0 ),  0 );
