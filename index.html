@@ -184,6 +184,17 @@
 		test( "checkType_96", _GSUcheckType( "21",    "oneOf", [ 0, 21 ]    ), false );
 		test( "checkType_97", _GSUcheckType( "21",    "oneOf", [ 0, 21 ]    ), false );
 	} );
+	tests( "GSUcheckType:objay", () => {
+		test( "checkType_a0", _GSUcheckType( {},        "objay" ), true  );
+		test( "checkType_a1", _GSUcheckType( [],        "objay" ), true  );
+		test( "checkType_a2", _GSUcheckType( [ 21 ],    "objay" ), true  );
+		test( "checkType_a3", _GSUcheckType( null,      "objay" ), false );
+		test( "checkType_a4", _GSUcheckType( undefined, "objay" ), false );
+		test( "checkType_a5", _GSUcheckType( GSUnoop,   "objay" ), false );
+		test( "checkType_a6", _GSUcheckType( 21,        "objay" ), false );
+		test( "checkType_a7", _GSUcheckType( "abc",     "objay" ), false );
+		test( "checkType_a8", _GSUcheckType( "",        "objay" ), false );
+	} );
 </script>
 
 <!-- ....................................................................... -->
