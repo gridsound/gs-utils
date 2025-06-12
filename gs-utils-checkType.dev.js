@@ -34,6 +34,7 @@ function _GSUcheckType( val, whatIf, ...args ) {
 		case "function":       if ( !GSUisFun( val )                           ) { return false; } break;
 		case "arrayOfNumber":  if ( !GSUisArr( val ) || !val.every( GSUisNum ) ) { return false; } break;
 		case "arrayOfInteger": if ( !GSUisArr( val ) || !val.every( GSUisInt ) ) { return false; } break;
+		case "element":        if ( !( val instanceof Element )                ) { return false; } break;
 	}
 	if (
 		( arr.includes( "positive" ) && val <= 0 ) ||
