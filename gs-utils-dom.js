@@ -319,6 +319,10 @@ function GSUdomClosestScrollable( el ) {
 	___( el, "element" );
 	let par = el;
 
-	while ( ( par = par.parentNode ) && !GSUdomIsScrollable( par ) ) {}
-	return par;
+	while ( par !== document.documentElement && ( par = par.parentNode ) ) {
+		if ( GSUdomIsScrollable( par ) ) {
+			return par;
+		}
+	}
+	return null;
 }
