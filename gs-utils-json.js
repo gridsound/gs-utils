@@ -23,7 +23,7 @@ function GSUgetNewIds( obj, nb ) {
 }
 
 function GSUgetLastOrder( obj ) {
-	___( obj, "object" );
+	___( obj, "objay" );
 	return GSUreduce( obj, ( max, item ) => Math.max( max, item.order || 0 ), -1 ) + 1;
 }
 
