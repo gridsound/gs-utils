@@ -790,10 +790,10 @@
 
 		test( "domGetAttrNum_0", GSUdomGetAttrNum( elCirc2, "data-a" ), 21 );
 		test( "domGetAttrNum_1", GSUdomGetAttrNum( elCirc2, "data-d" ), -3.14 );
-		testThrow( "domGetAttrNum_2", "number", () => GSUdomGetAttrNum() );
-		testThrow( "domGetAttrNum_3", "number", () => GSUdomGetAttrNum( elCirc2 ) );
-		testThrow( "domGetAttrNum_4", "number", () => GSUdomGetAttrNum( elCirc2, "data-b" ) );
-		testThrow( "domGetAttrNum_5", "number", () => GSUdomGetAttrNum( elCirc2, "data-c" ) );
+		test( "domGetAttrNum_2", GSUdomGetAttrNum(),                     0 );
+		test( "domGetAttrNum_3", GSUdomGetAttrNum( elCirc2 ),            0 );
+		test( "domGetAttrNum_4", GSUdomGetAttrNum( elCirc2, "data-b" ),  0 );
+		test( "domGetAttrNum_5", GSUdomGetAttrNum( elCirc2, "data-c" ),  0 );
 	} );
 	tests( "GSUdomRmAttr", () => {
 		const foo = GSUdomQS( "[data-foo]" );

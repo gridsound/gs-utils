@@ -202,12 +202,7 @@ function GSUcreateOption( attr, child ) { return GSUcreateElement( "option", att
 function GSUdomRmAttr( el, ...attr ) { el && GSUforEach( attr, a => el.removeAttribute( a ) ); }
 function GSUdomHasAttr( el, attr ) { return el ? el.hasAttribute( attr ) : false; }
 function GSUdomGetAttr( el, attr ) { return el ? el.getAttribute( attr ) : null; }
-function GSUdomGetAttrNum( el, attr ) {
-	const n = +( GSUdomGetAttr( el, attr ) || NaN );
-
-	___( n, "number" );
-	return n || 0;
-}
+function GSUdomGetAttrNum( el, attr ) { return +GSUdomGetAttr( el, attr ) || 0; }
 function GSUsetAttribute( el, attr, val ) {
 	if ( GSUisStr( attr ) ) {
 		_GSUdomSetAttr( el, attr, val );
