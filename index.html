@@ -34,7 +34,7 @@
 		<div id="square3"></div>
 		<div class="circle1"></div>
 	</div><br/>
-	<div class="circle1"></div>
+	<div class="circle1" data-foo data-bar data-bar2></div>
 
 <!-- ....................................................................... -->
 <script src="gs-utils.js"></script>
@@ -750,6 +750,18 @@
 		testStrict( "GSUdomQSA_6", ci2.length, elSquare2.querySelectorAll( ".circle1" ).length );
 		testStrict( "GSUdomQSA_7", ci2[ 0 ], elSquare2.querySelectorAll( ".circle1" )[ 0 ] );
 		testStrict( "GSUdomQSA_8", ci2[ 1 ], elSquare2.querySelectorAll( ".circle1" )[ 1 ] );
+	} );
+	tests( "GSUdomRmAttr", () => {
+		const foo = GSUdomQS( "[data-foo]" );
+
+		test( "GSUdomRmAttr_0", foo.hasAttribute( "data-foo" ), true );
+		GSUdomRmAttr( null, "data-foo" );
+		GSUdomRmAttr( foo, "data-foo" );
+		test( "GSUdomRmAttr_1", foo.hasAttribute( "data-foo" ), false );
+		test( "GSUdomRmAttr_2", foo.matches( "[data-bar][data-bar2]" ), true );
+		GSUdomRmAttr( foo, "data-bar", "data-bar2" );
+		test( "GSUdomRmAttr_3", foo.hasAttribute( "data-bar"  ), false );
+		test( "GSUdomRmAttr_4", foo.hasAttribute( "data-bar2" ), false );
 	} );
 </script>
 

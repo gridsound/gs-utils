@@ -226,6 +226,11 @@ function GSUtoggleAttribute( el, attr, val = true ) {
 		? !GSUhasAttribute( el, attr )
 		: GSUgetAttribute( el, attr ) === val ? false : val );
 }
+function GSUdomRmAttr( el, ...attr ) {
+	if ( el ) {
+		GSUforEach( attr, a => el.removeAttribute( a ) );
+	}
+}
 function _GSUsetAttribute( el, attr, val ) {
 	if ( val === false || val === null || val === undefined ) {
 		el.removeAttribute( attr );
