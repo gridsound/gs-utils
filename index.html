@@ -18,7 +18,8 @@
 	height: 50%;
 	background-color: gray;
 }
-.circle1 {
+.circle1,
+.circle2 {
 	width: 10px;
 	height: 10px;
 	border-radius: 50%;
@@ -34,7 +35,8 @@
 		<div id="square3"></div>
 		<div class="circle1"></div>
 	</div><br/>
-	<div class="circle1" data-foo data-bar data-bar2></div>
+	<div class="circle1" data-foo data-bar data-bar2></div><br/>
+	<div class="circle2" data-a="21" data-b="abc" data-c></div>
 
 <!-- ....................................................................... -->
 <script src="gs-utils.js"></script>
@@ -732,44 +734,57 @@
 		test( "domBCRxywh_1", GSUdomBCRxywh( elSquare1 ), [ square1BCR.x, square1BCR.y, square1BCR.width, square1BCR.height ] );
 	} );
 	tests( "GSUdomQS", () => {
-		testStrict( "GSUdomQS_0", GSUdomQS( "#square1" ), elSquare1 );
-		testStrict( "GSUdomQS_1", GSUdomQS( elSquare2, "#square3" ), elSquare3 );
-		testStrict( "GSUdomQS_2", GSUdomQS( elSquare2, "div" ), elSquare3 );
-		testStrict( "GSUdomQS_3", GSUdomQS( elSquare2, "*" ), elSquare3 );
-		testStrict( "GSUdomQS_4", GSUdomQS( ".u404" ), document.querySelector( ".u404" ) );
+		testStrict( "domQS_0", GSUdomQS( "#square1" ), elSquare1 );
+		testStrict( "domQS_1", GSUdomQS( elSquare2, "#square3" ), elSquare3 );
+		testStrict( "domQS_2", GSUdomQS( elSquare2, "div" ), elSquare3 );
+		testStrict( "domQS_3", GSUdomQS( elSquare2, "*" ), elSquare3 );
+		testStrict( "domQS_4", GSUdomQS( ".u404" ), document.querySelector( ".u404" ) );
 	} );
 	tests( "GSUdomQSA", () => {
 		const ci = GSUdomQSA( ".circle1" );
 		const ci2 = GSUdomQSA( elSquare2, ".circle1" );
 
-		test( "GSUdomQSA_0", GSUdomQSA( ".u404" ), document.querySelectorAll( ".u404" ) );
-		testStrict( "GSUdomQSA_1", ci[ 0 ], elCircles[ 0 ] );
-		testStrict( "GSUdomQSA_2", ci[ 1 ], elCircles[ 1 ] );
-		testStrict( "GSUdomQSA_3", ci[ 2 ], elCircles[ 2 ] );
-		testStrict( "GSUdomQSA_5", ci.length, elCircles.length );
-		testStrict( "GSUdomQSA_6", ci2.length, elSquare2.querySelectorAll( ".circle1" ).length );
-		testStrict( "GSUdomQSA_7", ci2[ 0 ], elSquare2.querySelectorAll( ".circle1" )[ 0 ] );
-		testStrict( "GSUdomQSA_8", ci2[ 1 ], elSquare2.querySelectorAll( ".circle1" )[ 1 ] );
+		test( "domQSA_0", GSUdomQSA( ".u404" ), document.querySelectorAll( ".u404" ) );
+		testStrict( "domQSA_1", ci[ 0 ], elCircles[ 0 ] );
+		testStrict( "domQSA_2", ci[ 1 ], elCircles[ 1 ] );
+		testStrict( "domQSA_3", ci[ 2 ], elCircles[ 2 ] );
+		testStrict( "domQSA_5", ci.length, elCircles.length );
+		testStrict( "domQSA_6", ci2.length, elSquare2.querySelectorAll( ".circle1" ).length );
+		testStrict( "domQSA_7", ci2[ 0 ], elSquare2.querySelectorAll( ".circle1" )[ 0 ] );
+		testStrict( "domQSA_8", ci2[ 1 ], elSquare2.querySelectorAll( ".circle1" )[ 1 ] );
 	} );
 	tests( "GSUdomHasAttr", () => {
 		const foo = GSUdomQS( "[data-foo]" );
 
 		GSUdomHasAttr( null, "data-foo" );
-		test( "GSUdomHasAttr_0", foo.hasAttribute( "data-foo" ), true );
-		test( "GSUdomHasAttr_1", GSUdomHasAttr( foo, "data-foo" ), true );
-		test( "GSUdomHasAttr_2", GSUdomHasAttr( foo, "undefined" ), false );
+		test( "domHasAttr_0", foo.hasAttribute( "data-foo" ), true );
+		test( "domHasAttr_1", GSUdomHasAttr( foo, "data-foo" ), true );
+		test( "domHasAttr_2", GSUdomHasAttr( foo, "undefined" ), false );
+	} );
+	tests( "GSUdomGetAttr", () => {
+		const elCirc2 = GSUdomQS( ".circle2" );
+
+		test( "domGetAttr_0", GSUdomGetAttr(),                    null );
+		test( "domGetAttr_1", GSUdomGetAttr( null ),              null );
+		test( "domGetAttr_2", GSUdomGetAttr( undefined ),         null );
+		test( "domGetAttr_3", GSUdomGetAttr( null, "qwe" ),       null );
+		test( "domGetAttr_4", GSUdomGetAttr( elCirc2 ),           null );
+		test( "domGetAttr_5", GSUdomGetAttr( elCirc2, "qwe" ),    null );
+		test( "domGetAttr_6", GSUdomGetAttr( elCirc2, "data-a" ), "21" );
+		test( "domGetAttr_7", GSUdomGetAttr( elCirc2, "data-b" ), "abc" );
+		test( "domGetAttr_8", GSUdomGetAttr( elCirc2, "data-c" ), "" );
 	} );
 	tests( "GSUdomRmAttr", () => {
 		const foo = GSUdomQS( "[data-foo]" );
 
-		test( "GSUdomRmAttr_0", foo.hasAttribute( "data-foo" ), true );
+		test( "domRmAttr_0", foo.hasAttribute( "data-foo" ), true );
 		GSUdomRmAttr( null, "data-foo" );
 		GSUdomRmAttr( foo, "data-foo" );
-		test( "GSUdomRmAttr_1", foo.hasAttribute( "data-foo" ), false );
-		test( "GSUdomRmAttr_2", foo.matches( "[data-bar][data-bar2]" ), true );
+		test( "domRmAttr_1", foo.hasAttribute( "data-foo" ), false );
+		test( "domRmAttr_2", foo.matches( "[data-bar][data-bar2]" ), true );
 		GSUdomRmAttr( foo, "data-bar", "data-bar2" );
-		test( "GSUdomRmAttr_3", foo.hasAttribute( "data-bar"  ), false );
-		test( "GSUdomRmAttr_4", foo.hasAttribute( "data-bar2" ), false );
+		test( "domRmAttr_3", foo.hasAttribute( "data-bar"  ), false );
+		test( "domRmAttr_4", foo.hasAttribute( "data-bar2" ), false );
 	} );
 </script>
 
