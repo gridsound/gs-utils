@@ -807,6 +807,27 @@
 		test( "domRmAttr_3", foo.hasAttribute( "data-bar"  ), false );
 		test( "domRmAttr_4", foo.hasAttribute( "data-bar2" ), false );
 	} );
+	tests( "GSUdomSetAttr", () => {
+		const elCirc2 = GSUdomQS( ".circle2" );
+
+		GSUdomSetAttr( elCirc2, "data-z", 555 );
+		test( "domSetAttr_0", GSUdomGetAttrNum( elCirc2, "data-z" ), 555 );
+		GSUdomSetAttr( elCirc2, "data-y" );
+		test( "domSetAttr_1", GSUdomGetAttr( elCirc2, "data-y" ), "" );
+		GSUdomSetAttr( elCirc2, "data-y", false );
+		test( "domSetAttr_2", GSUdomGetAttr( elCirc2, "data-y" ), null );
+		test( "domSetAttr_3", GSUdomHasAttr( elCirc2, "data-y" ), false );
+		GSUdomSetAttr( elCirc2, "data-z", false );
+		test( "domSetAttr_4", GSUdomHasAttr( elCirc2, "data-z" ), false );
+		GSUdomSetAttr( elCirc2, {
+			"data-x": 222,
+			"data-y": 333,
+			"data-z": 444,
+		} );
+		test( "domSetAttr_5", GSUdomGetAttrNum( elCirc2, "data-x" ), 222 );
+		test( "domSetAttr_6", GSUdomGetAttrNum( elCirc2, "data-y" ), 333 );
+		test( "domSetAttr_7", GSUdomGetAttrNum( elCirc2, "data-z" ), 444 );
+	} );
 </script>
 
 <!-- ....................................................................... -->

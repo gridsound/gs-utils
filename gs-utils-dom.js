@@ -162,7 +162,7 @@ function GSUcreateElementSVG( tag, attr, ...children ) {
 function _GSUcreateElement( ns, tag, attrObj, children ) {
 	const el = document.createElementNS( ns, tag );
 
-	GSUsetAttribute( el, attrObj );
+	GSUdomSetAttr( el, attrObj );
 	el.append( ...children.flat( 1 ).filter( ch => Boolean( ch ) || Number.isFinite( ch ) ) );
 	return el;
 }
@@ -203,11 +203,11 @@ function GSUdomRmAttr( el, ...attr ) { el && GSUforEach( attr, a => el.removeAtt
 function GSUdomHasAttr( el, attr ) { return el ? el.hasAttribute( attr ) : false; }
 function GSUdomGetAttr( el, attr ) { return el ? el.getAttribute( attr ) : null; }
 function GSUdomGetAttrNum( el, attr ) { return +GSUdomGetAttr( el, attr ) || 0; }
-function GSUsetAttribute( el, attr, val ) {
-	if ( GSUisStr( attr ) ) {
-		_GSUdomSetAttr( el, attr, val );
-	} else if ( attr ) {
-		GSUforEach( attr, ( val, attr ) => _GSUdomSetAttr( el, attr, val ) );
+function GSUdomSetAttr( el, attr, val = true ) {
+	if ( el && attr ) {
+		GSUisStr( attr )
+			? _GSUdomSetAttr( el, attr, val )
+			: GSUforEach( attr, ( val, a ) => _GSUdomSetAttr( el, a, val ) );
 	}
 }
 function GSUtoggleAttribute( el, attr, val = true ) {
@@ -224,7 +224,7 @@ function _GSUdomSetAttr( el, attr, val ) {
 		el.setAttribute( attr, val === true ? "" : val );
 	}
 }
-function GSUsetViewBox( svg, x, y, w, h ) { GSUsetAttribute( svg, "viewBox", `${ x } ${ y } ${ w } ${ h }` ); }
+function GSUsetViewBox( svg, x, y, w, h ) { GSUdomSetAttr( svg, "viewBox", `${ x } ${ y } ${ w } ${ h }` ); }
 function GSUsetViewBoxWH( svg, w, h ) { GSUsetViewBox( svg, 0, 0, w, h ); }
 
 // .............................................................................
