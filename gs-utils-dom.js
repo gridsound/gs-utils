@@ -217,7 +217,7 @@ function GSUtoggleAttribute( el, attr, val = true ) {
 }
 function _GSUdomSetAttr( el, attr, val ) {
 	if ( val === false || val === null || val === undefined ) {
-		el.removeAttribute( attr );
+		GSUdomRmAttr( el, attr );
 	} else if ( attr === "style" && !GSUisStr( val ) ) {
 		GSUforEach( val, ( val, prop ) => el.style[ prop ] = val );
 	} else {
