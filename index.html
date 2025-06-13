@@ -1,7 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
 <meta charset="utf-8"/>
+<title>gs-utils: tests</title>
+<style>
+#square1,
+#square2 {
+	width: 32px;
+	height: 18px;
+	background-color: gray;
+}
+#square2 {
+	background-color: darkblue;
+}
+#square3 {
+	width: 50%;
+	height: 50%;
+	background-color: gray;
+}
+.circle1 {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background-color: #00abff;
+}
+</style>
+</head>
 <body>
-	<div id="square1" style="width: 32px; height: 18px; background: #0005;"></div>
-</body>
+
+<!-- ....................................................................... -->
+	<div id="square1"></div><br/>
+	<div id="square2">
+		<div id="square3"></div>
+		<div class="circle1"></div>
+	</div><br/>
+	<div class="circle1"></div>
+
+<!-- ....................................................................... -->
 <script src="gs-utils.js"></script>
 <script src="gs-utils-dom.js"></script>
 <script src="gs-utils-func.js"></script>
@@ -9,6 +44,8 @@
 <script src="gs-utils-json.js"></script>
 <script src="gs-utils-audio.js"></script>
 <script src="gs-utils-checkType.dev.js"></script>
+
+<!-- ....................................................................... -->
 <script>
 	function lg( a ) { return console.log( ...arguments ), a; }
 
@@ -667,29 +704,52 @@
 <!-- ..... gs-utils-dom .................................................... -->
 <!-- ....................................................................... -->
 <script>
-	const elSquare = document.querySelector( "#square1" );
-	const squareBCR = elSquare.getBoundingClientRect();
+	const elSquare1 = document.querySelector( "#square1" );
+	const elSquare2 = document.querySelector( "#square2" );
+	const elSquare3 = document.querySelector( "#square3" );
+	const elCircles = document.querySelectorAll( ".circle1" );
+	const square1BCR = elSquare1.getBoundingClientRect();
 
 	tests( "GSUdomBCR", () => {
-		const squareBCR2 = GSUdeepCopy( squareBCR );
+		const squareBCR2 = GSUdeepCopy( square1BCR );
 
 		squareBCR2.w = squareBCR2.width;
 		squareBCR2.h = squareBCR2.height;
 		test( "domBCR_0", GSUdomBCR( null ),      null );
 		test( "domBCR_1", GSUdomBCR( undefined ), null );
-		test( "domBCR_2", GSUdomBCR( elSquare ),  squareBCR2 );
+		test( "domBCR_2", GSUdomBCR( elSquare1 ),  squareBCR2 );
 	} );
 	tests( "GSUdomBCRxy", () => {
 		test( "domBCRxy_0", GSUdomBCRxy( null ),     [ 0, 0 ] );
-		test( "domBCRxy_1", GSUdomBCRxy( elSquare ), [ squareBCR.x, squareBCR.y ] );
+		test( "domBCRxy_1", GSUdomBCRxy( elSquare1 ), [ square1BCR.x, square1BCR.y ] );
 	} );
 	tests( "GSUdomBCRwh", () => {
 		test( "domBCRwh_0", GSUdomBCRwh( null ),     [ 0, 0 ] );
-		test( "domBCRwh_1", GSUdomBCRwh( elSquare ), [ squareBCR.width, squareBCR.height ] );
+		test( "domBCRwh_1", GSUdomBCRwh( elSquare1 ), [ square1BCR.width, square1BCR.height ] );
 	} );
 	tests( "GSUdomBCRxywh", () => {
 		test( "domBCRxywh_0", GSUdomBCRxywh( null ),     [ 0, 0, 0, 0 ] );
-		test( "domBCRxywh_1", GSUdomBCRxywh( elSquare ), [ squareBCR.x, squareBCR.y, squareBCR.width, squareBCR.height ] );
+		test( "domBCRxywh_1", GSUdomBCRxywh( elSquare1 ), [ square1BCR.x, square1BCR.y, square1BCR.width, square1BCR.height ] );
+	} );
+	tests( "GSUdomQS", () => {
+		testStrict( "GSUdomQS_0", GSUdomQS( "#square1" ), elSquare1 );
+		testStrict( "GSUdomQS_1", GSUdomQS( elSquare2, "#square3" ), elSquare3 );
+		testStrict( "GSUdomQS_2", GSUdomQS( elSquare2, "div" ), elSquare3 );
+		testStrict( "GSUdomQS_3", GSUdomQS( elSquare2, "*" ), elSquare3 );
+		testStrict( "GSUdomQS_4", GSUdomQS( ".u404" ), document.querySelector( ".u404" ) );
+	} );
+	tests( "GSUdomQSA", () => {
+		const ci = GSUdomQSA( ".circle1" );
+		const ci2 = GSUdomQSA( elSquare2, ".circle1" );
+
+		test( "GSUdomQSA_0", GSUdomQSA( ".u404" ), document.querySelectorAll( ".u404" ) );
+		testStrict( "GSUdomQSA_1", ci[ 0 ], elCircles[ 0 ] );
+		testStrict( "GSUdomQSA_2", ci[ 1 ], elCircles[ 1 ] );
+		testStrict( "GSUdomQSA_3", ci[ 2 ], elCircles[ 2 ] );
+		testStrict( "GSUdomQSA_5", ci.length, elCircles.length );
+		testStrict( "GSUdomQSA_6", ci2.length, elSquare2.querySelectorAll( ".circle1" ).length );
+		testStrict( "GSUdomQSA_7", ci2[ 0 ], elSquare2.querySelectorAll( ".circle1" )[ 0 ] );
+		testStrict( "GSUdomQSA_8", ci2[ 1 ], elSquare2.querySelectorAll( ".circle1" )[ 1 ] );
 	} );
 </script>
 
@@ -1123,3 +1183,5 @@
 	resultFrame();
 	const interId = setInterval( resultFrame, 50 );
 </script>
+</body>
+</html>
