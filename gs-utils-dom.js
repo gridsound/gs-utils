@@ -200,7 +200,7 @@ function GSUcreateOption( attr, child ) { return GSUcreateElement( "option", att
 
 // .............................................................................
 function GSUdomHasAttr( el, attr ) { return el ? el.hasAttribute( attr ) : false; }
-function GSUdomGetAttr( el, attr ) { return el.getAttribute( attr ); }
+function GSUdomGetAttr( el, attr ) { return el?.getAttribute( attr ); }
 function GSUdomRmAttr( el, ...attr ) { el && GSUforEach( attr, a => el.removeAttribute( a ) ); }
 function GSUgetAttributeNum( el, attr ) {
 	const val = el.getAttribute( attr );
