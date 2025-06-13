@@ -751,6 +751,14 @@
 		testStrict( "GSUdomQSA_7", ci2[ 0 ], elSquare2.querySelectorAll( ".circle1" )[ 0 ] );
 		testStrict( "GSUdomQSA_8", ci2[ 1 ], elSquare2.querySelectorAll( ".circle1" )[ 1 ] );
 	} );
+	tests( "GSUdomHasAttr", () => {
+		const foo = GSUdomQS( "[data-foo]" );
+
+		GSUdomHasAttr( null, "data-foo" );
+		test( "GSUdomHasAttr_0", foo.hasAttribute( "data-foo" ), true );
+		test( "GSUdomHasAttr_1", GSUdomHasAttr( foo, "data-foo" ), true );
+		test( "GSUdomHasAttr_2", GSUdomHasAttr( foo, "undefined" ), false );
+	} );
 	tests( "GSUdomRmAttr", () => {
 		const foo = GSUdomQS( "[data-foo]" );
 

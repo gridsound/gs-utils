@@ -199,8 +199,8 @@ function GSUcreateSelect( attr, ...child ) { return GSUcreateElement( "select", 
 function GSUcreateOption( attr, child ) { return GSUcreateElement( "option", attr, child || attr?.value ); }
 
 // .............................................................................
-function GSUhasAttribute( el, attr ) {
-	return el.hasAttribute( attr );
+function GSUdomHasAttr( el, attr ) {
+	return el ? el.hasAttribute( attr ) : false;
 }
 function GSUgetAttribute( el, attr ) {
 	return el.getAttribute( attr );
@@ -223,7 +223,7 @@ function GSUsetAttribute( el, attr, val ) {
 }
 function GSUtoggleAttribute( el, attr, val = true ) {
 	_GSUsetAttribute( el, attr, val === true
-		? !GSUhasAttribute( el, attr )
+		? !GSUdomHasAttr( el, attr )
 		: GSUgetAttribute( el, attr ) === val ? false : val );
 }
 function GSUdomRmAttr( el, ...attr ) {
