@@ -203,7 +203,7 @@ function GSUdomRmAttr( el, ...attr ) { el && GSUforEach( attr, a => el.removeAtt
 function GSUdomHasAttr( el, attr ) { return el ? el.hasAttribute( attr ) : false; }
 function GSUdomGetAttr( el, attr ) { return el ? el.getAttribute( attr ) : null; }
 function GSUdomGetAttrNum( el, attr ) {
-	const n = +( el?.getAttribute( attr ) || NaN );
+	const n = +( GSUdomGetAttr( el, attr ) || NaN );
 
 	___( n, "number" );
 	return n || 0;
