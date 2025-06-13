@@ -199,17 +199,14 @@ function GSUcreateSelect( attr, ...child ) { return GSUcreateElement( "select", 
 function GSUcreateOption( attr, child ) { return GSUcreateElement( "option", attr, child || attr?.value ); }
 
 // .............................................................................
+function GSUdomRmAttr( el, ...attr ) { el && GSUforEach( attr, a => el.removeAttribute( a ) ); }
 function GSUdomHasAttr( el, attr ) { return el ? el.hasAttribute( attr ) : false; }
 function GSUdomGetAttr( el, attr ) { return el ? el.getAttribute( attr ) : null; }
-function GSUdomRmAttr( el, ...attr ) { el && GSUforEach( attr, a => el.removeAttribute( a ) ); }
-function GSUgetAttributeNum( el, attr ) {
-	const val = el.getAttribute( attr );
-	const n = +val;
+function GSUdomGetAttrNum( el, attr ) {
+	const n = +( el?.getAttribute( attr ) || NaN );
 
-	if ( GSUisNaN( n ) ) {
-		console.error( `GSUgetAttributeNum: ${ attr } is NaN (${ val })` );
-	}
-	return n;
+	___( n, "number" );
+	return n || 0;
 }
 function GSUsetAttribute( el, attr, val ) {
 	if ( GSUisStr( attr ) ) {

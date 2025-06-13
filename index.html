@@ -36,7 +36,7 @@
 		<div class="circle1"></div>
 	</div><br/>
 	<div class="circle1" data-foo data-bar data-bar2></div><br/>
-	<div class="circle2" data-a="21" data-b="abc" data-c></div>
+	<div class="circle2" data-a="21" data-b="abc" data-c data-d="-3.14"></div>
 
 <!-- ....................................................................... -->
 <script src="gs-utils.js"></script>
@@ -706,34 +706,43 @@
 <!-- ..... gs-utils-dom .................................................... -->
 <!-- ....................................................................... -->
 <script>
-	const elSquare1 = document.querySelector( "#square1" );
-	const elSquare2 = document.querySelector( "#square2" );
-	const elSquare3 = document.querySelector( "#square3" );
-	const elCircles = document.querySelectorAll( ".circle1" );
-	const square1BCR = elSquare1.getBoundingClientRect();
-
 	tests( "GSUdomBCR", () => {
+		const elSquare1 = document.querySelector( "#square1" );
+		const square1BCR = elSquare1.getBoundingClientRect();
 		const squareBCR2 = GSUdeepCopy( square1BCR );
 
 		squareBCR2.w = squareBCR2.width;
 		squareBCR2.h = squareBCR2.height;
 		test( "domBCR_0", GSUdomBCR( null ),      null );
 		test( "domBCR_1", GSUdomBCR( undefined ), null );
-		test( "domBCR_2", GSUdomBCR( elSquare1 ),  squareBCR2 );
+		test( "domBCR_2", GSUdomBCR( elSquare1 ), squareBCR2 );
 	} );
 	tests( "GSUdomBCRxy", () => {
-		test( "domBCRxy_0", GSUdomBCRxy( null ),     [ 0, 0 ] );
+		const elSquare1 = document.querySelector( "#square1" );
+		const square1BCR = elSquare1.getBoundingClientRect();
+
+		test( "domBCRxy_0", GSUdomBCRxy( null ),      [ 0, 0 ] );
 		test( "domBCRxy_1", GSUdomBCRxy( elSquare1 ), [ square1BCR.x, square1BCR.y ] );
 	} );
 	tests( "GSUdomBCRwh", () => {
-		test( "domBCRwh_0", GSUdomBCRwh( null ),     [ 0, 0 ] );
+		const elSquare1 = document.querySelector( "#square1" );
+		const square1BCR = elSquare1.getBoundingClientRect();
+
+		test( "domBCRwh_0", GSUdomBCRwh( null ),      [ 0, 0 ] );
 		test( "domBCRwh_1", GSUdomBCRwh( elSquare1 ), [ square1BCR.width, square1BCR.height ] );
 	} );
 	tests( "GSUdomBCRxywh", () => {
-		test( "domBCRxywh_0", GSUdomBCRxywh( null ),     [ 0, 0, 0, 0 ] );
+		const elSquare1 = document.querySelector( "#square1" );
+		const square1BCR = elSquare1.getBoundingClientRect();
+
+		test( "domBCRxywh_0", GSUdomBCRxywh( null ),      [ 0, 0, 0, 0 ] );
 		test( "domBCRxywh_1", GSUdomBCRxywh( elSquare1 ), [ square1BCR.x, square1BCR.y, square1BCR.width, square1BCR.height ] );
 	} );
 	tests( "GSUdomQS", () => {
+		const elSquare1 = document.querySelector( "#square1" );
+		const elSquare2 = document.querySelector( "#square2" );
+		const elSquare3 = document.querySelector( "#square3" );
+
 		testStrict( "domQS_0", GSUdomQS( "#square1" ), elSquare1 );
 		testStrict( "domQS_1", GSUdomQS( elSquare2, "#square3" ), elSquare3 );
 		testStrict( "domQS_2", GSUdomQS( elSquare2, "div" ), elSquare3 );
@@ -741,6 +750,8 @@
 		testStrict( "domQS_4", GSUdomQS( ".u404" ), document.querySelector( ".u404" ) );
 	} );
 	tests( "GSUdomQSA", () => {
+		const elCircles = document.querySelectorAll( ".circle1" );
+		const elSquare2 = document.querySelector( "#square2" );
 		const ci = GSUdomQSA( ".circle1" );
 		const ci2 = GSUdomQSA( elSquare2, ".circle1" );
 
@@ -773,6 +784,16 @@
 		test( "domGetAttr_6", GSUdomGetAttr( elCirc2, "data-a" ), "21" );
 		test( "domGetAttr_7", GSUdomGetAttr( elCirc2, "data-b" ), "abc" );
 		test( "domGetAttr_8", GSUdomGetAttr( elCirc2, "data-c" ), "" );
+	} );
+	tests( "GSUdomGetAttrNum", () => {
+		const elCirc2 = GSUdomQS( ".circle2" );
+
+		test( "domGetAttrNum_0", GSUdomGetAttrNum( elCirc2, "data-a" ), 21 );
+		test( "domGetAttrNum_1", GSUdomGetAttrNum( elCirc2, "data-d" ), -3.14 );
+		testThrow( "domGetAttrNum_2", "number", () => GSUdomGetAttrNum() );
+		testThrow( "domGetAttrNum_3", "number", () => GSUdomGetAttrNum( elCirc2 ) );
+		testThrow( "domGetAttrNum_4", "number", () => GSUdomGetAttrNum( elCirc2, "data-b" ) );
+		testThrow( "domGetAttrNum_5", "number", () => GSUdomGetAttrNum( elCirc2, "data-c" ) );
 	} );
 	tests( "GSUdomRmAttr", () => {
 		const foo = GSUdomQS( "[data-foo]" );
