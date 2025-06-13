@@ -250,9 +250,9 @@ function _GSUsetStyle( el, val, prop ) {
 
 // .............................................................................
 function GSUrecallAttributes( el, props ) {
-	Object.entries( props ).forEach( ( [ p, val ] ) => {
-		el.hasAttribute( p )
-			? el.attributeChangedCallback?.( p, null, el.getAttribute( p ) )
+	GSUforEach( props, ( val, p ) => {
+		GSUdomHasAttr( el, p )
+			? el.attributeChangedCallback?.( p, null, GSUdomGetAttr( el, p ) )
 			: val !== false
 				? _GSUdomSetAttr( el, p, val )
 				: el.$attributeChanged?.( p, null, null )
