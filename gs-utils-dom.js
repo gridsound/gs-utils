@@ -199,12 +199,9 @@ function GSUcreateSelect( attr, ...child ) { return GSUcreateElement( "select", 
 function GSUcreateOption( attr, child ) { return GSUcreateElement( "option", attr, child || attr?.value ); }
 
 // .............................................................................
-function GSUdomHasAttr( el, attr ) {
-	return el ? el.hasAttribute( attr ) : false;
-}
-function GSUgetAttribute( el, attr ) {
-	return el.getAttribute( attr );
-}
+function GSUdomHasAttr( el, attr ) { return el ? el.hasAttribute( attr ) : false; }
+function GSUdomGetAttr( el, attr ) { return el.getAttribute( attr ); }
+function GSUdomRmAttr( el, ...attr ) { el && GSUforEach( attr, a => el.removeAttribute( a ) ); }
 function GSUgetAttributeNum( el, attr ) {
 	const val = el.getAttribute( attr );
 	const n = +val;
@@ -216,22 +213,17 @@ function GSUgetAttributeNum( el, attr ) {
 }
 function GSUsetAttribute( el, attr, val ) {
 	if ( GSUisStr( attr ) ) {
-		_GSUsetAttribute( el, attr, val );
+		_GSUdomSetAttr( el, attr, val );
 	} else if ( attr ) {
-		Object.entries( attr ).forEach( kv => _GSUsetAttribute( el, ...kv ) );
+		GSUforEach( attr, ( val, attr ) => _GSUdomSetAttr( el, attr, val ) );
 	}
 }
 function GSUtoggleAttribute( el, attr, val = true ) {
-	_GSUsetAttribute( el, attr, val === true
+	_GSUdomSetAttr( el, attr, val === true
 		? !GSUdomHasAttr( el, attr )
-		: GSUgetAttribute( el, attr ) === val ? false : val );
+		: GSUdomGetAttr( el, attr ) === val ? false : val );
 }
-function GSUdomRmAttr( el, ...attr ) {
-	if ( el ) {
-		GSUforEach( attr, a => el.removeAttribute( a ) );
-	}
-}
-function _GSUsetAttribute( el, attr, val ) {
+function _GSUdomSetAttr( el, attr, val ) {
 	if ( val === false || val === null || val === undefined ) {
 		el.removeAttribute( attr );
 	} else if ( attr === "style" && !GSUisStr( val ) ) {
@@ -270,7 +262,7 @@ function GSUrecallAttributes( el, props ) {
 		el.hasAttribute( p )
 			? el.attributeChangedCallback?.( p, null, el.getAttribute( p ) )
 			: val !== false
-				? _GSUsetAttribute( el, p, val )
+				? _GSUdomSetAttr( el, p, val )
 				: el.$attributeChanged?.( p, null, null )
 	} );
 }
