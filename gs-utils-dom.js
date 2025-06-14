@@ -203,10 +203,10 @@ function GSUdomRmAttr( el, ...attr ) { el && GSUforEach( attr, a => el.removeAtt
 function GSUdomHasAttr( el, attr ) { return el ? el.hasAttribute( attr ) : false; }
 function GSUdomGetAttr( el, attr ) { return el ? el.getAttribute( attr ) : null; }
 function GSUdomGetAttrNum( el, attr ) { return +GSUdomGetAttr( el, attr ) || 0; }
-function GSUdomSetAttr( el, attr, val = true ) {
+function GSUdomSetAttr( el, attr, val ) {
 	if ( el && attr ) {
 		GSUisStr( attr )
-			? _GSUdomSetAttr( el, attr, val )
+			? _GSUdomSetAttr( el, attr, arguments.length === 2 || val )
 			: GSUforEach( attr, ( val, a ) => _GSUdomSetAttr( el, a, val ) );
 	}
 }

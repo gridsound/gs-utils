@@ -827,6 +827,16 @@
 		test( "domSetAttr_5", GSUdomGetAttrNum( elCirc2, "data-x" ), 222 );
 		test( "domSetAttr_6", GSUdomGetAttrNum( elCirc2, "data-y" ), 333 );
 		test( "domSetAttr_7", GSUdomGetAttrNum( elCirc2, "data-z" ), 444 );
+		GSUdomSetAttr( elCirc2, "data-z", 0 );
+		test( "domSetAttr_8", GSUdomGetAttr( elCirc2, "data-z" ), "0" );
+		test( "domSetAttr_9", GSUdomGetAttrNum( elCirc2, "data-z" ), 0 );
+		GSUdomSetAttr( elCirc2, "data-z", 1 );
+		test( "domSetAttr_a", GSUdomGetAttr( elCirc2, "data-z" ), "1" );
+		test( "domSetAttr_b", GSUdomGetAttrNum( elCirc2, "data-z" ), 1 );
+		GSUdomSetAttr( elCirc2, "data-w", undefined );
+		test( "domSetAttr_c", GSUdomHasAttr( elCirc2, "data-w" ), false );
+		GSUdomSetAttr( elCirc2, "data-z", undefined );
+		test( "domSetAttr_d", GSUdomHasAttr( elCirc2, "data-z" ), false );
 	} );
 </script>
 
