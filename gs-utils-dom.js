@@ -210,10 +210,12 @@ function GSUdomSetAttr( el, attr, val ) {
 			: GSUforEach( attr, ( val, a ) => _GSUdomSetAttr( el, a, val ) );
 	}
 }
-function GSUtoggleAttribute( el, attr, val = true ) {
-	_GSUdomSetAttr( el, attr, val === true
-		? !GSUdomHasAttr( el, attr )
-		: GSUdomGetAttr( el, attr ) === val ? false : val );
+function GSUdomTogAttr( el, attr, val = true ) {
+	if ( el && attr ) {
+		_GSUdomSetAttr( el, attr, val === true
+			? !GSUdomHasAttr( el, attr )
+			: GSUdomGetAttr( el, attr ) === val ? false : val );
+	}
 }
 function _GSUdomSetAttr( el, attr, val ) {
 	if ( val === false || val === null || val === undefined ) {

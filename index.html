@@ -810,6 +810,11 @@
 	tests( "GSUdomSetAttr", () => {
 		const elCirc2 = GSUdomQS( ".circle2" );
 
+		GSUdomSetAttr();
+		GSUdomSetAttr( null );
+		GSUdomSetAttr( undefined );
+		GSUdomSetAttr( null, "qwe" );
+		GSUdomSetAttr( null, { a: 21 } );
 		GSUdomSetAttr( elCirc2, "data-z", 555 );
 		test( "domSetAttr_0", GSUdomGetAttrNum( elCirc2, "data-z" ), 555 );
 		GSUdomSetAttr( elCirc2, "data-y" );
@@ -837,6 +842,22 @@
 		test( "domSetAttr_c", GSUdomHasAttr( elCirc2, "data-w" ), false );
 		GSUdomSetAttr( elCirc2, "data-z", undefined );
 		test( "domSetAttr_d", GSUdomHasAttr( elCirc2, "data-z" ), false );
+	} );
+	tests( "GSUdomTogAttr", () => {
+		const elCirc2 = GSUdomQS( ".circle2" );
+
+		GSUdomTogAttr();
+		GSUdomTogAttr( null );
+		GSUdomTogAttr( undefined );
+		GSUdomTogAttr( null, "qwe" );
+		GSUdomTogAttr( elCirc2, "data-tog" ); test( "GSUdomTogAttr_0", GSUdomGetAttr( elCirc2, "data-tog" ), "" );
+		GSUdomTogAttr( elCirc2, "data-tog" ); test( "GSUdomTogAttr_0", GSUdomGetAttr( elCirc2, "data-tog" ), null );
+		GSUdomTogAttr( elCirc2, "data-tog" ); test( "GSUdomTogAttr_0", GSUdomGetAttr( elCirc2, "data-tog" ), "" );
+		GSUdomTogAttr( elCirc2, "data-tog" ); test( "GSUdomTogAttr_0", GSUdomGetAttr( elCirc2, "data-tog" ), null );
+		GSUdomTogAttr( elCirc2, "data-to2", "abc" ); test( "GSUdomTogAttr_0", GSUdomGetAttr( elCirc2, "data-to2" ), "abc" );
+		GSUdomTogAttr( elCirc2, "data-to2", "abc" ); test( "GSUdomTogAttr_0", GSUdomGetAttr( elCirc2, "data-to2" ), null );
+		GSUdomTogAttr( elCirc2, "data-to2", "abc" ); test( "GSUdomTogAttr_0", GSUdomGetAttr( elCirc2, "data-to2" ), "abc" );
+		GSUdomTogAttr( elCirc2, "data-to2", "abc" ); test( "GSUdomTogAttr_0", GSUdomGetAttr( elCirc2, "data-to2" ), null );
 	} );
 </script>
 
