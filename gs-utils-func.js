@@ -4,6 +4,11 @@ function GSUnoop() {}
 function GSUnoopFalse() { return false; }
 
 // .............................................................................
+function GSUwait( sec ) {
+	return new Promise( res => GSUsetTimeout( res, sec ) ); 
+}
+
+// .............................................................................
 function GSUsetTimeout( fn, sec ) {
 	___( fn, "function" );
 	___( sec, "number-positive-0" );

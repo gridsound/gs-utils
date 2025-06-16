@@ -56,9 +56,6 @@
 	let nbTestsOk = 0;
 	let toWait = 0;
 
-	function wait( sec ) {
-		return new Promise( res => GSUsetTimeout( res, sec ) ); 
-	}
 	async function tests( name, fn ) {
 		++toWait;
 		++nbGroups;
@@ -503,8 +500,8 @@
 
 		timeoutId = GSUsetTimeout( fn, .05 );
 		test( "setTimeout_0", GSUisInt( timeoutId ) && timeoutId > 0, true );
-		test( "setTimeout_1", timeoutInc, 0 ); await wait( .045 );
-		test( "setTimeout_2", timeoutInc, 0 ); await wait( .005 + .02 );
+		test( "setTimeout_1", timeoutInc, 0 ); await GSUwait( .045 );
+		test( "setTimeout_2", timeoutInc, 0 ); await GSUwait( .005 + .02 );
 		test( "setTimeout_3", timeoutInc, 1 );
 		timeoutId = GSUsetTimeout( fn, 0 );
 		test( "setTimeout_4", timeoutId, null );
@@ -513,7 +510,7 @@
 		testThrow( "setTimeout_7", "number-positive-0", () => GSUsetTimeout( fn, NaN ) );
 		test( "setTimeout_8", timeoutInc, 2 );
 		timeoutId = GSUsetTimeout( fn, .01 );
-		GSUclearTimeout( timeoutId ); await wait( .02 );
+		GSUclearTimeout( timeoutId ); await GSUwait( .02 );
 		test( "setTimeout_9", timeoutInc, 2 );
 	} );
 </script>
