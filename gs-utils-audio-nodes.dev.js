@@ -1,6 +1,7 @@
 "use strict";
 
 const _GSUaudioContext_wm = new WeakMap();
+const _GSUaudioContextOff_wm = new WeakMap();
 const _GSUaudioGain_wm = new WeakMap();
 const _GSUaudioDelay_wm = new WeakMap();
 const _GSUaudioBuffer_wm = new WeakMap();
@@ -17,6 +18,7 @@ const _GSUaudioConstantSource_wm = new WeakMap();
 const _GSUaudioChannelSplitter_wm = new WeakMap();
 
 const GSUaudioContext         = (    ...a ) => { const n = new AudioContext( ...a );        _GSUaudioContext_wm.set( n, 1 );         return n; };
+const GSUaudioContextOff      = (    ...a ) => { const n = new OfflineAudioContext( ...a ); _GSUaudioContextOff_wm.set( n, 1 );      return n; };
 const GSUaudioGain            = ( c, ...a ) => { const n = c.createGain( ...a );            _GSUaudioGain_wm.set( n, 1 );            return n; };
 const GSUaudioDelay           = ( c, ...a ) => { const n = c.createDelay( ...a );           _GSUaudioDelay_wm.set( n, 1 );           return n; };
 const GSUaudioBuffer          = ( c, ...a ) => { const n = c.createBuffer( ...a );          _GSUaudioBuffer_wm.set( n, 1 );          return n; };
@@ -34,6 +36,7 @@ const GSUaudioChannelSplitter = ( c, ...a ) => { const n = c.createChannelSplitt
 
 function GSUaudioLogWeakMaps( m ) {
 	( !m || m === "context"         ) && console.log( "context", _GSUaudioContext_wm );
+	( !m || m === "contextOff"      ) && console.log( "contextOff", _GSUaudioContextOff_wm );
 	( !m || m === "gain"            ) && console.log( "gain", _GSUaudioGain_wm );
 	( !m || m === "delay"           ) && console.log( "delay", _GSUaudioDelay_wm );
 	( !m || m === "buffer"          ) && console.log( "buffer", _GSUaudioBuffer_wm );
