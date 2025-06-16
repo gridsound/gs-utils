@@ -1,5 +1,6 @@
 "use strict";
 
+const GSUaudioContext = ( ...a ) => new AudioContext( ...a );
 const GSUaudioGain = ( c, ...a ) => c.createGain( ...a );
 const GSUaudioDelay = ( c, ...a ) => c.createDelay( ...a );
 const GSUaudioBuffer = ( c, ...a ) => c.createBuffer( ...a );
