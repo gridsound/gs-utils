@@ -20,6 +20,13 @@ function GSUdomQS(  el, sel ) { return GSUisStr( el ) ? document.querySelector( 
 function GSUdomQSA( el, sel ) { return GSUisStr( el ) ? document.querySelectorAll( el ) : el.querySelectorAll( sel ); }
 
 // .............................................................................
+function GSUdomHasClass( el, clazz    ) { return el?.classList.contains( clazz    ) || false; }
+function GSUdomTogClass( el, clazz, b ) { return el?.classList.toggle(   clazz, b ) || false; }
+function GSUdomRepClass( el, clazz, b ) { return el?.classList.replace(  clazz, b ) || false; }
+function GSUdomAddClass( el, ...clazz ) { el?.classList.add(    ...clazz ); }
+function GSUdomRmClass ( el, ...clazz ) { el?.classList.remove( ...clazz ); }
+
+// .............................................................................
 function GSUdomBCR( el ) {
 	const bcr = el?.getBoundingClientRect() || null;
 

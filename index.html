@@ -37,6 +37,7 @@
 	</div><br/>
 	<div class="circle1" data-foo data-bar data-bar2></div><br/>
 	<div class="circle2" data-a="21" data-b="abc" data-c data-d="-3.14"></div>
+	<div id="classes"></div>
 
 <!-- ....................................................................... -->
 <script src="gs-utils.js"></script>
@@ -847,14 +848,81 @@
 		GSUdomTogAttr( null );
 		GSUdomTogAttr( undefined );
 		GSUdomTogAttr( null, "qwe" );
-		GSUdomTogAttr( elCirc2, "data-tog" ); test( "GSUdomTogAttr_0", GSUdomGetAttr( elCirc2, "data-tog" ), "" );
-		GSUdomTogAttr( elCirc2, "data-tog" ); test( "GSUdomTogAttr_0", GSUdomGetAttr( elCirc2, "data-tog" ), null );
-		GSUdomTogAttr( elCirc2, "data-tog" ); test( "GSUdomTogAttr_0", GSUdomGetAttr( elCirc2, "data-tog" ), "" );
-		GSUdomTogAttr( elCirc2, "data-tog" ); test( "GSUdomTogAttr_0", GSUdomGetAttr( elCirc2, "data-tog" ), null );
-		GSUdomTogAttr( elCirc2, "data-to2", "abc" ); test( "GSUdomTogAttr_0", GSUdomGetAttr( elCirc2, "data-to2" ), "abc" );
-		GSUdomTogAttr( elCirc2, "data-to2", "abc" ); test( "GSUdomTogAttr_0", GSUdomGetAttr( elCirc2, "data-to2" ), null );
-		GSUdomTogAttr( elCirc2, "data-to2", "abc" ); test( "GSUdomTogAttr_0", GSUdomGetAttr( elCirc2, "data-to2" ), "abc" );
-		GSUdomTogAttr( elCirc2, "data-to2", "abc" ); test( "GSUdomTogAttr_0", GSUdomGetAttr( elCirc2, "data-to2" ), null );
+		GSUdomTogAttr( elCirc2, "data-tog" ); test( "domTogAttr_0", GSUdomGetAttr( elCirc2, "data-tog" ), "" );
+		GSUdomTogAttr( elCirc2, "data-tog" ); test( "domTogAttr_0", GSUdomGetAttr( elCirc2, "data-tog" ), null );
+		GSUdomTogAttr( elCirc2, "data-tog" ); test( "domTogAttr_0", GSUdomGetAttr( elCirc2, "data-tog" ), "" );
+		GSUdomTogAttr( elCirc2, "data-tog" ); test( "domTogAttr_0", GSUdomGetAttr( elCirc2, "data-tog" ), null );
+		GSUdomTogAttr( elCirc2, "data-to2", "abc" ); test( "domTogAttr_0", GSUdomGetAttr( elCirc2, "data-to2" ), "abc" );
+		GSUdomTogAttr( elCirc2, "data-to2", "abc" ); test( "domTogAttr_0", GSUdomGetAttr( elCirc2, "data-to2" ), null );
+		GSUdomTogAttr( elCirc2, "data-to2", "abc" ); test( "domTogAttr_0", GSUdomGetAttr( elCirc2, "data-to2" ), "abc" );
+		GSUdomTogAttr( elCirc2, "data-to2", "abc" ); test( "domTogAttr_0", GSUdomGetAttr( elCirc2, "data-to2" ), null );
+	} );
+	tests( "GSUdomAddClass", () => {
+		const el = GSUdomQS( "#classes" );
+
+		el.className = "";
+		GSUdomAddClass();
+		GSUdomAddClass( el );
+		GSUdomAddClass( null );
+		GSUdomAddClass( undefined );
+		                                test( "domAddClass_0", el.className, "" );
+		GSUdomAddClass( el, "a", "b" ); test( "domAddClass_1", el.className, "a b" );
+		GSUdomAddClass( el, "abc" );    test( "domAddClass_2", el.className, "a b abc" );
+	} );
+	tests( "GSUdomHasClass", () => {
+		const el = GSUdomQS( "#classes" );
+
+		el.className = "a b abc";
+		test( "domHasClass_0", GSUdomHasClass(),              false );
+		test( "domHasClass_1", GSUdomHasClass( null ),        false );
+		test( "domHasClass_2", GSUdomHasClass( undefined ),   false );
+		test( "domHasClass_3", GSUdomHasClass( null, "123" ), false );
+		test( "domHasClass_4", GSUdomHasClass( el, "123" ),   false );
+		test( "domHasClass_5", GSUdomHasClass( el, "abcd" ),  false );
+		test( "domHasClass_6", GSUdomHasClass( el, "abc" ),   true );
+		test( "domHasClass_7", GSUdomHasClass( el, "a" ),     true );
+	} );
+	tests( "GSUdomRepClass", () => {
+		const el = GSUdomQS( "#classes" );
+
+		el.className = "a b abc";
+		test( "domRepClass_0", [ GSUdomRepClass(                  ), el.className ], [ false, "a b abc" ] );
+		test( "domRepClass_0", [ GSUdomRepClass( null             ), el.className ], [ false, "a b abc" ] );
+		test( "domRepClass_0", [ GSUdomRepClass( undefined        ), el.className ], [ false, "a b abc" ] );
+		test( "domRepClass_0", [ GSUdomRepClass( null, "123"      ), el.className ], [ false, "a b abc" ] );
+		test( "domRepClass_0", [ GSUdomRepClass( el               ), el.className ], [ false, "a b abc" ] );
+		test( "domRepClass_1", [ GSUdomRepClass( el, "qwe404"     ), el.className ], [ false, "a b abc" ] );
+		test( "domRepClass_2", [ GSUdomRepClass( el, "abc", "123" ), el.className ], [ true,  "a b 123" ] );
+		test( "domRepClass_3", [ GSUdomRepClass( el, "a", "b"     ), el.className ], [ true,    "b 123" ] );
+	} );
+	tests( "GSUdomRmClass", () => {
+		const el = GSUdomQS( "#classes" );
+
+		el.className = "a b abc";
+		GSUdomRmClass();
+		GSUdomRmClass( null );
+		GSUdomRmClass( undefined );
+		GSUdomRmClass( null, "123" );
+		GSUdomRmClass( el );
+		                               test( "domRmClass_0", el.className, "a b abc" );
+		GSUdomRmClass( el, "abc" );    test( "domRmClass_1", el.className, "a b" );
+		GSUdomRmClass( el, "a", "b" ); test( "domRmClass_2", el.className, "" );
+	} );
+	tests( "GSUdomTogClass", () => {
+		const el = GSUdomQS( "#classes" );
+
+		el.className = "a b abc";
+		test( "domTogClass_0", [ GSUdomTogClass(                ), el.className ], [ false, "a b abc" ] );
+		test( "domTogClass_1", [ GSUdomTogClass( null           ), el.className ], [ false, "a b abc" ] );
+		test( "domTogClass_2", [ GSUdomTogClass( undefined      ), el.className ], [ false, "a b abc" ] );
+		test( "domTogClass_3", [ GSUdomTogClass( null, "123"    ), el.className ], [ false, "a b abc" ] );
+		test( "domTogClass_4", [ GSUdomTogClass( el, "abc"      ), el.className ], [ false, "a b" ] );
+		test( "domTogClass_5", [ GSUdomTogClass( el, "b"        ), el.className ], [ false, "a" ] );
+		test( "domTogClass_6", [ GSUdomTogClass( el, "b"        ), el.className ], [ true,  "a b" ] );
+		test( "domTogClass_7", [ GSUdomTogClass( el, "b", false ), el.className ], [ false, "a" ] );
+		test( "domTogClass_8", [ GSUdomTogClass( el, "b", false ), el.className ], [ false, "a" ] );
+		test( "domTogClass_9", [ GSUdomTogClass( el, "b", true  ), el.className ], [ true,  "a b" ] );
+		test( "domTogClass_a", [ GSUdomTogClass( el, "b", true  ), el.className ], [ true,  "a b" ] );
 	} );
 </script>
 
