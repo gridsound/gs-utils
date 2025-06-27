@@ -198,6 +198,7 @@ function GSUcreateButton( attr, ...child ) {
 }
 function GSUcreateA( attr, ...child ) { return GSUcreateElement( "a", { href: true, ...attr }, ...child ); }
 function GSUcreateDiv( attr, ...child ) { return GSUcreateElement( "div", attr, ...child ); }
+function GSUcreateFlex( attr, ...child ) { return GSUcreateElement( "gs-flex", attr, ...child ); }
 function GSUcreateAExt( attr, ...child ) { return GSUcreateA( { ...attr, target: "_blank", rel: "noopener" }, ...child ); }
 function GSUcreateSpan( attr, ...child ) { return GSUcreateElement( "span", attr, ...child ); }
 function GSUcreateInput( attr, ...child ) { return GSUcreateElement( "input", attr, ...child ); }
