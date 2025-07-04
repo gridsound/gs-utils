@@ -44,6 +44,39 @@ function GSUmathClamp( n, min, max ) {
 }
 
 // .............................................................................
+const GSUmathWaveFns = {
+	sine: GSUmathWaveSine,
+	square: GSUmathWaveSquare,
+	sawtooth: GSUmathWaveSawtooth,
+	triangle: GSUmathWaveTriangle,
+};
+function GSUmathWaveSine( len ) {
+	___( len, "number-positive" );
+	return GSUnewArray( len, i => Math.sin( ( i / ( len - 1 ) ) * Math.PI * 2 ) );
+}
+function GSUmathWaveSquare( len ) {
+	___( len, "number-positive" );
+	return GSUnewArray( len, i => i < len / 2 ? 1 : -1 );
+}
+function GSUmathWaveSawtooth( len ) {
+	___( len, "number-positive" );
+	const len2 = ( len - 1 ) * .50;
+
+	return GSUnewArray( len, i => i < len2 ? i / len2 : -1 + ( i - len2 ) / len2 );
+}
+function GSUmathWaveTriangle( len ) {
+	___( len, "number-positive" );
+	const len25 = ( len - 1 ) * .25;
+	const len75 = ( len - 1 ) * .75;
+
+	return GSUnewArray( len, i =>
+		i < len25 ? i / len25 :
+		i < len75 ? 1 - ( i - len25 ) / len25 :
+		           -1 + ( i - len75 ) / len25
+	);
+}
+
+// .............................................................................
 function GSUmathRealImagToXY( real, imag, width ) {
 	const arr = [];
 	const fn = _GSUmathRealImagToXY.bind( null, real, imag );
