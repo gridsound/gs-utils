@@ -1170,6 +1170,19 @@
 		test( "newArray.3", GSUnewArray( 3, 7 ),      [ 7, 7, 7 ] );
 		test( "newArray.4", GSUnewArray( 3, i => i ), [ 0, 1, 2 ] );
 	} );
+	tests( "GSUarrayEq", () => {
+		test( "arrayEq_0", GSUarrayEq( [],          []               ), true );
+		test( "arrayEq_1", GSUarrayEq( [ 0 ],       [ 0 ]            ), true );
+		test( "arrayEq_2", GSUarrayEq( [ 0, 0 ],    [ 0, 0 ]         ), true );
+		test( "arrayEq_3", GSUarrayEq( [ .1 + .2 ], [ .1 + .2 ]      ), true );
+		test( "arrayEq_4", GSUarrayEq( [ -1 ],      [ -1 ]           ), true );
+		test( "arrayEq_5", GSUarrayEq( [ 0 ],       [ 1 ],        1  ), true );
+		test( "arrayEq_6", GSUarrayEq( [ 0, 0 ],    [ 0, 0.01 ], .01 ), true );
+		test( "arrayEq_7", GSUarrayEq( [ 0, 1 ],    [ 0, 1.01 ], .01 ), true );
+		test( "arrayEq_8", GSUarrayEq( [ 0 ],       [ 1 ]            ), false );
+		test( "arrayEq_9", GSUarrayEq( [ 0 ],       [ 0, 0 ],     1  ), false );
+		test( "arrayEq_a", GSUarrayEq( [ 0 ],       [ 0.0101 ],  .01 ), false );
+	} );
 	tests( "GSUarrayFrom", () => {
 		const objEmpty = {};
 		const arrEmpty = [];

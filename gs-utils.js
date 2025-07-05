@@ -81,6 +81,12 @@ function GSUnewArray( l, fn ) {
 			? Array.from( { length: l }, ( _, i ) => fn( i ) )
 			: Array.from( { length: l } ).fill( fn );
 }
+function GSUarrayEq( a, b, diff ) {
+	return a.length === b.length && a.every( diff
+		? ( a, i ) => GSUmathApprox( a, b[ i ], diff )
+		: ( a, i ) => a === b[ i ]
+	);
+}
 function GSUarrayFrom( a ) {
 	return GSUisArr( a ) ? a : "length" in a ? Array.from( a ) : [ a ];
 }
