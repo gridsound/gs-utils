@@ -1182,6 +1182,9 @@
 		test( "arrayEq_8", GSUarrayEq( [ 0 ],       [ 1 ]            ), false );
 		test( "arrayEq_9", GSUarrayEq( [ 0 ],       [ 0, 0 ],     1  ), false );
 		test( "arrayEq_a", GSUarrayEq( [ 0 ],       [ 0.0101 ],  .01 ), false );
+		test( "arrayEq_b", GSUarrayEq( new Float32Array( [] ),    new Float32Array( [] )    ), true );
+		test( "arrayEq_c", GSUarrayEq( new Float32Array( [ 0 ] ), new Float32Array( [ 0 ] ) ), true );
+		test( "arrayEq_d", GSUarrayEq( new Float32Array( [ 0 ] ), new Float32Array( [ 0.1 ] ) ), false );
 	} );
 	tests( "GSUarrayFrom", () => {
 		const objEmpty = {};

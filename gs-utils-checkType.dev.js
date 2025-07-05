@@ -26,16 +26,16 @@ function _GSUcheckType( val, whatIf, ...args ) {
 	}
 	switch ( arr[ 0 ] ) {
 		case "oneOf":          return args[ 0 ].includes( val );
-		case "objay":          if ( !GSUisObj( val )                           ) { return false; } break;
-		case "array":          if ( !GSUisArr( val )                           ) { return false; } break;
-		case "object":         if ( !GSUisObj( val ) || GSUisArr( val )        ) { return false; } break;
-		case "string":         if ( !GSUisStr( val )                           ) { return false; } break;
-		case "number":         if ( !GSUisNum( val )                           ) { return false; } break;
-		case "integer":        if ( !GSUisInt( val )                           ) { return false; } break;
-		case "function":       if ( !GSUisFun( val )                           ) { return false; } break;
-		case "arrayOfNumber":  if ( !GSUisArr( val ) || !val.every( GSUisNum ) ) { return false; } break;
-		case "arrayOfInteger": if ( !GSUisArr( val ) || !val.every( GSUisInt ) ) { return false; } break;
-		case "element":        if ( !( val instanceof Element )                ) { return false; } break;
+		case "objay":          if ( !GSUisObj( val )                    ) { return false; } break;
+		case "array":          if ( !GSUisArr( val )                    ) { return false; } break;
+		case "object":         if ( !GSUisObj( val ) || GSUisArr( val ) ) { return false; } break;
+		case "string":         if ( !GSUisStr( val )                    ) { return false; } break;
+		case "number":         if ( !GSUisNum( val )                    ) { return false; } break;
+		case "integer":        if ( !GSUisInt( val )                    ) { return false; } break;
+		case "function":       if ( !GSUisFun( val )                    ) { return false; } break;
+		case "arrayOfNumber":  if ( !_GSUcheckType_isArrNum( val )      ) { return false; } break;
+		case "arrayOfInteger": if ( !_GSUcheckType_isArrInt( val )      ) { return false; } break;
+		case "element":        if ( !( val instanceof Element )         ) { return false; } break;
 	}
 	if (
 		( arr.includes( "positive" ) && val <= 0 ) ||
@@ -45,4 +45,11 @@ function _GSUcheckType( val, whatIf, ...args ) {
 		return false;
 	}
 	return true;
+}
+
+function _GSUcheckType_isArrNum( arr ) {
+	return arr instanceof Float32Array || ( GSUisArr( arr ) && arr.every( GSUisNum ) );
+}
+function _GSUcheckType_isArrInt( arr ) {
+	return GSUisArr( arr ) && arr.every( GSUisInt );
 }
