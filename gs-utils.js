@@ -109,6 +109,25 @@ function GSUarrayRemove( arr, fn ) {
 	arr.length = j;
 	return arr;
 }
+function GSUarrayResize( arr, len ) {
+	___( arr, "arrayOfNumber" );
+	___( len, "integer-positive-0" );
+	if ( len < 1 ) { return []; }
+	if ( len === 1 ) { return [ arr[ 0 ] || 0 ]; }
+	if ( arr.length === len ) { return [ ...arr ]; }
+
+	const oldLen = arr.length - 1;
+	const scale = oldLen / ( len - 1 );
+
+	return GSUnewArray( len, i => {
+		const i2 = i * scale;
+		const a = Math.floor( i2 );
+		const b = Math.min( Math.ceil( i2 ), oldLen );
+		const t = i2 - a;
+
+		return ( 1 - t ) * arr[ a ] + t * arr[ b ];
+	} );
+}
 
 // .............................................................................
 // ..... GSUisXxx ..............................................................
