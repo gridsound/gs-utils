@@ -17,9 +17,10 @@ function _GSUcheckType( val, whatIf, ...args ) {
 	const arr = whatIf.split( "-" );
 
 	if (
-		( val === 0       && arr.includes( "0"    ) ) ||
-		( val === null    && arr.includes( "null" ) ) ||
-		( GSUisNaN( val ) && arr.includes( "NaN"  ) )
+		( val === 0         && arr.includes( "0"         ) ) ||
+		( val === null      && arr.includes( "null"      ) ) ||
+		( val === undefined && arr.includes( "undefined" ) ) ||
+		( GSUisNaN( val )   && arr.includes( "NaN"       ) )
 	) {
 		return true;
 	}
