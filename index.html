@@ -574,8 +574,15 @@
 		test( "deepCopy_9", obj4.b.c, 10 );
 		test( "deepCopy_a", obj4.d, undefined );
 		test( "deepCopy_b", "d" in obj4, true );
-		test( "deepCopy_c", GSUdeepCopy( [] ), {} );
-		test( "deepCopy_d", GSUdeepCopy( [ 21 ] ), { 0: 21 } );
+		test( "deepCopy_c", GSUdeepCopy( [] ), [] );
+		test( "deepCopy_d", GSUdeepCopy( [ 21 ] ), [ 21 ] );
+
+		const obj5 = { a: 21, b: [ 21, 33, { c: 42 } ] };
+		const obj6 = GSUdeepCopy( obj5 );
+		test( "deepCopy_e", obj5, obj6 );
+		obj5.b[ 2 ].c = 43;
+		test( "deepCopy_f", obj5.b[ 2 ].c, 43 );
+		test( "deepCopy_g", obj6.b[ 2 ].c, 42 );
 	} );
 	tests( "GSUdeepAssign", () => {
 		test( "deepAssign_0", GSUdeepAssign(), undefined );

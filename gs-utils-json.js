@@ -35,9 +35,13 @@ function GSUdeepCopy( obj ) {
 	return !GSUisObj( obj )
 		? obj
 		: GSUreduce( obj, ( cpy, v, k ) => {
-			cpy[ k ] = GSUdeepCopy( v );
+			if ( GSUisArr( cpy ) ) {
+				cpy.push( GSUdeepCopy( v ) );
+			} else {
+				cpy[ k ] = GSUdeepCopy( v );
+			}
 			return cpy;
-		}, {} );
+		}, GSUisArr( obj ) ? [] : {} );
 }
 
 function GSUdeepAssign( a, b ) {
