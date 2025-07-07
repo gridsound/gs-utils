@@ -689,7 +689,7 @@
 		GSUdiffAssign( obj2, { a: undefined, b: undefined } ); test( "diffAssign_f", obj2, {} );
 		GSUdiffAssign( obj2, { aa: { b: undefined, c: 1 } } ); test( "diffAssign_g", obj2, { aa: { c: 1 } } );
 		GSUdiffAssign( obj2, { aa: { c: { d: [ 1, 2 ] } } } ); test( "diffAssign_h", obj2, { aa: { c: { d: [ 1, 2 ] } } } );
-		GSUdiffAssign( obj2, { aa: { c: { d: [ 3 ] } } } );    test( "diffAssign_i", obj2, { aa: { c: { d: [ 3, 2 ] } } } );
+		GSUdiffAssign( obj2, { aa: { c: { d: [ 3 ] } } } );    test( "diffAssign_i", obj2, { aa: { c: { d: [ 3 ] } } } );
 		GSUdiffAssign( obj2, { aa: undefined } );              test( "diffAssign_j", obj2, {} );
 	} );
 	tests( "GSUcomposeUndo", () => {

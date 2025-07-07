@@ -98,8 +98,8 @@ function GSUdiffAssign( a, b ) {
 				delete a[ k ];
 			} else if ( !GSUisObj( val ) ) {
 				a[ k ] = val;
-			} else if ( !GSUisObj( a[ k ] ) ) {
-				a[ k ] = GSUjsonCopy( val );
+			} else if ( !GSUisObj( a[ k ] ) || GSUisArr( val ) ) {
+				a[ k ] = GSUdeepCopy( val );
 			} else {
 				GSUdiffAssign( a[ k ], val );
 			}
