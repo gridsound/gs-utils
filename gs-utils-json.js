@@ -121,12 +121,14 @@ function GSUaddIfNotEmpty( obj, attr, valObj ) {
 
 function GSUcomposeUndo( data, redo ) {
 	if ( GSUisObj( data ) && GSUisObj( redo ) ) {
-		return Object.freeze( GSUreduce( redo, ( undo, val, k ) => {
-			if ( data[ k ] !== val ) {
-				undo[ k ] = GSUcomposeUndo( data[ k ], val );
-			}
-			return undo;
-		}, {} ) );
+		return Object.freeze( GSUisArr( redo )
+			? GSUdeepCopy( data )
+			: GSUreduce( redo, ( undo, val, k ) => {
+				if ( data[ k ] !== val ) {
+					undo[ k ] = GSUcomposeUndo( data[ k ], val );
+				}
+				return undo;
+			}, {} ) );
 	}
 	return data;
 }

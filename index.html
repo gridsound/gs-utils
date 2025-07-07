@@ -699,13 +699,27 @@
 			c: { ca: 1, cb: 2, cc: 3 },
 		};
 		test( "composeUndo_0", GSUcomposeUndo( src, {} ), {} );
-		test( "composeUndo_0", GSUcomposeUndo( {}, { a: 1 } ), { a: undefined             } );
-		test( "composeUndo_0", GSUcomposeUndo( { a: 1       }, { a: undefined             } ), { a: 1 } );
-		test( "composeUndo_0", GSUcomposeUndo( { a: 1       }, { a: 2, b: 3               } ), { a: 1, b: undefined } );
-		test( "composeUndo_0", GSUcomposeUndo( { a: 1, c: 4 }, { a: 2, b: 3, c: undefined } ), { a: 1, b: undefined, c: 4 } );
-		test( "composeUndo_1", GSUcomposeUndo( src, { a: { aa: undefined } } ), { a: { aa: 1               } } );
-		test( "composeUndo_2", GSUcomposeUndo( src, { a: { ad: 4         } } ), { a: { ad: undefined       } } );
-		test( "composeUndo_3", GSUcomposeUndo( src, { a: undefined         } ), { a: { aa: 1, ab: 2, ac: 3 } } );
+		test( "composeUndo_1", GSUcomposeUndo( {            }, { a: 1                     } ), { a: undefined             } );
+		test( "composeUndo_2", GSUcomposeUndo( { a: 1       }, { a: undefined             } ), { a: 1                     } );
+		test( "composeUndo_3", GSUcomposeUndo( { a: 1       }, { a: 2, b: 3               } ), { a: 1, b: undefined       } );
+		test( "composeUndo_4", GSUcomposeUndo( { a: 1, c: 4 }, { a: 2, b: 3, c: undefined } ), { a: 1, b: undefined, c: 4 } );
+
+		test( "composeUndo_5", GSUcomposeUndo( src, { a: { aa: undefined } } ), { a: { aa: 1               } } );
+		test( "composeUndo_6", GSUcomposeUndo( src, { a: { ad: 4         } } ), { a: { ad: undefined       } } );
+		test( "composeUndo_7", GSUcomposeUndo( src, { a: undefined         } ), { a: { aa: 1, ab: 2, ac: 3 } } );
+
+		const src2 = {
+			a: { aa: 1, ab: 2, ac: 3 },
+			b: { aa: [ 0, 1, 2, 3, 1000 ] },
+		};
+		test( "composeUndo_8", GSUcomposeUndo( src2, {} ), {} );
+
+		const undo = GSUcomposeUndo( src2, { b: { aa: [ 21 ] } } );
+		test( "composeUndo_9", undo, { b: { aa: [ 0, 1, 2, 3, 1000 ] } } );
+		test( "composeUndo_a", GSUisArr( undo.b.aa ), true );
+
+		undo.b.aa[ 4 ] = 5555;
+		test( "composeUndo_b", undo.b.aa[ 4 ], 1000 );
 	} );
 </script>
 
