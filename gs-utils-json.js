@@ -70,9 +70,9 @@ function GSUdiffObjects( a, b ) {
 	const diff = GSUreduce( b, ( diff, bv, bk ) => {
 		const av = a[ bk ];
 		const newval = av === bv ? undefined :
-			typeof bv !== "object" || bv === null ? bv :
-			typeof av !== "object" || av === null
-				? GSUjsonCopy( bv )
+			!GSUisObj( bv ) ? bv :
+			!GSUisObj( av ) || ( GSUisArr( bv ) && GSUisArr( av ) && !GSUarrayEq( av, bv ) )
+				? GSUdeepCopy( bv )
 				: GSUdiffObjects( av, bv );
 
 		if ( newval !== undefined ) {

@@ -663,6 +663,8 @@
 		test( "diffObjects_j", GSUdiffObjects( { a: 1, b: { c: 2, d: 2 } }, { a: 1, b: { c: 3, d: 3 } } ), {       b: { c: 3, d: 3 } } );
 		test( "diffObjects_k", GSUdiffObjects( { a: 1, b: { c: 2, d: 2 } }, { a: 4, b: { c: 2, d: 3 } } ), { a: 4, b: {       d: 3 } } );
 		test( "diffObjects_l", GSUdiffObjects( { a: 1, b: { c: 2       } }, { a: 1, B: { c: 2       } } ), { b: undefined, B: { c: 2 } } );
+		test( "diffObjects_m", GSUdiffObjects( { a: [ 5, 7 ] }, { a: [ 5, 8 ] } ), { a: [ 5, 8 ] } );
+		test( "diffObjects_n", GSUdiffObjects( { a: [ 5, 7 ] }, { a: [ 5, 7 ] } ), undefined );
 	} );
 	tests( "GSUdiffAssign", () => {
 		test( "diffAssign_0", GSUdiffAssign( 0 ), 0 );
