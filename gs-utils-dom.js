@@ -27,6 +27,9 @@ function GSUdomAddClass( el, ...clazz ) { el?.classList.add(    ...clazz ); }
 function GSUdomRmClass ( el, ...clazz ) { el?.classList.remove( ...clazz ); }
 
 // .............................................................................
+function GSUdomBCRxy( el )   { const r = GSUdomBCR( el ); return r ? [ r.x, r.y ] : [ 0, 0 ]; }
+function GSUdomBCRwh( el )   { const r = GSUdomBCR( el ); return r ? [ r.w, r.h ] : [ 0, 0 ]; }
+function GSUdomBCRxywh( el ) { const r = GSUdomBCR( el ); return r ? [ r.x, r.y, r.w, r.h ] : [ 0, 0, 0, 0 ]; }
 function GSUdomBCR( el ) {
 	const bcr = el?.getBoundingClientRect() || null;
 
@@ -35,17 +38,6 @@ function GSUdomBCR( el ) {
 		bcr.h = bcr.height;
 	}
 	return bcr;
-}
-function GSUdomBCRxy( el ) {
-	const bcr = GSUdomBCR( el );
-
-	return [ bcr?.x || 0, bcr?.y || 0 ];
-}
-function GSUdomBCRwh( el ) {
-	return [ el?.clientWidth || 0, el?.clientHeight || 0 ];
-}
-function GSUdomBCRxywh( el ) {
-	return [ ...GSUdomBCRxy( el ), ...GSUdomBCRwh( el ) ];
 }
 
 // .............................................................................
