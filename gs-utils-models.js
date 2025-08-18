@@ -116,6 +116,10 @@ GSUsetModel( "oscillator", {
 	unisonblend: .33,
 } );
 GSUsetModel( "wavetable", {
+	div: "16 16",
+	wave: 0,
+	tool: "goUp",
+	symmetry: false,
 	waves: {
 		0: {
 			index: 0,
