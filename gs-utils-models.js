@@ -117,7 +117,7 @@ GSUsetModel( "oscillator", {
 } );
 GSUsetModel( "wavetable", {
 	div: "16 16",
-	wave: 0,
+	wave: "0",
 	tool: "goUp",
 	symmetry: false,
 	waves: {
