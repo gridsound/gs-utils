@@ -139,13 +139,12 @@ function GSUdomDispatch( el, ev, ...args ) {
 		detail: { $event: ev, $args: args, $target: el },
 	} ) );
 }
-function GSUlistenEvents( el, cbs ) {
-	el.addEventListener( "gsuiEvents", e => {
+function GSUdomListen( el, cbs ) {
+	el.addEventListener( "gsui", e => {
 		const d = e.detail;
-		const cbs2 = cbs[ d.component ] || cbs.default;
-		const fn = cbs2 && ( cbs2[ d.eventName ] || cbs2.default );
+		const fn = cbs[ d.$event ];
 
-		if ( fn && fn( d, d.target, e ) !== true ) {
+		if ( fn && fn( d, ...d.$args ) !== true ) {
 			e.stopPropagation();
 			e.stopImmediatePropagation();
 		}
