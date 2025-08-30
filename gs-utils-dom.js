@@ -133,10 +133,10 @@ function _GSUfindElementsQueryAll( root, sel ) {
 }
 
 // .............................................................................
-function GSUdispatchEvent( el, component, eventName, ...args ) {
-	el.dispatchEvent( new CustomEvent( "gsuiEvents", {
+function GSUdomDispatch( el, ev, ...args ) {
+	el.dispatchEvent( new CustomEvent( "gsui", {
 		bubbles: true,
-		detail: { component, eventName, args, target: el },
+		detail: { $event: ev, $args: args, $target: el },
 	} ) );
 }
 function GSUlistenEvents( el, cbs ) {
