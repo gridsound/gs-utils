@@ -78,46 +78,46 @@ function GSUgetTemplate( tmpId, ...args ) {
 }
 
 // .............................................................................
-function GSUfindElements( root, graph ) {
+function GSUdomFind( root, graph ) {
 	return GSUisStr( graph )
-		? _GSUfindElementsStr( root, graph )
+		? _GSUdomFindStr( root, graph )
 		: Object.seal( GSUisArr( graph )
-			? _GSUfindElementsArr( root, graph )
-			: _GSUfindElementsObj( root, graph ) );
+			? _GSUdomFindArr( root, graph )
+			: _GSUdomFindObj( root, graph ) );
 }
-function _GSUfindElementsArr( root, arr ) {
-	return arr.map( sel => GSUfindElements( root, sel ) );
+function _GSUdomFindArr( root, arr ) {
+	return arr.map( sel => GSUdomFind( root, sel ) );
 }
-function _GSUfindElementsObj( root, obj ) {
+function _GSUdomFindObj( root, obj ) {
 	if ( obj ) {
 		const ent = Object.entries( obj );
 
-		ent.forEach( kv => kv[ 1 ] = GSUfindElements( root, kv[ 1 ] ) );
+		ent.forEach( kv => kv[ 1 ] = GSUdomFind( root, kv[ 1 ] ) );
 		return Object.fromEntries( ent );
 	}
 }
-function _GSUfindElementsStr( root, sel ) {
+function _GSUdomFindStr( root, sel ) {
 	if ( sel.startsWith( "[]" ) ) {
 		const sel2 = sel.slice( 2 );
 
 		return !GSUisArr( root )
-			? _GSUfindElementsQueryAll( root, sel2 )
-			: root.map( r => _GSUfindElementsQueryAll( r, sel2 ) ).flat();
+			? _GSUdomFindQueryAll( root, sel2 )
+			: root.map( r => _GSUdomFindQueryAll( r, sel2 ) ).flat();
 	}
 	if ( GSUisArr( root ) ) {
 		let el;
 
-		root.find( r => el = _GSUfindElementsQuery( r, sel ) );
+		root.find( r => el = _GSUdomFindQuery( r, sel ) );
 		return el || null;
 	}
-	return _GSUfindElementsQuery( root, sel );
+	return _GSUdomFindQuery( root, sel );
 }
-function _GSUfindElementsQuery( root, sel ) {
+function _GSUdomFindQuery( root, sel ) {
 	return root.matches( sel )
 		? root
 		: root.querySelector( sel );
 }
-function _GSUfindElementsQueryAll( root, sel ) {
+function _GSUdomFindQueryAll( root, sel ) {
 	const arr = Array.from( root.querySelectorAll( sel ) );
 
 	if ( root.matches( sel ) ) {
