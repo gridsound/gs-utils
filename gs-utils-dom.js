@@ -54,7 +54,7 @@ function GSUemptyElement( el ) {
 }
 
 // .............................................................................
-function GSUsetChildrenNumber( el, n, tag, prop ) {
+function GSUdomSetChildrenLength( el, n, tag, prop ) {
 	if ( el.children.length < n ) {
 		el.append( ...GSUnewArray( n - el.children.length, () => GSUcreateElement( tag, prop ) ) );
 	} else {
