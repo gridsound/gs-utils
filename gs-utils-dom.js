@@ -5,9 +5,9 @@ const GSUpopup = document.createElement( "gsui-popup" );
 document.body.prepend( GSUpopup );
 
 // .............................................................................
-function GSUdefineElement( name, clazz ) {
+function GSUdomDefine( tag, clazz ) {
 	Object.freeze( clazz );
-	customElements.define( name, clazz );
+	customElements.define( tag, clazz );
 }
 
 // .............................................................................
