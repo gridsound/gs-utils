@@ -47,7 +47,7 @@ function GSUunselectText() {
 }
 
 // .............................................................................
-function GSUemptyElement( el ) {
+function GSUdomEmpty( el ) {
 	while ( el.lastChild ) {
 		el.lastChild.remove();
 	}
