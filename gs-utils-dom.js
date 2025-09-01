@@ -136,7 +136,12 @@ function _GSUfindElementsQueryAll( root, sel ) {
 function GSUdomDispatch( el, ev, ...args ) {
 	el.dispatchEvent( new CustomEvent( "gsui", {
 		bubbles: true,
-		detail: { $event: ev, $args: args, $target: el },
+		detail: {
+			$event: ev,
+			$args: args,
+			$target: el,
+			$targetId: el.dataset.id || null,
+		},
 	} ) );
 }
 function GSUdomListen( el, cbs ) {
