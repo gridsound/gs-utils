@@ -55,14 +55,8 @@ function GSUemptyElement( el ) {
 
 // .............................................................................
 function GSUsetChildrenNumber( el, n, tag, prop ) {
-	return _GSUsetChildrenNumber( el, n, tag, prop, GSUcreateElement );
-}
-function GSUsetSVGChildrenNumber( el, n, tag, prop ) {
-	return _GSUsetChildrenNumber( el, n, tag, prop, GSUcreateElementSVG );
-}
-function _GSUsetChildrenNumber( el, n, tag, prop, createFn ) {
 	if ( el.children.length < n ) {
-		el.append( ...GSUnewArray( n - el.children.length, () => createFn( tag, prop ) ) );
+		el.append( ...GSUnewArray( n - el.children.length, () => GSUcreateElement( tag, prop ) ) );
 	} else {
 		while ( el.children.length > n ) {
 			el.lastChild.remove();
@@ -157,16 +151,16 @@ function GSUdomListen( el, cbs ) {
 }
 
 // .............................................................................
+const _GSUdomSVGelements = Object.freeze( "circle defs g line linearGradient path polygon polyline rect stop svg use"
+	.split( " " ).reduce( ( map, s ) => ( map[ s ] = true, map ), {} ) );
+
 function GSUcreateElement( tag, attr, ...children ) {
-	return _GSUcreateElement( "http://www.w3.org/1999/xhtml", tag, attr, children );
-}
-function GSUcreateElementSVG( tag, attr, ...children ) {
-	return _GSUcreateElement( "http://www.w3.org/2000/svg", tag, attr, children );
-}
-function _GSUcreateElement( ns, tag, attrObj, children ) {
+	const ns = tag in _GSUdomSVGelements
+		? "http://www.w3.org/2000/svg"
+		: "http://www.w3.org/1999/xhtml";
 	const el = document.createElementNS( ns, tag );
 
-	GSUdomSetAttr( el, attrObj );
+	GSUdomSetAttr( el, attr );
 	el.append( ...children.flat( 1 ).filter( ch => Boolean( ch ) || Number.isFinite( ch ) ) );
 	return el;
 }
