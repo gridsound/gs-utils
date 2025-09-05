@@ -225,23 +225,29 @@ function _GSUdomSetAttr( el, attr, val ) {
 		el.setAttribute( attr, val === true ? "" : val );
 	}
 }
-function GSUsetViewBox( svg, x, y, w, h ) { GSUdomSetAttr( svg, "viewBox", `${ x } ${ y } ${ w } ${ h }` ); }
-function GSUsetViewBoxWH( svg, w, h ) { GSUsetViewBox( svg, 0, 0, w, h ); }
 
 // .............................................................................
-function GSUgetStyle( el, prop ) {
-	return !prop
-		? getComputedStyle( el )
-		: prop.startsWith( "--" )
-			? el.style.getPropertyValue( prop )
-			: getComputedStyle( el )[ prop ];
+function GSUdomViewBox( svg, x, y, w, h ) {
+	GSUdomSetAttr( svg, "viewBox", arguments.length === 5
+		? `${ x } ${ y } ${ w } ${ h }`
+		: `0 0 ${ x } ${ y }` );
 }
-function GSUsetStyle( el, prop, val ) {
-	GSUisStr( prop )
-		? _GSUsetStyle( el, val, prop )
-		: GSUforEach( prop, _GSUsetStyle.bind( null, el ) );
+
+// .............................................................................
+function GSUdomStyle( el, prop, val ) {
+	switch ( arguments.length ) {
+		case 1: return getComputedStyle( el );
+		case 3: return _GSUdomStyle_set( el, val, prop );
+		case 2:
+			if ( GSUisStr( prop ) ) {
+				return prop.startsWith( "--" )
+					? el.style.getPropertyValue( prop )
+					: getComputedStyle( el )[ prop ];
+			}
+			GSUforEach( prop, _GSUdomStyle_set.bind( null, el ) );
+	}
 }
-function _GSUsetStyle( el, val, prop ) {
+function _GSUdomStyle_set( el, val, prop ) {
 	if ( prop.startsWith( "--" ) ) {
 		el.style.setProperty( prop, val );
 	} else {
@@ -250,7 +256,7 @@ function _GSUsetStyle( el, val, prop ) {
 }
 
 // .............................................................................
-function GSUrecallAttributes( el, props ) {
+function GSUdomRecallAttributes( el, props ) {
 	GSUforEach( props, ( val, p ) => {
 		GSUdomHasAttr( el, p )
 			? el.attributeChangedCallback?.( p, null, GSUdomGetAttr( el, p ) )
@@ -261,37 +267,37 @@ function GSUrecallAttributes( el, props ) {
 }
 
 // .............................................................................
-const _GSUresizeMap = new Map();
-const _GSUresizeObs = new ResizeObserver( entries => {
+const _GSUdomResizeMap = new Map();
+const _GSUdomResizeObs = new ResizeObserver( entries => {
 	entries.forEach( e => {
-		_GSUresizeMap.get( e.target )
+		_GSUdomResizeMap.get( e.target )
 			.forEach( fn => fn( e.contentRect.width, e.contentRect.height ) );
 	} );
 } );
 
-function GSUobserveSizeOf( el, fn ) {
-	if ( _GSUresizeMap.has( el ) ) {
-		_GSUresizeMap.get( el ).push( fn );
+function GSUdomObserveSize( el, fn ) {
+	if ( _GSUdomResizeMap.has( el ) ) {
+		_GSUdomResizeMap.get( el ).push( fn );
 	} else {
-		_GSUresizeMap.set( el, [ fn ] );
+		_GSUdomResizeMap.set( el, [ fn ] );
 	}
-	_GSUresizeObs.observe( el );
+	_GSUdomResizeObs.observe( el );
 }
-function GSUunobserveSizeOf( el, fn ) {
-	const fns = _GSUresizeMap.get( el );
+function GSUdomUnobserveSize( el, fn ) {
+	const fns = _GSUdomResizeMap.get( el );
 	const fnInd = fns?.indexOf( fn );
 
 	if ( fnInd > -1 ) {
-		_GSUresizeObs.unobserve( el );
+		_GSUdomResizeObs.unobserve( el );
 		fns.splice( fnInd, 1 );
 		if ( fns.length === 0 ) {
-			_GSUresizeMap.delete( el );
+			_GSUdomResizeMap.delete( el );
 		}
 	}
 }
 
 // .............................................................................
-function GSUscrollIntoViewX( el, par ) {
+function GSUdomScrollIntoViewX( el, par ) {
 	if ( el && par ) {
 		const elBCR = GSUdomBCR( el );
 		const parBCR = GSUdomBCR( par );
@@ -309,7 +315,7 @@ function GSUscrollIntoViewX( el, par ) {
 // .............................................................................
 function GSUdomIsScrollable( el ) {
 	___( el, "element" );
-	const ov = GSUgetStyle( el, "overflow" );
+	const ov = GSUdomStyle( el, "overflow" );
 
 	return ov === "auto" || ov === "scroll";
 }
