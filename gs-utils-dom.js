@@ -261,24 +261,6 @@ function GSUrecallAttributes( el, props ) {
 }
 
 // .............................................................................
-function GSUhasDataTransfer( e, list ) {
-	return list.some( k => e.dataTransfer.types.includes( k ) );
-}
-function GSUgetDataTransfer( e, list ) {
-	const ret = [];
-
-	list.find( k => {
-		const dat = e.dataTransfer.getData( k );
-
-		if ( dat ) {
-			ret.push( k, dat );
-			return true;
-		}
-	} );
-	return ret;
-}
-
-// .............................................................................
 const _GSUresizeMap = new Map();
 const _GSUresizeObs = new ResizeObserver( entries => {
 	entries.forEach( e => {
