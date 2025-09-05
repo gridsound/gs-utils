@@ -42,7 +42,7 @@ function GSUdomBCR( el ) {
 }
 
 // .............................................................................
-function GSUunselectText() {
+function GSUdomUnselect() {
 	window.getSelection().removeAllRanges();
 }
 
