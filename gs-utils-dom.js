@@ -241,7 +241,7 @@ function GSUdomStyle( el, prop, val ) {
 		case 2:
 			if ( GSUisStr( prop ) ) {
 				return prop.startsWith( "--" )
-					? el.style.getPropertyValue( prop )
+					? getComputedStyle( el ).getPropertyValue( prop )
 					: getComputedStyle( el )[ prop ];
 			}
 			GSUforEach( prop, _GSUdomStyle_set.bind( null, el ) );
