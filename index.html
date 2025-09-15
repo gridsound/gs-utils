@@ -266,6 +266,29 @@
 		test( "mathApprox_k", GSUmathApprox(  -20.8,  -21, .1 ), false );
 		test( "mathApprox_l", GSUmathApprox(  -21.2,  -21, .1 ), false );
 	} );
+	tests( "GSUmathMod", () => {
+		test( "mathMod_0", GSUmathMod(    0,  10 ), 0 );
+		test( "mathMod_1", GSUmathMod(    1,  10 ), 1 );
+		test( "mathMod_2", GSUmathMod(    9,  10 ), 9 );
+		test( "mathMod_3", GSUmathMod(   10,  10 ), 0 );
+		test( "mathMod_4", GSUmathMod(  100,  10 ), 0 );
+		test( "mathMod_5", GSUmathMod(  999,  10 ), 9 );
+		test( "mathMod_6", GSUmathMod( 1000,  10 ), 0 );
+		test( "mathMod_7", GSUmathMod( 1001,  10 ), 1 );
+		test( "mathMod_8", GSUmathMod(   -1,  10 ), 9 );
+		test( "mathMod_9", GSUmathMod(   -2,  10 ), 8 );
+		test( "mathMod_a", GSUmathMod(   -9,  10 ), 1 );
+		test( "mathMod_b", GSUmathMod(  -10,  10 ), 0 );
+		test( "mathMod_c", GSUmathMod(  -11,  10 ), 9 );
+		test( "mathMod_d", GSUmathMod( -100,  10 ), 0 );
+		test( "mathMod_e", GSUmathMod(   -1,   1 ), 0 );
+		test( "mathMod_f", GSUmathMod(    0,   1 ), 0 );
+		test( "mathMod_g", GSUmathMod(    1,   1 ), 0 );
+		test( "mathMod_h", GSUmathMod(   -1,  -1 ), -0 );
+		test( "mathMod_i", GSUmathMod(   -5, -10 ), -5 );
+		test( "mathMod_j", GSUmathMod(  -10, -10 ), -0 );
+		test( "mathMod_k", GSUmathMod(  -11, -10 ), -1 );
+	} );
 	tests( "GSUmathFix", () => {
 		test( "mathFix_0", GSUmathFix( null ),       0 );
 		test( "mathFix_1", GSUmathFix( true ),       1 );

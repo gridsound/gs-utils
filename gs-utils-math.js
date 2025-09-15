@@ -1,6 +1,7 @@
 "use strict";
 
 // .............................................................................
+function GSUmathMod( n, m ) { return ( ( n % m ) + m ) % m; }
 function GSUmathLogN( x, y ) { return Math.log( y ) / Math.log( x ); }
 function GSUmathEaseInCirc( n, pow = 2 ) { return 1 - Math.sqrt( 1 - n ** pow ); }
 function GSUmathEaseOutCirc( n, pow = 2 ) { return Math.sqrt( 1 - ( n - 1 ) ** pow ); }
