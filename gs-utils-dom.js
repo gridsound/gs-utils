@@ -189,11 +189,11 @@ function GSUcreateElement( tag, attr, ...children ) {
 }
 function GSUcreateIcon( attr ) {
 	const attr2 = { 
+		inert: true,
 		...attr,
 		class: `gsuiIcon${ attr?.class ? ` ${ attr.class }` : "" }`,
 		"data-icon": attr?.icon || null,
 		"data-spin": attr?.spin ? "on" : null,
-		inert: true,
 	};
 
 	delete attr2.icon;
