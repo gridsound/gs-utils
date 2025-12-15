@@ -985,6 +985,26 @@ body {
 </script>
 
 <!-- ....................................................................... -->
+<!-- ..... gs-utils-audio .................................................. -->
+<!-- ....................................................................... -->
+<script>
+	tests( "GSUaudioDelayDuration", () => {
+		test( "audioDelayDuration_0", GSUaudioDelayDuration( -1, -1  ),       0 );
+		test( "audioDelayDuration_1", GSUaudioDelayDuration( -1,  0  ),       0 );
+		test( "audioDelayDuration_2", GSUaudioDelayDuration(  0, -1  ),       0 );
+		test( "audioDelayDuration_3", GSUaudioDelayDuration(  0,  0  ),       0 );
+		test( "audioDelayDuration_4", GSUaudioDelayDuration(  1,  1  ),       Infinity );
+		test( "audioDelayDuration_5", GSUaudioDelayDuration(  1,  .5 ),       4 );
+		test( "audioDelayDuration_6", GSUaudioDelayDuration(  1,  .5, .1 ),   4 );
+		test( "audioDelayDuration_7", GSUaudioDelayDuration(  1,  .5, .2 ),   3 );
+		test( "audioDelayDuration_8", GSUaudioDelayDuration(  1,  .5, .25 ),  2 );
+		test( "audioDelayDuration_9", GSUaudioDelayDuration(  1,  .5, .26 ),  2 );
+		test( "audioDelayDuration_a", GSUaudioDelayDuration(  1,  .5, .01 ),  7 );
+		test( "audioDelayDuration_b", GSUaudioDelayDuration(  1,  .9993605 ), 3600 );
+	} );
+</script>
+
+<!-- ....................................................................... -->
 <!-- ..... GSUxxxx ......................................................... -->
 <!-- ....................................................................... -->
 <script>

@@ -14,6 +14,15 @@ function GSUHztoX( x ) {
 }
 
 // .............................................................................
+function GSUaudioDelayDuration( timeSec, gain, target = .1 ) {
+	return (
+		gain <= 0 ? 0 :
+		gain >= 1 ? Infinity :
+		Math.ceil( Math.log( target ) / Math.log( gain ) ) * timeSec
+	);
+}
+
+// .............................................................................
 function GSUformatWavetableName( synthId, oscId )    { return `custom.s${ synthId }.o${ oscId }`; }
 function GSUformatWaveName( synthId, oscId, waveId ) { return `custom.s${ synthId }.o${ oscId }.${ waveId }`; }
 function GSUisWavetableName( name ) { return GSUisStr( name ) && name.startsWith( "custom.s" ) && GSUcountChar( name, "." ) === 2; }
