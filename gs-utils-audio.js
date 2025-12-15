@@ -14,11 +14,11 @@ function GSUHztoX( x ) {
 }
 
 // .............................................................................
-function GSUaudioDelayDuration( timeSec, gain, target = .1 ) {
+function GSUaudioDelayDuration( time, gain, target = .1 ) {
 	return (
 		gain <= 0 ? 0 :
 		gain >= 1 ? Infinity :
-		Math.ceil( Math.log( target ) / Math.log( gain ) ) * timeSec
+		Math.ceil( Math.log( target ) / Math.log( gain ) ) * time
 	);
 }
 

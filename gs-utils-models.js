@@ -139,6 +139,7 @@ GSUsetModel( "wavetable", {
 GSUsetModel( "synth", {
 	name: "synth",
 	dest: "main",
+	octave: 4,
 	envs: {
 		gain: GSUgetModel( "envGain" ),
 		detune: GSUgetModel( "envDetune" ),
