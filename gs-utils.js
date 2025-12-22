@@ -110,12 +110,14 @@ function GSUarrayRemove( arr, fn ) {
 	let i = 0;
 	let j = 0;
 
-	for ( ; i < arr.length; ++i ) {
-		if ( !fn2( arr[ i ] ) ) {
-			arr[ j++ ] = arr[ i ];
+	if ( arr ) {
+		for ( ; i < arr.length; ++i ) {
+			if ( !fn2( arr[ i ] ) ) {
+				arr[ j++ ] = arr[ i ];
+			}
 		}
+		arr.length = j;
 	}
-	arr.length = j;
 	return arr;
 }
 function GSUarrayResize( arr, len ) {
