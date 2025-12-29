@@ -1,5 +1,9 @@
 "use strict";
 
+const GSUdomHead = document.head;
+const GSUdomBody = document.body;
+const GSUdomHtml = GSUdomBody.parentNode;
+
 const GSUpopup = document.createElement( "gsui-popup" );
 
 document.body.prepend( GSUpopup );
