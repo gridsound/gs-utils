@@ -5,7 +5,7 @@ function GSUloadJSFile( src ) {
 		const js = GSUcreateElement( "script", { src, type: "text/javascript" } );
 
 		js.onload = resolve;
-		document.head.append( js );
+		GSUdomHead.append( js );
 	} );
 }
 
@@ -28,7 +28,7 @@ function GSUdownloadURL( name, url ) {
 		target: "_blank"
 	} );
 
-	document.body.append( a );
+	GSUdomBody.append( a );
 	a.click();
 	a.remove();
 }

@@ -1443,7 +1443,7 @@ body {
 		test( "setModel.m", GSUgetModel( "foo", "hello" ), { a: 1 } );
 		test( "setModel.n", GSUgetModel( "foo", [] ), { a: 1 } );
 		test( "setModel.o", GSUgetModel( "foo", { b: 2, c: 3, a: 21 } ), { a: 21 } );
-		test( "setModel.p", GSUgetModel( "foo", document.body ), { a: 1 } );
+		test( "setModel.p", GSUgetModel( "foo", GSUdomBody ), { a: 1 } );
 	} );
 </script>
 

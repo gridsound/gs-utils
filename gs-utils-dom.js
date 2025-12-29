@@ -6,7 +6,7 @@ const GSUdomHtml = GSUdomBody.parentNode;
 
 const GSUpopup = document.createElement( "gsui-popup" );
 
-document.body.prepend( GSUpopup );
+GSUdomBody.prepend( GSUpopup );
 
 // .............................................................................
 function GSUdomDefine( tag, clazz ) {
@@ -355,7 +355,7 @@ function GSUdomClosestScrollable( el ) {
 	___( el, "element" );
 	let par = el;
 
-	while ( par !== document.documentElement && ( par = par.parentNode ) ) {
+	while ( par !== GSUdomHtml && ( par = par.parentNode ) ) {
 		if ( GSUdomIsScrollable( par ) ) {
 			return par;
 		}
