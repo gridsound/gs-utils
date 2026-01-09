@@ -59,16 +59,19 @@ function _GSUreduce( obj, fn, val ) {
 	}
 	return val2;
 }
-function GSUsome( obj, fn ) {
-	if ( obj?.some ) {
-		return obj.some( fn );
+function GSUfind( obj, fn ) {
+	if ( obj?.find ) {
+		return obj.find( fn );
 	}
 	for ( const k in obj ) {
 		if ( fn( obj[ k ], k, obj ) ) {
-			return true;
+			return obj[ k ];
 		}
 	}
-	return false;
+	return null;
+}
+function GSUsome( obj, fn ) {
+	return !!GSUfind( obj, fn );
 }
 
 // .............................................................................
