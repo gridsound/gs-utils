@@ -39,6 +39,9 @@ function GSUmathInRange( n, min, max ) {
 		: max <= n && n <= min;
 }
 function GSUmathClamp( n, min, max ) {
+	___( n, "number-NaN" );
+	___( min, "number" );
+	___( max, "number" );
 	return min < max
 		? Math.max( min, Math.min( n || 0, max ) )
 		: Math.max( max, Math.min( n || 0, min ) );
