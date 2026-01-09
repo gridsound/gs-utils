@@ -138,6 +138,7 @@ GSUsetModel( "wavetable", {
 } );
 GSUsetModel( "synth", {
 	name: "synth",
+	preset: null,
 	dest: "main",
 	octave: 4,
 	envs: {
