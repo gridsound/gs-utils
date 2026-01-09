@@ -151,6 +151,7 @@ function GSUisFun( n ) { return typeof n === "function"; }
 function GSUisBoo( n ) { return typeof n === "boolean"; }
 function GSUisNum( n ) { return typeof n === "number" && !GSUisNaN( n ); }
 function GSUisInt( n ) { return GSUisNum( n ) && n === Math.round( n ); }
+function GSUisElm( o ) { return o instanceof Element; }
 function GSUisEmpty( o ) {
 	for ( const a in o ) {
 		return false;
