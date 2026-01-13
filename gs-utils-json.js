@@ -4,7 +4,9 @@ function GSUgetNewId( obj ) {
 	___( obj, "object" );
 	let i = 0;
 
-	for ( ; i in obj; ++i ) {}
+	while ( i in obj ) {
+		++i;
+	}
 	return `${ i }`;
 }
 

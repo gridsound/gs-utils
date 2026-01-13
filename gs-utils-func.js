@@ -5,7 +5,7 @@ function GSUnoopFalse() { return false; }
 
 // .............................................................................
 function GSUwait( sec ) {
-	return new Promise( res => GSUsetTimeout( res, sec ) ); 
+	return new Promise( res => GSUsetTimeout( res, sec ) );
 }
 
 // .............................................................................

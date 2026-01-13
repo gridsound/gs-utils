@@ -236,6 +236,7 @@ function GSUplural( nb, word, s ) {
 
 // .............................................................................
 const GSUmodels = new Map();
+
 function GSUsetModel( id, obj ) {
 	GSUmodels.set( id, GSUdeepFreeze( obj ) );
 }

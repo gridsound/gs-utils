@@ -21,9 +21,7 @@ function GSUmathFFT( signal ) {
 	}
 
 	const bitReversedIndices = _GSUmathFFT_bitReverseArray( N );
-
-	// sort array
-	const ordered = {
+	const ordered = { // sort array
 		real: [],
 		imag: [],
 	};
@@ -43,13 +41,12 @@ function GSUmathFFT( signal ) {
 
 		// find twiddle factors
 		for ( let k = 0; k < currN / 2; ++k ) {
-			const twiddle = _GSUmathFFT_euler(k, currN);
+			const twiddle = _GSUmathFFT_euler( k, currN );
 
 			// on each block of FT, implement the butterfly diagram
 			for ( let m = 0; m < N / currN; ++m ) {
 				const currEvenIndex = ( currN * m ) + k;
 				const currOddIndex = ( currN * m ) + k + ( currN / 2 );
-
 				const currEvenIndexSample = {
 					real: complexSignal.real[ currEvenIndex ],
 					imag: complexSignal.imag[ currEvenIndex ],
@@ -58,14 +55,14 @@ function GSUmathFFT( signal ) {
 					real: complexSignal.real[ currOddIndex ],
 					imag: complexSignal.imag[ currOddIndex ],
 				};
-
 				const odd = _GSUmathFFT_multiply( twiddle, currOddIndexSample );
-
 				const subtractionResult = _GSUmathFFT_subtract( currEvenIndexSample, odd );
+
 				complexSignal.real[ currOddIndex ] = subtractionResult.real;
 				complexSignal.imag[ currOddIndex ] = subtractionResult.imag;
 
 				const additionResult = _GSUmathFFT_add( odd, currEvenIndexSample );
+
 				complexSignal.real[ currEvenIndex ] = additionResult.real;
 				complexSignal.imag[ currEvenIndex ] = additionResult.imag;
 			}

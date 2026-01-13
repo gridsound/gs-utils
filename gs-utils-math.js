@@ -54,6 +54,7 @@ const GSUmathWaveFns = {
 	sawtooth: GSUmathWaveSawtooth,
 	triangle: GSUmathWaveTriangle,
 };
+
 function GSUmathWaveSine( len ) {
 	___( len, "number-positive" );
 	return GSUnewArray( len, i => Math.sin( ( i / ( len - 1 ) ) * Math.PI * 2 ) );
@@ -75,8 +76,9 @@ function GSUmathWaveTriangle( len ) {
 
 	return GSUnewArray( len, i =>
 		i < len25 ? i / len25 :
-		i < len75 ? 1 - ( i - len25 ) / len25 :
-		           -1 + ( i - len75 ) / len25
+		i < len75
+			? +1 - ( i - len25 ) / len25
+			: -1 + ( i - len75 ) / len25
 	);
 }
 

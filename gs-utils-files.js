@@ -25,7 +25,7 @@ function GSUdownloadURL( name, url ) {
 	const a = GSUcreateA( {
 		href: url,
 		download: name,
-		target: "_blank"
+		target: "_blank",
 	} );
 
 	GSUdomBody.append( a );

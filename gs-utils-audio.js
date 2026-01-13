@@ -9,7 +9,7 @@ function GSUXtoHz( x ) {
 	// return 2 ** ( x * 11 - 11 );
 }
 function GSUHztoX( x ) {
-	return GSUmathLogN( GSUXtoHz_a, ( x * GSUXtoHz_c + GSUXtoHz_b ) );
+	return GSUmathLogN( GSUXtoHz_a, x * GSUXtoHz_c + GSUXtoHz_b );
 	// return ( Math.log2( x ) + 11 ) / 11;
 }
 

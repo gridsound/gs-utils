@@ -3,7 +3,6 @@
 const GSUdomHead = document.head;
 const GSUdomBody = document.body;
 const GSUdomHtml = GSUdomBody.parentNode;
-
 const GSUpopup = document.createElement( "gsui-popup" );
 
 GSUdomBody.prepend( GSUpopup );
@@ -28,7 +27,7 @@ function GSUdomHasClass( el, clazz    ) { return el?.classList.contains( clazz  
 function GSUdomTogClass( el, clazz, b ) { return el?.classList.toggle(   clazz, b ) || false; }
 function GSUdomRepClass( el, clazz, b ) { return el?.classList.replace(  clazz, b ) || false; }
 function GSUdomAddClass( el, ...clazz ) { el?.classList.add(    ...clazz ); }
-function GSUdomRmClass ( el, ...clazz ) { el?.classList.remove( ...clazz ); }
+function GSUdomRmClass(  el, ...clazz ) { el?.classList.remove( ...clazz ); }
 
 // .............................................................................
 function GSUdomGetSize( el ) { return el ? [ el.clientWidth, el.clientHeight ] : [ 0, 0 ]; }
@@ -192,7 +191,7 @@ function GSUcreateElement( tag, attr, ...children ) {
 	return el;
 }
 function GSUcreateIcon( attr ) {
-	const attr2 = { 
+	const attr2 = {
 		inert: true,
 		...attr,
 		class: `gsuiIcon${ attr?.class ? ` ${ attr.class }` : "" }`,
@@ -208,7 +207,7 @@ function GSUcreateButton( attr, ...child ) {
 		type: "button",
 		...attr,
 		class: `${ attr?.class || "" }${ attr?.icon ? " gsuiIcon" : "" }` || null,
-		"data-icon": attr?.icon || null, 
+		"data-icon": attr?.icon || null,
 	};
 
 	delete attr2.icon;
@@ -289,7 +288,7 @@ function GSUdomRecallAttributes( el, props ) {
 			? el.attributeChangedCallback?.( p, null, GSUdomGetAttr( el, p ) )
 			: val !== false
 				? _GSUdomSetAttr( el, p, val )
-				: el.$attributeChanged?.( p, null, null )
+				: el.$attributeChanged?.( p, null, null );
 	} );
 }
 
