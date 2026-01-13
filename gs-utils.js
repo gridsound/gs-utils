@@ -68,7 +68,7 @@ function GSUfind( obj, fn ) {
 			return obj[ k ];
 		}
 	}
-	return null;
+	return undefined;
 }
 function GSUsome( obj, fn ) {
 	return !!GSUfind( obj, fn );
