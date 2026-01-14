@@ -31,11 +31,6 @@ function GSUdomRmClass(  el, ...clazz ) { el?.classList.remove( ...clazz ); }
 
 // .............................................................................
 function GSUdomGetSize( el ) { return el ? [ el.clientWidth, el.clientHeight ] : [ 0, 0 ]; }
-/* eslint-disable @stylistic/curly-newline, @stylistic/padding-line-between-statements */
-function GSUdomBCRxy( el )   { const r = GSUdomBCR( el ); return r ? [ r.x, r.y ] : [ 0, 0 ]; }
-function GSUdomBCRwh( el )   { const r = GSUdomBCR( el ); return r ? [ r.w, r.h ] : [ 0, 0 ]; }
-function GSUdomBCRxywh( el ) { const r = GSUdomBCR( el ); return r ? [ r.x, r.y, r.w, r.h ] : [ 0, 0, 0, 0 ]; }
-/* eslint-enable */
 function GSUdomBCR( el ) {
 	const bcr = el?.getBoundingClientRect() || null;
 
@@ -45,6 +40,11 @@ function GSUdomBCR( el ) {
 	}
 	return bcr;
 }
+/* eslint-disable @stylistic/curly-newline, @stylistic/padding-line-between-statements */
+function GSUdomBCRxy( el )   { const r = GSUdomBCR( el ); return r ? [ r.x, r.y ] : [ 0, 0 ]; }
+function GSUdomBCRwh( el )   { const r = GSUdomBCR( el ); return r ? [ r.w, r.h ] : [ 0, 0 ]; }
+function GSUdomBCRxywh( el ) { const r = GSUdomBCR( el ); return r ? [ r.x, r.y, r.w, r.h ] : [ 0, 0, 0, 0 ]; }
+/* eslint-enable */
 
 // .............................................................................
 function GSUdomUnselect() {
@@ -82,17 +82,6 @@ function GSUdomIsDblClick( e ) {
 }
 
 // .............................................................................
-function GSUdomSetChildrenLength( el, n, tag, prop ) {
-	if ( el.children.length < n ) {
-		el.append( ...GSUnewArray( n - el.children.length, () => GSUcreateElement( tag, prop ) ) );
-	} else {
-		while ( el.children.length > n ) {
-			el.lastChild.remove();
-		}
-	}
-}
-
-// .............................................................................
 const _GSUtemplates = new Map();
 
 function GSUsetTemplate( tmpId, fn ) {
@@ -106,17 +95,10 @@ function GSUgetTemplate( tmpId, ...args ) {
 }
 
 // .............................................................................
-function GSUdomFind( root, graph ) {
-	return GSUisStr( graph )
-		? _GSUdomFindStr( root, graph )
-		: Object.seal( GSUisArr( graph )
-			? _GSUdomFindArr( root, graph )
-			: _GSUdomFindObj( root, graph ) );
-}
-function _GSUdomFindArr( root, arr ) {
+function GSUdomFind_arr( root, arr ) {
 	return arr.map( sel => GSUdomFind( root, sel ) );
 }
-function _GSUdomFindObj( root, obj ) {
+function GSUdomFind_obj( root, obj ) {
 	if ( obj ) {
 		const ent = Object.entries( obj );
 
@@ -124,34 +106,41 @@ function _GSUdomFindObj( root, obj ) {
 		return Object.fromEntries( ent );
 	}
 }
-function _GSUdomFindStr( root, sel ) {
-	if ( sel.startsWith( "[]" ) ) {
-		const sel2 = sel.slice( 2 );
-
-		return !GSUisArr( root )
-			? _GSUdomFindQueryAll( root, sel2 )
-			: root.map( r => _GSUdomFindQueryAll( r, sel2 ) ).flat();
-	}
-	if ( GSUisArr( root ) ) {
-		let el;
-
-		root.find( r => el = _GSUdomFindQuery( r, sel ) );
-		return el || null;
-	}
-	return _GSUdomFindQuery( root, sel );
-}
-function _GSUdomFindQuery( root, sel ) {
+function GSUdomFind_query( root, sel ) {
 	return root.matches( sel )
 		? root
 		: root.querySelector( sel );
 }
-function _GSUdomFindQueryAll( root, sel ) {
+function GSUdomFind_queryAll( root, sel ) {
 	const arr = Array.from( root.querySelectorAll( sel ) );
 
 	if ( root.matches( sel ) ) {
 		arr.unshift( root );
 	}
 	return arr;
+}
+function GSUdomFind_str( root, sel ) {
+	if ( sel.startsWith( "[]" ) ) {
+		const sel2 = sel.slice( 2 );
+
+		return !GSUisArr( root )
+			? GSUdomFind_queryAll( root, sel2 )
+			: root.map( r => GSUdomFind_queryAll( r, sel2 ) ).flat();
+	}
+	if ( GSUisArr( root ) ) {
+		let el;
+
+		root.find( r => el = GSUdomFind_query( r, sel ) );
+		return el || null;
+	}
+	return GSUdomFind_query( root, sel );
+}
+function GSUdomFind( root, graph ) {
+	return GSUisStr( graph )
+		? GSUdomFind_str( root, graph )
+		: Object.seal( GSUisArr( graph )
+			? GSUdomFind_arr( root, graph )
+			: GSUdomFind_obj( root, graph ) );
 }
 
 // .............................................................................
@@ -176,6 +165,35 @@ function GSUdomListen( el, cbs ) {
 			e.stopImmediatePropagation();
 		}
 	} );
+}
+
+// .............................................................................
+function GSUdomRmAttr( el, ...attr ) { el && GSUforEach( attr, a => el.removeAttribute( a ) ); }
+function GSUdomHasAttr( el, attr ) { return el ? el.hasAttribute( attr ) : false; }
+function GSUdomGetAttr( el, attr ) { return el ? el.getAttribute( attr ) : null; }
+function GSUdomGetAttrNum( el, attr ) { return +GSUdomGetAttr( el, attr ) || 0; }
+function GSUdomSetAttr_sub( el, attr, val ) {
+	if ( val === false || val === null || val === undefined ) {
+		GSUdomRmAttr( el, attr );
+	} else if ( attr === "style" && !GSUisStr( val ) ) {
+		GSUforEach( val, ( val, prop ) => el.style[ prop ] = val );
+	} else {
+		el.setAttribute( attr, val === true ? "" : val );
+	}
+}
+function GSUdomSetAttr( el, attr, val ) {
+	if ( el && attr ) {
+		GSUisStr( attr )
+			? GSUdomSetAttr_sub( el, attr, arguments.length === 2 || val )
+			: GSUforEach( attr, ( val, a ) => GSUdomSetAttr_sub( el, a, val ) );
+	}
+}
+function GSUdomTogAttr( el, attr, val = true ) {
+	if ( el && attr ) {
+		GSUdomSetAttr_sub( el, attr, val === true
+			? !GSUdomHasAttr( el, attr )
+			: GSUdomGetAttr( el, attr ) === val ? false : val );
+	}
 }
 
 // .............................................................................
@@ -226,35 +244,6 @@ function GSUcreateSelect( attr, ...child ) { return GSUcreateElement( "select", 
 function GSUcreateOption( attr, child ) { return GSUcreateElement( "option", attr, child || attr?.value ); }
 
 // .............................................................................
-function GSUdomRmAttr( el, ...attr ) { el && GSUforEach( attr, a => el.removeAttribute( a ) ); }
-function GSUdomHasAttr( el, attr ) { return el ? el.hasAttribute( attr ) : false; }
-function GSUdomGetAttr( el, attr ) { return el ? el.getAttribute( attr ) : null; }
-function GSUdomGetAttrNum( el, attr ) { return +GSUdomGetAttr( el, attr ) || 0; }
-function GSUdomSetAttr( el, attr, val ) {
-	if ( el && attr ) {
-		GSUisStr( attr )
-			? _GSUdomSetAttr( el, attr, arguments.length === 2 || val )
-			: GSUforEach( attr, ( val, a ) => _GSUdomSetAttr( el, a, val ) );
-	}
-}
-function GSUdomTogAttr( el, attr, val = true ) {
-	if ( el && attr ) {
-		_GSUdomSetAttr( el, attr, val === true
-			? !GSUdomHasAttr( el, attr )
-			: GSUdomGetAttr( el, attr ) === val ? false : val );
-	}
-}
-function _GSUdomSetAttr( el, attr, val ) {
-	if ( val === false || val === null || val === undefined ) {
-		GSUdomRmAttr( el, attr );
-	} else if ( attr === "style" && !GSUisStr( val ) ) {
-		GSUforEach( val, ( val, prop ) => el.style[ prop ] = val );
-	} else {
-		el.setAttribute( attr, val === true ? "" : val );
-	}
-}
-
-// .............................................................................
 function GSUdomViewBox( svg, x, y, w, h ) {
 	GSUdomSetAttr( svg, "viewBox", arguments.length === 5
 		? `${ x } ${ y } ${ w } ${ h }`
@@ -262,24 +251,24 @@ function GSUdomViewBox( svg, x, y, w, h ) {
 }
 
 // .............................................................................
+function GSUdomStyle_set( el, val, prop ) {
+	if ( prop.startsWith( "--" ) ) {
+		el.style.setProperty( prop, val );
+	} else {
+		el.style[ prop ] = val;
+	}
+}
 function GSUdomStyle( el, prop, val ) {
 	switch ( arguments.length ) {
 		case 1: return getComputedStyle( el );
-		case 3: return _GSUdomStyle_set( el, val, prop );
+		case 3: return GSUdomStyle_set( el, val, prop );
 		case 2:
 			if ( GSUisStr( prop ) ) {
 				return prop.startsWith( "--" )
 					? getComputedStyle( el ).getPropertyValue( prop )
 					: getComputedStyle( el )[ prop ];
 			}
-			GSUforEach( prop, _GSUdomStyle_set.bind( null, el ) );
-	}
-}
-function _GSUdomStyle_set( el, val, prop ) {
-	if ( prop.startsWith( "--" ) ) {
-		el.style.setProperty( prop, val );
-	} else {
-		el.style[ prop ] = val;
+			GSUforEach( prop, GSUdomStyle_set.bind( null, el ) );
 	}
 }
 
@@ -289,7 +278,7 @@ function GSUdomRecallAttributes( el, props ) {
 		GSUdomHasAttr( el, p )
 			? el.attributeChangedCallback?.( p, null, GSUdomGetAttr( el, p ) )
 			: val !== false
-				? _GSUdomSetAttr( el, p, val )
+				? GSUdomSetAttr_sub( el, p, val )
 				: el.$attributeChanged?.( p, null, null );
 	} );
 }
@@ -362,4 +351,15 @@ function GSUdomClosestScrollable( el ) {
 		}
 	}
 	return null;
+}
+
+// .............................................................................
+function GSUdomSetChildrenLength( el, n, tag, prop ) {
+	if ( el.children.length < n ) {
+		el.append( ...GSUnewArray( n - el.children.length, () => GSUcreateElement( tag, prop ) ) );
+	} else {
+		while ( el.children.length > n ) {
+			el.lastChild.remove();
+		}
+	}
 }
