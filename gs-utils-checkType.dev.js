@@ -1,19 +1,14 @@
 "use strict";
 
-let _GSUcheckType_lastError = null;
+let GSUcheckType_lastError = null;
 
-function ___( val, whatIf, ...args ) {
-	if ( _GSUcheckType( val, whatIf, ...args ) ) {
-		_GSUcheckType_lastError = null;
-	} else {
-		const valStr = GSUisNum( val ) || GSUisNaN( val ) ? val : JSON.stringify( val );
-
-		_GSUcheckType_lastError = whatIf;
-		throw new Error( `\`${ valStr }\` (typeof ${ typeof val }) should be "${ whatIf }" ${ args.join( ", " ) }` );
-	}
+function GSUcheckType_isArrNum( arr ) {
+	return arr instanceof Float32Array || ( GSUisArr( arr ) && arr.every( GSUisNum ) );
 }
-
-function _GSUcheckType( val, whatIf, ...args ) {
+function GSUcheckType_isArrInt( arr ) {
+	return GSUisArr( arr ) && arr.every( GSUisInt );
+}
+function GSUcheckType( val, whatIf, ...args ) {
 	const arr = whatIf.split( "-" );
 
 	if (
@@ -33,8 +28,8 @@ function _GSUcheckType( val, whatIf, ...args ) {
 		case "number":         if ( !GSUisNum( val )                    ) { return false; } break;
 		case "integer":        if ( !GSUisInt( val )                    ) { return false; } break;
 		case "function":       if ( !GSUisFun( val )                    ) { return false; } break;
-		case "arrayOfNumber":  if ( !_GSUcheckType_isArrNum( val )      ) { return false; } break;
-		case "arrayOfInteger": if ( !_GSUcheckType_isArrInt( val )      ) { return false; } break;
+		case "arrayOfNumber":  if ( !GSUcheckType_isArrNum( val )      ) { return false; } break;
+		case "arrayOfInteger": if ( !GSUcheckType_isArrInt( val )      ) { return false; } break;
 		case "element":        if ( !( val instanceof Element )         ) { return false; } break;
 	}
 	if (
@@ -47,9 +42,13 @@ function _GSUcheckType( val, whatIf, ...args ) {
 	return true;
 }
 
-function _GSUcheckType_isArrNum( arr ) {
-	return arr instanceof Float32Array || ( GSUisArr( arr ) && arr.every( GSUisNum ) );
-}
-function _GSUcheckType_isArrInt( arr ) {
-	return GSUisArr( arr ) && arr.every( GSUisInt );
+function ___( val, whatIf, ...args ) {
+	if ( GSUcheckType( val, whatIf, ...args ) ) {
+		GSUcheckType_lastError = null;
+	} else {
+		const valStr = GSUisNum( val ) || GSUisNaN( val ) ? val : JSON.stringify( val );
+
+		GSUcheckType_lastError = whatIf;
+		throw new Error( `\`${ valStr }\` (typeof ${ typeof val }) should be "${ whatIf }" ${ args.join( ", " ) }` );
+	}
 }
