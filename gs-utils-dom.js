@@ -31,9 +31,11 @@ function GSUdomRmClass(  el, ...clazz ) { el?.classList.remove( ...clazz ); }
 
 // .............................................................................
 function GSUdomGetSize( el ) { return el ? [ el.clientWidth, el.clientHeight ] : [ 0, 0 ]; }
+/* eslint-disable @stylistic/curly-newline, @stylistic/padding-line-between-statements */
 function GSUdomBCRxy( el )   { const r = GSUdomBCR( el ); return r ? [ r.x, r.y ] : [ 0, 0 ]; }
 function GSUdomBCRwh( el )   { const r = GSUdomBCR( el ); return r ? [ r.w, r.h ] : [ 0, 0 ]; }
 function GSUdomBCRxywh( el ) { const r = GSUdomBCR( el ); return r ? [ r.x, r.y, r.w, r.h ] : [ 0, 0, 0, 0 ]; }
+/* eslint-enable */
 function GSUdomBCR( el ) {
 	const bcr = el?.getBoundingClientRect() || null;
 
