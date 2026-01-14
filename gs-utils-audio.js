@@ -60,27 +60,27 @@ function GSUhashBufferV1( u8buf ) {
 }
 
 // .............................................................................
+function GSUpanningMerge_LR( l, r ) {
+	return (
+		l > r ? -1 + r / l :
+		l < r ?  1 - l / r : 0
+	);
+}
+function GSUpanningSplit_LR( pan ) {
+	return (
+		pan < 0 ? [ 1, 1 + pan ] :
+		pan > 0 ? [ 1 - pan, 1 ] : [ 1, 1 ]
+	);
+}
 function GSUpanningMerge( ...pans ) {
-	const lr = pans.map( _GSUpanningSplitLR )
+	const lr = pans.map( GSUpanningSplit_LR )
 		.reduce( ( ret, lr ) => {
 			ret[ 0 ] *= lr[ 0 ];
 			ret[ 1 ] *= lr[ 1 ];
 			return ret;
 		}, [ 1, 1 ] );
 
-	return _GSUpanningMergeLR( ...lr );
-}
-function _GSUpanningMergeLR( l, r ) {
-	return (
-		l > r ? -1 + r / l :
-		l < r ?  1 - l / r : 0
-	);
-}
-function _GSUpanningSplitLR( pan ) {
-	return (
-		pan < 0 ? [ 1, 1 + pan ] :
-		pan > 0 ? [ 1 - pan, 1 ] : [ 1, 1 ]
-	);
+	return GSUpanningMerge_LR( ...lr );
 }
 
 // .............................................................................
