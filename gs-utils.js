@@ -21,18 +21,14 @@ function GSUdotProp( obj, path ) {
 
 // .............................................................................
 function GSUisEqual( a, b ) {
-	if ( !GSUisObj( a ) || !GSUisObj( b ) ) {
-		return Object.is( a, b );
-	}
-	return GSUisArr( a ) === GSUisArr( b ) && _GSUisEqual( a, b ) && _GSUisEqual( b, a );
-}
-function _GSUisEqual( a, b ) {
-	for ( const i in a ) {
-		if ( !GSUisEqual( a[ i ], b[ i ] ) ) {
-			return false;
-		}
-	}
-	return true;
+	return (
+		Object.is( a, b ) ? true :
+		!GSUisObj( a ) || !GSUisObj( b ) || GSUisArr( a ) !== GSUisArr( b ) ? false :
+		!(
+			GSUsome( a, ( av, ak ) => !GSUisEqual( av, b[ ak ] ) ) ||
+			GSUsome( b, ( bv, bk ) => !GSUisEqual( bv, a[ bk ] ) )
+		)
+	);
 }
 
 // .............................................................................
