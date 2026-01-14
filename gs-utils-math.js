@@ -29,7 +29,6 @@ function GSUmathStack( arr, x ) {
 function GSUmathSign( n ) { return n >= 0 ? `+${ n }` : `${ n }`; }
 
 // .............................................................................
-function GSUmathApprox( n, x, diff ) { return GSUmathInRange( n, x - diff, x + diff ); }
 function GSUmathInRange( n, min, max ) {
 	if ( n === "" || ( !GSUisStr( n ) && !GSUisNum( n ) ) ) {
 		return false;
@@ -38,6 +37,7 @@ function GSUmathInRange( n, min, max ) {
 		? min <= n && n <= max
 		: max <= n && n <= min;
 }
+function GSUmathApprox( n, x, diff ) { return GSUmathInRange( n, x - diff, x + diff ); }
 function GSUmathClamp( n, min, max ) {
 	___( n, "number-NaN" );
 	___( min, "number" );
@@ -48,13 +48,6 @@ function GSUmathClamp( n, min, max ) {
 }
 
 // .............................................................................
-const GSUmathWaveFns = {
-	sine: GSUmathWaveSine,
-	square: GSUmathWaveSquare,
-	sawtooth: GSUmathWaveSawtooth,
-	triangle: GSUmathWaveTriangle,
-};
-
 function GSUmathWaveSine( len ) {
 	___( len, "number-positive" );
 	return GSUnewArray( len, i => Math.sin( ( i / ( len - 1 ) ) * Math.PI * 2 ) );
@@ -82,69 +75,46 @@ function GSUmathWaveTriangle( len ) {
 	);
 }
 
-// .............................................................................
-function GSUmathRealImagToXY( real, imag, width ) {
-	const arr = [];
-	const fn = _GSUmathRealImagToXY.bind( null, real, imag );
+const GSUmathWaveFns = {
+	sine: GSUmathWaveSine,
+	square: GSUmathWaveSquare,
+	sawtooth: GSUmathWaveSawtooth,
+	triangle: GSUmathWaveTriangle,
+};
 
-	for ( let x = 0; x < width; ++x ) {
-		arr.push( fn( x / width ) );
-	}
-	return arr;
-}
-function _GSUmathRealImagToXY( a, b, t ) {
+// .............................................................................
+function GSUmathRealImagToXY_sub( a, b, t ) {
 	return a.reduce( ( val, ai, i ) => {
 		const tmp = Math.PI * 2 * i * t;
 
 		return val + ai * Math.cos( tmp ) + b[ i ] * Math.sin( tmp );
 	}, 0 );
 }
+function GSUmathRealImagToXY( real, imag, width ) {
+	const arr = [];
+	const fn = GSUmathRealImagToXY_sub.bind( null, real, imag );
+
+	for ( let x = 0; x < width; ++x ) {
+		arr.push( fn( x / width ) );
+	}
+	return arr;
+}
 
 // .............................................................................
-function GSUmathLineFindY( ptA, ptB, x ) {
-	return ptA.x < ptB.x
-		? _GSUmathLineFindY( ptA, ptB, x )
-		: _GSUmathLineFindY( ptB, ptA, x );
-}
-function _GSUmathLineFindY( ptA, ptB, x ) {
+function GSUmathLineFindY_sub( ptA, ptB, x ) {
 	const w = ptB.x - ptA.x;
 	const h = ptB.y - ptA.y;
 	const xx = x - ptA.x;
 
 	return xx / w * h + ptA.y;
 }
+function GSUmathLineFindY( ptA, ptB, x ) {
+	return ptA.x < ptB.x
+		? GSUmathLineFindY_sub( ptA, ptB, x )
+		: GSUmathLineFindY_sub( ptB, ptA, x );
+}
 
 // .............................................................................
-function GSUmathDotLineGetYFromX( dots, x ) {
-	let a = null;
-	let b = null;
-
-	GSUforEach( dots, d => {
-		if ( GSUmathInRange( d.x, a?.x ?? -Infinity, x ) ) {
-			a = d;
-		}
-	} );
-	GSUforEach( dots, d => {
-		if ( GSUmathInRange( d.x, x, b?.x ?? Infinity ) ) {
-			b = d;
-		}
-	} );
-	if ( a && b ) {
-		const p = GSUmathClamp( ( x - a.x ) / ( b.x - a.x ), 0, 1 );
-		const y = GSUmathDotLineGetYFromDot( b.type, b.val, p );
-		const y2 = a.y < b.y ? y : 1 - y;
-		const yStart = Math.min( a.y, b.y );
-		const h = Math.abs( a.y - b.y );
-
-		return yStart + y2 * h;
-	}
-	return 0;
-}
-function GSUmathDotLineGetYFromDot( type, val, p ) {
-	const val2 = _GSUmathSampleDotLine_calcDotVal( type, val );
-
-	return GSUmathClamp( _GSUmathSampleDotLine_fns[ type || "curve" ]( val2, p, 1 ), 0, 1 );
-}
 function GSUmathSampleDotLine( dots, nb, xstart, xend ) {
 	const dataDots = Object.values( dots ).sort( ( a, b ) => a.x - b.x );
 	const dataFloat = GSUnewArray( nb, 0 );
@@ -168,10 +138,10 @@ function GSUmathSampleDotLine( dots, nb, xstart, xend ) {
 				i2 = 0;
 				prevDot = dataDots[ dotI ];
 				dot = dataDots[ ++dotI ];
-				type = dot.type in _GSUmathSampleDotLine_fns ? dot.type : "line";
+				type = dot.type in GSUmathSampleDotLine.$fns ? dot.type : "line";
 				dotW = dot.x - prevDot.x;
 				dotH = dot.y - prevDot.y;
-				fn = _GSUmathSampleDotLine_fns[ type ].bind( null, _GSUmathSampleDotLine_calcDotVal( type, dot.val ) );
+				fn = GSUmathSampleDotLine.$fns[ type ].bind( null, GSUmathSampleDotLine.$calcDotVal( type, dot.val ) );
 			}
 
 			const p = GSUmathClamp( ( currX - prevDot.x ) / dotW, 0, 1 );
@@ -183,8 +153,8 @@ function GSUmathSampleDotLine( dots, nb, xstart, xend ) {
 	}
 	return dataFloat;
 }
-function _GSUmathSampleDotLine_calcDotVal( type, val ) {
-	const dotVal = ( !type || type.endsWith( "urve" ) ? val : Math.round( val ) );
+GSUmathSampleDotLine.$calcDotVal = ( type, val ) => {
+	const dotVal = !type || type.endsWith( "urve" ) ? val : Math.round( val );
 	const dotVal2 = !dotVal && (
 		type === "stair" ||
 		type === "sineWave" ||
@@ -193,8 +163,8 @@ function _GSUmathSampleDotLine_calcDotVal( type, val ) {
 	) ? 1 : dotVal;
 
 	return dotVal2;
-}
-const _GSUmathSampleDotLine_fns = Object.freeze( {
+};
+GSUmathSampleDotLine.$fns = Object.freeze( {
 	hold: () => 0,
 	line: ( _, p ) => p,
 	curve: ( val, p ) => {
@@ -204,8 +174,8 @@ const _GSUmathSampleDotLine_fns = Object.freeze( {
 	},
 	doubleCurve: ( val, p ) => {
 		return p > .5
-			? _GSUmathSampleDotLine_fns.curve( val, ( p - .5 ) * 2 ) / 2 + .5
-			: _GSUmathSampleDotLine_fns.curve( -val, p * 2 ) / 2;
+			? GSUmathSampleDotLine.$fns.curve( val, ( p - .5 ) * 2 ) / 2 + .5
+			: GSUmathSampleDotLine.$fns.curve( -val, p * 2 ) / 2;
 	},
 	stair: ( val, p, i ) => {
 		const nbStairsAbs = Math.abs( val );
@@ -234,3 +204,35 @@ const _GSUmathSampleDotLine_fns = Object.freeze( {
 		return val2 && p < 1 ? 0 : 1;
 	},
 } );
+
+// .............................................................................
+function GSUmathDotLineGetYFromDot( type, val, p ) {
+	const val2 = GSUmathSampleDotLine.$calcDotVal( type, val );
+
+	return GSUmathClamp( GSUmathSampleDotLine.$fns[ type || "curve" ]( val2, p, 1 ), 0, 1 );
+}
+function GSUmathDotLineGetYFromX( dots, x ) {
+	let a = null;
+	let b = null;
+
+	GSUforEach( dots, d => {
+		if ( GSUmathInRange( d.x, a?.x ?? -Infinity, x ) ) {
+			a = d;
+		}
+	} );
+	GSUforEach( dots, d => {
+		if ( GSUmathInRange( d.x, x, b?.x ?? Infinity ) ) {
+			b = d;
+		}
+	} );
+	if ( a && b ) {
+		const p = GSUmathClamp( ( x - a.x ) / ( b.x - a.x ), 0, 1 );
+		const y = GSUmathDotLineGetYFromDot( b.type, b.val, p );
+		const y2 = a.y < b.y ? y : 1 - y;
+		const yStart = Math.min( a.y, b.y );
+		const h = Math.abs( a.y - b.y );
+
+		return yStart + y2 * h;
+	}
+	return 0;
+}
