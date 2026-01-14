@@ -8,6 +8,25 @@ const GSUonSafari = navigator.userAgent.includes( "Safari" ) && !GSUonChrome;
 const GSUonFirefox = navigator.userAgent.includes( "Firefox" );
 
 // .............................................................................
+// ..... GSUisXxx ..............................................................
+// .............................................................................
+function GSUisObj( o ) { return o !== null && typeof o === "object"; }
+function GSUisArr( a ) { return Array.isArray( a ); }
+function GSUisNaN( n ) { return Number.isNaN( n ); }
+function GSUisStr( n ) { return typeof n === "string"; }
+function GSUisFun( n ) { return typeof n === "function"; }
+function GSUisBoo( n ) { return typeof n === "boolean"; }
+function GSUisNum( n ) { return typeof n === "number" && !GSUisNaN( n ); }
+function GSUisInt( n ) { return GSUisNum( n ) && n === Math.round( n ); }
+function GSUisElm( o ) { return o instanceof Element; }
+function GSUisEmpty( o ) {
+	for ( const a in o ) {
+		return false;
+	}
+	return !o?.size;
+}
+
+// .............................................................................
 function GSUdotProp( obj, path ) {
 	return !path ? obj : path.split( "." ).filter( Boolean ).reduce( ( obj, p ) => {
 		return !GSUisObj( obj ) || !( p in obj )
@@ -20,18 +39,6 @@ function GSUdotProp( obj, path ) {
 GSUdotProp.$undefined = Symbol();
 
 // .............................................................................
-function GSUisEqual( a, b ) {
-	return (
-		Object.is( a, b ) ? true :
-		!GSUisObj( a ) || !GSUisObj( b ) || GSUisArr( a ) !== GSUisArr( b ) ? false :
-		!(
-			GSUsome( a, ( av, ak ) => !GSUisEqual( av, b[ ak ] ) ) ||
-			GSUsome( b, ( bv, bk ) => !GSUisEqual( bv, a[ bk ] ) )
-		)
-	);
-}
-
-// .............................................................................
 function GSUforEach( obj, fn ) {
 	if ( obj?.forEach ) {
 		obj.forEach( fn );
@@ -42,18 +49,18 @@ function GSUforEach( obj, fn ) {
 	}
 	return obj;
 }
-function GSUreduce( obj, fn, val ) {
-	return obj?.reduce
-		? obj.reduce( fn, val )
-		: _GSUreduce( obj, fn, val );
-}
-function _GSUreduce( obj, fn, val ) {
+function GSUreduce_sub( obj, fn, val ) {
 	let val2 = val;
 
 	for ( const k in obj ) {
 		val2 = fn( val2, obj[ k ], k, obj );
 	}
 	return val2;
+}
+function GSUreduce( obj, fn, val ) {
+	return obj?.reduce
+		? obj.reduce( fn, val )
+		: GSUreduce_sub( obj, fn, val );
 }
 function GSUfind( obj, fn ) {
 	if ( obj?.find ) {
@@ -68,6 +75,18 @@ function GSUfind( obj, fn ) {
 }
 function GSUsome( obj, fn ) {
 	return GSUfind( obj, fn ) !== undefined;
+}
+
+// .............................................................................
+function GSUisEqual( a, b ) {
+	return (
+		Object.is( a, b ) ? true :
+		!GSUisObj( a ) || !GSUisObj( b ) || GSUisArr( a ) !== GSUisArr( b ) ? false :
+		!(
+			GSUsome( a, ( av, ak ) => !GSUisEqual( av, b[ ak ] ) ) ||
+			GSUsome( b, ( bv, bk ) => !GSUisEqual( bv, a[ bk ] ) )
+		)
+	);
 }
 
 // .............................................................................
@@ -137,25 +156,6 @@ function GSUarrayResize( arr, len ) {
 
 		return ( 1 - t ) * arr[ a ] + t * arr[ b ];
 	} );
-}
-
-// .............................................................................
-// ..... GSUisXxx ..............................................................
-// .............................................................................
-function GSUisObj( o ) { return o !== null && typeof o === "object"; }
-function GSUisArr( a ) { return Array.isArray( a ); }
-function GSUisNaN( n ) { return Number.isNaN( n ); }
-function GSUisStr( n ) { return typeof n === "string"; }
-function GSUisFun( n ) { return typeof n === "function"; }
-function GSUisBoo( n ) { return typeof n === "boolean"; }
-function GSUisNum( n ) { return typeof n === "number" && !GSUisNaN( n ); }
-function GSUisInt( n ) { return GSUisNum( n ) && n === Math.round( n ); }
-function GSUisElm( o ) { return o instanceof Element; }
-function GSUisEmpty( o ) {
-	for ( const a in o ) {
-		return false;
-	}
-	return !o?.size;
 }
 
 // .............................................................................
