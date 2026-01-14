@@ -1,7 +1,9 @@
 "use strict";
 
+/* eslint-disable no-empty-function */
 function GSUnoop() {}
 function GSUnoopFalse() { return false; }
+/* eslint-enable */
 
 // .............................................................................
 function GSUwait( sec ) {
