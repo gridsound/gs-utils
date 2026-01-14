@@ -1222,19 +1222,25 @@ body {
 	} );
 	tests( "GSUsome", () => {
 		const fnSome21 = n => n === 21;
-		test( "some.0", GSUsome( NaN,             null     ), false );
-		test( "some.1", GSUsome( null,            null     ), false );
-		test( "some.2", GSUsome( true,            null     ), false );
-		test( "some.3", GSUsome( false,           null     ), false );
-		test( "some.4", GSUsome( undefined,       null     ), false );
-		test( "some.5", GSUsome( GSUnoop,         null     ), false );
-		test( "some.6", GSUsome( [],              fnSome21 ), false );
-		test( "some.7", GSUsome( {},              fnSome21 ), false );
-		test( "some.8", GSUsome( [ 0, 1,  2 ],    fnSome21 ), false );
-		test( "some.9", GSUsome( { a: 0, b:  1 }, fnSome21 ), false );
-		test( "some.a", GSUsome( [ 21 ],          fnSome21 ), true  );
-		test( "some.b", GSUsome( [ 0, 1, 21 ],    fnSome21 ), true  );
-		test( "some.c", GSUsome( { a: 0, b: 21 }, fnSome21 ), true  );
+		test( "some_0", GSUsome( NaN,             null        ), false );
+		test( "some_1", GSUsome( null,            null        ), false );
+		test( "some_2", GSUsome( true,            null        ), false );
+		test( "some_3", GSUsome( false,           null        ), false );
+		test( "some_4", GSUsome( undefined,       null        ), false );
+		test( "some_5", GSUsome( GSUnoop,         null        ), false );
+		test( "some_6", GSUsome( [],              fnSome21    ), false );
+		test( "some_7", GSUsome( {},              fnSome21    ), false );
+		test( "some_8", GSUsome( [ 0, 1,  2 ],    fnSome21    ), false );
+		test( "some_9", GSUsome( { a: 0, b:  1 }, fnSome21    ), false );
+		test( "some_a", GSUsome( [ 21 ],          fnSome21    ), true  );
+		test( "some_b", GSUsome( [ 0, 1, 21 ],    fnSome21    ), true  );
+		test( "some_c", GSUsome( { a: 0, b: 21 }, fnSome21    ), true  );
+		test( "some_d", GSUsome( [],              () => true  ), false );
+		test( "some_e", GSUsome( [ 1 ],           () => true  ), true  );
+		test( "some_f", GSUsome( [ 0 ],           () => true  ), true  );
+		test( "some_g", GSUsome( [],              () => false ), false );
+		test( "some_h", GSUsome( [ 1 ],           () => false ), false );
+		test( "some_i", GSUsome( [ 0 ],           () => false ), false );
 	} );
 	tests( "GSUHztoX", () => {
 		test( "HztoX.0", GSUmathFix( GSUHztoX( GSUXtoHz( .5 ) ), 8 ), .5 );
