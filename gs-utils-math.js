@@ -167,38 +167,38 @@ GSUmathSampleDotLine.$calcDotVal = ( type, val ) => {
 GSUmathSampleDotLine.$fns = Object.freeze( {
 	hold: () => 0,
 	line: ( _, p ) => p,
-	curve: ( val, p ) => {
+	curve( val, p ) {
 		return val > 0
 			? 1 - ( ( 1 - p ) ** ( val + 1 ) )
 			: p ** -( val - 1 );
 	},
-	doubleCurve: ( val, p ) => {
+	doubleCurve( val, p ) {
 		return p > .5
 			? GSUmathSampleDotLine.$fns.curve( val, ( p - .5 ) * 2 ) / 2 + .5
 			: GSUmathSampleDotLine.$fns.curve( -val, p * 2 ) / 2;
 	},
-	stair: ( val, p, i ) => {
+	stair( val, p, i ) {
 		const nbStairsAbs = Math.abs( val );
 		const inv = val > 0;
 		const y = ( Math.floor( p / ( 1 / ( nbStairsAbs + inv ) ) ) + !inv ) * ( 1 / ( nbStairsAbs + !inv ) );
 
 		return i ? y : 0;
 	},
-	sineWave: ( val, p ) => {
+	sineWave( val, p ) {
 		const val2 = Math.abs( val );
 		const val3 = val2 * ( ( val2 - .5 ) / val2 );
 		const p2 = val < 0 ? p + 1 : p;
 
 		return .5 + Math.sin( Math.PI * 1.5 + p2 * val3 * Math.PI * 2 ) / 2;
 	},
-	triangleWave: ( val, p ) => {
+	triangleWave( val, p ) {
 		const val2 = Math.abs( val );
 		const val3 = val2 * ( ( val2 - .5 ) / val2 );
 		const p2 = val < 0 ? p + 1 : p;
 
 		return -Math.abs( 2 * val3 * p2 % 2 - 1 ) + 1;
 	},
-	squareWave: ( val, p ) => {
+	squareWave( val, p ) {
 		const val2 = Math.floor( p / ( 1 / ( val * 2 ) ) ) % 2 === 0;
 
 		return val2 && p < 1 ? 0 : 1;
