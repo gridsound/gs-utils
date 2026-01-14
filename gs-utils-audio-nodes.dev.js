@@ -17,6 +17,7 @@ const _GSUaudioChannelMerger_wm = new WeakMap();
 const _GSUaudioConstantSource_wm = new WeakMap();
 const _GSUaudioChannelSplitter_wm = new WeakMap();
 
+/* eslint-disable @stylistic/curly-newline, @stylistic/padding-line-between-statements, @stylistic/max-statements-per-line */
 const GSUaudioContext         = (    ...a ) => { const n = new AudioContext( ...a );        _GSUaudioContext_wm.set( n, 1 );         return n; };
 const GSUaudioContextOff      = (    ...a ) => { const n = new OfflineAudioContext( ...a ); _GSUaudioContextOff_wm.set( n, 1 );      return n; };
 const GSUaudioGain            = ( c, ...a ) => { const n = c.createGain( ...a );            _GSUaudioGain_wm.set( n, 1 );            return n; };
@@ -33,6 +34,7 @@ const GSUaudioStereoPanner    = ( c, ...a ) => { const n = c.createStereoPanner(
 const GSUaudioChannelMerger   = ( c, ...a ) => { const n = c.createChannelMerger( ...a );   _GSUaudioChannelMerger_wm.set( n, 1 );   return n; };
 const GSUaudioConstantSource  = ( c, ...a ) => { const n = c.createConstantSource( ...a );  _GSUaudioConstantSource_wm.set( n, 1 );  return n; };
 const GSUaudioChannelSplitter = ( c, ...a ) => { const n = c.createChannelSplitter( ...a ); _GSUaudioChannelSplitter_wm.set( n, 1 ); return n; };
+/* eslint-enable */
 
 function GSUaudioLogWeakMaps( m ) {
 	( !m || m === "context"         ) && console.log( "context", _GSUaudioContext_wm );
