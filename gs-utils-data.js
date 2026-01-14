@@ -71,26 +71,22 @@ class GSData {
 			}
 		} else if ( targetData === undefined ) {
 			calls.push( [ "create", targetDiff ] );
+		} else if ( !GSUisObj( targetDiff ) ) {
+			calls.push( [ "update", targetDiff ] );
 		} else {
-			if ( !GSUisObj( targetDiff ) ) {
-				calls.push( [ "update", targetDiff ] );
-			} else {
-				GSUforEach( targetDiff, ( v, k ) => {
-					if ( v === undefined ) {
-						if ( targetData[ k ] ) {
-							calls.push( [ "delete", k ] );
-						}
-					} else {
-						if ( targetDiff[ k ] !== targetData[ k ] ) {
-							if ( targetData[ k ] === undefined ) {
-								calls.push( [ "create", k, v, v ] );
-							} else {
-								calls.push( [ "update", k, v, GSUdotProp( newData, path )[ k ] ] );
-							}
-						}
+			GSUforEach( targetDiff, ( v, k ) => {
+				if ( v === undefined ) {
+					if ( targetData[ k ] ) {
+						calls.push( [ "delete", k ] );
 					}
-				} );
-			}
+				} else if ( targetDiff[ k ] !== targetData[ k ] ) {
+					if ( targetData[ k ] === undefined ) {
+						calls.push( [ "create", k, v, v ] );
+					} else {
+						calls.push( [ "update", k, v, GSUdotProp( newData, path )[ k ] ] );
+					}
+				}
+			} );
 		}
 	}
 }
