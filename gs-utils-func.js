@@ -6,11 +6,6 @@ function GSUnoopFalse() { return false; }
 /* eslint-enable */
 
 // .............................................................................
-function GSUwait( sec ) {
-	return new Promise( res => GSUsetTimeout( res, sec ) );
-}
-
-// .............................................................................
 function GSUsetTimeout( fn, sec ) {
 	___( fn, "function" );
 	___( sec, "number-positive-0" );
@@ -55,6 +50,11 @@ function GSUclearInterval( id ) {
 	GSUisObj( id )
 		? cancelAnimationFrame( id.$id )
 		: clearInterval( id );
+}
+
+// .............................................................................
+function GSUwait( sec ) {
+	return new Promise( res => GSUsetTimeout( res, sec ) );
 }
 
 // .............................................................................
