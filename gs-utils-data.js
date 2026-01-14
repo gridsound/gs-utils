@@ -65,7 +65,7 @@ class GSData {
 		} );
 	}
 	static #assign2( calls, targetDiff, targetData, newData, path ) {
-		if ( targetDiff === GSUdotProp_undefined ) {
+		if ( targetDiff === GSUdotProp.$undefined ) {
 			if ( targetData !== undefined ) {
 				calls.push( [ "delete" ] );
 			}

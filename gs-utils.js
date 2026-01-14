@@ -8,16 +8,16 @@ const GSUonSafari = navigator.userAgent.includes( "Safari" ) && !GSUonChrome;
 const GSUonFirefox = navigator.userAgent.includes( "Firefox" );
 
 // .............................................................................
-const GSUdotProp_undefined = Symbol();
 function GSUdotProp( obj, path ) {
-	return !path ? obj : path.split( "." ).filter( Boolean ).reduce( ( obj, p ) => (
-		!GSUisObj( obj ) || !( p in obj )
+	return !path ? obj : path.split( "." ).filter( Boolean ).reduce( ( obj, p ) => {
+		return !GSUisObj( obj ) || !( p in obj )
 			? undefined
 			: obj[ p ] === undefined
-				? GSUdotProp_undefined
-				: obj[ p ]
-	), obj );
+				? GSUdotProp.$undefined
+				: obj[ p ];
+	}, obj );
 }
+GSUdotProp.$undefined = Symbol();
 
 // .............................................................................
 function GSUisEqual( a, b ) {

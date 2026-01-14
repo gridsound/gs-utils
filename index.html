@@ -1186,7 +1186,7 @@ body {
 		test( "dotProp.j", GSUdotProp( { a: { b: [ 3, 4 ] } }, "a.b.1" ), 4 );
 		test( "dotProp.k", GSUdotProp( { a: { b: [ 3, 4 ] } }, "a.b.2" ), undefined );
 		test( "dotProp.l", GSUdotProp( {},               "a" ), undefined );
-		test( "dotProp.m", GSUdotProp( { a: undefined }, "a" ), GSUdotProp_undefined );
+		test( "dotProp.m", GSUdotProp( { a: undefined }, "a" ), GSUdotProp.$undefined );
 		test( "dotProp.n", GSUdotProp( { a: 1 }, ".a" ), 1 );
 	} );
 	tests( "GSUforEach", () => {
