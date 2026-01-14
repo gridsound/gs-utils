@@ -95,6 +95,7 @@ function GSUgetTemplate( tmpId, ...args ) {
 }
 
 // .............................................................................
+/* eslint-disable no-use-before-define */
 function GSUdomFind_arr( root, arr ) {
 	return arr.map( sel => GSUdomFind( root, sel ) );
 }
@@ -106,6 +107,7 @@ function GSUdomFind_obj( root, obj ) {
 		return Object.fromEntries( ent );
 	}
 }
+/* eslint-enable */
 function GSUdomFind_query( root, sel ) {
 	return root.matches( sel )
 		? root
