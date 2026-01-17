@@ -1562,6 +1562,14 @@
 		testStrict( "GSUjq_find_0", f0, GSUdomQS( "[data-rrr]" ) );
 		testStrict( "GSUjq_find_1", f1, undefined );
 	} );
+	tests( "GSUjq_empty", () => {
+		testStrict( "GSUjq_empty_0", GSUdomQSA( "#eljq_1 *" ).length, 3 );
+		GSUjq( "#eljq_1" ).$empty();
+		testStrict( "GSUjq_empty_1", GSUdomQSA( "#eljq_1 *" ).length, 0 );
+		testStrict( "GSUjq_empty_2", GSUdomQSA( "#eljq_2 *, #eljq_3 *" ).length, 6 );
+		GSUjq( "#eljq_2, #eljq_3" ).$empty();
+		testStrict( "GSUjq_empty_3", GSUdomQSA( "#eljq_2 *, #eljq_3 *" ).length, 0 );
+	} );
 </script>
 
 <!-- ....................................................................... -->

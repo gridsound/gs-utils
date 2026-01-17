@@ -83,6 +83,10 @@ class GSUjqClass {
 		GSUforEach( this.#list, el => el.textContent = val );
 		return this;
 	}
+	$empty() {
+		GSUforEach( this.#list, GSUdomEmpty );
+		return this;
+	}
 
 	// .........................................................................
 	$hasAttr( attr ) {
