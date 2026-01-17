@@ -52,6 +52,9 @@ class GSUjqClass {
 		GSUforEach( this.#list, fn );
 		return this;
 	}
+	$find( fn ) {
+		return GSUfind( this.#list, fn );
+	}
 
 	// .........................................................................
 	$on( ev, fn ) {

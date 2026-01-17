@@ -50,8 +50,13 @@
 	</div>
 	<div id="eljq_2">
 		<div class="a"></div>
+		<div class="b" data-rrr></div>
 		<div class="b"></div>
+	</div>
+	<div id="eljq_3">
+		<div class="a"></div>
 		<div class="b"></div>
+		<div class="b" data-rrr></div>
 	</div>
 
 <!-- ....................................................................... -->
@@ -1548,6 +1553,14 @@
 		testStrict( "jqC_3", GSUjq( [ eljq_1, eljq_2 ], ".a"     ).$size(), 2 );
 		testStrict( "jqC_4", GSUjq( [ eljq_1, eljq_2 ], ".b"     ).$size(), 4 );
 		testStrict( "jqC_5", GSUjq( [ eljq_1, eljq_2 ], ".a, .b" ).$size(), 6 );
+	} );
+	tests( "GSUjq_find", () => {
+		const jq = GSUjq( "[id*='eljq'] *" );
+		const f0 = jq.$find( el => GSUdomHasAttr( el, "data-rrr" ) );
+		const f1 = jq.$find( GSUnoopFalse );
+
+		testStrict( "GSUjq_find_0", f0, GSUdomQS( "[data-rrr]" ) );
+		testStrict( "GSUjq_find_1", f1, undefined );
 	} );
 </script>
 
