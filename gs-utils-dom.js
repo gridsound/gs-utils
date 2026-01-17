@@ -261,17 +261,18 @@ function GSUdomStyle_set( el, val, prop ) {
 	}
 }
 function GSUdomStyle( el, prop, val ) {
-	switch ( arguments.length ) {
-		case 1: return getComputedStyle( el );
-		case 3: return GSUdomStyle_set( el, val, prop );
-		case 2:
-			if ( GSUisStr( prop ) ) {
-				return prop.startsWith( "--" )
-					? getComputedStyle( el ).getPropertyValue( prop )
-					: getComputedStyle( el )[ prop ];
-			}
-			GSUforEach( prop, GSUdomStyle_set.bind( null, el ) );
+	if ( prop === undefined && val === undefined ) {
+		return getComputedStyle( el );
 	}
+	if ( val !== undefined ) {
+		return GSUdomStyle_set( el, val, prop );
+	}
+	if ( GSUisStr( prop ) ) {
+		return prop.startsWith( "--" )
+			? getComputedStyle( el ).getPropertyValue( prop )
+			: getComputedStyle( el )[ prop ];
+	}
+	GSUforEach( prop, GSUdomStyle_set.bind( null, el ) );
 }
 
 // .............................................................................
