@@ -4,32 +4,32 @@
 <meta charset="utf-8"/>
 <title>gs-utils: tests</title>
 <style>
-body {
-	color-scheme: dark;
-	color: #fff;
-	background-color: #000;
-}
-#square1,
-#square2 {
-	width: 32px;
-	height: 18px;
-	background-color: gray;
-}
-#square2 {
-	background-color: darkblue;
-}
-#square3 {
-	width: 50%;
-	height: 50%;
-	background-color: gray;
-}
-.circle1,
-.circle2 {
-	width: 10px;
-	height: 10px;
-	border-radius: 50%;
-	background-color: #00abff;
-}
+	body {
+		color-scheme: dark;
+		color: #fff;
+		background-color: #000;
+	}
+	#square1,
+	#square2 {
+		width: 32px;
+		height: 18px;
+		background-color: gray;
+	}
+	#square2 {
+		background-color: darkblue;
+	}
+	#square3 {
+		width: 50%;
+		height: 50%;
+		background-color: gray;
+	}
+	.circle1,
+	.circle2 {
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		background-color: #00abff;
+	}
 </style>
 </head>
 <body>
@@ -43,6 +43,16 @@ body {
 	<div class="circle1" data-foo data-bar data-bar2></div><br/>
 	<div class="circle2" data-a="21" data-b="abc" data-c data-d="-3.14"></div>
 	<div id="classes"></div>
+	<div id="eljq_1">
+		<div class="a"></div>
+		<div class="b"></div>
+		<div class="b"></div>
+	</div>
+	<div id="eljq_2">
+		<div class="a"></div>
+		<div class="b"></div>
+		<div class="b"></div>
+	</div>
 
 <!-- ....................................................................... -->
 <script src="gs-utils.js"></script>
@@ -51,6 +61,7 @@ body {
 <script src="gs-utils-math.js"></script>
 <script src="gs-utils-json.js"></script>
 <script src="gs-utils-audio.js"></script>
+<script src="gs-utils-jquery.js"></script>
 <script src="gs-utils-checkType.dev.js"></script>
 
 <!-- ....................................................................... -->
@@ -1450,6 +1461,93 @@ body {
 		test( "setModel.n", GSUgetModel( "foo", [] ), { a: 1 } );
 		test( "setModel.o", GSUgetModel( "foo", { b: 2, c: 3, a: 21 } ), { a: 21 } );
 		test( "setModel.p", GSUgetModel( "foo", GSUdomBody ), { a: 1 } );
+	} );
+</script>
+
+<!-- ....................................................................... -->
+<!-- ..... gs-utils-jquery ................................................. -->
+<!-- ....................................................................... -->
+<script>
+	tests( "GSUjq_a", () => {
+		const jq404 = GSUjq( "#e404" );
+		const sq1 = GSUdomQS( "#square1" );
+
+		testStrict( "jqA_0", jq404[ 0 ], undefined );
+		testStrict( "jqA_1", GSUjq( "#square1" )[ 0 ], sq1 );
+
+		const sq2divs = GSUjq( "#square2 div" );
+		const sq2divs2 = GSUdomQSA( "#square2 div" );
+
+		testStrict( "jqA_2", sq2divs[ 0 ], sq2divs2[ 0 ] );
+		testStrict( "jqA_3", sq2divs[ 1 ], sq2divs2[ 1 ] );
+
+		let ret = true;
+		let count = 0;
+		const eachRet = sq2divs.$each( ( el, i ) => {
+			if ( el !== sq2divs2[ i ] ) {
+				ret = false;
+			}
+			++count;
+		} );
+
+		testStrict( "jqA_4", ret, true );
+		testStrict( "jqA_5", count, 2 );
+		testStrict( "jqA_6", eachRet, sq2divs );
+
+		jq404.$attr( "data-jkl", "oWe" );
+
+		const jkl404 = jq404.$attr( "data-jkl" );
+
+		testStrict( "jqA_7", jkl404, null );
+
+		GSUjq( "#square1" ).$attr( "data-jkl", "oWe" );
+		testStrict( "jqA_8", GSUdomGetAttr( sq1, "data-jkl" ), "oWe" );
+
+		GSUjq( "#square1" ).$attr( "data-jkl", false );
+		testStrict( "jqA_9", GSUdomHasAttr( sq1, "data-jkl" ), false );
+
+		let ret2 = true;
+		GSUjq( "#square2 div" ).$attr( "data-jkl", "wAq" );
+		sq2divs2.forEach( el => {
+			if ( GSUdomGetAttr( el, "data-jkl" ) !== "wAq" ) {
+				ret2 = false;
+			}
+		} );
+		testStrict( "jqA_a", ret2, true );
+
+		let ret3 = true;
+		GSUjq( "#square2 div" ).$attr( "data-jkl", false );
+		sq2divs2.forEach( el => {
+			if ( GSUdomHasAttr( el, "data-jkl" ) ) {
+				ret3 = false;
+			}
+		} );
+		testStrict( "jqA_b", ret3, true );
+
+		jq404.$text( "foo" );
+		const txt404 = jq404.$text();
+
+		testStrict( "jqA_c", txt404, undefined );
+	} );
+	tests( "GSUjq_b", () => {
+		const eljq_1 = GSUdomQS( "#eljq_1" );
+		const eljq_2 = GSUdomQS( "#eljq_2" );
+
+		testStrict( "jqB_0", GSUjq( null,   ".a"     ).$size(), 0 );
+		testStrict( "jqB_1", GSUjq( eljq_1, ".a"     ).$size(), 1 );
+		testStrict( "jqB_2", GSUjq( eljq_1, ".b"     ).$size(), 2 );
+		testStrict( "jqB_3", GSUjq( eljq_1, ".a, .b" ).$size(), 3 );
+	} );
+	tests( "GSUjq_c", () => {
+		const eljq_1 = GSUdomQS( "#eljq_1" );
+		const eljq_2 = GSUdomQS( "#eljq_2" );
+
+		testStrict( "jqC_0", GSUjq( [                ], ".a"     ).$size(), 0 );
+		testStrict( "jqC_1", GSUjq( [ eljq_1         ], ".a"     ).$size(), 1 );
+		testStrict( "jqC_2", GSUjq( [ eljq_1, eljq_1 ], ".a"     ).$size(), 1 );
+		testStrict( "jqC_3", GSUjq( [ eljq_1, eljq_2 ], ".a"     ).$size(), 2 );
+		testStrict( "jqC_4", GSUjq( [ eljq_1, eljq_2 ], ".b"     ).$size(), 4 );
+		testStrict( "jqC_5", GSUjq( [ eljq_1, eljq_2 ], ".a, .b" ).$size(), 6 );
 	} );
 </script>
 
