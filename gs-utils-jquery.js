@@ -55,7 +55,11 @@ class GSUjqClass {
 
 	// .........................................................................
 	$on( ev, fn ) {
-		GSUforEach( this.#list, el => el.addEventListener( ev, fn ) );
+		GSUforEach( this.#list, GSUisStr( ev )
+			? el => el.addEventListener( ev, fn )
+			: el => {
+				GSUforEach( ev, ( fn, ev ) => el.addEventListener( ev, fn ) );
+			} );
 		return this;
 	}
 
@@ -65,6 +69,15 @@ class GSUjqClass {
 			return GSUdomStyle( this.#list[ 0 ], prop );
 		}
 		GSUforEach( this.#list, el => GSUdomStyle( el, prop, val ) );
+		return this;
+	}
+
+	// .........................................................................
+	$text( val ) {
+		if ( val === undefined ) {
+			return this.#list[ 0 ]?.textContent;
+		}
+		GSUforEach( this.#list, el => el.textContent = val );
 		return this;
 	}
 
@@ -90,13 +103,6 @@ class GSUjqClass {
 				: el => GSUdomSetAttr( el, attr, val )
 			);
 		}
-		return this;
-	}
-	$text( val ) {
-		if ( val === undefined ) {
-			return this.#list[ 0 ]?.textContent;
-		}
-		GSUforEach( this.#list, el => el.textContent = val );
 		return this;
 	}
 
