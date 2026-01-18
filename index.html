@@ -37,6 +37,7 @@
 <!-- ....................................................................... -->
 	<div id="square1"></div><br/>
 	<div id="square2">
+		lorem
 		<div id="square3"></div>
 		<div class="circle1"></div>
 	</div><br/>
@@ -1473,68 +1474,25 @@
 <!-- ..... gs-utils-jquery ................................................. -->
 <!-- ....................................................................... -->
 <script>
-	tests( "GSUjq_a", () => {
-		const jq404 = GSUjq( "#e404" );
-		const sq1 = GSUdomQS( "#square1" );
-
-		testStrict( "jqA_0", jq404[ 0 ], undefined );
-		testStrict( "jqA_1", GSUjq( "#square1" )[ 0 ], sq1 );
-
-		const sq2divs = GSUjq( "#square2 div" );
-		const sq2divs2 = GSUdomQSA( "#square2 div" );
-
-		testStrict( "jqA_2", sq2divs[ 0 ], sq2divs2[ 0 ] );
-		testStrict( "jqA_3", sq2divs[ 1 ], sq2divs2[ 1 ] );
-
-		let ret = true;
-		let count = 0;
-		const eachRet = sq2divs.$each( ( el, i ) => {
-			if ( el !== sq2divs2[ i ] ) {
-				ret = false;
-			}
-			++count;
-		} );
-
-		testStrict( "jqA_4", ret, true );
-		testStrict( "jqA_5", count, 2 );
-		testStrict( "jqA_6", eachRet, sq2divs );
-
-		jq404.$attr( "data-jkl", "oWe" );
-
-		const jkl404 = jq404.$attr( "data-jkl" );
-
-		testStrict( "jqA_7", jkl404, null );
-
-		GSUjq( "#square1" ).$attr( "data-jkl", "oWe" );
-		testStrict( "jqA_8", GSUdomGetAttr( sq1, "data-jkl" ), "oWe" );
-
-		GSUjq( "#square1" ).$attr( "data-jkl", false );
-		testStrict( "jqA_9", GSUdomHasAttr( sq1, "data-jkl" ), false );
-
-		let ret2 = true;
-		GSUjq( "#square2 div" ).$attr( "data-jkl", "wAq" );
-		sq2divs2.forEach( el => {
-			if ( GSUdomGetAttr( el, "data-jkl" ) !== "wAq" ) {
-				ret2 = false;
-			}
-		} );
-		testStrict( "jqA_a", ret2, true );
-
-		let ret3 = true;
-		GSUjq( "#square2 div" ).$attr( "data-jkl", false );
-		sq2divs2.forEach( el => {
-			if ( GSUdomHasAttr( el, "data-jkl" ) ) {
-				ret3 = false;
-			}
-		} );
-		testStrict( "jqA_b", ret3, true );
-
-		jq404.$text( "foo" );
-		const txt404 = jq404.$text();
-
-		testStrict( "jqA_c", txt404, undefined );
+	tests( "GSUjq_cnstrctr_errors", () => {
+		testStrict( "jq0_0", GSUjq().$size(), 0 );
+		testStrict( "jq0_1", GSUjq( 0 ).$size(), 0 );
+		testStrict( "jq0_2", GSUjq( null ).$size(), 0 );
+		testStrict( "jq0_3", GSUjq( "#e404" ).$size(), 0 );
+		testStrict( "jq0_4", GSUjq( undefined ).$size(), 0 );
 	} );
-	tests( "GSUjq_b", () => {
+	tests( "GSUjq_cnstrctr_sel", () => {
+		const a = GSUjq( "#square1" );
+		const b = GSUjq( ".circle1" );
+		const u = GSUjq( "#e404" );
+		const bb = GSUdomQSA( ".circle1" );
+
+		testStrict( "jqA_0", a.$at( 0 ), GSUdomQS( "#square1" ) );
+		testStrict( "jqA_1", b.$at( 0 ), bb[ 0 ] );
+		testStrict( "jqA_2", b.$at( 1 ), bb[ 1 ] );
+		testStrict( "jqA_3", u.$at( 0 ), undefined );
+	} );
+	tests( "GSUjq_cnstrctr_elm_sel", () => {
 		const eljq_1 = GSUdomQS( "#eljq_1" );
 		const eljq_2 = GSUdomQS( "#eljq_2" );
 
@@ -1543,7 +1501,7 @@
 		testStrict( "jqB_2", GSUjq( eljq_1, ".b"     ).$size(), 2 );
 		testStrict( "jqB_3", GSUjq( eljq_1, ".a, .b" ).$size(), 3 );
 	} );
-	tests( "GSUjq_c", () => {
+	tests( "GSUjq_cnstrctr_arrElm_sel", () => {
 		const eljq_1 = GSUdomQS( "#eljq_1" );
 		const eljq_2 = GSUdomQS( "#eljq_2" );
 
@@ -1554,14 +1512,88 @@
 		testStrict( "jqC_4", GSUjq( [ eljq_1, eljq_2 ], ".b"     ).$size(), 4 );
 		testStrict( "jqC_5", GSUjq( [ eljq_1, eljq_2 ], ".a, .b" ).$size(), 6 );
 	} );
-	tests( "GSUjq_find", () => {
-		const jq = GSUjq( "[id*='eljq'] *" );
-		const f0 = jq.$find( el => GSUdomHasAttr( el, "data-rrr" ) );
-		const f1 = jq.$find( GSUnoopFalse );
+	tests( "GSUjq_cnstrctr_jqu", () => {
+		const a = GSUjq( "#eljq_1" );
+		const b = GSUjq( "#eljq_1 .b" );
 
-		testStrict( "GSUjq_find_0", f0, GSUdomQS( "[data-rrr]" ) );
-		testStrict( "GSUjq_find_1", f1, undefined );
+		testStrict( "jqD_0", GSUjq( a ).$size(), 1 );
+		testStrict( "jqD_1", GSUjq( b ).$size(), 2 );
 	} );
+	tests( "GSUjq_cnstrctr_arrJQu", () => {
+		const a = GSUjq( "#eljq_1 .b" );
+		const b = GSUjq( "#eljq_2 .b" );
+
+		testStrict( "jqE_0", GSUjq( [ a, b ] ).$size(), 4 );
+	} );
+	tests( "GSUjq_a", () => {
+		const jq404 = GSUjq( "#e404" );
+		const sq1 = GSUdomQS( "#square1" );
+
+		testStrict( "jqZ_0", jq404[ 0 ], undefined );
+		testStrict( "jqZ_1", GSUjq( "#square1" ).$at( 0 ), sq1 );
+
+		const sq2divs = GSUjq( "#square2 div" );
+		const sq2divs2 = GSUdomQSA( "#square2 div" );
+
+		testStrict( "jqZ_2", sq2divs.$at( 0 ), sq2divs2[ 0 ] );
+		testStrict( "jqZ_3", sq2divs.$at( 1 ), sq2divs2[ 1 ] );
+
+		let ret = true;
+		let count = 0;
+		const eachRet = sq2divs.$each( ( el, i ) => {
+			if ( el !== sq2divs2[ i ] ) {
+				ret = false;
+			}
+			++count;
+		} );
+
+		testStrict( "jqZ_4", ret, true );
+		testStrict( "jqZ_5", count, 2 );
+		testStrict( "jqZ_6", eachRet, sq2divs );
+
+		jq404.$attr( "data-jkl", "oWe" );
+
+		const jkl404 = jq404.$attr( "data-jkl" );
+
+		testStrict( "jqZ_7", jkl404, null );
+
+		GSUjq( "#square1" ).$attr( "data-jkl", "oWe" );
+		testStrict( "jqZ_8", GSUdomGetAttr( sq1, "data-jkl" ), "oWe" );
+
+		GSUjq( "#square1" ).$attr( "data-jkl", false );
+		testStrict( "jqZ_9", GSUdomHasAttr( sq1, "data-jkl" ), false );
+
+		let ret2 = true;
+		GSUjq( "#square2 div" ).$attr( "data-jkl", "wAq" );
+		sq2divs2.forEach( el => {
+			if ( GSUdomGetAttr( el, "data-jkl" ) !== "wAq" ) {
+				ret2 = false;
+			}
+		} );
+		testStrict( "jqZ_a", ret2, true );
+
+		let ret3 = true;
+		GSUjq( "#square2 div" ).$attr( "data-jkl", false );
+		sq2divs2.forEach( el => {
+			if ( GSUdomHasAttr( el, "data-jkl" ) ) {
+				ret3 = false;
+			}
+		} );
+		testStrict( "jqZ_b", ret3, true );
+
+		jq404.$text( "foo" );
+		const txt404 = jq404.$text();
+
+		testStrict( "jqZ_c", txt404, undefined );
+	} );
+	// tests( "GSUjq_find", () => {
+	// 	const jq = GSUjq( "[id*='eljq'] *" );
+	// 	const f0 = jq.$find( el => GSUdomHasAttr( el, "data-rrr" ) );
+	// 	const f1 = jq.$find( GSUnoopFalse );
+
+	// 	testStrict( "GSUjq_find_0", f0, GSUdomQS( "[data-rrr]" ) );
+	// 	testStrict( "GSUjq_find_1", f1, undefined );
+	// } );
 	tests( "GSUjq_empty", () => {
 		testStrict( "GSUjq_empty_0", GSUdomQSA( "#eljq_1 *" ).length, 3 );
 		GSUjq( "#eljq_1" ).$empty();

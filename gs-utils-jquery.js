@@ -9,28 +9,41 @@ class GSUjqClass {
 	#list = [];
 
 	constructor( a, b ) {
+		Object.freeze( this );
 		if ( b === undefined ) {
-			if ( GSUisStr( a ) ) {
-				this.#cstrDomQuery( GSUdomBody, a );
-			} else if ( GSUisElm( a ) ) {
-				this.#list.push( a );
-			} else if ( GSUisArr( a ) ) {
-				this.#list = [ ...a ];
-			}
+			if ( GSUisStr( a ) ) { return this.#constr_sel( a ); }
+			if ( GSUisElm( a ) ) { return this.#constr_elm( a ); }
+			if ( GSUisJQu( a ) ) { return this.#constr_jqu( a ); }
+			if ( GSUisArr( a ) ) { return this.#constr_arr( a ); }
 		} else if ( GSUisStr( b ) ) {
-			if ( GSUisElm( a ) ) {
-				this.#cstrDomQuery( a, b );
-			} else if ( GSUisArr( a ) ) {
-				this.#cstrDomQueries( a, b );
-			}
+			if ( GSUisElm( a ) ) { return this.#constr_elm_sel( a, b ); }
+			if ( GSUisArr( a ) ) { return this.#constr_arr_sel( a, b ); }
 		}
 	}
-	#cstrDomQuery( elem, sel ) {
-		this.#list = GSUdomQSA( elem, sel );
-		Object.assign( this, this.#list );
+	#constr_sel( sel ) {
+		this.#list = [ ...GSUdomQSA( GSUdomBody, sel ) ];
 	}
-	#cstrDomQueries( elems, sel ) {
-		const list = elems.flatMap( el => {
+	#constr_elm( el ) {
+		this.#list.push( el );
+	}
+	#constr_jqu( jq ) {
+		jq.$each( el => this.#list.push( el ) );
+	}
+	#constr_arr( arr ) {
+		GSUforEach( arr, el => {
+			if ( GSUisElm( el ) ) {
+				this.#list.push( el );
+			} else if ( GSUisJQu( el ) ) {
+				el.$each( el => this.#list.push( el ) );
+			}
+		} );
+		this.#cleanList();
+	}
+	#constr_elm_sel( el, sel ) {
+		this.#list = [ ...GSUdomQSA( el, sel ) ];
+	}
+	#constr_arr_sel( elems, sel ) {
+		this.#list = elems.flatMap( el => {
 			const arr = [ ...GSUdomQSA( el, sel ) ];
 
 			if ( el.matches( sel ) ) {
@@ -38,9 +51,10 @@ class GSUjqClass {
 			}
 			return arr;
 		} );
-
-		this.#list = [ ...new Set( list ) ];
-		Object.assign( this, this.#list );
+		this.#cleanList();
+	}
+	#cleanList() {
+		return this.#list = [ ...new Set( this.#list ) ];
 	}
 
 	// .........................................................................
@@ -52,22 +66,30 @@ class GSUjqClass {
 		GSUforEach( this.#list, fn );
 		return this;
 	}
-	$find( fn ) {
-		return GSUfind( this.#list, fn );
+
+	// .........................................................................
+	$filter( fn ) {
+		return new GSUjqClass( this.#list.filter( fn ) );
+	}
+	$child( n ) {
+		return new GSUjqClass( this.#list.map( el => el.children[ n ] ) );
+	}
+	$find( sel ) {
+		const list = this.#list.flatMap( el => [ ...GSUdomQSA( el, sel ) ] );
+
+		return new GSUjqClass( [ ...new Set( list ) ] );
 	}
 
 	// .........................................................................
 	$on( ev, fn ) {
 		GSUforEach( this.#list, GSUisStr( ev )
 			? el => el.addEventListener( ev, fn )
-			: el => {
-				GSUforEach( ev, ( fn, ev ) => el.addEventListener( ev, fn ) );
-			} );
+			: el => GSUforEach( ev, ( fn, ev ) => el.addEventListener( ev, fn ) ) );
 		return this;
 	}
 
 	// .........................................................................
-	$style( prop, val ) {
+	$css( prop, val ) {
 		if ( GSUisStr( prop ) && val === undefined ) {
 			return GSUdomStyle( this.#list[ 0 ], prop );
 		}
@@ -85,6 +107,10 @@ class GSUjqClass {
 	}
 	$empty() {
 		GSUforEach( this.#list, GSUdomEmpty );
+		return this;
+	}
+	$remove() {
+		GSUforEach( this.#list, el => el.remove() );
 		return this;
 	}
 
@@ -122,3 +148,6 @@ class GSUjqClass {
 	$pause() { return this.#exec( "pause" ); }
 	$click() { return this.#exec( "click" ); }
 }
+
+Object.freeze( GSUjq );
+Object.freeze( GSUjqClass );
