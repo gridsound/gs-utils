@@ -96,6 +96,13 @@ class GSUjqClass {
 		GSUforEach( this.#list, el => GSUdomStyle( el, prop, val ) );
 		return this;
 	}
+	$top(    n, unit ) { return n === undefined ? parseFloat( GSUdomStyle( this.#list[ 0 ], "top" ) )  || 0 : this.$css( "top",  GSUjqClass.#unity( n, unit ) ); }
+	$left(   n, unit ) { return n === undefined ? parseFloat( GSUdomStyle( this.#list[ 0 ], "left" ) ) || 0 : this.$css( "left", GSUjqClass.#unity( n, unit ) ); }
+	$width(  n, unit ) { return n === undefined ? this.#list[ 0 ]?.clientWidth  || 0 : this.$css( "width",  GSUjqClass.#unity( n, unit ) ); }
+	$height( n, unit ) { return n === undefined ? this.#list[ 0 ]?.clientHeight || 0 : this.$css( "height", GSUjqClass.#unity( n, unit ) ); }
+	static #unity( n, unit ) {
+		return `${ n }${ unit || "px" }`;
+	}
 
 	// .........................................................................
 	$text( val ) {
