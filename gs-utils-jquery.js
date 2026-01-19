@@ -74,6 +74,9 @@ class GSUjqClass {
 	$child( n ) {
 		return new GSUjqClass( this.#list.map( el => el.children[ n ] ) );
 	}
+	$children() {
+		return new GSUjqClass( this.#list.flatMap( el => [ ...el.children ] ) );
+	}
 	$find( sel ) {
 		const list = this.#list.flatMap( el => [ ...GSUdomQSA( el, sel ) ] );
 
