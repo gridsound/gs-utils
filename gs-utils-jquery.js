@@ -116,8 +116,16 @@ class GSUjqClass {
 	}
 
 	// .........................................................................
-	$prepend( ...el ) { return this.#list[ 0 ]?.prepend( ...el ), this; }
-	$append( ...el ) { return this.#list[ 0 ]?.append( ...el ), this; }
+	$prepend( ...arr ) { return this.#list[ 0 ]?.prepend( ...this.#extractList( arr ) ), this; }
+	$append( ...arr ) { return this.#list[ 0 ]?.append( ...this.#extractList( arr ) ), this; }
+	#extractList( arr ) {
+		return arr.reduce( ( arr, el ) => {
+			GSUisElm( el )
+				? arr.push( el )
+				: el.$each?.( el => arr.push( el ) );
+			return arr;
+		}, [] );
+	}
 
 	// .........................................................................
 	$text( val ) {
