@@ -30,13 +30,7 @@ class GSUjqClass {
 		jq.$each( el => this.#list.push( el ) );
 	}
 	#constr_arr( arr ) {
-		GSUforEach( arr, el => {
-			if ( GSUisElm( el ) ) {
-				this.#list.push( el );
-			} else if ( GSUisJQu( el ) ) {
-				el.$each( el => this.#list.push( el ) );
-			}
-		} );
+		this.#list = this.#extractList( arr );
 		this.#cleanList();
 	}
 	#constr_elm_sel( el, sel ) {
