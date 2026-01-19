@@ -63,7 +63,7 @@ class GSUjqClass {
 
 	// .........................................................................
 	$filter( fn ) {
-		return new GSUjqClass( this.#list.filter( fn ) );
+		return new GSUjqClass( this.#list.filter( GSUisFun( fn ) ? fn : el => el.matches( fn ) ) );
 	}
 	$child( n ) {
 		return new GSUjqClass( this.#list.map( el => Array.prototype.at.call( el.children, n ) ) );
