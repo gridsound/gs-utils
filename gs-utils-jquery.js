@@ -113,6 +113,10 @@ class GSUjqClass {
 	}
 
 	// .........................................................................
+	$prepend( ...el ) { return this.#list[ 0 ]?.prepend( ...el ), this; }
+	$append( ...el ) { return this.#list[ 0 ]?.append( ...el ), this; }
+
+	// .........................................................................
 	$text( val ) {
 		if ( val === undefined ) {
 			return this.#list[ 0 ]?.textContent;
