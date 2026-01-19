@@ -1525,6 +1525,15 @@
 
 		testStrict( "jqE_0", GSUjq( [ a, b ] ).$size(), 4 );
 	} );
+	tests( "GSUjq_at", () => {
+		const a = GSUjq( "#eljq_1 *" );
+		const b = GSUdomQSA( "#eljq_1 *" );
+
+		testStrict( "jqF_0", a.$at( -1 ), b[ 2 ] );
+		testStrict( "jqF_1", a.$at( 0 ), b[ 0 ] );
+		testStrict( "jqF_2", a.$at( 1 ), b[ 1 ] );
+		testStrict( "jqF_3", a.$at( 2 ), b[ 2 ] );
+	} );
 	tests( "GSUjq_a", () => {
 		const jq404 = GSUjq( "#e404" );
 		const sq1 = GSUdomQS( "#square1" );
