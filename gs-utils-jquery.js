@@ -116,7 +116,7 @@ class GSUjqClass {
 		return arr.reduce( ( arr, el ) => {
 			GSUisElm( el )
 				? arr.push( el )
-				: el.$each?.( el => arr.push( el ) );
+				: el?.$each?.( el => arr.push( el ) );
 			return arr;
 		}, [] );
 	}
