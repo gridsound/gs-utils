@@ -105,6 +105,14 @@ class GSUjqClass {
 	}
 
 	// .........................................................................
+	$scrollX( left, behavior = "auto" ) { return this.#scroll( { left, behavior } ); }
+	$scrollY( top, behavior = "auto" ) { return this.#scroll( { top, behavior } ); }
+	#scroll( obj ) {
+		GSUforEach( this.#list, el => el.scrollTo( obj ) );
+		return this;
+	}
+
+	// .........................................................................
 	$text( val ) {
 		if ( val === undefined ) {
 			return this.#list[ 0 ]?.textContent;
