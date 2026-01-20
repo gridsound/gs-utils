@@ -174,6 +174,15 @@ class GSUjqClass {
 	}
 
 	// .........................................................................
+	$value( v ) {
+		if ( !arguments.length ) {
+			return this.#list[ 0 ]?.value;
+		}
+		GSUforEach( this.#list, el => el.value = v );
+		return this;
+	}
+
+	// .........................................................................
 	#exec( strFn ) {
 		GSUforEach( this.#list, el => el[ strFn ]() );
 		return this;
