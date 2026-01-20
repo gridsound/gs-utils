@@ -86,20 +86,19 @@ class GSUjqClass {
 	}
 
 	// .........................................................................
-	$css( prop, val ) {
+	$css( prop, val, unit = "" ) {
 		if ( GSUisStr( prop ) && val === undefined ) {
 			return GSUdomStyle( this.#list[ 0 ], prop );
 		}
-		GSUforEach( this.#list, el => GSUdomStyle( el, prop, val ) );
+		GSUforEach( this.#list, GSUisFun( val )
+			? ( el, i ) => GSUdomStyle( el, prop, `${ val( el, i ) }${ unit }` )
+			: el => GSUdomStyle( el, prop, `${ val }${ unit }` ) );
 		return this;
 	}
-	$top(    n, unit ) { return n === undefined ? parseFloat( GSUdomStyle( this.#list[ 0 ], "top" ) )  || 0 : this.$css( "top",  GSUjqClass.#unity( n, unit ) ); }
-	$left(   n, unit ) { return n === undefined ? parseFloat( GSUdomStyle( this.#list[ 0 ], "left" ) ) || 0 : this.$css( "left", GSUjqClass.#unity( n, unit ) ); }
-	$width(  n, unit ) { return n === undefined ? this.#list[ 0 ]?.clientWidth  || 0 : this.$css( "width",  GSUjqClass.#unity( n, unit ) ); }
-	$height( n, unit ) { return n === undefined ? this.#list[ 0 ]?.clientHeight || 0 : this.$css( "height", GSUjqClass.#unity( n, unit ) ); }
-	static #unity( n, unit ) {
-		return `${ n }${ unit || "px" }`;
-	}
+	$top(    n, unit = "px" ) { return n === undefined ? parseFloat( GSUdomStyle( this.#list[ 0 ], "top" ) )  || 0 : this.$css( "top",  n, unit ); }
+	$left(   n, unit = "px" ) { return n === undefined ? parseFloat( GSUdomStyle( this.#list[ 0 ], "left" ) ) || 0 : this.$css( "left", n, unit ); }
+	$width(  n, unit = "px" ) { return n === undefined ? this.#list[ 0 ]?.clientWidth  || 0 : this.$css( "width",  n, unit ); }
+	$height( n, unit = "px" ) { return n === undefined ? this.#list[ 0 ]?.clientHeight || 0 : this.$css( "height", n, unit ); }
 
 	// .........................................................................
 	$scrollX( left, behavior = "auto" ) { return this.#scroll( { left, behavior } ); }
