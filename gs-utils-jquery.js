@@ -87,12 +87,16 @@ class GSUjqClass {
 
 	// .........................................................................
 	$css( prop, val, unit = "" ) {
-		if ( GSUisStr( prop ) && val === undefined ) {
-			return GSUdomStyle( this.#list[ 0 ], prop );
+		if ( GSUisObj( prop ) ) {
+			GSUforEach( this.#list, el => GSUdomStyle( el, prop ) );
+		} else if ( GSUisStr( prop ) ) {
+			if ( val === undefined ) {
+				return GSUdomStyle( this.#list[ 0 ], prop );
+			}
+			GSUforEach( this.#list, GSUisFun( val )
+				? ( el, i ) => GSUdomStyle( el, prop, `${ val( el, i ) }${ unit }` )
+				: el => GSUdomStyle( el, prop, `${ val }${ unit }` ) );
 		}
-		GSUforEach( this.#list, GSUisFun( val )
-			? ( el, i ) => GSUdomStyle( el, prop, `${ val( el, i ) }${ unit }` )
-			: el => GSUdomStyle( el, prop, `${ val }${ unit }` ) );
 		return this;
 	}
 	$top(    n, unit = "px" ) { return n === undefined ? parseFloat( GSUdomStyle( this.#list[ 0 ], "top" ) )  || 0 : this.$css( "top",  n, unit ); }
