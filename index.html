@@ -1495,10 +1495,10 @@
 		const u = GSUjq( "#e404" );
 		const bb = GSUdomQSA( ".circle1" );
 
-		testStrict( "jqA_0", a.$at( 0 ), GSUdomQS( "#square1" ) );
-		testStrict( "jqA_1", b.$at( 0 ), bb[ 0 ] );
-		testStrict( "jqA_2", b.$at( 1 ), bb[ 1 ] );
-		testStrict( "jqA_3", u.$at( 0 ), undefined );
+		testStrict( "jqA_0", a.$get( 0 ), GSUdomQS( "#square1" ) );
+		testStrict( "jqA_1", b.$get( 0 ), bb[ 0 ] );
+		testStrict( "jqA_2", b.$get( 1 ), bb[ 1 ] );
+		testStrict( "jqA_3", u.$get( 0 ), undefined );
 	} );
 	tests( "GSUjq_cnstrctr_elm_sel", () => {
 		const eljq_1 = GSUdomQS( "#eljq_1" );
@@ -1534,17 +1534,17 @@
 		testStrict( "jqE_0", GSUjq( [ a, b ] ).$size(), 4 );
 	} );
 	tests( "GSUjq_cnstrctr_tag", () => {
-		testStrict( "jqF_0", GSUjq( "<div>" ).$at( 0 ).tagName, "DIV" );
-		testStrict( "jqF_1", GSUjq( "<gs-flex>" ).$at( 0 ).tagName, "GS-FLEX" );
+		testStrict( "jqF_0", GSUjq( "<div>" ).$get( 0 ).tagName, "DIV" );
+		testStrict( "jqF_1", GSUjq( "<gs-flex>" ).$get( 0 ).tagName, "GS-FLEX" );
 	} );
 	tests( "GSUjq_at", () => {
 		const a = GSUjq( "#eljq_1 *" );
 		const b = GSUdomQSA( "#eljq_1 *" );
 
-		testStrict( "jqG_0", a.$at( -1 ), b[ 2 ] );
-		testStrict( "jqG_1", a.$at( 0 ), b[ 0 ] );
-		testStrict( "jqG_2", a.$at( 1 ), b[ 1 ] );
-		testStrict( "jqG_3", a.$at( 2 ), b[ 2 ] );
+		testStrict( "jqG_0", a.$get( -1 ), b[ 2 ] );
+		testStrict( "jqG_1", a.$get( 0 ), b[ 0 ] );
+		testStrict( "jqG_2", a.$get( 1 ), b[ 1 ] );
+		testStrict( "jqG_3", a.$get( 2 ), b[ 2 ] );
 	} );
 	tests( "GSUjq_text", () => {
 		const a = GSUjq( "#eljq_text" );
@@ -1563,27 +1563,27 @@
 		testStrict( "jqText_0", a.$value(), "initA" );
 		a.$value( "aplop" );
 		testStrict( "jqText_1", a.$value(), "aplop" );
-		testStrict( "jqText_2", a.$value(), a.$at( 0 ).value );
+		testStrict( "jqText_2", a.$value(), a.$get( 0 ).value );
 		b.$value( "777" );
 		testStrict( "jqText_3", a.$value(), "777" );
-		testStrict( "jqText_4", a.$value(), a.$at( 0 ).value );
-		testStrict( "jqText_5", "777", b.$at( 0 ).value );
+		testStrict( "jqText_4", a.$value(), a.$get( 0 ).value );
+		testStrict( "jqText_5", "777", b.$get( 0 ).value );
 		b.$value( ( el, i ) => i );
-		testStrict( "jqText_6", "0", b.$at( 0 ).value );
-		testStrict( "jqText_7", "1", b.$at( 1 ).value );
+		testStrict( "jqText_6", "0", b.$get( 0 ).value );
+		testStrict( "jqText_7", "1", b.$get( 1 ).value );
 	} );
 	tests( "GSUjq_a", () => {
 		const jq404 = GSUjq( "#e404" );
 		const sq1 = GSUdomQS( "#square1" );
 
 		testStrict( "jqZ_0", jq404[ 0 ], undefined );
-		testStrict( "jqZ_1", GSUjq( "#square1" ).$at( 0 ), sq1 );
+		testStrict( "jqZ_1", GSUjq( "#square1" ).$get( 0 ), sq1 );
 
 		const sq2divs = GSUjq( "#square2 div" );
 		const sq2divs2 = GSUdomQSA( "#square2 div" );
 
-		testStrict( "jqZ_2", sq2divs.$at( 0 ), sq2divs2[ 0 ] );
-		testStrict( "jqZ_3", sq2divs.$at( 1 ), sq2divs2[ 1 ] );
+		testStrict( "jqZ_2", sq2divs.$get( 0 ), sq2divs2[ 0 ] );
+		testStrict( "jqZ_3", sq2divs.$get( 1 ), sq2divs2[ 1 ] );
 
 		let ret = true;
 		let count = 0;
