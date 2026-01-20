@@ -112,10 +112,13 @@ class GSUjqClass {
 	$height( n, unit = "px" ) { return n === undefined ? this.#list[ 0 ]?.clientHeight || 0 : this.$css( "height", n, unit ); }
 
 	// .........................................................................
-	$scrollX( left, behavior = "auto" ) { return this.#scroll( { left, behavior } ); }
-	$scrollY( top, behavior = "auto" ) { return this.#scroll( { top, behavior } ); }
-	#scroll( obj ) {
-		GSUforEach( this.#list, el => el.scrollTo( obj ) );
+	$scrollX( n, beh ) { return this.#scroll( "left", n, beh ); }
+	$scrollY( n, beh ) { return this.#scroll( "top", n, beh ); }
+	#scroll( dir, n, beh ) {
+		GSUforEach( this.#list, ( el, i ) => el.scrollTo( {
+			[ dir ]: GSUisFun( n ) ? n( el, i ) : n,
+			behavior: beh || "auto",
+		} ) );
 		return this;
 	}
 
