@@ -59,6 +59,10 @@
 		<div class="b"></div>
 		<div class="b" data-rrr></div>
 	</div>
+	<div id="eljq_text">
+		<div class="a">Aa</div>
+		<div class="b">Bb</div>
+	</div>
 
 <!-- ....................................................................... -->
 <script src="gs-utils.js"></script>
@@ -1537,6 +1541,16 @@
 		testStrict( "jqG_1", a.$at( 0 ), b[ 0 ] );
 		testStrict( "jqG_2", a.$at( 1 ), b[ 1 ] );
 		testStrict( "jqG_3", a.$at( 2 ), b[ 2 ] );
+	} );
+	tests( "GSUjq_text", () => {
+		const a = GSUjq( "#eljq_text" );
+		const b = a.$children();
+
+		testStrict( "jqText_0", a.$text(), "\n\t\tAa\n\t\tBb\n\t" );
+		b.$text( "X" );
+		testStrict( "jqText_0", a.$text(), "\n\t\tX\n\t\tX\n\t" );
+		b.$text( ( el, i ) => el.textContent + i );
+		testStrict( "jqText_0", a.$text(), "\n\t\tX0\n\t\tX1\n\t" );
 	} );
 	tests( "GSUjq_a", () => {
 		const jq404 = GSUjq( "#e404" );

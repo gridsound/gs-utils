@@ -136,7 +136,7 @@ class GSUjqClass {
 		if ( val === undefined ) {
 			return this.#list[ 0 ]?.textContent;
 		}
-		GSUforEach( this.#list, el => el.textContent = val );
+		GSUforEach( this.#list, ( el, i ) => el.textContent = GSUisFun( val ) ? val( el, i ) : val );
 		return this;
 	}
 	$empty() {
