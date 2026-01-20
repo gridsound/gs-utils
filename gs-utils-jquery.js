@@ -134,13 +134,6 @@ class GSUjqClass {
 	}
 
 	// .........................................................................
-	$text( val ) {
-		if ( val === undefined ) {
-			return this.#list[ 0 ]?.textContent;
-		}
-		GSUforEach( this.#list, ( el, i ) => el.textContent = GSUjqClass.#calcVal( val, el, i ) );
-		return this;
-	}
 	$empty() {
 		GSUforEach( this.#list, GSUdomEmpty );
 		return this;
@@ -187,6 +180,7 @@ class GSUjqClass {
 		GSUforEach( this.#list, ( el, i ) => el[ str ] = GSUjqClass.#calcVal( val, el, i ) );
 		return this;
 	}
+	$text( v ) { return this.$prop( "textContent", v ); }
 	$value( v ) { return this.$prop( "value", v ); }
 
 	// .........................................................................
