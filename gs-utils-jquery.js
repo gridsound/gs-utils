@@ -194,13 +194,13 @@ class GSUjqClass {
 	}
 
 	// .........................................................................
-	#exec( strFn ) {
-		GSUforEach( this.#list, el => el[ strFn ]() );
+	$trigger( s ) {
+		GSUforEach( this.#list, el => el[ s ]() );
 		return this;
 	}
-	$play() { return this.#exec( "play" ); }
-	$pause() { return this.#exec( "pause" ); }
-	$click() { return this.#exec( "click" ); }
+	$play() { return this.$trigger( "play" ); }
+	$pause() { return this.$trigger( "pause" ); }
+	$click() { return this.$trigger( "click" ); }
 }
 
 Object.freeze( GSUjq );
