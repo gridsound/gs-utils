@@ -184,7 +184,7 @@ class GSUjqClass {
 		if ( val === undefined ) {
 			return this.#list[ 0 ]?.[ str ];
 		}
-		GSUforEach( this.#list, el => el[ str ] = val );
+		GSUforEach( this.#list, ( el, i ) => el[ str ] = GSUjqClass.#calcVal( val, el, i ) );
 		return this;
 	}
 	$value( v ) { return this.$prop( "value", v ); }

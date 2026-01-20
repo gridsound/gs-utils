@@ -1568,6 +1568,9 @@
 		testStrict( "jqText_3", a.$value(), "777" );
 		testStrict( "jqText_4", a.$value(), a.$at( 0 ).value );
 		testStrict( "jqText_5", "777", b.$at( 0 ).value );
+		b.$value( ( el, i ) => i );
+		testStrict( "jqText_6", "0", b.$at( 0 ).value );
+		testStrict( "jqText_7", "1", b.$at( 1 ).value );
 	} );
 	tests( "GSUjq_a", () => {
 		const jq404 = GSUjq( "#e404" );
