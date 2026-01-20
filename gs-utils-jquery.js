@@ -11,14 +11,21 @@ class GSUjqClass {
 	constructor( a, b ) {
 		Object.freeze( this );
 		if ( b === undefined ) {
-			if ( GSUisStr( a ) ) { return this.#constr_sel( a ); }
 			if ( GSUisElm( a ) ) { return this.#constr_elm( a ); }
 			if ( GSUisJQu( a ) ) { return this.#constr_jqu( a ); }
 			if ( GSUisArr( a ) ) { return this.#constr_arr( a ); }
+			if ( GSUisStr( a ) ) {
+				return a.startsWith( "<" ) && a.endsWith( ">" )
+					? this.#constr_tag( a )
+					: this.#constr_sel( a );
+			}
 		} else if ( GSUisStr( b ) ) {
 			if ( GSUisElm( a ) ) { return this.#constr_elm_sel( a, b ); }
 			if ( GSUisArr( a ) ) { return this.#constr_arr_sel( a, b ); }
 		}
+	}
+	#constr_tag( tag ) {
+		this.#list.push( GSUcreateElement( tag.slice( 1, -1 ) ) );
 	}
 	#constr_sel( sel ) {
 		this.#list = [ ...GSUdomQSA( GSUdomBody, sel ) ];

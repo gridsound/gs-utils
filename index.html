@@ -1525,14 +1525,18 @@
 
 		testStrict( "jqE_0", GSUjq( [ a, b ] ).$size(), 4 );
 	} );
+	tests( "GSUjq_cnstrctr_tag", () => {
+		testStrict( "jqF_0", GSUjq( "<div>" ).$at( 0 ).tagName, "DIV" );
+		testStrict( "jqF_1", GSUjq( "<gs-flex>" ).$at( 0 ).tagName, "GS-FLEX" );
+	} );
 	tests( "GSUjq_at", () => {
 		const a = GSUjq( "#eljq_1 *" );
 		const b = GSUdomQSA( "#eljq_1 *" );
 
-		testStrict( "jqF_0", a.$at( -1 ), b[ 2 ] );
-		testStrict( "jqF_1", a.$at( 0 ), b[ 0 ] );
-		testStrict( "jqF_2", a.$at( 1 ), b[ 1 ] );
-		testStrict( "jqF_3", a.$at( 2 ), b[ 2 ] );
+		testStrict( "jqG_0", a.$at( -1 ), b[ 2 ] );
+		testStrict( "jqG_1", a.$at( 0 ), b[ 0 ] );
+		testStrict( "jqG_2", a.$at( 1 ), b[ 1 ] );
+		testStrict( "jqG_3", a.$at( 2 ), b[ 2 ] );
 	} );
 	tests( "GSUjq_a", () => {
 		const jq404 = GSUjq( "#e404" );
