@@ -180,13 +180,14 @@ class GSUjqClass {
 	}
 
 	// .........................................................................
-	$value( v ) {
-		if ( !arguments.length ) {
-			return this.#list[ 0 ]?.value;
+	$prop( str, val ) {
+		if ( val === undefined ) {
+			return this.#list[ 0 ]?.[ str ];
 		}
-		GSUforEach( this.#list, el => el.value = v );
+		GSUforEach( this.#list, el => el[ str ] = val );
 		return this;
 	}
+	$value( v ) { return this.$prop( "value", v ); }
 
 	// .........................................................................
 	$trigger( s ) {

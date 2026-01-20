@@ -63,6 +63,10 @@
 		<div class="a">Aa</div>
 		<div class="b">Bb</div>
 	</div>
+	<div id="eljq_value">
+		<input type="text" value="initA" />
+		<input type="text" value="initB" />
+	</div>
 
 <!-- ....................................................................... -->
 <script src="gs-utils.js"></script>
@@ -1548,9 +1552,22 @@
 
 		testStrict( "jqText_0", a.$text(), "\n\t\tAa\n\t\tBb\n\t" );
 		b.$text( "X" );
-		testStrict( "jqText_0", a.$text(), "\n\t\tX\n\t\tX\n\t" );
+		testStrict( "jqText_1", a.$text(), "\n\t\tX\n\t\tX\n\t" );
 		b.$text( ( el, i ) => el.textContent + i );
-		testStrict( "jqText_0", a.$text(), "\n\t\tX0\n\t\tX1\n\t" );
+		testStrict( "jqText_2", a.$text(), "\n\t\tX0\n\t\tX1\n\t" );
+	} );
+	tests( "GSUjq_value", () => {
+		const a = GSUjq( "#eljq_value input:first-child" );
+		const b = GSUjq( "#eljq_value input" );
+
+		testStrict( "jqText_0", a.$value(), "initA" );
+		a.$value( "aplop" );
+		testStrict( "jqText_1", a.$value(), "aplop" );
+		testStrict( "jqText_2", a.$value(), a.$at( 0 ).value );
+		b.$value( "777" );
+		testStrict( "jqText_3", a.$value(), "777" );
+		testStrict( "jqText_4", a.$value(), a.$at( 0 ).value );
+		testStrict( "jqText_5", "777", b.$at( 0 ).value );
 	} );
 	tests( "GSUjq_a", () => {
 		const jq404 = GSUjq( "#e404" );
