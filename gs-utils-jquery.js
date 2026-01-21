@@ -193,6 +193,12 @@ class GSUjqClass {
 	$click() { return this.$trigger( "click" ); }
 
 	// .........................................................................
+	$dispatch( ev, ...args ) {
+		GSUforEach( this.#list, el => GSUdomDispatch( el, ev, ...args ) );
+		return this;
+	}
+
+	// .........................................................................
 	static #calcVal( val, el, i ) {
 		return GSUisFun( val ) ? val( el, i ) : val;
 	}

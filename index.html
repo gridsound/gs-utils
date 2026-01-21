@@ -1537,7 +1537,7 @@
 		testStrict( "jqF_0", GSUjq( "<div>" ).$get( 0 ).tagName, "DIV" );
 		testStrict( "jqF_1", GSUjq( "<gs-flex>" ).$get( 0 ).tagName, "GS-FLEX" );
 	} );
-	tests( "GSUjq_at", () => {
+	tests( "GSUjq_get", () => {
 		const a = GSUjq( "#eljq_1 *" );
 		const b = GSUdomQSA( "#eljq_1 *" );
 
