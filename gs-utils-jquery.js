@@ -166,6 +166,12 @@ class GSUjqClass {
 	}
 
 	// .........................................................................
+	$hasClass( clazz ) { return this.#list.some( el => el.classList.contains( clazz ) ); }
+	$addClass( ...clazzes ) { return this.#list.forEach( el => el.classList.add( ...clazzes ) ), this; }
+	$rmClass( ...clazzes ) { return this.#list.forEach( el => el.classList.remove( ...clazzes ) ), this; }
+	$togClass( ...attr ) { return this.#list.forEach( el => el.classList.toggle( ...attr ) ), this; }
+
+	// .........................................................................
 	$viewbox( x, y, w, h ) {
 		return this.$attr( "viewBox", arguments.length === 4
 			? `${ x } ${ y } ${ w } ${ h }`
