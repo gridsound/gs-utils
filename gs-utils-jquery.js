@@ -60,6 +60,7 @@ class GSUjqClass {
 
 	// .........................................................................
 	$size() { return this.#list.length; }
+	$at( n ) { return new GSUjqClass( this.#list.at( n ) ); }
 	$get( n ) { return this.#list.at( n ); }
 	$sort( fn ) { return this.#list.sort( fn ), this; }
 
