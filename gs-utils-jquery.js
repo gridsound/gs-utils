@@ -145,9 +145,7 @@ class GSUjqClass {
 	}
 
 	// .........................................................................
-	$hasAttr( attr ) {
-		return this.$attr( attr ) !== null;
-	}
+	$hasAttr( attr ) { return this.#list.some( el => el.hasAttribute( attr ) ); }
 	$togAttr( attr ) {
 		GSUforEach( this.#list, el => GSUdomTogAttr( el, attr ) );
 		return this;
