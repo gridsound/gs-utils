@@ -146,6 +146,7 @@ class GSUjqClass {
 
 	// .........................................................................
 	$hasAttr( attr ) { return this.#list.some( el => el.hasAttribute( attr ) ); }
+	$addAttr( ...attrs ) { return this.#list.forEach( el => attrs.forEach( a => el.setAttribute( a, "" ) ) ), this; }
 	$rmAttr( ...attrs ) { return this.#list.forEach( el => attrs.forEach( a => el.removeAttribute( a ) ) ), this; }
 	$togAttr( attr ) {
 		GSUforEach( this.#list, el => GSUdomTogAttr( el, attr ) );
