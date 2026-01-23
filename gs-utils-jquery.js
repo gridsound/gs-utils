@@ -6,7 +6,8 @@ function GSUjq( ...args ) {
 
 // .............................................................................
 class GSUjqClass {
-	#a = null;
+	#a;
+	#a0;
 
 	constructor( a, b ) {
 		const list = [];
@@ -22,6 +23,7 @@ class GSUjqClass {
 			GSUisArr( a ) ? ( this.#constr_arr_sel( list, a, b ) ) : null;
 		}
 		this.#a = !GSUisArr( a ) ? list : [ ...new Set( list ) ];
+		this.#a0 = this.#a[ 0 ];
 	}
 	#constr_elm( list, elm ) {
 		list.push( elm );
@@ -99,16 +101,16 @@ class GSUjqClass {
 			GSUforEach( this.#a, el => GSUdomStyle( el, prop ) );
 		} else if ( GSUisStr( prop ) ) {
 			if ( val === undefined ) {
-				return GSUdomStyle( this.#a[ 0 ], prop );
+				return GSUdomStyle( this.#a0, prop );
 			}
 			GSUforEach( this.#a, ( el, i ) => GSUdomStyle( el, prop, `${ GSUjqClass.#calcVal( val, el, i ) }${ unit }` ) );
 		}
 		return this;
 	}
-	$top(    n, unit = "px" ) { return n === undefined ? parseFloat( GSUdomStyle( this.#a[ 0 ], "top" ) )  || 0 : this.$css( "top",  n, unit ); }
-	$left(   n, unit = "px" ) { return n === undefined ? parseFloat( GSUdomStyle( this.#a[ 0 ], "left" ) ) || 0 : this.$css( "left", n, unit ); }
-	$width(  n, unit = "px" ) { return n === undefined ? this.#a[ 0 ]?.clientWidth  || 0 : this.$css( "width",  n, unit ); }
-	$height( n, unit = "px" ) { return n === undefined ? this.#a[ 0 ]?.clientHeight || 0 : this.$css( "height", n, unit ); }
+	$top(    n, unit = "px" ) { return n === undefined ? parseFloat( GSUdomStyle( this.#a0, "top" ) )  || 0 : this.$css( "top",  n, unit ); }
+	$left(   n, unit = "px" ) { return n === undefined ? parseFloat( GSUdomStyle( this.#a0, "left" ) ) || 0 : this.$css( "left", n, unit ); }
+	$width(  n, unit = "px" ) { return n === undefined ? this.#a0?.clientWidth  || 0 : this.$css( "width",  n, unit ); }
+	$height( n, unit = "px" ) { return n === undefined ? this.#a0?.clientHeight || 0 : this.$css( "height", n, unit ); }
 
 	// .........................................................................
 	$scrollX( n, beh ) { return this.#scroll( "left", n, beh ); }
@@ -122,8 +124,8 @@ class GSUjqClass {
 	}
 
 	// .........................................................................
-	$prepend( ...arr ) { return this.#a[ 0 ]?.prepend( ...this.#extractList( arr ) ), this; }
-	$append( ...arr ) { return this.#a[ 0 ]?.append( ...this.#extractList( arr ) ), this; }
+	$prepend( ...arr ) { return this.#a0?.prepend( ...this.#extractList( arr ) ), this; }
+	$append( ...arr ) { return this.#a0?.append( ...this.#extractList( arr ) ), this; }
 	#extractList( arr ) {
 		return arr.reduce( ( arr, el ) => {
 			GSUisElm( el )
@@ -151,7 +153,7 @@ class GSUjqClass {
 	$attr( attr, val ) {
 		if ( val === undefined ) {
 			if ( GSUisStr( attr ) ) {
-				return GSUdomGetAttr( this.#a[ 0 ], attr );
+				return GSUdomGetAttr( this.#a0, attr );
 			}
 			if ( GSUisObj( attr ) ) {
 				GSUforEach( this.#a, el => GSUdomSetAttr( el, attr ) );
@@ -178,7 +180,7 @@ class GSUjqClass {
 	// .........................................................................
 	$prop( str, val ) {
 		if ( val === undefined ) {
-			return this.#a[ 0 ]?.[ str ];
+			return this.#a0?.[ str ];
 		}
 		GSUforEach( this.#a, ( el, i ) => el[ str ] = GSUjqClass.#calcVal( val, el, i ) );
 		return this;
