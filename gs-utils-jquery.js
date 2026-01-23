@@ -149,7 +149,7 @@ class GSUjqClass {
 
 	// .........................................................................
 	$viewbox( x, y, w, h ) {
-		return this.$attr( "viewBox", arguments.length === 4
+		return this.$setAttr( "viewBox", arguments.length === 4
 			? `${ x } ${ y } ${ w } ${ h }`
 			: `0 0 ${ x } ${ y }` );
 	}
