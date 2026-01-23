@@ -59,7 +59,7 @@ class $$ {
 
 	// .........................................................................
 	$trigger( s ) { return this.$each( el => el[ s ]() ); }
-	$dispatch( ev, ...args ) { return this.$each( el => GSUdomDispatch( el, ev, ...args ) ); }
+	$dispatch( ev, ...args ) { return this.$each( el => $$.#dispatch( el, ev, ...args ) ); }
 	$prop( str, val ) {
 		return val === undefined
 			? this.#a0?.[ str ]
@@ -150,6 +150,17 @@ class $$ {
 				: el?.$each?.( el => arr.push( el ) );
 			return arr;
 		}, [] );
+	}
+	static #dispatch( el, ev, ...args ) {
+		el.dispatchEvent( new CustomEvent( "gsui", {
+			bubbles: true,
+			detail: {
+				$event: ev,
+				$args: args,
+				$target: el,
+				$targetId: el.dataset.id || null,
+			},
+		} ) );
 	}
 }
 
