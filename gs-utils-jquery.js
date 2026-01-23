@@ -14,49 +14,33 @@ class GSUjqClass {
 
 		Object.freeze( this );
 		if ( b === undefined ) {
-			GSUisElm( a ) ? ( this.#constr_elm( list, a ) ) :
-			GSUisJQu( a ) ? ( this.#constr_jqu( list, a ) ) :
-			GSUisArr( a ) ? ( this.#constr_arr( list, a ) ) :
-			GSUisStr( a ) ? ( this.#constr_str( list, a ) ) : null;
+			if ( GSUisElm( a ) ) {
+				list.push( a );
+			} else if ( GSUisJQu( a ) ) {
+				a.$each( el => list.push( el ) );
+			} else if ( GSUisArr( a ) ) {
+				list.push( ...GSUjqClass.#extractList( a ) );
+			} else if ( GSUisStr( a ) ) {
+				a.startsWith( "<" ) && a.endsWith( ">" )
+					? list.push( GSUcreateElement( a.slice( 1, -1 ) ) )
+					: list.push( ...GSUdomQSA( GSUdomBody, a ) );
+			}
 		} else if ( GSUisStr( b ) ) {
-			GSUisElm( a ) ? ( this.#constr_elm_sel( list, a, b ) ) :
-			GSUisArr( a ) ? ( this.#constr_arr_sel( list, a, b ) ) : null;
+			if ( GSUisElm( a ) ) {
+				list.push( ...GSUdomQSA( a, b ) );
+			} else if ( GSUisArr( a ) ) {
+				list.push( ...a.flatMap( el => {
+					const arr = [ ...GSUdomQSA( el, b ) ];
+
+					if ( el.matches( b ) ) {
+						arr.push( el );
+					}
+					return arr;
+				} ) );
+			}
 		}
 		this.#a = !GSUisArr( a ) ? list : [ ...new Set( list ) ];
 		this.#a0 = this.#a[ 0 ];
-	}
-	#constr_elm( list, elm ) {
-		list.push( elm );
-	}
-	#constr_jqu( list, jq ) {
-		jq.$each( el => list.push( el ) );
-	}
-	#constr_arr( list, arr ) {
-		list.push( ...GSUjqClass.#extractList( arr ) );
-	}
-	#constr_str( list, str ) {
-		str.startsWith( "<" ) && str.endsWith( ">" )
-			? this.#constr_tag( list, str )
-			: this.#constr_sel( list, str );
-	}
-	#constr_tag( list, tag ) {
-		list.push( GSUcreateElement( tag.slice( 1, -1 ) ) );
-	}
-	#constr_sel( list, sel ) {
-		list.push( ...GSUdomQSA( GSUdomBody, sel ) );
-	}
-	#constr_elm_sel( list, elm, sel ) {
-		list.push( ...GSUdomQSA( elm, sel ) );
-	}
-	#constr_arr_sel( list, arr, sel ) {
-		list.push( ...arr.flatMap( el => {
-			const arr = [ ...GSUdomQSA( el, sel ) ];
-
-			if ( el.matches( sel ) ) {
-				arr.push( el );
-			}
-			return arr;
-		} ) );
 	}
 
 	// .........................................................................
