@@ -68,6 +68,11 @@
 		<input type="text" value="initB" />
 	</div>
 	<abc-custom id="eljq_tag">oye</abc-custom>
+	<div id="eljq_parent">
+		<div id="eljq_parent_a">
+			<div id="eljq_parent_b"></div>
+		</div>
+	</div>
 
 <!-- ....................................................................... -->
 <script src="gs-utils.js"></script>
@@ -1578,6 +1583,10 @@
 		testStrict( "jqTag_1", $( "#eljq_1" ).$tag(), "div" );
 		testStrict( "jqTag_2", $( "#eljq_1 *" ).$tag(), "div" );
 		testStrict( "jqTag_3", $( "#eljq_tag" ).$tag(), "abc-custom" );
+	} );
+	tests( "$_parent", () => {
+		testStrict( "jqParent_0", $( [] ).$parent().$size(), 0 );
+		testStrict( "jqParent_1", $( "#eljq_parent_b" ).$parent().$getAttr( "id" ), "eljq_parent_a" );
 	} );
 	tests( "$_a", () => {
 		const jq404 = $( "#e404" );

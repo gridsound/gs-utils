@@ -56,6 +56,7 @@ class $$ {
 	$child( n ) { return new $$( this.#a.map( el => Array.prototype.at.call( el.children, n ) ) ); }
 	$children() { return new $$( this.#a.flatMap( el => [ ...el.children ] ) ); }
 	$find( sel ) { return new $$( this.#a.flatMap( el => [ ...GSUdomQSA( el, sel ) ] ) ); }
+	$parent() { return new $$( this.#a.map( el => el.parentNode ) ); }
 
 	// .........................................................................
 	$trigger( s ) { return this.$each( el => el[ s ]() ); }
