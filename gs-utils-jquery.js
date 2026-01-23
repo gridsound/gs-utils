@@ -151,17 +151,10 @@ class GSUjqClass {
 	$rmAttr( ...k ) { return this.#a.forEach( el => k.forEach( a => el.removeAttribute( a ) ) ), this; }
 	$addAttr( ...k ) { return this.#a.forEach( el => k.forEach( a => el.setAttribute( a, "" ) ) ), this; }
 	$getAttr( ...k ) { return k.length === 1 ? this.#a0?.getAttribute( k[ 0 ] ) : k.map( a => this.#a0?.getAttribute( a ) ); }
-	$attr( attr, val ) {
-		if ( val === undefined ) {
-			if ( GSUisStr( attr ) ) {
-				return GSUdomGetAttr( this.#a0, attr );
-			}
-			if ( GSUisObj( attr ) ) {
-				GSUforEach( this.#a, el => GSUdomSetAttr( el, attr ) );
-			}
-		} else if ( GSUisStr( attr ) ) {
-			GSUforEach( this.#a, ( el, i ) => GSUdomSetAttr( el, attr, GSUjqClass.#calcVal( val, el, i ) ) );
-		}
+	$attr( k, v ) {
+		GSUforEach( this.#a, GSUisObj( k )
+			? el => GSUforEach( k, ( v, k ) => GSUjqClass.#setAttr( el, k, v ) )
+			: ( el, i ) => GSUjqClass.#setAttr( el, k, GSUjqClass.#calcVal( v, el, i ) ) );
 		return this;
 	}
 
@@ -207,6 +200,11 @@ class GSUjqClass {
 	// .........................................................................
 	static #calcVal( val, el, i ) {
 		return GSUisFun( val ) ? val( el, i ) : val;
+	}
+	static #setAttr( el, k, v ) {
+		v === false
+			? el.removeAttribute( k )
+			: el.setAttribute( k, v === true ? "" : v );
 	}
 }
 
