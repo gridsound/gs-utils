@@ -159,10 +159,10 @@ class GSUjqClass {
 	}
 
 	// .........................................................................
-	$hasClass( clazz ) { return this.#a.some( el => el.classList.contains( clazz ) ); }
-	$addClass( ...clazzes ) { return this.#a.forEach( el => el.classList.add( ...clazzes ) ), this; }
-	$rmClass( ...clazzes ) { return this.#a.forEach( el => el.classList.remove( ...clazzes ) ), this; }
-	$togClass( ...attr ) { return this.#a.forEach( el => el.classList.toggle( ...attr ) ), this; }
+	$hasClass( c ) { return this.#a.some( el => el.classList.contains( c ) ); }
+	$addClass( ...c ) { return this.#a.forEach( el => el.classList.add( ...c ) ), this; }
+	$rmClass( ...c ) { return this.#a.forEach( el => el.classList.remove( ...c ) ), this; }
+	$togClass( ...c ) { return this.#a.forEach( el => el.classList.toggle( ...c ) ), this; }
 
 	// .........................................................................
 	$viewbox( x, y, w, h ) {
