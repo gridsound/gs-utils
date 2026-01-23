@@ -84,23 +84,19 @@ class GSUjqClass {
 
 	// .........................................................................
 	$on( ev, fn ) {
-		this.#a.forEach( GSUisStr( ev )
+		return this.$each( GSUisStr( ev )
 			? el => el.addEventListener( ev, fn )
 			: el => GSUforEach( ev, ( fn, ev ) => el.addEventListener( ev, fn ) ) );
-		return this;
 	}
 
 	// .........................................................................
 	$css( prop, val, unit = "" ) {
 		if ( GSUisObj( prop ) ) {
-			this.#a.forEach( el => GSUdomStyle( el, prop ) );
-		} else if ( GSUisStr( prop ) ) {
-			if ( val === undefined ) {
-				return GSUdomStyle( this.#a0, prop );
-			}
-			this.#a.forEach( ( el, i ) => GSUdomStyle( el, prop, `${ GSUjqClass.#calcVal( val, el, i ) }${ unit }` ) );
+			return this.$each( el => GSUdomStyle( el, prop ) );
 		}
-		return this;
+		return val === undefined
+			? GSUdomStyle( this.#a0, prop )
+			: this.$each( ( el, i ) => GSUdomStyle( el, prop, `${ GSUjqClass.#calcVal( val, el, i ) }${ unit }` ) );
 	}
 	$top(    n, unit = "px" ) { return n === undefined ? parseFloat( GSUdomStyle( this.#a0, "top" ) )  || 0 : this.$css( "top",  n, unit ); }
 	$left(   n, unit = "px" ) { return n === undefined ? parseFloat( GSUdomStyle( this.#a0, "left" ) ) || 0 : this.$css( "left", n, unit ); }
@@ -111,11 +107,10 @@ class GSUjqClass {
 	$scrollX( n, beh ) { return this.#scroll( "left", n, beh ); }
 	$scrollY( n, beh ) { return this.#scroll( "top", n, beh ); }
 	#scroll( dir, n, beh ) {
-		this.#a.forEach( ( el, i ) => el.scrollTo( {
+		return this.$each( ( el, i ) => el.scrollTo( {
 			[ dir ]: GSUjqClass.#calcVal( n, el, i ),
 			behavior: beh || "auto",
 		} ) );
-		return this;
 	}
 
 	// .........................................................................
@@ -131,33 +126,26 @@ class GSUjqClass {
 	}
 
 	// .........................................................................
-	$empty() {
-		this.#a.forEach( GSUdomEmpty );
-		return this;
-	}
-	$remove() {
-		this.#a.forEach( el => el.remove() );
-		return this;
-	}
+	$empty() { return this.$each( GSUdomEmpty ); }
+	$remove() { return this.$each( el => el.remove() ); }
 
 	// .........................................................................
 	$hasAttr( k ) { return this.#a.some( el => el.hasAttribute( k ) ); }
-	$togAttr( k ) { return this.#a.forEach( el => GSUdomTogAttr( el, k ) ), this; }
-	$rmAttr( ...k ) { return this.#a.forEach( el => k.forEach( a => el.removeAttribute( a ) ) ), this; }
-	$addAttr( ...k ) { return this.#a.forEach( el => k.forEach( a => el.setAttribute( a, "" ) ) ), this; }
+	$togAttr( k ) { return this.$each( el => GSUdomTogAttr( el, k ) ); }
+	$rmAttr( ...k ) { return this.$each( el => k.forEach( a => el.removeAttribute( a ) ) ); }
+	$addAttr( ...k ) { return this.$each( el => k.forEach( a => el.setAttribute( a, "" ) ) ); }
 	$getAttr( ...k ) { return k.length === 1 ? this.#a0?.getAttribute( k[ 0 ] ) || null : k.map( a => this.#a0?.getAttribute( a ) ); }
 	$setAttr( k, v ) {
-		this.#a.forEach( GSUisObj( k )
+		return this.$each( GSUisObj( k )
 			? el => GSUforEach( k, ( v, k ) => GSUjqClass.#setAttr( el, k, v ) )
 			: ( el, i ) => GSUjqClass.#setAttr( el, k, GSUjqClass.#calcVal( v, el, i ) ) );
-		return this;
 	}
 
 	// .........................................................................
 	$hasClass( c ) { return this.#a.some( el => el.classList.contains( c ) ); }
-	$addClass( ...c ) { return this.#a.forEach( el => el.classList.add( ...c ) ), this; }
-	$rmClass( ...c ) { return this.#a.forEach( el => el.classList.remove( ...c ) ), this; }
-	$togClass( ...c ) { return this.#a.forEach( el => el.classList.toggle( ...c ) ), this; }
+	$addClass( ...c ) { return this.$each( el => el.classList.add( ...c ) ); }
+	$rmClass( ...c ) { return this.$each( el => el.classList.remove( ...c ) ); }
+	$togClass( ...c ) { return this.$each( el => el.classList.toggle( ...c ) ); }
 
 	// .........................................................................
 	$viewbox( x, y, w, h ) {
@@ -168,29 +156,21 @@ class GSUjqClass {
 
 	// .........................................................................
 	$prop( str, val ) {
-		if ( val === undefined ) {
-			return this.#a0?.[ str ];
-		}
-		this.#a.forEach( ( el, i ) => el[ str ] = GSUjqClass.#calcVal( val, el, i ) );
-		return this;
+		return val === undefined
+			? this.#a0?.[ str ]
+			: this.$each( ( el, i ) => el[ str ] = GSUjqClass.#calcVal( val, el, i ) );
 	}
 	$text( v ) { return this.$prop( "textContent", v ); }
 	$value( v ) { return this.$prop( "value", v ); }
 
 	// .........................................................................
-	$trigger( s ) {
-		this.#a.forEach( el => el[ s ]() );
-		return this;
-	}
+	$trigger( s ) { return this.$each( el => el[ s ]() ); }
 	$play() { return this.$trigger( "play" ); }
 	$pause() { return this.$trigger( "pause" ); }
 	$click() { return this.$trigger( "click" ); }
 
 	// .........................................................................
-	$dispatch( ev, ...args ) {
-		this.#a.forEach( el => GSUdomDispatch( el, ev, ...args ) );
-		return this;
-	}
+	$dispatch( ev, ...args ) { return this.$each( el => GSUdomDispatch( el, ev, ...args ) ); }
 
 	// .........................................................................
 	static #calcVal( val, el, i ) {
