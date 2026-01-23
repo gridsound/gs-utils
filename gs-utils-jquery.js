@@ -32,7 +32,7 @@ class GSUjqClass {
 		jq.$each( el => list.push( el ) );
 	}
 	#constr_arr( list, arr ) {
-		list.push( ...this.#extractList( arr ) );
+		list.push( ...GSUjqClass.#extractList( arr ) );
 	}
 	#constr_str( list, str ) {
 		str.startsWith( "<" ) && str.endsWith( ">" )
@@ -114,16 +114,8 @@ class GSUjqClass {
 	}
 
 	// .........................................................................
-	$prepend( ...arr ) { return this.#a0?.prepend( ...this.#extractList( arr ) ), this; }
-	$append( ...arr ) { return this.#a0?.append( ...this.#extractList( arr ) ), this; }
-	#extractList( arr ) {
-		return arr.reduce( ( arr, el ) => {
-			GSUisElm( el )
-				? arr.push( el )
-				: el?.$each?.( el => arr.push( el ) );
-			return arr;
-		}, [] );
-	}
+	$prepend( ...arr ) { return this.#a0?.prepend( ...GSUjqClass.#extractList( arr ) ), this; }
+	$append( ...arr ) { return this.#a0?.append( ...GSUjqClass.#extractList( arr ) ), this; }
 
 	// .........................................................................
 	$empty() { return this.$each( GSUdomEmpty ); }
@@ -180,6 +172,14 @@ class GSUjqClass {
 		v === false
 			? el.removeAttribute( k )
 			: el.setAttribute( k, v === true ? "" : v );
+	}
+	static #extractList( arr ) {
+		return arr.reduce( ( arr, el ) => {
+			GSUisElm( el )
+				? arr.push( el )
+				: el?.$each?.( el => arr.push( el ) );
+			return arr;
+		}, [] );
 	}
 }
 
