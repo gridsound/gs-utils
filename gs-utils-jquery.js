@@ -103,12 +103,13 @@ class $$ {
 	$width(  n, unit = "px" ) { return n === undefined ? this.#a0?.clientWidth  || 0 : this.$css( "width",  n, unit ); }
 	$height( n, unit = "px" ) { return n === undefined ? this.#a0?.clientHeight || 0 : this.$css( "height", n, unit ); }
 	$css( prop, val, unit = "" ) {
-		if ( GSUisObj( prop ) ) {
-			return this.$each( el => GSUdomStyle( el, prop ) );
-		}
-		return val === undefined
+		return GSUisStr( prop ) && val === undefined
 			? GSUdomStyle( this.#a0, prop )
-			: this.$each( ( el, i ) => GSUdomStyle( el, prop, `${ $$.#calcVal( val, el, i ) }${ unit }` ) );
+			: this.$each(
+				GSUisObj( prop ) ? el => GSUdomStyle( el, prop ) :
+				GSUisFun( prop ) ? ( el, i ) => GSUdomStyle( el, prop( el, i ) ) :
+				( el, i ) => GSUdomStyle( el, prop, `${ $$.#calcVal( val, el, i ) }${ unit }` )
+			);
 	}
 
 	// .........................................................................
