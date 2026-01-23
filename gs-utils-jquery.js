@@ -57,6 +57,10 @@ class $$ {
 	$children() { return new $$( this.#a.flatMap( el => [ ...el.children ] ) ); }
 	$find( sel ) { return new $$( this.#a.flatMap( el => [ ...GSUdomQSA( el, sel ) ] ) ); }
 	$parent() { return new $$( this.#a.map( el => el.parentNode ) ); }
+	$prev() { return new $$( this.#a.map( el => el.previousElementSibling ) ); }
+	$next() { return new $$( this.#a.map( el => el.nextElementSibling ) ); }
+	$prevUntil( sel ) { return new $$( this.#a.flatMap( el => $$.#siblingUntil( el, "previousElementSibling", sel ) ) ); }
+	$nextUntil( sel ) { return new $$( this.#a.flatMap( el => $$.#siblingUntil( el, "nextElementSibling", sel ) ) ); }
 
 	// .........................................................................
 	$trigger( s ) { return this.$each( el => el[ s ]() ); }
@@ -163,6 +167,15 @@ class $$ {
 				$targetId: el.dataset.id || null,
 			},
 		} ) );
+	}
+	static #siblingUntil( el, dir, sel ) {
+		const arr = [];
+		let el2 = el[ dir ];
+
+		for ( ; el2 && !el2.matches( sel ); el2 = el2[ dir ] ) {
+			arr.push( el2 );
+		}
+		return arr;
 	}
 }
 
