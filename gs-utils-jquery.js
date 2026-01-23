@@ -67,20 +67,10 @@ class GSUjqClass {
 	$each( fn ) { return this.#a.forEach( fn ), this; }
 
 	// .........................................................................
-	$filter( fn ) {
-		return new GSUjqClass( this.#a.filter( GSUisFun( fn ) ? fn : el => el.matches( fn ) ) );
-	}
-	$child( n ) {
-		return new GSUjqClass( this.#a.map( el => Array.prototype.at.call( el.children, n ) ) );
-	}
-	$children() {
-		return new GSUjqClass( this.#a.flatMap( el => [ ...el.children ] ) );
-	}
-	$find( sel ) {
-		const list = this.#a.flatMap( el => [ ...GSUdomQSA( el, sel ) ] );
-
-		return new GSUjqClass( [ ...new Set( list ) ] );
-	}
+	$filter( fn ) { return new GSUjqClass( this.#a.filter( GSUisFun( fn ) ? fn : el => el.matches( fn ) ) ); }
+	$child( n ) { return new GSUjqClass( this.#a.map( el => Array.prototype.at.call( el.children, n ) ) ); }
+	$children() { return new GSUjqClass( this.#a.flatMap( el => [ ...el.children ] ) ); }
+	$find( sel ) { return new GSUjqClass( this.#a.flatMap( el => [ ...GSUdomQSA( el, sel ) ] ) ); }
 
 	// .........................................................................
 	$on( ev, fn ) {
