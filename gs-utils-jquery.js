@@ -146,10 +146,10 @@ class GSUjqClass {
 	}
 
 	// .........................................................................
-	$hasAttr( attr ) { return this.#a.some( el => el.hasAttribute( attr ) ); }
-	$togAttr( attr ) { return this.#a.forEach( el => GSUdomTogAttr( el, attr ) ), this; }
-	$rmAttr( ...attrs ) { return this.#a.forEach( el => attrs.forEach( a => el.removeAttribute( a ) ) ), this; }
-	$addAttr( ...attrs ) { return this.#a.forEach( el => attrs.forEach( a => el.setAttribute( a, "" ) ) ), this; }
+	$hasAttr( k ) { return this.#a.some( el => el.hasAttribute( k ) ); }
+	$togAttr( k ) { return this.#a.forEach( el => GSUdomTogAttr( el, k ) ), this; }
+	$rmAttr( ...k ) { return this.#a.forEach( el => k.forEach( a => el.removeAttribute( a ) ) ), this; }
+	$addAttr( ...k ) { return this.#a.forEach( el => k.forEach( a => el.setAttribute( a, "" ) ) ), this; }
 	$attr( attr, val ) {
 		if ( val === undefined ) {
 			if ( GSUisStr( attr ) ) {
