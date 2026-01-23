@@ -47,6 +47,7 @@ class GSUjqClass {
 	$size() { return this.#a.length; }
 	$at( n ) { return new GSUjqClass( this.#a.at( n ) ); }
 	$get( n ) { return this.#a.at( n ); }
+	$some( fn ) { return this.#a.some( fn ); }
 	$sort( fn ) { return this.#a.sort( fn ), this; }
 	$each( fn ) { return this.#a.forEach( fn ), this; }
 
@@ -79,13 +80,13 @@ class GSUjqClass {
 	$append( ...arr ) { return this.#a0?.append( ...GSUjqClass.#extractList( arr ) ), this; }
 
 	// .........................................................................
-	$hasClass( c ) { return this.#a.some( el => el.classList.contains( c ) ); }
+	$hasClass( c ) { return this.$some( el => el.classList.contains( c ) ); }
 	$addClass( ...c ) { return this.$each( el => el.classList.add( ...c ) ); }
 	$rmClass( ...c ) { return this.$each( el => el.classList.remove( ...c ) ); }
 	$togClass( ...c ) { return this.$each( el => el.classList.toggle( ...c ) ); }
 
 	// .........................................................................
-	$hasAttr( k ) { return this.#a.some( el => el.hasAttribute( k ) ); }
+	$hasAttr( k ) { return this.$some( el => el.hasAttribute( k ) ); }
 	$togAttr( k ) { return this.$each( el => GSUdomTogAttr( el, k ) ); }
 	$rmAttr( ...k ) { return this.$each( el => k.forEach( a => el.removeAttribute( a ) ) ); }
 	$addAttr( ...k ) { return this.$each( el => k.forEach( a => el.setAttribute( a, "" ) ) ); }
