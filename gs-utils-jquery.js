@@ -6,56 +6,55 @@ function GSUjq( ...args ) {
 
 // .............................................................................
 class GSUjqClass {
-	#a = [];
+	#a = null;
 
 	constructor( a, b ) {
+		const list = [];
+
 		Object.freeze( this );
 		if ( b === undefined ) {
-			if ( GSUisElm( a ) ) { return this.#constr_elm( a ); }
-			if ( GSUisJQu( a ) ) { return this.#constr_jqu( a ); }
-			if ( GSUisArr( a ) ) { return this.#constr_arr( a ); }
-			if ( GSUisStr( a ) ) {
-				return a.startsWith( "<" ) && a.endsWith( ">" )
-					? this.#constr_tag( a )
-					: this.#constr_sel( a );
-			}
+			GSUisElm( a ) ? ( this.#constr_elm( list, a ) ) :
+			GSUisJQu( a ) ? ( this.#constr_jqu( list, a ) ) :
+			GSUisArr( a ) ? ( this.#constr_arr( list, a ) ) :
+			GSUisStr( a ) ? ( this.#constr_str( list, a ) ) : null;
 		} else if ( GSUisStr( b ) ) {
-			if ( GSUisElm( a ) ) { return this.#constr_elm_sel( a, b ); }
-			if ( GSUisArr( a ) ) { return this.#constr_arr_sel( a, b ); }
+			GSUisElm( a ) ? ( this.#constr_elm_sel( list, a, b ) ) :
+			GSUisArr( a ) ? ( this.#constr_arr_sel( list, a, b ) ) : null;
 		}
+		this.#a = !GSUisArr( a ) ? list : [ ...new Set( list ) ];
 	}
-	#constr_tag( tag ) {
-		this.#a.push( GSUcreateElement( tag.slice( 1, -1 ) ) );
+	#constr_elm( list, elm ) {
+		list.push( elm );
 	}
-	#constr_sel( sel ) {
-		this.#a = [ ...GSUdomQSA( GSUdomBody, sel ) ];
+	#constr_jqu( list, jq ) {
+		jq.$each( el => list.push( el ) );
 	}
-	#constr_elm( el ) {
-		this.#a.push( el );
+	#constr_arr( list, arr ) {
+		list.push( ...this.#extractList( arr ) );
 	}
-	#constr_jqu( jq ) {
-		jq.$each( el => this.#a.push( el ) );
+	#constr_str( list, str ) {
+		str.startsWith( "<" ) && str.endsWith( ">" )
+			? this.#constr_tag( list, str )
+			: this.#constr_sel( list, str );
 	}
-	#constr_arr( arr ) {
-		this.#a = this.#extractList( arr );
-		this.#cleanList();
+	#constr_tag( list, tag ) {
+		list.push( GSUcreateElement( tag.slice( 1, -1 ) ) );
 	}
-	#constr_elm_sel( el, sel ) {
-		this.#a = [ ...GSUdomQSA( el, sel ) ];
+	#constr_sel( list, sel ) {
+		list.push( ...GSUdomQSA( GSUdomBody, sel ) );
 	}
-	#constr_arr_sel( elems, sel ) {
-		this.#a = elems.flatMap( el => {
+	#constr_elm_sel( list, elm, sel ) {
+		list.push( ...GSUdomQSA( elm, sel ) );
+	}
+	#constr_arr_sel( list, arr, sel ) {
+		list.push( ...arr.flatMap( el => {
 			const arr = [ ...GSUdomQSA( el, sel ) ];
 
 			if ( el.matches( sel ) ) {
 				arr.push( el );
 			}
 			return arr;
-		} );
-		this.#cleanList();
-	}
-	#cleanList() {
-		return this.#a = [ ...new Set( this.#a ) ];
+		} ) );
 	}
 
 	// .........................................................................
