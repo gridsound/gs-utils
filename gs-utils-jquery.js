@@ -145,7 +145,7 @@ class GSUjqClass {
 	$togAttr( k ) { return this.#a.forEach( el => GSUdomTogAttr( el, k ) ), this; }
 	$rmAttr( ...k ) { return this.#a.forEach( el => k.forEach( a => el.removeAttribute( a ) ) ), this; }
 	$addAttr( ...k ) { return this.#a.forEach( el => k.forEach( a => el.setAttribute( a, "" ) ) ), this; }
-	$getAttr( ...k ) { return k.length === 1 ? this.#a0?.getAttribute( k[ 0 ] ) : k.map( a => this.#a0?.getAttribute( a ) ); }
+	$getAttr( ...k ) { return k.length === 1 ? this.#a0?.getAttribute( k[ 0 ] ) || null : k.map( a => this.#a0?.getAttribute( a ) ); }
 	$setAttr( k, v ) {
 		this.#a.forEach( GSUisObj( k )
 			? el => GSUforEach( k, ( v, k ) => GSUjqClass.#setAttr( el, k, v ) )
