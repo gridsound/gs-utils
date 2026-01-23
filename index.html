@@ -67,6 +67,7 @@
 		<input type="text" value="initA" />
 		<input type="text" value="initB" />
 	</div>
+	<abc-custom id="eljq_tag">oye</abc-custom>
 
 <!-- ....................................................................... -->
 <script src="gs-utils.js"></script>
@@ -1571,6 +1572,12 @@
 		b.$value( ( el, i ) => i );
 		testStrict( "jqText_6", "0", b.$get( 0 ).value );
 		testStrict( "jqText_7", "1", b.$get( 1 ).value );
+	} );
+	tests( "$_tag", () => {
+		testStrict( "jqTag_0", $( [] ).$tag(), undefined );
+		testStrict( "jqTag_1", $( "#eljq_1" ).$tag(), "div" );
+		testStrict( "jqTag_2", $( "#eljq_1 *" ).$tag(), "div" );
+		testStrict( "jqTag_3", $( "#eljq_tag" ).$tag(), "abc-custom" );
 	} );
 	tests( "$_a", () => {
 		const jq404 = $( "#e404" );

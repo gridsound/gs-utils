@@ -123,6 +123,7 @@ class $$ {
 	}
 
 	// .........................................................................
+	$tag() { return this.#a0?.tagName.toLowerCase(); }
 	$play() { return this.$trigger( "play" ); }
 	$pause() { return this.$trigger( "pause" ); }
 	$click() { return this.$trigger( "click" ); }
