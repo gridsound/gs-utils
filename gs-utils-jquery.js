@@ -1,11 +1,11 @@
 "use strict";
 
-function GSUjq( ...args ) {
-	return new GSUjqClass( ...args );
+function $( ...args ) {
+	return new $$( ...args );
 }
 
 // .............................................................................
-class GSUjqClass {
+class $$ {
 	#a;
 	#a0;
 
@@ -19,7 +19,7 @@ class GSUjqClass {
 			} else if ( GSUisJQu( a ) ) {
 				a.$each( el => list.push( el ) );
 			} else if ( GSUisArr( a ) ) {
-				list.push( ...GSUjqClass.#extractList( a ) );
+				list.push( ...$$.#extractList( a ) );
 			} else if ( GSUisStr( a ) ) {
 				a.startsWith( "<" ) && a.endsWith( ">" )
 					? list.push( GSUcreateElement( a.slice( 1, -1 ) ) )
@@ -45,17 +45,17 @@ class GSUjqClass {
 
 	// .........................................................................
 	$size() { return this.#a.length; }
-	$at( n ) { return new GSUjqClass( this.#a.at( n ) ); }
+	$at( n ) { return new $$( this.#a.at( n ) ); }
 	$get( n ) { return this.#a.at( n ); }
 	$some( fn ) { return this.#a.some( fn ); }
 	$sort( fn ) { return this.#a.sort( fn ), this; }
 	$each( fn ) { return this.#a.forEach( fn ), this; }
 
 	// .........................................................................
-	$filter( fn ) { return new GSUjqClass( this.#a.filter( GSUisFun( fn ) ? fn : el => el.matches( fn ) ) ); }
-	$child( n ) { return new GSUjqClass( this.#a.map( el => Array.prototype.at.call( el.children, n ) ) ); }
-	$children() { return new GSUjqClass( this.#a.flatMap( el => [ ...el.children ] ) ); }
-	$find( sel ) { return new GSUjqClass( this.#a.flatMap( el => [ ...GSUdomQSA( el, sel ) ] ) ); }
+	$filter( fn ) { return new $$( this.#a.filter( GSUisFun( fn ) ? fn : el => el.matches( fn ) ) ); }
+	$child( n ) { return new $$( this.#a.map( el => Array.prototype.at.call( el.children, n ) ) ); }
+	$children() { return new $$( this.#a.flatMap( el => [ ...el.children ] ) ); }
+	$find( sel ) { return new $$( this.#a.flatMap( el => [ ...GSUdomQSA( el, sel ) ] ) ); }
 
 	// .........................................................................
 	$trigger( s ) { return this.$each( el => el[ s ]() ); }
@@ -63,7 +63,7 @@ class GSUjqClass {
 	$prop( str, val ) {
 		return val === undefined
 			? this.#a0?.[ str ]
-			: this.$each( ( el, i ) => el[ str ] = GSUjqClass.#calcVal( val, el, i ) );
+			: this.$each( ( el, i ) => el[ str ] = $$.#calcVal( val, el, i ) );
 	}
 
 	// .........................................................................
@@ -76,8 +76,8 @@ class GSUjqClass {
 	// .........................................................................
 	$empty() { return this.$each( GSUdomEmpty ); }
 	$remove() { return this.$each( el => el.remove() ); }
-	$prepend( ...arr ) { return this.#a0?.prepend( ...GSUjqClass.#extractList( arr ) ), this; }
-	$append( ...arr ) { return this.#a0?.append( ...GSUjqClass.#extractList( arr ) ), this; }
+	$prepend( ...arr ) { return this.#a0?.prepend( ...$$.#extractList( arr ) ), this; }
+	$append( ...arr ) { return this.#a0?.append( ...$$.#extractList( arr ) ), this; }
 
 	// .........................................................................
 	$hasClass( c ) { return this.$some( el => el.classList.contains( c ) ); }
@@ -93,8 +93,8 @@ class GSUjqClass {
 	$getAttr( ...k ) { return k.length === 1 ? this.#a0?.getAttribute( k[ 0 ] ) || null : k.map( a => this.#a0?.getAttribute( a ) ); }
 	$setAttr( k, v ) {
 		return this.$each( GSUisObj( k )
-			? el => GSUforEach( k, ( v, k ) => GSUjqClass.#setAttr( el, k, v ) )
-			: ( el, i ) => GSUjqClass.#setAttr( el, k, GSUjqClass.#calcVal( v, el, i ) ) );
+			? el => GSUforEach( k, ( v, k ) => $$.#setAttr( el, k, v ) )
+			: ( el, i ) => $$.#setAttr( el, k, $$.#calcVal( v, el, i ) ) );
 	}
 
 	// .........................................................................
@@ -108,7 +108,7 @@ class GSUjqClass {
 		}
 		return val === undefined
 			? GSUdomStyle( this.#a0, prop )
-			: this.$each( ( el, i ) => GSUdomStyle( el, prop, `${ GSUjqClass.#calcVal( val, el, i ) }${ unit }` ) );
+			: this.$each( ( el, i ) => GSUdomStyle( el, prop, `${ $$.#calcVal( val, el, i ) }${ unit }` ) );
 	}
 
 	// .........................................................................
@@ -116,7 +116,7 @@ class GSUjqClass {
 	$scrollY( n, beh ) { return this.#scroll( "top", n, beh ); }
 	#scroll( dir, n, beh ) {
 		return this.$each( ( el, i ) => el.scrollTo( {
-			[ dir ]: GSUjqClass.#calcVal( n, el, i ),
+			[ dir ]: $$.#calcVal( n, el, i ),
 			behavior: beh || "auto",
 		} ) );
 	}
@@ -152,5 +152,5 @@ class GSUjqClass {
 	}
 }
 
-Object.freeze( GSUjq );
-Object.freeze( GSUjqClass );
+Object.freeze( $ );
+Object.freeze( $$ );
