@@ -1493,7 +1493,7 @@
 		const a = $( "#square1" );
 		const b = $( "#square1" ).$get( 0 );
 
-		testStrict( "jq0_0", $().$size(), 0 );
+		testStrict( "jq0_0", $noop.$size(), 0 );
 		testStrict( "jq0_1", $( 0 ).$size(), 0 );
 		testStrict( "jq0_2", $( null ).$size(), 0 );
 		testStrict( "jq0_3", $( "#e404" ).$size(), 0 );
