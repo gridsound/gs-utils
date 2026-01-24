@@ -4,8 +4,6 @@ function $( ...args ) {
 	return new $$( ...args );
 }
 
-const $noop = $();
-
 class $$ {
 	#a;
 	#a0;
@@ -195,3 +193,5 @@ class $$ {
 
 Object.freeze( $ );
 Object.freeze( $$ );
+
+const $noop = $();
