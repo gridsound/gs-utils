@@ -77,6 +77,9 @@ class $$ {
 			? el => $$.#onEvent( el, ev, fn )
 			: el => GSUforEach( ev, ( fn, ev ) => $$.#onEvent( el, ev, fn ) ) );
 	}
+	$off( ...ev ) {
+		return this.$each( el => ev.forEach( ev => el[ `on${ ev }` ] = null ) );
+	}
 
 	// .........................................................................
 	$empty() { return this.$each( GSUdomEmpty ); }
