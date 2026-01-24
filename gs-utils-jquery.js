@@ -74,8 +74,8 @@ class $$ {
 	// .........................................................................
 	$on( ev, fn ) {
 		return this.$each( GSUisStr( ev )
-			? el => el.addEventListener( ev, fn )
-			: el => GSUforEach( ev, ( fn, ev ) => el.addEventListener( ev, fn ) ) );
+			? el => $$.#onEvent( el, ev, fn )
+			: el => GSUforEach( ev, ( fn, ev ) => $$.#onEvent( el, ev, fn ) ) );
 	}
 
 	// .........................................................................
@@ -176,6 +176,15 @@ class $$ {
 			arr.push( el2 );
 		}
 		return arr;
+	}
+	static #onEvent( el, ev, fn ) {
+		const ev2 = `on${ ev }`;
+
+		if ( el[ ev2 ] !== null ) {
+			console.warn( `$on, ${ ev2 } is already set`, el[ ev2 ] );
+		} else {
+			el[ ev2 ] = fn;
+		}
 	}
 }
 
