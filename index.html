@@ -1550,6 +1550,26 @@
 		testStrict( "jqF_0", $( "<div>" ).$get( 0 ).tagName, "DIV" );
 		testStrict( "jqF_1", $( "<gs-flex>" ).$get( 0 ).tagName, "GS-FLEX" );
 	} );
+	tests( "$_is", () => {
+		const a = $( "#eljq_1" );
+		const b = $( "#eljq_1" ).$get( 0 );
+		const c = $( "#eljq_2" );
+		const d = $( "#eljq_1 *" );
+		const e = $( "#eljq_1 :last-child" );
+		const f = $( "#eljq_1 :last-child" ).$get( 0 );
+
+		testStrict( "jqIs_0", a.$is(),            false );
+		testStrict( "jqIs_1", a.$is( 0 ),         false );
+		testStrict( "jqIs_2", a.$is( 1 ),         false );
+		testStrict( "jqIs_3", a.$is( null ),      false );
+		testStrict( "jqIs_4", a.$is( undefined ), false );
+		testStrict( "jqIs_5", a.$is( b ), true );
+		testStrict( "jqIs_6", a.$is( a ), true );
+		testStrict( "jqIs_7", a.$is( c ), false );
+		testStrict( "jqIs_8", d.$is( e ), true );
+		testStrict( "jqIs_9", d.$is( f ), true );
+		testStrict( "jqIs_a", e.$is( d ), true );
+	} )
 	tests( "$_get", () => {
 		const a = $( "#eljq_1 *" );
 		const b = GSUdomQSA( "#eljq_1 *" );

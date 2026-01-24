@@ -50,6 +50,7 @@ class $$ {
 	$some( fn ) { return this.#a.some( fn ); }
 	$sort( fn ) { return this.#a.sort( fn ), this; }
 	$each( fn ) { return this.#a.forEach( fn ), this; }
+	$is( tar ) { return this.$some( GSUisJQu( tar ) ? el => tar.$is( el ) : el => el === tar ); }
 
 	// .........................................................................
 	$filter( fn ) { return new $$( this.#a.filter( GSUisFun( fn ) ? fn : el => el.matches( fn ) ) ); }
