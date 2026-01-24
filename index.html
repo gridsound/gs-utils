@@ -73,6 +73,7 @@
 			<div id="eljq_parent_b"></div>
 		</div>
 	</div>
+	<div id="eljq_append"></div>
 
 <!-- ....................................................................... -->
 <script src="gs-utils.js"></script>
@@ -1489,11 +1490,17 @@
 <!-- ....................................................................... -->
 <script>
 	tests( "$_cnstrctr_errors", () => {
+		const a = $( "#square1" );
+		const b = $( "#square1" ).$get( 0 );
+
 		testStrict( "jq0_0", $().$size(), 0 );
 		testStrict( "jq0_1", $( 0 ).$size(), 0 );
 		testStrict( "jq0_2", $( null ).$size(), 0 );
 		testStrict( "jq0_3", $( "#e404" ).$size(), 0 );
 		testStrict( "jq0_4", $( undefined ).$size(), 0 );
+		testStrict( "jq0_5", $( [ undefined, null ] ).$size(), 0 );
+		testStrict( "jq0_6", $( [ undefined, null, b ] ).$size(), 1 );
+		testStrict( "jq0_7", $( [ undefined, a, null, b ] ).$size(), 1 );
 	} );
 	tests( "$_cnstrctr_sel", () => {
 		const a = $( "#square1" );
@@ -1587,6 +1594,44 @@
 	tests( "$_parent", () => {
 		testStrict( "jqParent_0", $( [] ).$parent().$size(), 0 );
 		testStrict( "jqParent_1", $( "#eljq_parent_b" ).$parent().$getAttr( "id" ), "eljq_parent_a" );
+	} );
+	tests( "$_append", () => {
+		const a = $( "#eljq_append" );
+		const b = $( "<div>" );
+
+		testStrict( "jqAppend_0", a.$children().$size(), 0 );
+		testStrict( "jqAppend_1", a.$append( b ).$size(), 1 );
+
+		const c = GSUdomQSA( "#eljq_append *" );
+		const d = $( "<span>" );
+
+		testStrict( "jqAppend_2", c.length, 1 );
+		testStrict( "jqAppend_3", c[ 0 ], b.$get( 0 ) );
+
+		a.$append( d );
+		const e = GSUdomQSA( "#eljq_append *" );
+
+		testStrict( "jqAppend_4", e.length, 2 );
+		testStrict( "jqAppend_5", e[ 0 ], b.$get( 0 ) );
+		testStrict( "jqAppend_6", e[ 1 ], d.$get( 0 ) );
+
+		const f = $( "<b>" );
+		const g = $( "<i>" ).$get( 0 );
+
+		a.$append( f, g );
+		const h = GSUdomQSA( "#eljq_append *" );
+
+		testStrict( "jqAppend_7", h.length, 4 );
+		testStrict( "jqAppend_8", h[ 2 ].tagName, "B" );
+		testStrict( "jqAppend_9", h[ 3 ].tagName, "I" );
+
+		a.$append( null );
+		a.$append( null, undefined );
+		a.$append( [ null ] );
+		a.$append( [ null, undefined ] );
+		const i = GSUdomQSA( "#eljq_append *" );
+
+		testStrict( "jqAppend_a", i.length, 4 );
 	} );
 	tests( "$_a", () => {
 		const jq404 = $( "#e404" );
