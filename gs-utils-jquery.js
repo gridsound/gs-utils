@@ -121,8 +121,8 @@ class $$ {
 	}
 
 	// .........................................................................
-	$scrollX( n, beh ) { return this.#scroll( "left", n, beh ); }
-	$scrollY( n, beh ) { return this.#scroll( "top", n, beh ); }
+	$scrollX( n, beh ) { return n === undefined ? this.#a0?.scrollLeft : this.#scroll( "left", n, beh ); }
+	$scrollY( n, beh ) { return n === undefined ? this.#a0?.scrollTop : this.#scroll( "top", n, beh ); }
 	#scroll( dir, n, beh ) {
 		return this.$each( ( el, i ) => el.scrollTo( {
 			[ dir ]: $$.#calcVal( n, el, i ),
