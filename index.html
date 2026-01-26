@@ -74,6 +74,11 @@
 		</div>
 	</div>
 	<div id="eljq_append"></div>
+	<div id="eljq_index">
+		<div id="eljq_index_0"></div>
+		<div id="eljq_index_1"></div>
+		<div id="eljq_index_2"></div>
+	</div>
 
 <!-- ....................................................................... -->
 <script src="gs-utils.js"></script>
@@ -1614,6 +1619,15 @@
 	tests( "$_parent", () => {
 		testStrict( "jqParent_0", $( [] ).$parent().$size(), 0 );
 		testStrict( "jqParent_1", $( "#eljq_parent_b" ).$parent().$getAttr( "id" ), "eljq_parent_a" );
+	} );
+	tests( "$_index", () => {
+		testStrict( "jqIndex_0", $().$index(), -1 );
+		testStrict( "jqIndex_1", $( "#e404" ).$index(), -1 );
+		testStrict( "jqIndex_2", $( "#eljq_index_0" ).$index(), 0 );
+		testStrict( "jqIndex_3", $( "#eljq_index_1" ).$index(), 1 );
+		testStrict( "jqIndex_4", $( "#eljq_index_2" ).$index(), 2 );
+		testStrict( "jqIndex_5", $( "#eljq_index *" ).$index(), 0 );
+		testStrict( "jqIndex_6", $( "#eljq_index * + *" ).$index(), 1 );
 	} );
 	tests( "$_append", () => {
 		const a = $( "#eljq_append" );
