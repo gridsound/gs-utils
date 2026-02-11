@@ -68,6 +68,13 @@
 		<input type="text" value="initB" />
 	</div>
 	<abc-custom id="eljq_tag">oye</abc-custom>
+	<div id="eljq_find">
+		<div class="a">
+			<div class="b">B0</div>
+			<div class="b">B1</div>
+		</div>
+		<div class="b">B2</div>
+	</div>
 	<div id="eljq_parent">
 		<div id="eljq_parent_a">
 			<div id="eljq_parent_b"></div>
@@ -1728,14 +1735,20 @@
 
 		testStrict( "jqZ_c", txt404, undefined );
 	} );
-	// tests( "$_find", () => {
-	// 	const jq = $( "[id*='eljq'] *" );
-	// 	const f0 = jq.$find( el => GSUdomHasAttr( el, "data-rrr" ) );
-	// 	const f1 = jq.$find( GSUnoopFalse );
+	tests( "$_find", () => {
+		const a = $( "#eljq_find" );
+		const b = $( "#eljq_find .b" );
+		const c = a.$find( ".b" );
+		const d = a.$find( ".e404" );
 
-	// 	testStrict( "jqFind_0", f0, GSUdomQS( "[data-rrr]" ) );
-	// 	testStrict( "jqFind_1", f1, undefined );
-	// } );
+		testStrict( "jqFind_0", c.$size(), 3 );
+		testStrict( "jqFind_1", b.$size(), 3 );
+		testStrict( "jqFind_2", d.$size(), 0 );
+		testStrict( "jqFind_3", b.$get( 0 ), c.$get( 0 ) );
+		testStrict( "jqFind_4", b.$get( 1 ), c.$get( 1 ) );
+		testStrict( "jqFind_5", b.$get( 2 ), c.$get( 2 ) );
+		testStrict( "jqFind_6", b.$get( 3 ), c.$get( 3 ) );
+	} );
 	tests( "$_empty", () => {
 		testStrict( "jqEmpty_0", GSUdomQSA( "#eljq_1 *" ).length, 3 );
 		$( "#eljq_1" ).$empty();
