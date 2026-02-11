@@ -50,6 +50,7 @@ class $$ {
 	$sort( fn ) { return this.#a.sort( fn ), this; }
 	$each( fn ) { return this.#a.forEach( fn ), this; }
 	$find( fn ) { return new $$( this.#a.find( fn ) ); }
+	$findIndex( fn ) { return this.#a.findIndex( fn ); }
 	$is( tar ) { return this.$some( GSUisJQu( tar ) ? el => tar.$is( el ) : el => el === tar ); }
 	$index() {
 		return this.#a0?.parentNode

@@ -1753,6 +1753,14 @@
 		testStrict( "jqFind_4", a.$find( ( el, i ) => el.dataset.i === "1" && i === 1 ).$get( 0 ), a.$get( 1 ) );
 		testStrict( "jqFind_5", a.$find( ( el, i ) => el.dataset.i === "5" && i === 5 ).$get( 0 ), a.$get( 5 ) );
 	} );
+	tests( "$_findIndex", () => {
+		const a = $( "#eljq_find > *" );
+
+		testStrict( "jqFindIndex_0", a.$findIndex( () => false ), -1 );
+		testStrict( "jqFindIndex_1", a.$findIndex( ( el, i ) => el.dataset.i === "0" && i === 0 ), 0 );
+		testStrict( "jqFindIndex_2", a.$findIndex( ( el, i ) => el.dataset.i === "1" && i === 1 ), 1 );
+		testStrict( "jqFindIndex_3", a.$findIndex( ( el, i ) => el.dataset.i === "5" && i === 5 ), 5 );
+	} );
 	tests( "$_query", () => {
 		const a = $( "#eljq_jquery" );
 		const b = $( "#eljq_jquery .b" );
