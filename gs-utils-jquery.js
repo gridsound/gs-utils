@@ -60,7 +60,7 @@ class $$ {
 	$filter( fn ) { return new $$( this.#a.filter( GSUisFun( fn ) ? fn : el => el.matches( fn ) ) ); }
 	$child( n ) { return new $$( this.#a.map( el => Array.prototype.at.call( el.children, n ) ) ); }
 	$children() { return new $$( this.#a.flatMap( el => [ ...el.children ] ) ); }
-	$find( sel ) { return new $$( this.#a.flatMap( el => [ ...GSUdomQSA( el, sel ) ] ) ); }
+	$query( sel ) { return new $$( this.#a.flatMap( el => [ ...GSUdomQSA( el, sel ) ] ) ); }
 	$parent() { return new $$( this.#a.map( el => el.parentNode ) ); }
 	$prev() { return new $$( this.#a.map( el => el.previousElementSibling ) ); }
 	$next() { return new $$( this.#a.map( el => el.nextElementSibling ) ); }
