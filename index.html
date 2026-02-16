@@ -51,48 +51,8 @@
 	</div>
 	<div id="eljq_2">
 		<div class="a"></div>
-		<div class="b" data-rrr></div>
 		<div class="b"></div>
-	</div>
-	<div id="eljq_3">
-		<div class="a"></div>
 		<div class="b"></div>
-		<div class="b" data-rrr></div>
-	</div>
-	<div id="eljq_text">
-		<div class="a">Aa</div>
-		<div class="b">Bb</div>
-	</div>
-	<div id="eljq_value">
-		<input type="text" value="initA" />
-		<input type="text" value="initB" />
-	</div>
-	<abc-custom id="eljq_tag">oye</abc-custom>
-	<div id="eljq_find">
-		<div data-i="0">a0</div>
-		<div data-i="1">a1</div>
-		<div data-i="2">a2</div>
-		<div data-i="3">a3</div>
-		<div data-i="4">a4</div>
-		<div data-i="5">a5</div>
-	</div>
-	<div id="eljq_jquery">
-		<div class="a">
-			<div class="b">b0</div>
-			<div class="b">b1</div>
-		</div>
-		<div class="b">b2</div>
-	</div>
-	<div id="eljq_parent">
-		<div id="eljq_parent_a">
-			<div id="eljq_parent_b"></div>
-		</div>
-	</div>
-	<div id="eljq_append"></div>
-	<div id="eljq_index">
-		<div id="eljq_index_0"></div>
-		<div id="eljq_index_1"></div>
-		<div id="eljq_index_2"></div>
 	</div>
 
 <!-- ....................................................................... -->
@@ -1591,160 +1551,117 @@
 		testStrict( "jqIs_a", e.$is( d ), true );
 	} )
 	tests( "$_get", () => {
-		const a = $( "#eljq_1 *" );
-		const b = GSUdomQSA( "#eljq_1 *" );
-
-		testStrict( "jqG_0", a.$get( -1 ), b[ 2 ] );
-		testStrict( "jqG_1", a.$get( 0 ), b[ 0 ] );
-		testStrict( "jqG_2", a.$get( 1 ), b[ 1 ] );
-		testStrict( "jqG_3", a.$get( 2 ), b[ 2 ] );
-	} );
-	tests( "$_text", () => {
-		const a = $( "#eljq_text" );
+		const x = $( "<div>" );
+		const y = $( "<div>" );
+		const z = $( "<div>" );
+		const a = $( "<div>" ).$append( x, y, z );
 		const b = a.$children();
 
-		testStrict( "jqText_0", a.$text(), "\n\t\tAa\n\t\tBb\n\t" );
+		testStrict( "jqG_0", b.$get( -4 ), undefined );
+		testStrict( "jqG_1", b.$get( -3 ), x.$get( 0 ) );
+		testStrict( "jqG_2", b.$get( -2 ), y.$get( 0 ) );
+		testStrict( "jqG_3", b.$get( -1 ), z.$get( 0 ) );
+		testStrict( "jqG_4", b.$get(  0 ), x.$get( 0 ) );
+		testStrict( "jqG_5", b.$get(  1 ), y.$get( 0 ) );
+		testStrict( "jqG_6", b.$get(  2 ), z.$get( 0 ) );
+		testStrict( "jqG_7", b.$get(  3 ), undefined );
+	} );
+	tests( "$_text", () => {
+		const a = $( "<div>" ).$append(
+			$( "<div>" ).$addClass( "a" ).$text( "Aa" ),
+			$( "<div>" ).$addClass( "b" ).$text( "Bb" ),
+		);
+		const b = a.$children();
+
+		testStrict( "jqText_0", a.$text(), "AaBb" );
 		b.$text( "X" );
-		testStrict( "jqText_1", a.$text(), "\n\t\tX\n\t\tX\n\t" );
+		testStrict( "jqText_1", a.$text(), "XX" );
 		b.$text( ( el, i ) => el.textContent + i );
-		testStrict( "jqText_2", a.$text(), "\n\t\tX0\n\t\tX1\n\t" );
+		testStrict( "jqText_2", a.$text(), "X0X1" );
 	} );
 	tests( "$_value", () => {
-		const a = $( "#eljq_value input:first-child" );
-		const b = $( "#eljq_value input" );
+		const a = $( "<div>" ).$append(
+			$( "<input>" ).$setAttr( { type: "text", value: "initA" } ),
+			$( "<input>" ).$setAttr( { type: "text", value: "initB" } ),
+		);
+		const b = a.$child( 0 );
+		const c = a.$query( "input" );
 
-		testStrict( "jqText_0", a.$value(), "initA" );
-		a.$value( "aplop" );
-		testStrict( "jqText_1", a.$value(), "aplop" );
-		testStrict( "jqText_2", a.$value(), a.$get( 0 ).value );
-		b.$value( "777" );
-		testStrict( "jqText_3", a.$value(), "777" );
-		testStrict( "jqText_4", a.$value(), a.$get( 0 ).value );
-		testStrict( "jqText_5", "777", b.$get( 0 ).value );
-		b.$value( ( el, i ) => i );
-		testStrict( "jqText_6", "0", b.$get( 0 ).value );
-		testStrict( "jqText_7", "1", b.$get( 1 ).value );
+		testStrict( "jqValue_0", a.$children().$value(), "initA" );
+		testStrict( "jqValue_1", b.$value(), "initA" );
+		b.$value( "aplop" );
+		testStrict( "jqValue_2", b.$value(), "aplop" );
+		testStrict( "jqValue_3", b.$value(), b.$get( 0 ).value );
+		c.$value( "777" );
+		testStrict( "jqValue_4", b.$value(), "777" );
+		testStrict( "jqValue_5", b.$value(), b.$get( 0 ).value );
+		testStrict( "jqValue_6", "777", c.$get( 0 ).value );
+		c.$value( ( el, i ) => i );
+		testStrict( "jqValue_7", "0", c.$get( 0 ).value );
+		testStrict( "jqValue_8", "1", c.$get( 1 ).value );
 	} );
 	tests( "$_tag", () => {
 		testStrict( "jqTag_0", $( [] ).$tag(), undefined );
-		testStrict( "jqTag_1", $( "#eljq_1" ).$tag(), "div" );
-		testStrict( "jqTag_2", $( "#eljq_1 *" ).$tag(), "div" );
-		testStrict( "jqTag_3", $( "#eljq_tag" ).$tag(), "abc-custom" );
+		testStrict( "jqTag_1", $( "<div>" ).$tag(), "div" );
+		testStrict( "jqTag_2", $( "<span>" ).$tag(), "span" );
+		testStrict( "jqTag_3", $( "<abc-custom>" ).$tag(), "abc-custom" );
 	} );
 	tests( "$_parent", () => {
-		testStrict( "jqParent_0", $( [] ).$parent().$size(), 0 );
-		testStrict( "jqParent_1", $( "#eljq_parent_b" ).$parent().$getAttr( "id" ), "eljq_parent_a" );
+		const b = $( "<div>" );
+		const a = $( "<div>" ).$append( b );
+
+		testStrict( "jqParent_0", a.$parent().$size(), 0 );
+		testStrict( "jqParent_1", $().$parent().$size(), 0 );
+		testStrict( "jqParent_2", $( [] ).$parent().$size(), 0 );
+		testStrict( "jqParent_3", b.$parent().$is( a ), true );
 	} );
 	tests( "$_index", () => {
-		testStrict( "jqIndex_0", $().$index(), -1 );
-		testStrict( "jqIndex_1", $( "#e404" ).$index(), -1 );
-		testStrict( "jqIndex_2", $( "#eljq_index_0" ).$index(), 0 );
-		testStrict( "jqIndex_3", $( "#eljq_index_1" ).$index(), 1 );
-		testStrict( "jqIndex_4", $( "#eljq_index_2" ).$index(), 2 );
-		testStrict( "jqIndex_5", $( "#eljq_index *" ).$index(), 0 );
-		testStrict( "jqIndex_6", $( "#eljq_index * + *" ).$index(), 1 );
+		const a = $( "<div>" ).$append(
+			$( "<div>" ).$setAttr( { id: "jqIndex_0" } ),
+			$( "<div>" ).$setAttr( { id: "jqIndex_1" } ),
+			$( "<div>" ).$setAttr( { id: "jqIndex_2" } ),
+		);
+
+		testStrict( "jqIndex_0", a.$index(), -1 );
+		testStrict( "jqIndex_1", $().$index(), -1 );
+		testStrict( "jqIndex_2", $( "#e404" ).$index(), -1 );
+		testStrict( "jqIndex_3", a.$query( "#jqIndex_0" ).$index(), 0 );
+		testStrict( "jqIndex_4", a.$query( "#jqIndex_1" ).$index(), 1 );
+		testStrict( "jqIndex_5", a.$query( "#jqIndex_2" ).$index(), 2 );
+		testStrict( "jqIndex_6", a.$query( "*" ).$index(), 0 );
+		testStrict( "jqIndex_7", a.$query( "* + *" ).$index(), 1 );
 	} );
 	tests( "$_append", () => {
-		const a = $( "#eljq_append" );
-		const b = $( "<div>" );
+		const a = $( "<div>" );
+		const b = $( "<span>" );
+		const c = $( "<a>" );
+		const d = $( "<b>" );
+		const e = $( "<i>" );
 
-		testStrict( "jqAppend_0", a.$children().$size(), 0 );
-		testStrict( "jqAppend_1", a.$append( b ).$size(), 1 );
+		a.$append( b );
+		testStrict( "jqAppend_0", a.$children().$size(), 1 );
+		testStrict( "jqAppend_1", a.$child( 0 ).$tag(), "span" );
 
-		const c = GSUdomQSA( "#eljq_append *" );
-		const d = $( "<span>" );
+		a.$append( c.$get( 0 ) );
+		testStrict( "jqAppend_2", a.$children().$size(), 2 );
+		testStrict( "jqAppend_3", a.$child( 0 ).$is( b ), true );
+		testStrict( "jqAppend_4", a.$child( 1 ).$is( c ), true );
 
-		testStrict( "jqAppend_2", c.length, 1 );
-		testStrict( "jqAppend_3", c[ 0 ], b.$get( 0 ) );
-
-		a.$append( d );
-		const e = GSUdomQSA( "#eljq_append *" );
-
-		testStrict( "jqAppend_4", e.length, 2 );
-		testStrict( "jqAppend_5", e[ 0 ], b.$get( 0 ) );
-		testStrict( "jqAppend_6", e[ 1 ], d.$get( 0 ) );
-
-		const f = $( "<b>" );
-		const g = $( "<i>" ).$get( 0 );
-
-		a.$append( f, g );
-		const h = GSUdomQSA( "#eljq_append *" );
-
-		testStrict( "jqAppend_7", h.length, 4 );
-		testStrict( "jqAppend_8", h[ 2 ].tagName, "B" );
-		testStrict( "jqAppend_9", h[ 3 ].tagName, "I" );
+		a.$append( d, e.$get( 0 ) );
+		testStrict( "jqAppend_5", a.$children().$size(), 4 );
+		testStrict( "jqAppend_6", a.$child( 2 ).$tag(), "b" );
+		testStrict( "jqAppend_7", a.$child( 3 ).$tag(), "i" );
 
 		a.$append( null );
 		a.$append( null, undefined );
 		a.$append( [ null ] );
 		a.$append( [ null, undefined ] );
-		const i = GSUdomQSA( "#eljq_append *" );
-
-		testStrict( "jqAppend_a", i.length, 4 );
-	} );
-	tests( "$_a", () => {
-		const jq404 = $( "#e404" );
-		const sq1 = GSUdomQS( "#square1" );
-
-		testStrict( "jqZ_0", jq404[ 0 ], undefined );
-		testStrict( "jqZ_1", $( "#square1" ).$get( 0 ), sq1 );
-
-		const sq2divs = $( "#square2 div" );
-		const sq2divs2 = GSUdomQSA( "#square2 div" );
-
-		testStrict( "jqZ_2", sq2divs.$get( 0 ), sq2divs2[ 0 ] );
-		testStrict( "jqZ_3", sq2divs.$get( 1 ), sq2divs2[ 1 ] );
-
-		let ret = true;
-		let count = 0;
-		const eachRet = sq2divs.$each( ( el, i ) => {
-			if ( el !== sq2divs2[ i ] ) {
-				ret = false;
-			}
-			++count;
-		} );
-
-		testStrict( "jqZ_4", ret, true );
-		testStrict( "jqZ_5", count, 2 );
-		testStrict( "jqZ_6", eachRet, sq2divs );
-
-		jq404.$setAttr( "data-jkl", "oWe" );
-
-		const jkl404 = jq404.$getAttr( "data-jkl" );
-
-		testStrict( "jqZ_7", jkl404, null );
-
-		$( "#square1" ).$setAttr( "data-jkl", "oWe" );
-		testStrict( "jqZ_8", GSUdomGetAttr( sq1, "data-jkl" ), "oWe" );
-
-		$( "#square1" ).$rmAttr( "data-jkl" );
-		testStrict( "jqZ_9", GSUdomHasAttr( sq1, "data-jkl" ), false );
-
-		let ret2 = true;
-		$( "#square2 div" ).$setAttr( "data-jkl", "wAq" );
-		sq2divs2.forEach( el => {
-			if ( GSUdomGetAttr( el, "data-jkl" ) !== "wAq" ) {
-				ret2 = false;
-			}
-		} );
-		testStrict( "jqZ_a", ret2, true );
-
-		let ret3 = true;
-		$( "#square2 div" ).$rmAttr( "data-jkl" );
-		sq2divs2.forEach( el => {
-			if ( GSUdomHasAttr( el, "data-jkl" ) ) {
-				ret3 = false;
-			}
-		} );
-		testStrict( "jqZ_b", ret3, true );
-
-		jq404.$text( "foo" );
-		const txt404 = jq404.$text();
-
-		testStrict( "jqZ_c", txt404, undefined );
+		testStrict( "jqAppend_8", a.$children().$size(), 4 );
 	} );
 	tests( "$_find", () => {
-		const a = $( "#eljq_find > *" );
+		const a = $( "<div>" )
+			.$append( ...GSUnewArray( 6, i => $( "<div>" ).$setAttr( "data-i", i ).$text( `a${ i }` ) ) )
+			.$query( "*" );
 
 		testStrict( "jqFind_0", a.$size(), 6 );
 		testStrict( "jqFind_1", a.$find( () => false ).$size(), 0 );
@@ -1754,7 +1671,9 @@
 		testStrict( "jqFind_5", a.$find( ( el, i ) => el.dataset.i === "5" && i === 5 ).$get( 0 ), a.$get( 5 ) );
 	} );
 	tests( "$_findIndex", () => {
-		const a = $( "#eljq_find > *" );
+		const a = $( "<div>" )
+			.$append( ...GSUnewArray( 6, i => $( "<div>" ).$setAttr( "data-i", i ).$text( `a${ i }` ) ) )
+			.$query( "*" );
 
 		testStrict( "jqFindIndex_0", a.$findIndex( () => false ), -1 );
 		testStrict( "jqFindIndex_1", a.$findIndex( ( el, i ) => el.dataset.i === "0" && i === 0 ), 0 );
@@ -1762,26 +1681,123 @@
 		testStrict( "jqFindIndex_3", a.$findIndex( ( el, i ) => el.dataset.i === "5" && i === 5 ), 5 );
 	} );
 	tests( "$_query", () => {
-		const a = $( "#eljq_jquery" );
-		const b = $( "#eljq_jquery .b" );
-		const c = a.$query( ".b" );
-		const d = a.$query( ".e404" );
+		const a = $( "<div>" ).$append(
+			$( "<div>" ).$addClass( "a" ).$append(
+				$( "<div>" ).$addClass( "b" ).$text( "b0" ),
+				$( "<div>" ).$addClass( "b" ).$text( "b1" ),
+			),
+			$( "<div>" ).$addClass( "b" ).$text( "b2" ),
+		);
+		const b = a.$query( ".b" );
 
-		testStrict( "jqQuery_0", c.$size(), 3 );
+		testStrict( "jqQuery_0", a.$query( ".e404" ).$size(), 0 );
 		testStrict( "jqQuery_1", b.$size(), 3 );
-		testStrict( "jqQuery_2", d.$size(), 0 );
-		testStrict( "jqQuery_3", b.$get( 0 ), c.$get( 0 ) );
-		testStrict( "jqQuery_4", b.$get( 1 ), c.$get( 1 ) );
-		testStrict( "jqQuery_5", b.$get( 2 ), c.$get( 2 ) );
-		testStrict( "jqQuery_6", b.$get( 3 ), c.$get( 3 ) );
+		testStrict( "jqQuery_2", b.$at( 0 ).$text(), "b0" );
+		testStrict( "jqQuery_3", b.$at( 1 ).$text(), "b1" );
+		testStrict( "jqQuery_4", b.$at( 2 ).$text(), "b2" );
 	} );
 	tests( "$_empty", () => {
-		testStrict( "jqEmpty_0", GSUdomQSA( "#eljq_1 *" ).length, 3 );
-		$( "#eljq_1" ).$empty();
-		testStrict( "jqEmpty_1", GSUdomQSA( "#eljq_1 *" ).length, 0 );
-		testStrict( "jqEmpty_2", GSUdomQSA( "#eljq_2 *, #eljq_3 *" ).length, 6 );
-		$( "#eljq_2, #eljq_3" ).$empty();
-		testStrict( "jqEmpty_3", GSUdomQSA( "#eljq_2 *, #eljq_3 *" ).length, 0 );
+		const a = $( "<div>" ).$append(
+			$( "<div>" ).$addClass( "a" ),
+			$( "<div>" ).$addClass( "b" ),
+			$( "<div>" ).$addClass( "c" ),
+		);
+		const b = $( "<div>" ).$append(
+			$( "<div>" ).$addClass( "a" ),
+			$( "<div>" ).$addClass( "b" ),
+			$( "<div>" ).$addClass( "c" ),
+		);
+		const c = $( "<div>" ).$append(
+			$( "<div>" ).$addClass( "a" ),
+			$( "<div>" ).$addClass( "b" ),
+			$( "<div>" ).$addClass( "c" ),
+		);
+		const d = $( [ b, c ] );
+
+		testStrict( "jqEmpty_0", a.$children().$size(), 3 );
+		a.$empty();
+		testStrict( "jqEmpty_1", a.$children().$size(), 0 );
+		testStrict( "jqEmpty_2", d.$children().$size(), 6 );
+		d.$empty();
+		testStrict( "jqEmpty_3", d.$children().$size(), 0 );
+	} );
+	tests( "$_attr_0", () => {
+		const a = $( "<div>" );
+
+		testStrict( "jqAttr0_0", a.$hasAttr( "data-foo" ), false );
+		testStrict( "jqAttr0_1", a.$getAttr( "data-foo" ), null );
+		a.$setAttr( "data-foo", 21 );
+		testStrict( "jqAttr0_2", a.$hasAttr( "data-foo" ), true );
+		testStrict( "jqAttr0_3", a.$getAttr( "data-foo" ), "21" );
+		a.$setAttr( "data-foo", 42 );
+		testStrict( "jqAttr0_4", a.$hasAttr( "data-foo" ), true );
+		testStrict( "jqAttr0_5", a.$getAttr( "data-foo" ), "42" );
+		a.$setAttr( "data-foo", "" );
+		testStrict( "jqAttr0_6", a.$hasAttr( "data-foo" ), true );
+		testStrict( "jqAttr0_7", a.$getAttr( "data-foo" ), "" );
+		a.$rmAttr( "data-foo" );
+		testStrict( "jqAttr0_8", a.$hasAttr( "data-foo" ), false );
+		testStrict( "jqAttr0_9", a.$getAttr( "data-foo" ), null );
+		a.$setAttr( "data-foo", true );
+		testStrict( "jqAttr0_a", a.$hasAttr( "data-foo" ), true );
+		testStrict( "jqAttr0_b", a.$getAttr( "data-foo" ), "" );
+		a.$rmAttr( "data-foo" );
+		testStrict( "jqAttr0_c", a.$hasAttr( "data-foo" ), false );
+		a.$setAttr( "data-foo", "" );
+		testStrict( "jqAttr0_d", a.$hasAttr( "data-foo" ), true );
+		testStrict( "jqAttr0_e", a.$getAttr( "data-foo" ), "" );
+		a.$setAttr( "data-foo", "---" );
+
+		a.$setAttr( { "data-foo": "a0", "data-bar": "a1" } );
+		a.$rmAttr( null );
+		a.$rmAttr( undefined );
+		a.$rmAttr( null, undefined, 0 );
+		testStrict( "jqAttr0_f", a.$getAttr( "data-foo" ), "a0" );
+		testStrict( "jqAttr0_g", a.$getAttr( "data-bar" ), "a1" );
+		test( "jqAttr0_h", a.$getAttr( "data-foo", "data-bar" ), [ "a0", "a1" ] );
+		a.$rmAttr( "data-foo", "data-bar" );
+		testStrict( "jqAttr0_i", a.$hasAttr( "data-foo" ), false );
+		testStrict( "jqAttr0_j", a.$hasAttr( "data-bar" ), false );
+		test( "jqAttr0_k", a.$getAttr( "data-foo", "data-bar" ), [ null, null ] );
+		
+		a.$setAttr( "data-foo", "abc" );
+		testStrict( "jqAttr0_l", a.$getAttr( "data-foo" ), "abc" );
+		a.$setAttr( "data-foo", null );
+		testStrict( "jqAttr0_m", a.$getAttr( "data-foo" ), "null" );
+		a.$setAttr( "data-foo", undefined );
+		testStrict( "jqAttr0_n", a.$getAttr( "data-foo" ), "undefined" );
+		a.$setAttr( { "data-foo": null, "data-bar": undefined } );
+		test( "jqAttr0_o", a.$getAttr( "data-foo", "data-bar" ), [ "null", "undefined" ] );
+		a.$setAttr( { "data-foo": 0, "data-bar": false, "data-lol": "" } );
+		test( "jqAttr0_p", a.$getAttr( "data-foo", "data-bar", "data-lol" ), [ "0", null, "" ] );
+	} );
+	tests( "$_attr_1", () => {
+		const a = $( "<div>" ).$append( $( "<div>" ), $( "<div>" ), $( "<div>" ), $( "<div>" ) ).$query( "*" );
+
+		testStrict( "jqAttr1_0", a.$hasAttr( "data-hey" ), false );
+		testStrict( "jqAttr1_1", a.$filter( "[data-hey]" ).$size(), 0 );
+		a.$setAttr( "data-hey", "yo" );
+		testStrict( "jqAttr1_2", a.$hasAttr( "data-hey" ), true );
+		testStrict( "jqAttr1_3", a.$size(), 4 );
+		testStrict( "jqAttr1_4", a.$filter( "[data-hey]" ).$size(), 4 );
+		testStrict( "jqAttr1_5", a.$filter( "[data-hey='yo']" ).$size(), 4 );
+		a.$setAttr( "data-hey", false );
+		testStrict( "jqAttr1_6", a.$hasAttr( "data-hey" ), false );
+		testStrict( "jqAttr1_7", a.$filter( "[data-hey]" ).$size(), 0 );
+		a.$setAttr( "data-hey", ( _, i ) => i );
+		testStrict( "jqAttr1_8", a.$filter( "[data-hey='0']" ).$index(), 0 );
+		testStrict( "jqAttr1_9", a.$filter( "[data-hey='1']" ).$index(), 1 );
+		testStrict( "jqAttr1_a", a.$filter( "[data-hey='2']" ).$index(), 2 );
+		testStrict( "jqAttr1_b", a.$filter( "[data-hey='3']" ).$index(), 3 );
+		a.$setAttr( "data-hey", ( el, i ) => +el.dataset.hey * 2 );
+		testStrict( "jqAttr1_c", a.$filter( "[data-hey='0']" ).$index(), 0 );
+		testStrict( "jqAttr1_d", a.$filter( "[data-hey='2']" ).$index(), 1 );
+		testStrict( "jqAttr1_e", a.$filter( "[data-hey='4']" ).$index(), 2 );
+		testStrict( "jqAttr1_f", a.$filter( "[data-hey='6']" ).$index(), 3 );
+		a.$setAttr( { "data-lol": 21, "data-mdr": 42 } );
+		testStrict( "jqAttr1_g", a.$filter( "[data-lol][data-mdr]" ).$size(), 4 );
+		a.$rmAttr( "data-lol", "data-mdr" );
+		testStrict( "jqAttr1_h", a.$filter( ":is([data-lol],[data-mdr])" ).$size(), 0 );
 	} );
 </script>
 
