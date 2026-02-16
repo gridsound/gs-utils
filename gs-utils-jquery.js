@@ -105,7 +105,7 @@ class $$ {
 	$togAttr( k ) { return this.$each( el => GSUdomTogAttr( el, k ) ); }
 	$rmAttr( ...k ) { return this.$each( el => k.forEach( a => el.removeAttribute( a ) ) ); }
 	$addAttr( ...k ) { return this.$each( el => k.forEach( a => el.setAttribute( a, "" ) ) ); }
-	$getAttr( ...k ) { return k.length === 1 ? this.#a0?.getAttribute( k[ 0 ] ) || null : k.map( a => this.#a0?.getAttribute( a ) ); }
+	$getAttr( ...k ) { return k.length === 1 ? this.#a0?.getAttribute( k[ 0 ] ) ?? null : k.map( a => this.#a0?.getAttribute( a ) ); }
 	$setAttr( k, v ) {
 		return this.$each( GSUisObj( k )
 			? el => GSUforEach( k, ( v, k ) => $$.#setAttr( el, k, v ) )
