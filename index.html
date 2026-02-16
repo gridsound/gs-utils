@@ -1799,6 +1799,20 @@
 		a.$rmAttr( "data-lol", "data-mdr" );
 		testStrict( "jqAttr1_h", a.$filter( ":is([data-lol],[data-mdr])" ).$size(), 0 );
 	} );
+	tests( "$_attr_2", () => {
+		const a = $( [
+			$( "<div>" ).$setAttr( "id", "0" ),
+			$( "<div>" ).$setAttr( "id", "1" ),
+		] );
+		const b = [
+			{ "data-a0": "a0", "data-a1": "a1" },
+			{ "data-b0": "b0", "data-b1": "b1" },
+		];
+
+		a.$setAttr( ( el, i ) => +el.id === i && b[ i ] );
+		test( "jqAttr2_0", a.$at( 0 ).$getAttr( "data-a0", "data-a1", "data-b0", "data-b1" ), [ "a0", "a1", null, null ] );
+		test( "jqAttr2_1", a.$at( 1 ).$getAttr( "data-a0", "data-a1", "data-b0", "data-b1" ), [ null, null, "b0", "b1" ] );
+	} );
 </script>
 
 <!-- ....................................................................... -->

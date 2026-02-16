@@ -109,7 +109,10 @@ class $$ {
 	$setAttr( k, v ) {
 		return this.$each( GSUisObj( k )
 			? el => GSUforEach( k, ( v, k ) => $$.#setAttr( el, k, v ) )
-			: ( el, i ) => $$.#setAttr( el, k, $$.#calcVal( v, el, i ) ) );
+			: GSUisFun( k )
+				? ( el, i ) => GSUforEach( k( el, i ), ( v, k ) => $$.#setAttr( el, k, v ) )
+				: ( el, i ) => $$.#setAttr( el, k, $$.#calcVal( v, el, i ) )
+		);
 	}
 
 	// .........................................................................
