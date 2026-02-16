@@ -121,7 +121,7 @@ class $$ {
 	$width(  n, unit = "px" ) { return n === undefined ? this.#a0?.clientWidth  || 0 : this.$css( "width",  n, unit ); }
 	$height( n, unit = "px" ) { return n === undefined ? this.#a0?.clientHeight || 0 : this.$css( "height", n, unit ); }
 	$css( prop, val, unit = "" ) {
-		return GSUisStr( prop ) && val === undefined
+		return ( GSUisStr( prop ) || prop === undefined ) && val === undefined
 			? GSUdomStyle( this.#a0, prop )
 			: this.$each(
 				GSUisObj( prop ) ? el => GSUdomStyle( el, prop ) :
