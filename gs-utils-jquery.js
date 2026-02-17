@@ -152,6 +152,15 @@ class $$ {
 			? `${ x } ${ y } ${ w } ${ h }`
 			: `0 0 ${ x } ${ y }` );
 	}
+	$bcr() {
+		if ( this.#a0 ) {
+			const bcr = this.#a0.getBoundingClientRect();
+
+			bcr.w = bcr.width;
+			bcr.h = bcr.height;
+			return bcr;
+		}
+	}
 
 	// .........................................................................
 	static #calcVal( val, el, i ) {

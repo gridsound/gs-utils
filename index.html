@@ -1813,6 +1813,14 @@
 		test( "jqAttr2_0", a.$at( 0 ).$getAttr( "data-a0", "data-a1", "data-b0", "data-b1" ), [ "a0", "a1", null, null ] );
 		test( "jqAttr2_1", a.$at( 1 ).$getAttr( "data-a0", "data-a1", "data-b0", "data-b1" ), [ null, null, "b0", "b1" ] );
 	} );
+	tests( "$_bcr", () => {
+		const a = $( GSUdomBody );
+		const bcr = a.$bcr();
+
+		testStrict( "jqBCR_0", bcr.w, bcr.width );
+		testStrict( "jqBCR_1", bcr.h, bcr.height );
+		testStrict( "jqBCR_2", $noop.$bcr(), undefined );
+	} );
 </script>
 
 <!-- ....................................................................... -->
