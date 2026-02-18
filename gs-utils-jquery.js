@@ -79,6 +79,9 @@ class $$ {
 	}
 
 	// .........................................................................
+	$message( ev, ...args ) {
+		return this.$each( el => el.$onmessage?.( ev, ...args ) );
+	}
 	$on( ev, fn ) {
 		return this.$each( GSUisStr( ev )
 			? el => $$.#onEvent( el, ev, fn )
