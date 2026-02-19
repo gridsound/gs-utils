@@ -80,7 +80,15 @@ class $$ {
 
 	// .........................................................................
 	$message( ev, ...args ) {
-		return this.$each( el => el.$onmessage?.( ev, ...args ) );
+		let ret;
+
+		this.$some( el => {
+			ret = el.$onmessage?.( ev, ...args );
+			if ( ret !== undefined ) {
+				return true;
+			}
+		} );
+		return ret !== undefined ? ret : this;
 	}
 	$on( ev, fn ) {
 		return this.$each( GSUisStr( ev )
