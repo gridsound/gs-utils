@@ -142,7 +142,7 @@ function GSUarrayRemove( arr, fn ) {
 function GSUarrayResize( arr, len ) {
 	___( arr, "arrayOfNumber" );
 	___( len, "integer-positive-0" );
-	if ( len < 1 ) { return []; }
+	if ( len < 1 || arr.length < 1 ) { return []; }
 	if ( len === 1 ) { return [ arr[ 0 ] || 0 ]; }
 	if ( arr.length === len ) { return [ ...arr ]; }
 
