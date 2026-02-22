@@ -127,10 +127,10 @@ class $$ {
 	}
 
 	// .........................................................................
-	$top(    n, unit = "px" ) { return n === undefined ? parseFloat( GSUdomStyle( this.#a0, "top" ) )  || 0 : this.$css( "top",  n, unit ); }
-	$left(   n, unit = "px" ) { return n === undefined ? parseFloat( GSUdomStyle( this.#a0, "left" ) ) || 0 : this.$css( "left", n, unit ); }
-	$width(  n, unit = "px" ) { return n === undefined ? this.#a0?.clientWidth  || 0 : this.$css( "width",  n, unit ); }
-	$height( n, unit = "px" ) { return n === undefined ? this.#a0?.clientHeight || 0 : this.$css( "height", n, unit ); }
+	$top(    n, unit ) { return n === undefined ? parseFloat( GSUdomStyle( this.#a0, "top" ) )  || 0 : this.$css( "top",  n, unit ); }
+	$left(   n, unit ) { return n === undefined ? parseFloat( GSUdomStyle( this.#a0, "left" ) ) || 0 : this.$css( "left", n, unit ); }
+	$width(  n, unit ) { return n === undefined ? this.#a0?.clientWidth  || 0 : this.$css( "width",  n, unit ); }
+	$height( n, unit ) { return n === undefined ? this.#a0?.clientHeight || 0 : this.$css( "height", n, unit ); }
 	$css( prop, val, unit = "" ) {
 		return ( GSUisStr( prop ) || prop === undefined ) && val === undefined
 			? GSUdomStyle( this.#a0, prop )
