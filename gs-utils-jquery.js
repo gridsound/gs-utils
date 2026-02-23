@@ -178,7 +178,7 @@ class $$ {
 		return GSUisFun( val ) ? val( el, i ) : val;
 	}
 	static #setAttr( el, k, v ) {
-		v === false
+		v === false || v === null
 			? el.removeAttribute( k )
 			: el.setAttribute( k, v === true ? "" : v );
 	}

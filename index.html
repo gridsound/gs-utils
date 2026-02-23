@@ -1763,11 +1763,11 @@
 		a.$setAttr( "data-foo", "abc" );
 		testStrict( "jqAttr0_l", a.$getAttr( "data-foo" ), "abc" );
 		a.$setAttr( "data-foo", null );
-		testStrict( "jqAttr0_m", a.$getAttr( "data-foo" ), "null" );
+		testStrict( "jqAttr0_m", a.$hasAttr( "data-bar" ), false );
 		a.$setAttr( "data-foo", undefined );
 		testStrict( "jqAttr0_n", a.$getAttr( "data-foo" ), "undefined" );
 		a.$setAttr( { "data-foo": null, "data-bar": undefined } );
-		test( "jqAttr0_o", a.$getAttr( "data-foo", "data-bar" ), [ "null", "undefined" ] );
+		test( "jqAttr0_o", a.$getAttr( "data-foo", "data-bar" ), [ null, "undefined" ] );
 		a.$setAttr( { "data-foo": 0, "data-bar": false, "data-lol": "" } );
 		test( "jqAttr0_p", a.$getAttr( "data-foo", "data-bar", "data-lol" ), [ "0", null, "" ] );
 	} );
