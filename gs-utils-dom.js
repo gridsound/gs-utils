@@ -289,11 +289,6 @@ function GSUdomUnobserveSize( el, fn ) {
 }
 
 // .............................................................................
-function GSUdomFocus( el ) {
-	el?.focus( { preventScroll: true } );
-}
-
-// .............................................................................
 function GSUdomScrollIntoViewX( el, par ) {
 	if ( el && par ) {
 		const elBCR = $( el ).$bcr();
