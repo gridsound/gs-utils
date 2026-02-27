@@ -30,7 +30,6 @@ function GSUdomAddClass( el, ...clazz ) { el?.classList.add(    ...clazz ); }
 function GSUdomRmClass(  el, ...clazz ) { el?.classList.remove( ...clazz ); }
 
 // .............................................................................
-function GSUdomGetSize( el ) { return el ? [ el.clientWidth, el.clientHeight ] : [ 0, 0 ]; }
 function GSUdomBCR( el ) {
 	const bcr = el?.getBoundingClientRect() || null;
 
