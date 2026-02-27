@@ -153,6 +153,7 @@ class $$ {
 
 	// .........................................................................
 	$tag() { return this.#a0?.tagName.toLowerCase(); }
+	$focus() { return this.#a0?.focus( { preventScroll: true } ); }
 	$play() { return this.$trigger( "play" ); }
 	$pause() { return this.$trigger( "pause" ); }
 	$click() { return this.$trigger( "click" ); }
