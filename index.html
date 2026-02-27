@@ -774,38 +774,6 @@
 <!-- ..... gs-utils-dom .................................................... -->
 <!-- ....................................................................... -->
 <script>
-	tests( "GSUdomBCR", () => {
-		const elSquare1 = document.querySelector( "#square1" );
-		const square1BCR = elSquare1.getBoundingClientRect();
-		const squareBCR2 = GSUdeepCopy( square1BCR );
-
-		squareBCR2.w = squareBCR2.width;
-		squareBCR2.h = squareBCR2.height;
-		test( "domBCR_0", GSUdomBCR( null ),      null );
-		test( "domBCR_1", GSUdomBCR( undefined ), null );
-		test( "domBCR_2", GSUdomBCR( elSquare1 ), squareBCR2 );
-	} );
-	tests( "GSUdomBCRxy", () => {
-		const elSquare1 = document.querySelector( "#square1" );
-		const square1BCR = elSquare1.getBoundingClientRect();
-
-		test( "domBCRxy_0", GSUdomBCRxy( null ),      [ 0, 0 ] );
-		test( "domBCRxy_1", GSUdomBCRxy( elSquare1 ), [ square1BCR.x, square1BCR.y ] );
-	} );
-	tests( "GSUdomBCRwh", () => {
-		const elSquare1 = document.querySelector( "#square1" );
-		const square1BCR = elSquare1.getBoundingClientRect();
-
-		test( "domBCRwh_0", GSUdomBCRwh( null ),      [ 0, 0 ] );
-		test( "domBCRwh_1", GSUdomBCRwh( elSquare1 ), [ square1BCR.width, square1BCR.height ] );
-	} );
-	tests( "GSUdomBCRxywh", () => {
-		const elSquare1 = document.querySelector( "#square1" );
-		const square1BCR = elSquare1.getBoundingClientRect();
-
-		test( "domBCRxywh_0", GSUdomBCRxywh( null ),      [ 0, 0, 0, 0 ] );
-		test( "domBCRxywh_1", GSUdomBCRxywh( elSquare1 ), [ square1BCR.x, square1BCR.y, square1BCR.width, square1BCR.height ] );
-	} );
 	tests( "GSUdomQS", () => {
 		const elSquare1 = document.querySelector( "#square1" );
 		const elSquare2 = document.querySelector( "#square2" );

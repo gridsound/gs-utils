@@ -30,22 +30,6 @@ function GSUdomAddClass( el, ...clazz ) { el?.classList.add(    ...clazz ); }
 function GSUdomRmClass(  el, ...clazz ) { el?.classList.remove( ...clazz ); }
 
 // .............................................................................
-function GSUdomBCR( el ) {
-	const bcr = el?.getBoundingClientRect() || null;
-
-	if ( bcr ) {
-		bcr.w = bcr.width;
-		bcr.h = bcr.height;
-	}
-	return bcr;
-}
-/* eslint-disable @stylistic/curly-newline, @stylistic/padding-line-between-statements */
-function GSUdomBCRxy( el )   { const r = GSUdomBCR( el ); return r ? [ r.x, r.y ] : [ 0, 0 ]; }
-function GSUdomBCRwh( el )   { const r = GSUdomBCR( el ); return r ? [ r.w, r.h ] : [ 0, 0 ]; }
-function GSUdomBCRxywh( el ) { const r = GSUdomBCR( el ); return r ? [ r.x, r.y, r.w, r.h ] : [ 0, 0, 0, 0 ]; }
-/* eslint-enable */
-
-// .............................................................................
 function GSUdomUnselect() {
 	window.getSelection().removeAllRanges();
 }
@@ -312,8 +296,8 @@ function GSUdomFocus( el ) {
 // .............................................................................
 function GSUdomScrollIntoViewX( el, par ) {
 	if ( el && par ) {
-		const elBCR = GSUdomBCR( el );
-		const parBCR = GSUdomBCR( par );
+		const elBCR = $( el ).$bcr();
+		const parBCR = $( par ).$bcr();
 		const elX = elBCR.x - parBCR.x;
 		const diff = elX + elBCR.w - parBCR.w;
 
