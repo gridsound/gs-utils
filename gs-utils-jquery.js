@@ -104,6 +104,7 @@ class $$ {
 	$remove() { return this.$each( el => el.remove() ); }
 	$prepend( ...arr ) { return this.#a0?.prepend( ...$$.#extractList( arr ) ), this; }
 	$append( ...arr ) { return this.#a0?.append( ...$$.#extractList( arr ) ), this; }
+	$appendTo( el ) { return ( GSUisJQu( el ) ? el?.#a0 : el )?.append( ...this.#a ), this; }
 
 	// .........................................................................
 	$hasClass( c ) { return this.$some( el => el.classList.contains( c ) ); }
