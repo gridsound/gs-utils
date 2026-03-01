@@ -1,5 +1,7 @@
 "use strict";
 
+let GSUaudioCurrentContext = null;
+
 const GSUXtoHz_a = 128;
 const GSUXtoHz_b = .945;
 const GSUXtoHz_c = GSUXtoHz_a - GSUXtoHz_b;
