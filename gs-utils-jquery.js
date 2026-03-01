@@ -212,12 +212,16 @@ class $$ {
 		return arr;
 	}
 	static #onEvent( el, ev, fn ) {
-		const ev2 = `on${ ev }`;
-
-		if ( el[ ev2 ] !== null ) {
-			console.warn( `$on, ${ ev2 } is already set`, el[ ev2 ] );
+		if ( ev === "focusin" || ev === "focusout" ) {
+			el.addEventListener( ev, fn );
 		} else {
-			el[ ev2 ] = fn;
+			const ev2 = `on${ ev }`;
+
+			if ( el[ ev2 ] !== null ) {
+				console.warn( `$on, ${ ev2 } is already set`, el[ ev2 ] );
+			} else {
+				el[ ev2 ] = fn;
+			}
 		}
 	}
 }
