@@ -165,13 +165,6 @@ function GSUdomSetAttr( el, attr, val ) {
 			: GSUforEach( attr, ( val, a ) => GSUdomSetAttr_sub( el, a, val ) );
 	}
 }
-function GSUdomTogAttr( el, attr, val = true ) {
-	if ( el && attr ) {
-		GSUdomSetAttr_sub( el, attr, val === true
-			? !GSUdomHasAttr( el, attr )
-			: GSUdomGetAttr( el, attr ) === val ? false : val );
-	}
-}
 
 // .............................................................................
 const _GSUdomSVGelements = Object.freeze( "circle defs g line linearGradient path polygon polyline rect stop svg use"
