@@ -1722,8 +1722,7 @@
 		test( "jqAttr2_1", a.$at( 1 ).$getAttr( "data-a0", "data-a1", "data-b0", "data-b1" ), [ null, null, "b0", "b1" ] );
 	} );
 	tests( "$_bcr", () => {
-		const a = $( GSUdomBody );
-		const bcr = a.$bcr();
+		const bcr = $body.$bcr();
 
 		testStrict( "jqBCR_0", bcr.w, bcr.width );
 		testStrict( "jqBCR_1", bcr.h, bcr.height );
