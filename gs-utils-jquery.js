@@ -113,9 +113,9 @@ class $$ {
 	$togClass( ...c ) { return this.$each( el => el.classList.toggle( ...c ) ); }
 
 	// .........................................................................
-	$hasAttr( k ) { return this.$some( el => el.hasAttribute( k ) ); }
-	$togAttr( k ) { return this.$each( el => GSUdomTogAttr( el, k ) ); }
-	$rmAttr( ...k ) { return this.$each( el => k.forEach( a => el.removeAttribute( a ) ) ); }
+	$hasAttr( k ) { return this.$some( el => $$.#hasAttr( el, k ) ); }
+	$togAttr( k ) { return this.$each( el => $$.#togAttr( el, k ) ); }
+	$rmAttr( ...k ) { return this.$each( el => k.forEach( a => $$.#rmAttr( el, a ) ) ); }
 	$addAttr( ...k ) { return this.$each( el => k.forEach( a => el.setAttribute( a, "" ) ) ); }
 	$getAttr( ...k ) { return k.length === 1 ? this.#a0?.getAttribute( k[ 0 ] ) ?? null : k.map( a => this.#a0?.getAttribute( a ) ); }
 	$setAttr( k, v ) {
@@ -181,9 +181,12 @@ class $$ {
 	static #calcVal( val, el, i ) {
 		return GSUisFun( val ) ? val( el, i ) : val;
 	}
+	static #rmAttr( el, k ) { el.removeAttribute( k ); }
+	static #hasAttr( el, k ) { return el.hasAttribute( k ); }
+	static #togAttr( el, k ) { $$.#setAttr( el, k, !$$.#hasAttr( el, k ) ); }
 	static #setAttr( el, k, v ) {
 		v === false || v === null
-			? el.removeAttribute( k )
+			? $$.#rmAttr( el, k )
 			: el.setAttribute( k, v === true ? "" : v );
 	}
 	static #extractList( arr ) {
