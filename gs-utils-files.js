@@ -22,15 +22,15 @@ function GSUgetFileContent( file, format ) {
 }
 
 function GSUdownloadURL( name, url ) {
-	const a = GSUcreateA( {
-		href: url,
-		download: name,
-		target: "_blank",
-	} );
-
-	GSUdomBody.append( a );
-	a.click();
-	a.remove();
+	$( "<a>" )
+		.$setAttr( {
+			href: url,
+			download: name,
+			target: "_blank",
+		} )
+		.$appendTo( $body )
+		.$click()
+		.$remove();
 }
 
 function GSUdownloadBlob( name, blob ) {
