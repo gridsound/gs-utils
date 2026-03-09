@@ -242,3 +242,6 @@ Object.freeze( $ );
 Object.freeze( $$ );
 
 const $noop = $();
+const $head = $( document.head );
+const $body = $( document.body );
+const $html = $body.$parent();
