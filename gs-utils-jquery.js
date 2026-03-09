@@ -62,12 +62,18 @@ class $$ {
 	$filter( fn ) { return new $$( this.#a.filter( GSUisFun( fn ) ? fn : el => el.matches( fn ) ) ); }
 	$child( n ) { return new $$( this.#a.map( el => Array.prototype.at.call( el.children, n ) ) ); }
 	$children() { return new $$( this.#a.flatMap( el => [ ...el.children ] ) ); }
-	$query( sel ) { return new $$( this.#a.flatMap( el => [ ...GSUdomQSA( el, sel ) ] ) ); }
 	$parent() { return new $$( this.#a.map( el => el.parentNode ) ); }
 	$prev() { return new $$( this.#a.map( el => el.previousElementSibling ) ); }
 	$next() { return new $$( this.#a.map( el => el.nextElementSibling ) ); }
 	$prevUntil( sel ) { return new $$( this.#a.flatMap( el => $$.#siblingUntil( el, "previousElementSibling", sel ) ) ); }
 	$nextUntil( sel ) { return new $$( this.#a.flatMap( el => $$.#siblingUntil( el, "nextElementSibling", sel ) ) ); }
+	$query( sel ) { return new $$( this.#a.flatMap( el => [ ...GSUdomQSA( el, sel ) ] ) ); }
+	$queryMap( graph ) {
+		return GSUreduce( graph, ( obj, sel, key ) => {
+			obj[ key ] = $( [ this.$filter( sel ), this.$query( sel ) ] );
+			return obj;
+		}, {} );
+	}
 
 	// .........................................................................
 	$trigger( s ) { return this.$each( el => el[ s ]() ); }
