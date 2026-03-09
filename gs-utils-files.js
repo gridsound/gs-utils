@@ -2,10 +2,10 @@
 
 function GSUloadJSFile( src ) {
 	return new Promise( resolve => {
-		const js = GSUcreateElement( "script", { src, type: "text/javascript" } );
-
-		js.onload = resolve;
-		GSUdomHead.append( js );
+		$( "<script>" )
+			.$setAttr( { src, type: "text/javascript" } )
+			.$on( "load", resolve )
+			.$appendTo( $head );
 	} );
 }
 
