@@ -78,57 +78,6 @@ function GSUgetTemplate( tmpId, ...args ) {
 }
 
 // .............................................................................
-/* eslint-disable no-use-before-define */
-function GSUdomFind_arr( root, arr ) {
-	return arr.map( sel => GSUdomFind( root, sel ) );
-}
-function GSUdomFind_obj( root, obj ) {
-	if ( obj ) {
-		const ent = Object.entries( obj );
-
-		ent.forEach( kv => kv[ 1 ] = GSUdomFind( root, kv[ 1 ] ) );
-		return Object.fromEntries( ent );
-	}
-}
-/* eslint-enable */
-function GSUdomFind_query( root, sel ) {
-	return root.matches( sel )
-		? root
-		: root.querySelector( sel );
-}
-function GSUdomFind_queryAll( root, sel ) {
-	const arr = Array.from( root.querySelectorAll( sel ) );
-
-	if ( root.matches( sel ) ) {
-		arr.unshift( root );
-	}
-	return arr;
-}
-function GSUdomFind_str( root, sel ) {
-	if ( sel.startsWith( "[]" ) ) {
-		const sel2 = sel.slice( 2 );
-
-		return !GSUisArr( root )
-			? GSUdomFind_queryAll( root, sel2 )
-			: root.map( r => GSUdomFind_queryAll( r, sel2 ) ).flat();
-	}
-	if ( GSUisArr( root ) ) {
-		let el;
-
-		root.find( r => el = GSUdomFind_query( r, sel ) );
-		return el || null;
-	}
-	return GSUdomFind_query( root, sel );
-}
-function GSUdomFind( root, graph ) {
-	return GSUisStr( graph )
-		? GSUdomFind_str( root, graph )
-		: Object.seal( GSUisArr( graph )
-			? GSUdomFind_arr( root, graph )
-			: GSUdomFind_obj( root, graph ) );
-}
-
-// .............................................................................
 function GSUdomListen( el, cbs ) {
 	el.addEventListener( "gsui", e => {
 		const d = e.detail;
