@@ -127,6 +127,9 @@ function GSUdomFind( root, graph ) {
 			? GSUdomFind_arr( root, graph )
 			: GSUdomFind_obj( root, graph ) );
 }
+function GSUdomFind2( root, graph ) {
+	return GSUforEach( GSUdomFind( root, graph ), ( el, key, o ) => o[ key ] = $( el ) );
+}
 
 // .............................................................................
 function GSUdomListen( el, cbs ) {
