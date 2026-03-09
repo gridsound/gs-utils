@@ -143,6 +143,8 @@ class $$ {
 	}
 
 	// .........................................................................
+	$scrollW() { return this.#a0?.scrollWidth; }
+	$scrollH() { return this.#a0?.scrollHeight; }
 	$scrollX( n, beh ) { return n === undefined ? this.#a0?.scrollLeft : this.#scroll( "left", n, beh ); }
 	$scrollY( n, beh ) { return n === undefined ? this.#a0?.scrollTop : this.#scroll( "top", n, beh ); }
 	#scroll( dir, n, beh ) {
