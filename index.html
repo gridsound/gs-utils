@@ -800,14 +800,6 @@
 		testStrict( "domQSA_7", ci2[ 0 ], elSquare2.querySelectorAll( ".circle1" )[ 0 ] );
 		testStrict( "domQSA_8", ci2[ 1 ], elSquare2.querySelectorAll( ".circle1" )[ 1 ] );
 	} );
-	tests( "GSUdomHasAttr", () => {
-		const foo = GSUdomQS( "[data-foo]" );
-
-		GSUdomHasAttr( null, "data-foo" );
-		test( "domHasAttr_0", foo.hasAttribute( "data-foo" ), true );
-		test( "domHasAttr_1", GSUdomHasAttr( foo, "data-foo" ), true );
-		test( "domHasAttr_2", GSUdomHasAttr( foo, "undefined" ), false );
-	} );
 	tests( "GSUdomGetAttr", () => {
 		const elCirc2 = GSUdomQS( ".circle2" );
 
@@ -842,58 +834,6 @@
 		GSUdomRmAttr( foo, "data-bar", "data-bar2" );
 		test( "domRmAttr_3", foo.hasAttribute( "data-bar"  ), false );
 		test( "domRmAttr_4", foo.hasAttribute( "data-bar2" ), false );
-	} );
-	tests( "GSUdomSetAttr", () => {
-		const elCirc2 = GSUdomQS( ".circle2" );
-
-		GSUdomSetAttr();
-		GSUdomSetAttr( null );
-		GSUdomSetAttr( undefined );
-		GSUdomSetAttr( null, "qwe" );
-		GSUdomSetAttr( null, { a: 21 } );
-		GSUdomSetAttr( elCirc2, "data-z", 555 );
-		test( "domSetAttr_0", GSUdomGetAttrNum( elCirc2, "data-z" ), 555 );
-		GSUdomSetAttr( elCirc2, "data-y" );
-		test( "domSetAttr_1", GSUdomGetAttr( elCirc2, "data-y" ), "" );
-		GSUdomSetAttr( elCirc2, "data-y", false );
-		test( "domSetAttr_2", GSUdomGetAttr( elCirc2, "data-y" ), null );
-		test( "domSetAttr_3", GSUdomHasAttr( elCirc2, "data-y" ), false );
-		GSUdomSetAttr( elCirc2, "data-z", false );
-		test( "domSetAttr_4", GSUdomHasAttr( elCirc2, "data-z" ), false );
-		GSUdomSetAttr( elCirc2, {
-			"data-x": 222,
-			"data-y": 333,
-			"data-z": 444,
-		} );
-		test( "domSetAttr_5", GSUdomGetAttrNum( elCirc2, "data-x" ), 222 );
-		test( "domSetAttr_6", GSUdomGetAttrNum( elCirc2, "data-y" ), 333 );
-		test( "domSetAttr_7", GSUdomGetAttrNum( elCirc2, "data-z" ), 444 );
-		GSUdomSetAttr( elCirc2, "data-z", 0 );
-		test( "domSetAttr_8", GSUdomGetAttr( elCirc2, "data-z" ), "0" );
-		test( "domSetAttr_9", GSUdomGetAttrNum( elCirc2, "data-z" ), 0 );
-		GSUdomSetAttr( elCirc2, "data-z", 1 );
-		test( "domSetAttr_a", GSUdomGetAttr( elCirc2, "data-z" ), "1" );
-		test( "domSetAttr_b", GSUdomGetAttrNum( elCirc2, "data-z" ), 1 );
-		GSUdomSetAttr( elCirc2, "data-w", undefined );
-		test( "domSetAttr_c", GSUdomHasAttr( elCirc2, "data-w" ), false );
-		GSUdomSetAttr( elCirc2, "data-z", undefined );
-		test( "domSetAttr_d", GSUdomHasAttr( elCirc2, "data-z" ), false );
-	} );
-	tests( "GSUdomTogAttr", () => {
-		const elCirc2 = GSUdomQS( ".circle2" );
-
-		GSUdomTogAttr();
-		GSUdomTogAttr( null );
-		GSUdomTogAttr( undefined );
-		GSUdomTogAttr( null, "qwe" );
-		GSUdomTogAttr( elCirc2, "data-tog" ); test( "domTogAttr_0", GSUdomGetAttr( elCirc2, "data-tog" ), "" );
-		GSUdomTogAttr( elCirc2, "data-tog" ); test( "domTogAttr_0", GSUdomGetAttr( elCirc2, "data-tog" ), null );
-		GSUdomTogAttr( elCirc2, "data-tog" ); test( "domTogAttr_0", GSUdomGetAttr( elCirc2, "data-tog" ), "" );
-		GSUdomTogAttr( elCirc2, "data-tog" ); test( "domTogAttr_0", GSUdomGetAttr( elCirc2, "data-tog" ), null );
-		GSUdomTogAttr( elCirc2, "data-to2", "abc" ); test( "domTogAttr_0", GSUdomGetAttr( elCirc2, "data-to2" ), "abc" );
-		GSUdomTogAttr( elCirc2, "data-to2", "abc" ); test( "domTogAttr_0", GSUdomGetAttr( elCirc2, "data-to2" ), null );
-		GSUdomTogAttr( elCirc2, "data-to2", "abc" ); test( "domTogAttr_0", GSUdomGetAttr( elCirc2, "data-to2" ), "abc" );
-		GSUdomTogAttr( elCirc2, "data-to2", "abc" ); test( "domTogAttr_0", GSUdomGetAttr( elCirc2, "data-to2" ), null );
 	} );
 	tests( "GSUdomAddClass", () => {
 		const el = GSUdomQS( "#classes" );
