@@ -1,11 +1,8 @@
 "use strict";
 
-const GSUdomHead = document.head;
-const GSUdomBody = document.body;
-const GSUdomHtml = GSUdomBody.parentNode;
 const GSUpopup = document.createElement( "gsui-popup" );
 
-GSUdomBody.prepend( GSUpopup );
+document.body.prepend( GSUpopup );
 
 // .............................................................................
 function GSUdomDefine( tag, clazz ) {
@@ -255,9 +252,10 @@ function GSUdomIsScrollable( el ) {
 }
 function GSUdomClosestScrollable( el ) {
 	___( el, "element" );
+	const limit = $html.$get( 0 );
 	let par = el;
 
-	while ( par !== GSUdomHtml && ( par = par.parentNode ) ) {
+	while ( par !== limit && ( par = par.parentNode ) ) {
 		if ( GSUdomIsScrollable( par ) ) {
 			return par;
 		}

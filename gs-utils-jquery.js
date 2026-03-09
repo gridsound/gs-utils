@@ -22,7 +22,7 @@ class $$ {
 			} else if ( GSUisStr( a ) ) {
 				a.startsWith( "<" ) && a.endsWith( ">" )
 					? list.push( GSUcreateElement( a.slice( 1, -1 ) ) )
-					: list.push( ...GSUdomQSA( GSUdomBody, a ) );
+					: list.push( ...GSUdomQSA( $body.$get( 0 ), a ) );
 			}
 		} else if ( GSUisStr( b ) ) {
 			if ( GSUisElm( a ) ) {
