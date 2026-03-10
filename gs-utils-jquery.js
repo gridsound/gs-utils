@@ -108,7 +108,7 @@ class $$ {
 	$rmEventListener( ev, fn ) { this.$each( el => el.removeEventListener( ev, fn ) ); }
 
 	// .........................................................................
-	$empty() { return this.$each( GSUdomEmpty ); }
+	$empty() { return this.$each( $$.#empty ); }
 	$remove() { return this.$each( el => el.remove() ); }
 	$prepend( ...arr ) { return this.#a0?.prepend( ...$$.#extractList( arr ) ), this; }
 	$append( ...arr ) { return this.#a0?.append( ...$$.#extractList( arr ) ), this; }
@@ -188,6 +188,11 @@ class $$ {
 	// .........................................................................
 	static #calcVal( val, el, i ) {
 		return GSUisFun( val ) ? val( el, i ) : val;
+	}
+	static #empty( el ) {
+		while ( el.lastChild ) {
+			el.lastChild.remove();
+		}
 	}
 	static #rmAttr( el, k ) { el.removeAttribute( k ); }
 	static #hasAttr( el, k ) { return el.hasAttribute( k ); }

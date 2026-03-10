@@ -32,13 +32,6 @@ function GSUdomUnselect() {
 }
 
 // .............................................................................
-function GSUdomEmpty( el ) {
-	while ( el.lastChild ) {
-		el.lastChild.remove();
-	}
-}
-
-// .............................................................................
 const _GSUdomIsDblClick_delay = 300;
 let _GSUdomIsDblClick_when = 0;
 let _GSUdomIsDblClick_elem = null;
