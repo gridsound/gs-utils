@@ -1515,13 +1515,21 @@
 		testStrict( "jqTag_3", $( "<abc-custom>" ).$tag(), "abc-custom" );
 	} );
 	tests( "$_parent", () => {
-		const b = $( "<div>" );
+		const c = $( "<div>" );
+		const b = $( "<div>" ).$append( c );
 		const a = $( "<div>" ).$append( b );
 
 		testStrict( "jqParent_0", a.$parent().$size(), 0 );
 		testStrict( "jqParent_1", $().$parent().$size(), 0 );
 		testStrict( "jqParent_2", $( [] ).$parent().$size(), 0 );
 		testStrict( "jqParent_3", b.$parent().$is( a ), true );
+		testStrict( "jqParent_4", c.$parent().$is( b ), true );
+		testStrict( "jqParent_5", c.$parent(  1 ).$is( b ), true );
+		testStrict( "jqParent_6", c.$parent(  2 ).$is( a ), true );
+		testStrict( "jqParent_7", c.$parent(  3 ).$size(), 0 );
+		testStrict( "jqParent_8", c.$parent( 99 ).$size(), 0 );
+		testStrict( "jqParent_9", c.$parent( -1 ).$is( c ), true );
+		testStrict( "jqParent_a", c.$parent( -9 ).$is( c ), true );
 	} );
 	tests( "$_index", () => {
 		const a = $( "<div>" ).$append(

@@ -62,7 +62,7 @@ class $$ {
 	$filter( fn ) { return new $$( this.#a.filter( GSUisFun( fn ) ? fn : el => el.matches( fn ) ) ); }
 	$child( n ) { return new $$( this.#a.map( el => Array.prototype.at.call( el.children, n ) ) ); }
 	$children() { return new $$( this.#a.flatMap( el => [ ...el.children ] ) ); }
-	$parent() { return new $$( this.#a.map( el => el.parentNode ) ); }
+	$parent( n ) { return new $$( this.#a.map( el => $$.#parent( el, n ) ) ); }
 	$prev() { return new $$( this.#a.map( el => el.previousElementSibling ) ); }
 	$next() { return new $$( this.#a.map( el => el.nextElementSibling ) ); }
 	$prevUntil( sel ) { return new $$( this.#a.flatMap( el => $$.#siblingUntil( el, "previousElementSibling", sel ) ) ); }
@@ -193,6 +193,15 @@ class $$ {
 		while ( el.lastChild ) {
 			el.lastChild.remove();
 		}
+	}
+	static #parent( el, n = 1 ) {
+		let el2 = el;
+		let n2 = n;
+
+		while ( el2 && --n2 >= 0 ) {
+			el2 = el2.parentNode;
+		}
+		return el2;
 	}
 	static #rmAttr( el, k ) { el.removeAttribute( k ); }
 	static #hasAttr( el, k ) { return el.hasAttribute( k ); }
