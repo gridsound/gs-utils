@@ -71,6 +71,9 @@ class $$ {
 	$queryMap( graph ) {
 		return GSUreduce( graph, ( obj, sel, key ) => {
 			obj[ key ] = $( [ this.$filter( sel ), this.$query( sel ) ] );
+			if ( !obj[ key ].$size() ) {
+				console.warn( "$queryMap: empty query", [ key, sel ] );
+			}
 			return obj;
 		}, {} );
 	}
