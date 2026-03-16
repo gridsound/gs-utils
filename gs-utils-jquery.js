@@ -215,7 +215,7 @@ class $$ {
 	static #hasAttr( el, k ) { return el.hasAttribute( k ); }
 	static #togAttr( el, k ) { $$.#setAttr( el, k, !$$.#hasAttr( el, k ) ); }
 	static #setAttr( el, k, v ) {
-		v === false || v === null
+		v === false || v === null || v === undefined
 			? $$.#rmAttr( el, k )
 			: el.setAttribute( k, v === true ? "" : v );
 	}
