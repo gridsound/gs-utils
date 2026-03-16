@@ -22,7 +22,7 @@ class $$ {
 			} else if ( GSUisStr( a ) ) {
 				a.startsWith( "<" ) && a.endsWith( ">" )
 					? list.push( GSUcreateElement( a.slice( 1, -1 ) ) )
-					: list.push( ...GSUdomQSA( $body.$get( 0 ), a ) );
+					: list.push( ...GSUdomQSA( $body.$get( 0 ), a ) ); // eslint-disable-line no-use-before-define
 			}
 		} else if ( GSUisStr( b ) ) {
 			if ( GSUisElm( a ) ) {
@@ -260,7 +260,9 @@ class $$ {
 Object.freeze( $ );
 Object.freeze( $$ );
 
+/* eslint-disable */
 const $noop = $();
 const $head = $( document.head );
 const $body = $( document.body );
 const $html = $body.$parent();
+/* eslint-enable */
