@@ -180,17 +180,6 @@ function GSUdomStyle( el, prop, val ) {
 }
 
 // .............................................................................
-function GSUdomRecallAttributes( el, props ) {
-	GSUforEach( props, ( val, p ) => {
-		GSUdomHasAttr( el, p )
-			? el.attributeChangedCallback?.( p, null, GSUdomGetAttr( el, p ) )
-			: val !== false
-				? GSUdomSetAttr_sub( el, p, val )
-				: el.$attributeChanged?.( p, null, null );
-	} );
-}
-
-// .............................................................................
 const _GSUdomResizeMap = new Map();
 const _GSUdomResizeObs = new ResizeObserver( entries => {
 	entries.forEach( e => {
