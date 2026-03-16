@@ -53,7 +53,7 @@ class $$ {
 	$findIndex( fn ) { return this.#a.findIndex( fn ); }
 	$reduce( fn, x ) { return this.#a.reduce( fn, x ); }
 	$is( tar ) { return this.$some( GSUisJQu( tar ) ? el => tar.$is( el ) : el => el === tar ); }
-	$contains( tar ) { return this.$some( el => el.contains( GSUisJQu( tar ) ? tar.$get( 0 ) : tar ) ); }
+	$contains( tar ) { return this.$some( el => el.contains( $$.#extractFirst( tar ) ) ); }
 	$index() {
 		return this.#a0?.parentNode
 			? Array.prototype.indexOf.call( this.#a0?.parentNode.children, this.#a0 )
@@ -119,7 +119,8 @@ class $$ {
 	$remove() { return this.$each( el => el.remove() ); }
 	$prepend( ...arr ) { return this.#a0?.prepend( ...$$.#extractList( arr ) ), this; }
 	$append( ...arr ) { return this.#a0?.append( ...$$.#extractList( arr ) ), this; }
-	$appendTo( el ) { return ( GSUisJQu( el ) ? el?.#a0 : el )?.append( ...this.#a ), this; }
+	$prependTo( el ) { return $$.#extractFirst( el )?.prepend( ...this.#a ), this; }
+	$appendTo( el ) { return $$.#extractFirst( el )?.append( ...this.#a ), this; }
 
 	// .........................................................................
 	$hasClass( c ) { return this.$some( el => el.classList.contains( c ) ); }
@@ -217,6 +218,9 @@ class $$ {
 		v === false || v === null
 			? $$.#rmAttr( el, k )
 			: el.setAttribute( k, v === true ? "" : v );
+	}
+	static #extractFirst( el ) {
+		return GSUisJQu( el ) ? el?.#a0 : el;
 	}
 	static #extractList( arr ) {
 		return arr.reduce( ( arr, el ) => {
