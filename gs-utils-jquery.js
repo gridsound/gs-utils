@@ -53,6 +53,7 @@ class $$ {
 	$findIndex( fn ) { return this.#a.findIndex( fn ); }
 	$reduce( fn, x ) { return this.#a.reduce( fn, x ); }
 	$is( tar ) { return this.$some( GSUisJQu( tar ) ? el => tar.$is( el ) : el => el === tar ); }
+	$contains( tar ) { return this.$some( el => el.contains( GSUisJQu( tar ) ? tar.$get( 0 ) : tar ) ); }
 	$index() {
 		return this.#a0?.parentNode
 			? Array.prototype.indexOf.call( this.#a0?.parentNode.children, this.#a0 )
@@ -69,6 +70,8 @@ class $$ {
 	$prevUntil( sel ) { return new $$( this.#a.flatMap( el => $$.#siblingUntil( el, "previousElementSibling", sel ) ) ); }
 	$nextUntil( sel ) { return new $$( this.#a.flatMap( el => $$.#siblingUntil( el, "nextElementSibling", sel ) ) ); }
 	$query( sel ) { return new $$( this.#a.flatMap( el => [ ...GSUdomQSA( el, sel ) ] ) ); }
+
+	// .........................................................................
 	$queryMap( graph ) {
 		return GSUreduce( graph, ( obj, sel, key ) => {
 			obj[ key ] = $( [ this.$filter( sel ), this.$query( sel ) ] );
