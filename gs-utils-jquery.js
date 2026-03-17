@@ -4,6 +4,10 @@ function $( ...args ) {
 	return new $$( ...args );
 }
 
+$.$getElemByPoint = ( x, y ) => {
+	return $( document.elementFromPoint( x, y ) );
+};
+
 class $$ {
 	#a;
 	#a0;
