@@ -59,6 +59,7 @@ class $$ {
 	$size() { return this.#a.length; }
 	$at( n ) { return new $$( this.#a.at( n ) ); }
 	$get( n ) { return this.#a.at( n ); }
+	$map( fn ) { return this.#a.map( fn ); }
 	$some( fn ) { return this.#a.some( fn ); }
 	$sort( fn ) { return this.#a.sort( fn ), this; }
 	$each( fn ) { return this.#a.forEach( fn ), this; }
