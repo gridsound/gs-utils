@@ -5,7 +5,7 @@ function $( ...args ) {
 }
 
 $.$getElemByPoint = ( x, y ) => {
-	return $( document.elementFromPoint( x, y ) );
+	return new $$( document.elementFromPoint( x, y ) );
 };
 
 class $$ {
