@@ -192,6 +192,11 @@ class $$ {
 	$click() { return this.$trigger( "click" ); }
 	$text( v ) { return this.$prop( "textContent", v ); }
 	$value( v ) { return this.$prop( "value", v ); }
+	$dataId( id ) {
+		return id
+			? this.$setAttr( "data-id", id )
+			: this.$getAttr( "data-id" );
+	}
 	$viewbox( x, y, w, h ) {
 		return this.$setAttr( "viewBox", arguments.length === 4
 			? `${ x } ${ y } ${ w } ${ h }`

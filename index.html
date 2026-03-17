@@ -1764,6 +1764,14 @@
 		testStrict( "jqBCR_1", bcr.h, bcr.height );
 		testStrict( "jqBCR_2", $noop.$bcr(), undefined );
 	} );
+	tests( "$_dataId", () => {
+		const a = $( "<div>" );
+
+		testStrict( "jqBCR_0", $noop.$dataId(), null );
+		testStrict( "jqBCR_1", a.$dataId(), null );
+		testStrict( "jqBCR_2", a.$dataId( "abc" ).$dataId(), "abc" );
+		testStrict( "jqBCR_3", a.$get( 0 ).dataset.id, "abc" );
+	} );
 </script>
 
 <!-- ....................................................................... -->
