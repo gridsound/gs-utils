@@ -1457,6 +1457,8 @@
 		testStrict( "jqIs_8", d.$is( e ), true );
 		testStrict( "jqIs_9", d.$is( f ), true );
 		testStrict( "jqIs_a", e.$is( d ), true );
+		testStrict( "jqIs_b", a.$is( "#eljq_1" ), true );
+		testStrict( "jqIs_c", a.$is( "#eljq_0" ), false );
 	} )
 	tests( "$_get", () => {
 		const x = $( "<div>" );

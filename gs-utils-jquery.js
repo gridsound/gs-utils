@@ -43,6 +43,15 @@ class $$ {
 	}
 
 	// .........................................................................
+	$is( tar ) {
+		return this.$some(
+			GSUisElm( tar ) ? el => el === tar :
+			GSUisJQu( tar ) ? el => tar.$is( el ) :
+			GSUisStr( tar ) ? el => el.matches( tar ) : GSUnoopFalse
+		);
+	}
+
+	// .........................................................................
 	$size() { return this.#a.length; }
 	$at( n ) { return new $$( this.#a.at( n ) ); }
 	$get( n ) { return this.#a.at( n ); }
@@ -52,7 +61,6 @@ class $$ {
 	$find( fn ) { return new $$( this.#a.find( fn ) ); }
 	$findIndex( fn ) { return this.#a.findIndex( fn ); }
 	$reduce( fn, x ) { return this.#a.reduce( fn, x ); }
-	$is( tar ) { return this.$some( GSUisJQu( tar ) ? el => tar.$is( el ) : el => el === tar ); }
 	$contains( tar ) { return this.$some( el => el.contains( $$.#extractFirst( tar ) ) ); }
 	$index() {
 		return this.#a0?.parentNode
