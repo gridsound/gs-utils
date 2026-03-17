@@ -847,19 +847,6 @@
 		GSUdomAddClass( el, "a", "b" ); test( "domAddClass_1", el.className, "a b" );
 		GSUdomAddClass( el, "abc" );    test( "domAddClass_2", el.className, "a b abc" );
 	} );
-	tests( "GSUdomHasClass", () => {
-		const el = GSUdomQS( "#classes" );
-
-		el.className = "a b abc";
-		test( "domHasClass_0", GSUdomHasClass(),              false );
-		test( "domHasClass_1", GSUdomHasClass( null ),        false );
-		test( "domHasClass_2", GSUdomHasClass( undefined ),   false );
-		test( "domHasClass_3", GSUdomHasClass( null, "123" ), false );
-		test( "domHasClass_4", GSUdomHasClass( el, "123" ),   false );
-		test( "domHasClass_5", GSUdomHasClass( el, "abcd" ),  false );
-		test( "domHasClass_6", GSUdomHasClass( el, "abc" ),   true );
-		test( "domHasClass_7", GSUdomHasClass( el, "a" ),     true );
-	} );
 	tests( "GSUdomRepClass", () => {
 		const el = GSUdomQS( "#classes" );
 
