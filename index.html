@@ -1531,6 +1531,32 @@
 		testStrict( "jqParent_9", c.$parent( -1 ).$is( c ), true );
 		testStrict( "jqParent_a", c.$parent( -9 ).$is( c ), true );
 	} );
+	tests( "$_closest", () => {
+		const a = $( "<div>" ).$addClass( "e" ).$append(
+			$( "<span>" ).$addClass( "c", "e" ).$append(
+				$( "<div>" ).$setAttr( { class: "a" } ),
+				$( "<b>" ).$setAttr( { class: "a" } ),
+			),
+			$( "<span>" ).$addClass( "d" ).$append(
+				$( "<b>" ).$setAttr( { class: "a" } ),
+				$( "<div>" ).$setAttr( { class: "a" } ),
+			),
+		);
+		const b = a.$query( "b" ).$closest( "span" );
+		const c = a.$query( "b" ).$closest( ".c" );
+		const d = a.$query( "b" ).$closest( ".e" );
+
+		testStrict( "jqClosest_0", a.$closest( ".abc" ).$size(), 0 );
+		testStrict( "jqClosest_1", a.$closest( "div.e" ).$size(), 1 );
+		testStrict( "jqClosest_2", b.$size(), 2 );
+		testStrict( "jqClosest_3", b.$at( 0 ).$is( "span.c" ), true );
+		testStrict( "jqClosest_4", b.$at( 1 ).$is( "span.d" ), true );
+		testStrict( "jqClosest_5", c.$size(), 1 );
+		testStrict( "jqClosest_6", c.$at( 0 ).$is( "span.c" ), true );
+		testStrict( "jqClosest_7", d.$size(), 2 );
+		testStrict( "jqClosest_8", d.$at( 0 ).$is( "span.e" ), true );
+		testStrict( "jqClosest_9", d.$at( 1 ).$is( "div.e" ), true );
+	} );
 	tests( "$_index", () => {
 		const a = $( "<div>" ).$append(
 			$( "<div>" ).$setAttr( { id: "jqIndex_0" } ),

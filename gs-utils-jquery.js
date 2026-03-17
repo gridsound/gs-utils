@@ -65,6 +65,7 @@ class $$ {
 	$child( n ) { return new $$( this.#a.map( el => Array.prototype.at.call( el.children, n ) ) ); }
 	$children() { return new $$( this.#a.flatMap( el => [ ...el.children ] ) ); }
 	$parent( n ) { return new $$( this.#a.map( el => $$.#parent( el, n ) ) ); }
+	$closest( sel ) { return new $$( this.#a.map( el => el.closest( sel ) ) ); }
 	$prev() { return new $$( this.#a.map( el => el.previousElementSibling ) ); }
 	$next() { return new $$( this.#a.map( el => el.nextElementSibling ) ); }
 	$prevUntil( sel ) { return new $$( this.#a.flatMap( el => $$.#siblingUntil( el, "previousElementSibling", sel ) ) ); }
