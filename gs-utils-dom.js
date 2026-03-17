@@ -11,11 +11,6 @@ function GSUdomDefine( tag, clazz ) {
 }
 
 // .............................................................................
-function GSUdomIsCustomElement( el ) {
-	return el?.tagName.includes( "-" );
-}
-
-// .............................................................................
 function GSUdomQS(  el, sel ) { return GSUisStr( el ) ? document.querySelector( el ) : el.querySelector( sel ); }
 function GSUdomQSA( el, sel ) { return GSUisStr( el ) ? document.querySelectorAll( el ) : el.querySelectorAll( sel ); }
 
