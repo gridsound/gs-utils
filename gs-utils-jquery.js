@@ -163,7 +163,7 @@ class $$ {
 	$height( n, unit ) { return n === undefined ? this.#a0?.clientHeight || 0 : this.$css( "height", n, unit ); }
 	$css( prop, val, unit = "" ) {
 		return ( GSUisStr( prop ) || prop === undefined ) && val === undefined
-			? GSUdomStyle( this.#a0, prop )
+			? this.#a0 && GSUdomStyle( this.#a0, prop )
 			: this.$each(
 				GSUisObj( prop ) ? el => GSUdomStyle( el, prop ) :
 				GSUisFun( prop ) ? ( el, i ) => GSUdomStyle( el, prop( el, i ) ) :
