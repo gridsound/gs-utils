@@ -120,8 +120,8 @@ class $$ {
 	$off( ...ev ) {
 		return this.$each( el => ev.forEach( ev => el[ `on${ ev }` ] = null ) );
 	}
-	$addEventListener( ev, fn, opt ) { this.$each( el => el.addEventListener( ev, fn, opt ) ); }
-	$rmEventListener( ev, fn ) { this.$each( el => el.removeEventListener( ev, fn ) ); }
+	$addEventListener( ev, fn, opt ) { return this.$each( el => el.addEventListener( ev, fn, opt ) ); }
+	$rmEventListener( ev, fn ) { return this.$each( el => el.removeEventListener( ev, fn ) ); }
 
 	// .........................................................................
 	$empty() { return this.$each( $$.#empty ); }
