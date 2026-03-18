@@ -15,8 +15,8 @@ function GSUdomQS(  el, sel ) { return GSUisStr( el ) ? document.querySelector( 
 function GSUdomQSA( el, sel ) { return GSUisStr( el ) ? document.querySelectorAll( el ) : el.querySelectorAll( sel ); }
 
 // .............................................................................
-function GSUdomTogClass( el, clazz, b ) { return el?.classList.toggle(   clazz, b ) || false; }
-function GSUdomAddClass( el, ...clazz ) { el?.classList.add(    ...clazz ); }
+function GSUdomTogClass( el, clazz, b ) { return el?.classList.toggle( clazz, b ) || false; }
+function GSUdomAddClass( el, ...clazz ) { el?.classList.add( ...clazz ); }
 
 // .............................................................................
 function GSUdomUnselect() {

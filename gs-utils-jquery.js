@@ -271,22 +271,14 @@ class $$ {
 	}
 	static #onEvent( el, ev, fn ) {
 		if ( ev === "focusin" || ev === "focusout" ) {
-			if ( fn ) {
-				el.addEventListener( ev, fn );
-			} else {
-				console.warn( `$on, ${ ev } can not be remove like that` );
-			}
+			el.addEventListener( ev, fn );
 		} else {
 			const ev2 = `on${ ev }`;
 
-			if ( fn ) {
-				if ( el[ ev2 ] !== null ) {
-					console.warn( `$on, ${ ev } is already set`, el[ ev2 ] );
-				} else {
-					el[ ev2 ] = fn;
-				}
+			if ( el[ ev2 ] !== null ) {
+				console.warn( `$on, ${ ev } is already set`, el[ ev2 ] );
 			} else {
-				el[ ev2 ] = null;
+				el[ ev2 ] = fn;
 			}
 		}
 	}
