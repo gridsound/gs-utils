@@ -286,7 +286,7 @@ class $$ {
 					el[ ev2 ] = fn;
 				}
 			} else {
-				delete el[ ev2 ];
+				el[ ev2 ] = null;
 			}
 		}
 	}
