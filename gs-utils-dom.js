@@ -17,7 +17,6 @@ function GSUdomQSA( el, sel ) { return GSUisStr( el ) ? document.querySelectorAl
 // .............................................................................
 function GSUdomTogClass( el, clazz, b ) { return el?.classList.toggle(   clazz, b ) || false; }
 function GSUdomAddClass( el, ...clazz ) { el?.classList.add(    ...clazz ); }
-function GSUdomRmClass(  el, ...clazz ) { el?.classList.remove( ...clazz ); }
 
 // .............................................................................
 function GSUdomUnselect() {
