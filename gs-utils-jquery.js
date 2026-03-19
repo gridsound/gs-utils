@@ -4,9 +4,8 @@ function $( ...args ) {
 	return new $$( ...args );
 }
 
-$.$getElemByPoint = ( x, y ) => {
-	return new $$( document.elementFromPoint( x, y ) );
-};
+$.$css = ( el, prop, val ) => $$.$setStyle( el, prop, val );
+$.$getElemByPoint = ( x, y ) => new $$( document.elementFromPoint( x, y ) );
 
 class $$ {
 	#a;
@@ -158,17 +157,17 @@ class $$ {
 	}
 
 	// .........................................................................
-	$top(    n, unit ) { return n === undefined ? parseFloat( GSUdomStyle( this.#a0, "top" ) )  || 0 : this.$css( "top",  n, unit ); }
-	$left(   n, unit ) { return n === undefined ? parseFloat( GSUdomStyle( this.#a0, "left" ) ) || 0 : this.$css( "left", n, unit ); }
+	$top(    n, unit ) { return n === undefined ? parseFloat( $$.$setStyle( this.#a0, "top" ) )  || 0 : this.$css( "top",  n, unit ); }
+	$left(   n, unit ) { return n === undefined ? parseFloat( $$.$setStyle( this.#a0, "left" ) ) || 0 : this.$css( "left", n, unit ); }
 	$width(  n, unit ) { return n === undefined ? this.#a0?.clientWidth  || 0 : this.$css( "width",  n, unit ); }
 	$height( n, unit ) { return n === undefined ? this.#a0?.clientHeight || 0 : this.$css( "height", n, unit ); }
 	$css( prop, val, unit = "" ) {
 		return ( GSUisStr( prop ) || prop === undefined ) && val === undefined
-			? this.#a0 && GSUdomStyle( this.#a0, prop )
+			? this.#a0 && $$.$setStyle( this.#a0, prop )
 			: this.$each(
-				GSUisObj( prop ) ? el => GSUdomStyle( el, prop ) :
-				GSUisFun( prop ) ? ( el, i ) => GSUdomStyle( el, prop( el, i ) ) :
-				( el, i ) => GSUdomStyle( el, prop, `${ $$.#calcVal( val, el, i ) }${ unit }` )
+				GSUisObj( prop ) ? el => $$.$setStyle( el, prop ) :
+				GSUisFun( prop ) ? ( el, i ) => $$.$setStyle( el, prop( el, i ) ) :
+				( el, i ) => $$.$setStyle( el, prop, `${ $$.#calcVal( val, el, i ) }${ unit }` )
 			);
 	}
 
@@ -281,6 +280,30 @@ class $$ {
 				el[ ev2 ] = fn;
 			}
 		}
+	}
+	static #getComputedStyle( el ) {
+		return getComputedStyle( el );
+	}
+	static #setStyleSub( el, val, prop ) {
+		if ( prop.startsWith( "--" ) ) {
+			el.style.setProperty( prop, val );
+		} else {
+			el.style[ prop ] = val;
+		}
+	}
+	static $setStyle( el, prop, val ) {
+		if ( prop === undefined && val === undefined ) {
+			return $$.#getComputedStyle( el );
+		}
+		if ( val !== undefined ) {
+			return $$.#setStyleSub( el, val, prop );
+		}
+		if ( GSUisStr( prop ) ) {
+			return prop.startsWith( "--" )
+				? $$.#getComputedStyle( el ).getPropertyValue( prop )
+				: $$.#getComputedStyle( el )[ prop ];
+		}
+		GSUforEach( prop, $$.#setStyleSub.bind( null, el ) );
 	}
 }
 

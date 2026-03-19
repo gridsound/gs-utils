@@ -148,29 +148,6 @@ function GSUdomViewBox( svg, x, y, w, h ) {
 }
 
 // .............................................................................
-function GSUdomStyle_set( el, val, prop ) {
-	if ( prop.startsWith( "--" ) ) {
-		el.style.setProperty( prop, val );
-	} else {
-		el.style[ prop ] = val;
-	}
-}
-function GSUdomStyle( el, prop, val ) {
-	if ( prop === undefined && val === undefined ) {
-		return getComputedStyle( el );
-	}
-	if ( val !== undefined ) {
-		return GSUdomStyle_set( el, val, prop );
-	}
-	if ( GSUisStr( prop ) ) {
-		return prop.startsWith( "--" )
-			? getComputedStyle( el ).getPropertyValue( prop )
-			: getComputedStyle( el )[ prop ];
-	}
-	GSUforEach( prop, GSUdomStyle_set.bind( null, el ) );
-}
-
-// .............................................................................
 const _GSUdomResizeMap = new Map();
 const _GSUdomResizeObs = new ResizeObserver( entries => {
 	entries.forEach( e => {
@@ -219,7 +196,7 @@ function GSUdomScrollIntoViewX( el, par ) {
 // .............................................................................
 function GSUdomIsScrollable( el ) {
 	___( el, "element" );
-	const ov = GSUdomStyle( el, "overflow" );
+	const ov = $.$css( el, "overflow" );
 
 	return ov === "auto" || ov === "scroll";
 }
