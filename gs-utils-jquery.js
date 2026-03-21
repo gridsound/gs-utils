@@ -191,6 +191,7 @@ class $$ {
 	$click() { return this.$trigger( "click" ); }
 	$text( v ) { return this.$prop( "textContent", v ); }
 	$value( v ) { return this.$prop( "value", v ); }
+	$checked( b ) { return this.$prop( "checked", b ); }
 	$dataId( id ) {
 		return id
 			? this.$setAttr( "data-id", id )
