@@ -192,6 +192,7 @@ class $$ {
 	$text( v ) { return this.$prop( "textContent", v ); }
 	$value( v ) { return this.$prop( "value", v ); }
 	$checked( b ) { return this.$prop( "checked", b ); }
+	$disabled( b ) { return this.$setAttr( "disabled", b ); }
 	$dataId( id ) {
 		return id
 			? this.$setAttr( "data-id", id )
