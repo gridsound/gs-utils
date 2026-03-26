@@ -19,6 +19,34 @@ function GSUHztoX( x ) {
 }
 
 // .............................................................................
+// "main.gain"
+// "main.0_filter.gain"
+function GSUaudioStringifyTarget( chanId, fxId, fxType, prop ) {
+	return prop
+		? `${ chanId }.${ fxId }_${ fxType }.${ prop }`
+		: `${ chanId }.${ fxId }`;
+}
+function GSUaudioParseTarget( target ) {
+	const arr = target.split( "." );
+	const [ chan, fx, prop ] = arr;
+
+	if ( arr.length === 3 ) {
+		const [ fxId, fxType ] = fx.split( "_" );
+
+		return {
+			$channelId: chan,
+			$effectId: fxId,
+			$effectType: fxType,
+			$prop: prop,
+		};
+	}
+	return {
+		$channelId: chan,
+		$prop: fx,
+	};
+}
+
+// .............................................................................
 function GSUaudioDelayDuration( time, gain, target = .1 ) {
 	return (
 		gain <= 0 ? 0 :
