@@ -194,7 +194,7 @@ class $$ {
 	$checked( b ) { return this.$prop( "checked", b ); }
 	$disabled( b ) { return this.$setAttr( "disabled", b ); }
 	$dataId( id ) {
-		return id
+		return id !== undefined
 			? this.$setAttr( "data-id", id )
 			: this.$getAttr( "data-id" );
 	}
