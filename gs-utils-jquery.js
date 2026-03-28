@@ -187,15 +187,15 @@ class $$ {
 	$onclick( fn ) { return this.$on( "click", fn ); }
 	$oninput( fn ) { return this.$on( "input", fn ); }
 	$onchange( fn ) { return this.$on( "change", fn ); }
+
+	// .........................................................................
+	$play() { return this.$trigger( "play" ); }
+	$pause() { return this.$trigger( "pause" ); }
 	$click() { return this.$trigger( "click" ); }
-	$input() { return this.$trigger( "input" ); }
-	$change() { return this.$trigger( "change" ); }
 
 	// .........................................................................
 	$tag() { return this.#a0?.tagName.toLowerCase(); }
 	$focus() { return this.#a0?.focus( { preventScroll: true } ); }
-	$play() { return this.$trigger( "play" ); }
-	$pause() { return this.$trigger( "pause" ); }
 	$text( v ) { return this.$prop( "textContent", v ); }
 	$value( v ) { return this.$prop( "value", v ); }
 	$checked( b ) { return this.$prop( "checked", b ); }
