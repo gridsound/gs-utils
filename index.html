@@ -68,6 +68,11 @@
 <!-- ....................................................................... -->
 <script>
 	function lg( a ) { return console.log( ...arguments ), a; }
+	function qSA( el, sel ) {
+		return sel
+			? el.querySelectorAll( sel )
+			: document.querySelectorAll( el );
+	}
 
 	let nbGroups = 0;
 	let nbTests = 0;
@@ -785,21 +790,6 @@
 		testStrict( "domQS_3", GSUdomQS( elSquare2, "*" ), elSquare3 );
 		testStrict( "domQS_4", GSUdomQS( ".u404" ), document.querySelector( ".u404" ) );
 	} );
-	tests( "GSUdomQSA", () => {
-		const elCircles = document.querySelectorAll( ".circle1" );
-		const elSquare2 = document.querySelector( "#square2" );
-		const ci = GSUdomQSA( ".circle1" );
-		const ci2 = GSUdomQSA( elSquare2, ".circle1" );
-
-		test( "domQSA_0", GSUdomQSA( ".u404" ), document.querySelectorAll( ".u404" ) );
-		testStrict( "domQSA_1", ci[ 0 ], elCircles[ 0 ] );
-		testStrict( "domQSA_2", ci[ 1 ], elCircles[ 1 ] );
-		testStrict( "domQSA_3", ci[ 2 ], elCircles[ 2 ] );
-		testStrict( "domQSA_5", ci.length, elCircles.length );
-		testStrict( "domQSA_6", ci2.length, elSquare2.querySelectorAll( ".circle1" ).length );
-		testStrict( "domQSA_7", ci2[ 0 ], elSquare2.querySelectorAll( ".circle1" )[ 0 ] );
-		testStrict( "domQSA_8", ci2[ 1 ], elSquare2.querySelectorAll( ".circle1" )[ 1 ] );
-	} );
 	tests( "GSUdomGetAttr", () => {
 		const elCirc2 = GSUdomQS( ".circle2" );
 
@@ -1355,7 +1345,7 @@
 		const a = $( "#square1" );
 		const b = $( ".circle1" );
 		const u = $( "#e404" );
-		const bb = GSUdomQSA( ".circle1" );
+		const bb = qSA( ".circle1" );
 
 		testStrict( "jqA_0", a.$get( 0 ), GSUdomQS( "#square1" ) );
 		testStrict( "jqA_1", b.$get( 0 ), bb[ 0 ] );

@@ -25,14 +25,14 @@ class $$ {
 			} else if ( GSUisStr( a ) ) {
 				a.startsWith( "<" ) && a.endsWith( ">" )
 					? list.push( GSUcreateElement( a.slice( 1, -1 ) ) )
-					: list.push( ...GSUdomQSA( $body.$get( 0 ), a ) ); // eslint-disable-line no-use-before-define
+					: list.push( ...$$.#qSA( $body.$get( 0 ), a ) );
 			}
 		} else if ( GSUisStr( b ) ) {
 			if ( GSUisElm( a ) ) {
-				list.push( ...GSUdomQSA( a, b ) );
+				list.push( ...$$.#qSA( a, b ) );
 			} else if ( GSUisArr( a ) ) {
 				list.push( ...a.flatMap( el => {
-					const arr = [ ...GSUdomQSA( el, b ) ];
+					const arr = [ ...$$.#qSA( el, b ) ];
 
 					if ( el.matches( b ) ) {
 						arr.push( el );
@@ -82,7 +82,7 @@ class $$ {
 	$next() { return new $$( this.#a.map( el => el.nextElementSibling ) ); }
 	$prevUntil( sel ) { return new $$( this.#a.flatMap( el => $$.#siblingUntil( el, "previousElementSibling", sel ) ) ); }
 	$nextUntil( sel ) { return new $$( this.#a.flatMap( el => $$.#siblingUntil( el, "nextElementSibling", sel ) ) ); }
-	$query( sel ) { return new $$( this.#a.flatMap( el => [ ...GSUdomQSA( el, sel ) ] ) ); }
+	$query( sel ) { return new $$( this.#a.flatMap( el => [ ...$$.#qSA( el, sel ) ] ) ); }
 
 	// .........................................................................
 	$queryMap( graph ) {
@@ -214,6 +214,11 @@ class $$ {
 	}
 
 	// .........................................................................
+	static #qSA( el, sel ) {
+		return sel
+			? el.querySelectorAll( sel )
+			: document.querySelectorAll( el );
+	}
 	static #calcVal( val, el, i ) {
 		return GSUisFun( val ) ? val( el, i ) : val;
 	}

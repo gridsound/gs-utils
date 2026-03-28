@@ -12,7 +12,6 @@ function GSUdomDefine( tag, clazz ) {
 
 // .............................................................................
 function GSUdomQS(  el, sel ) { return GSUisStr( el ) ? document.querySelector( el ) : el.querySelector( sel ); }
-function GSUdomQSA( el, sel ) { return GSUisStr( el ) ? document.querySelectorAll( el ) : el.querySelectorAll( sel ); }
 
 // .............................................................................
 function GSUdomTogClass( el, clazz, b ) { return el?.classList.toggle( clazz, b ) || false; }
