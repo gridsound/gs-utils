@@ -69,13 +69,19 @@ function GSUisWaveName( name )      { return GSUisStr( name ) && name.startsWith
 function GSUaudioParamCancel( aparam, when = 0 ) {
 	aparam.cancelScheduledValues( when );
 }
-function GSUsetValueAtTime( audioParam, val, when ) {
-	GSUaudioParamCancel( audioParam, when );
-	audioParam.setValueAtTime( val, when );
+function GSUaudioParamSet( aparam, val, when = 0 ) {
+	aparam.setValueAtTime( val, when );
 }
-function GSUsetValueCurveAtTime( audioParam, arr, when, dur ) {
+function GSUaudioParamSetCurve( aparam, arr, when, dur ) {
+	aparam.setValueCurveAtTime( arr, when, dur );
+}
+function GSUsetValueAtTime( audioParam, val, when ) { // deprecated
 	GSUaudioParamCancel( audioParam, when );
-	audioParam.setValueCurveAtTime( new Float32Array( arr ), when, Math.max( .00001, dur ) );
+	GSUaudioParamSet( audioParam, val, when );
+}
+function GSUsetValueCurveAtTime( audioParam, arr, when, dur ) { // deprecated
+	GSUaudioParamCancel( audioParam, when );
+	GSUaudioParamSetCurve( new Float32Array( arr ), when, Math.max( .00001, dur ) );
 }
 
 // .............................................................................
