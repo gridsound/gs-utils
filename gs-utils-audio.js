@@ -75,14 +75,6 @@ function GSUaudioParamSet( aparam, val, when = 0 ) {
 function GSUaudioParamSetCurve( aparam, arr, when, dur ) {
 	aparam.setValueCurveAtTime( arr, when, dur );
 }
-function GSUsetValueAtTime( audioParam, val, when ) { // deprecated
-	GSUaudioParamCancel( audioParam, when );
-	GSUaudioParamSet( audioParam, val, when );
-}
-function GSUsetValueCurveAtTime( audioParam, arr, when, dur ) { // deprecated
-	GSUaudioParamCancel( audioParam, when );
-	GSUaudioParamSetCurve( audioParam, new Float32Array( arr ), when, Math.max( .00001, dur ) );
-}
 
 // .............................................................................
 function GSUhashBufferV1( u8buf ) {
