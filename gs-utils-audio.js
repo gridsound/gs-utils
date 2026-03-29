@@ -81,7 +81,7 @@ function GSUsetValueAtTime( audioParam, val, when ) { // deprecated
 }
 function GSUsetValueCurveAtTime( audioParam, arr, when, dur ) { // deprecated
 	GSUaudioParamCancel( audioParam, when );
-	GSUaudioParamSetCurve( new Float32Array( arr ), when, Math.max( .00001, dur ) );
+	GSUaudioParamSetCurve( audioParam, new Float32Array( arr ), when, Math.max( .00001, dur ) );
 }
 
 // .............................................................................
