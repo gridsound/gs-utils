@@ -9,10 +9,14 @@ const GSUXtoHz_b = .945;
 const GSUXtoHz_c = GSUXtoHz_a - GSUXtoHz_b;
 /* eslint-enable */
 
+// ( ( 128 ** x ) - .945 ) / ( 128 - .945 );
+// GSUmathLogN( 128, x * ( 128 - .945 ) + .945 );
+
 function GSUXtoHz( x ) {
 	return ( ( GSUXtoHz_a ** x ) - GSUXtoHz_b ) / GSUXtoHz_c;
 	// return 2 ** ( x * 11 - 11 );
 }
+// GSUHztoX( val / this.#nyquist )
 function GSUHztoX( x ) {
 	return GSUmathLogN( GSUXtoHz_a, x * GSUXtoHz_c + GSUXtoHz_b );
 	// return ( Math.log2( x ) + 11 ) / 11;
@@ -62,12 +66,15 @@ function GSUisWavetableName( name ) { return GSUisStr( name ) && name.startsWith
 function GSUisWaveName( name )      { return GSUisStr( name ) && name.startsWith( "custom.s" ) && GSUcountChar( name, "." ) === 3; }
 
 // .............................................................................
+function GSUaudioParamCancel( aparam, when = 0 ) {
+	aparam.cancelScheduledValues( when );
+}
 function GSUsetValueAtTime( audioParam, val, when ) {
-	audioParam.cancelScheduledValues( when );
+	GSUaudioParamCancel( audioParam, when );
 	audioParam.setValueAtTime( val, when );
 }
 function GSUsetValueCurveAtTime( audioParam, arr, when, dur ) {
-	audioParam.cancelScheduledValues( when );
+	GSUaudioParamCancel( audioParam, when );
 	audioParam.setValueCurveAtTime( new Float32Array( arr ), when, Math.max( .00001, dur ) );
 }
 
