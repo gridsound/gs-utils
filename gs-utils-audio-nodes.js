@@ -1,0 +1,54 @@
+"use strict";
+
+const _GSUaudioContext_wm         = __LOCALHOST__ ? new WeakMap() : null;
+const _GSUaudioContextOff_wm      = __LOCALHOST__ ? new WeakMap() : null;
+const _GSUaudioGain_wm            = __LOCALHOST__ ? new WeakMap() : null;
+const _GSUaudioDelay_wm           = __LOCALHOST__ ? new WeakMap() : null;
+const _GSUaudioBuffer_wm          = __LOCALHOST__ ? new WeakMap() : null;
+const _GSUaudioAnalyser_wm        = __LOCALHOST__ ? new WeakMap() : null;
+const _GSUaudioConvolver_wm       = __LOCALHOST__ ? new WeakMap() : null;
+const _GSUaudioOscillator_wm      = __LOCALHOST__ ? new WeakMap() : null;
+const _GSUaudioWaveShaper_wm      = __LOCALHOST__ ? new WeakMap() : null;
+const _GSUaudioBiquadFilter_wm    = __LOCALHOST__ ? new WeakMap() : null;
+const _GSUaudioBufferSource_wm    = __LOCALHOST__ ? new WeakMap() : null;
+const _GSUaudioPeriodicWave_wm    = __LOCALHOST__ ? new WeakMap() : null;
+const _GSUaudioStereoPanner_wm    = __LOCALHOST__ ? new WeakMap() : null;
+const _GSUaudioChannelMerger_wm   = __LOCALHOST__ ? new WeakMap() : null;
+const _GSUaudioConstantSource_wm  = __LOCALHOST__ ? new WeakMap() : null;
+const _GSUaudioChannelSplitter_wm = __LOCALHOST__ ? new WeakMap() : null;
+
+const GSUaudioContext         = !__LOCALHOST__ ? (    ...a ) => new AudioContext( ...a )        : (    ...a ) => { const n = new AudioContext( ...a );        _GSUaudioContext_wm.set( n, 1 );         return n; };
+const GSUaudioContextOff      = !__LOCALHOST__ ? (    ...a ) => new OfflineAudioContext( ...a ) : (    ...a ) => { const n = new OfflineAudioContext( ...a ); _GSUaudioContextOff_wm.set( n, 1 );      return n; };
+const GSUaudioGain            = !__LOCALHOST__ ? ( c, ...a ) => c.createGain( ...a )            : ( c, ...a ) => { const n = c.createGain( ...a );            _GSUaudioGain_wm.set( n, 1 );            return n; };
+const GSUaudioDelay           = !__LOCALHOST__ ? ( c, ...a ) => c.createDelay( ...a )           : ( c, ...a ) => { const n = c.createDelay( ...a );           _GSUaudioDelay_wm.set( n, 1 );           return n; };
+const GSUaudioBuffer          = !__LOCALHOST__ ? ( c, ...a ) => c.createBuffer( ...a )          : ( c, ...a ) => { const n = c.createBuffer( ...a );          _GSUaudioBuffer_wm.set( n, 1 );          return n; };
+const GSUaudioAnalyser        = !__LOCALHOST__ ? ( c, ...a ) => c.createAnalyser( ...a )        : ( c, ...a ) => { const n = c.createAnalyser( ...a );        _GSUaudioAnalyser_wm.set( n, 1 );        return n; };
+const GSUaudioConvolver       = !__LOCALHOST__ ? ( c, ...a ) => c.createConvolver( ...a )       : ( c, ...a ) => { const n = c.createConvolver( ...a );       _GSUaudioConvolver_wm.set( n, 1 );       return n; };
+const GSUaudioOscillator      = !__LOCALHOST__ ? ( c, ...a ) => c.createOscillator( ...a )      : ( c, ...a ) => { const n = c.createOscillator( ...a );      _GSUaudioOscillator_wm.set( n, 1 );      return n; };
+const GSUaudioWaveShaper      = !__LOCALHOST__ ? ( c, ...a ) => c.createWaveShaper( ...a )      : ( c, ...a ) => { const n = c.createWaveShaper( ...a );      _GSUaudioWaveShaper_wm.set( n, 1 );      return n; };
+const GSUaudioBiquadFilter    = !__LOCALHOST__ ? ( c, ...a ) => c.createBiquadFilter( ...a )    : ( c, ...a ) => { const n = c.createBiquadFilter( ...a );    _GSUaudioBiquadFilter_wm.set( n, 1 );    return n; };
+const GSUaudioBufferSource    = !__LOCALHOST__ ? ( c, ...a ) => c.createBufferSource( ...a )    : ( c, ...a ) => { const n = c.createBufferSource( ...a );    _GSUaudioBufferSource_wm.set( n, 1 );    return n; };
+const GSUaudioPeriodicWave    = !__LOCALHOST__ ? ( c, ...a ) => c.createPeriodicWave( ...a )    : ( c, ...a ) => { const n = c.createPeriodicWave( ...a );    _GSUaudioPeriodicWave_wm.set( n, 1 );    return n; };
+const GSUaudioStereoPanner    = !__LOCALHOST__ ? ( c, ...a ) => c.createStereoPanner( ...a )    : ( c, ...a ) => { const n = c.createStereoPanner( ...a );    _GSUaudioStereoPanner_wm.set( n, 1 );    return n; };
+const GSUaudioChannelMerger   = !__LOCALHOST__ ? ( c, ...a ) => c.createChannelMerger( ...a )   : ( c, ...a ) => { const n = c.createChannelMerger( ...a );   _GSUaudioChannelMerger_wm.set( n, 1 );   return n; };
+const GSUaudioConstantSource  = !__LOCALHOST__ ? ( c, ...a ) => c.createConstantSource( ...a )  : ( c, ...a ) => { const n = c.createConstantSource( ...a );  _GSUaudioConstantSource_wm.set( n, 1 );  return n; };
+const GSUaudioChannelSplitter = !__LOCALHOST__ ? ( c, ...a ) => c.createChannelSplitter( ...a ) : ( c, ...a ) => { const n = c.createChannelSplitter( ...a ); _GSUaudioChannelSplitter_wm.set( n, 1 ); return n; };
+
+const GSUaudioLogWeakMaps = !__LOCALHOST__ ? null : m => {
+	( !m || m === "context"         ) && console.log( "context", _GSUaudioContext_wm );
+	( !m || m === "contextOff"      ) && console.log( "contextOff", _GSUaudioContextOff_wm );
+	( !m || m === "gain"            ) && console.log( "gain", _GSUaudioGain_wm );
+	( !m || m === "delay"           ) && console.log( "delay", _GSUaudioDelay_wm );
+	( !m || m === "buffer"          ) && console.log( "buffer", _GSUaudioBuffer_wm );
+	( !m || m === "analyser"        ) && console.log( "analyser", _GSUaudioAnalyser_wm );
+	( !m || m === "convolver"       ) && console.log( "convolver", _GSUaudioConvolver_wm );
+	( !m || m === "oscillator"      ) && console.log( "oscillator", _GSUaudioOscillator_wm );
+	( !m || m === "waveShaper"      ) && console.log( "waveShaper", _GSUaudioWaveShaper_wm );
+	( !m || m === "biquadFilter"    ) && console.log( "biquadFilter", _GSUaudioBiquadFilter_wm );
+	( !m || m === "bufferSource"    ) && console.log( "bufferSource", _GSUaudioBufferSource_wm );
+	( !m || m === "periodicWave"    ) && console.log( "periodicWave", _GSUaudioPeriodicWave_wm );
+	( !m || m === "stereoPanner"    ) && console.log( "stereoPanner", _GSUaudioStereoPanner_wm );
+	( !m || m === "channelMerger"   ) && console.log( "channelMerger", _GSUaudioChannelMerger_wm );
+	( !m || m === "constantSource"  ) && console.log( "constantSource", _GSUaudioConstantSource_wm );
+	( !m || m === "channelSplitter" ) && console.log( "channelSplitter", _GSUaudioChannelSplitter_wm );
+};
