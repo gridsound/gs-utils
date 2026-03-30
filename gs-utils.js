@@ -101,9 +101,6 @@ function GSUnewArray( l, fn ) {
 			: Array.from( { length: l } ).fill( fn );
 }
 function GSUarrayEq( a, b, diff ) {
-	___( a, "arrayOfNumber" );
-	___( b, "arrayOfNumber" );
-	___( diff, "number-undefined" );
 	return a.length === b.length && a.every( diff
 		? ( a, i ) => GSUmathApprox( a, b[ i ], diff )
 		: ( a, i ) => a === b[ i ]
@@ -140,8 +137,6 @@ function GSUarrayRemove( arr, fn ) {
 	return arr;
 }
 function GSUarrayResize( arr, len ) {
-	___( arr, "arrayOfNumber" );
-	___( len, "integer-positive-0" );
 	if ( len < 1 || arr.length < 1 ) { return []; }
 	if ( len === 1 ) { return [ arr[ 0 ] || 0 ]; }
 	if ( arr.length === len ) { return [ ...arr ]; }

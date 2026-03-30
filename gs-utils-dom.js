@@ -194,13 +194,11 @@ function GSUdomScrollIntoViewX( el, par ) {
 
 // .............................................................................
 function GSUdomIsScrollable( el ) {
-	___( el, "element" );
 	const ov = $.$css( el, "overflow" );
 
 	return ov === "auto" || ov === "scroll";
 }
 function GSUdomClosestScrollable( el ) {
-	___( el, "element" );
 	const limit = $html.$get( 0 );
 	let par = el;
 

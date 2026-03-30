@@ -63,7 +63,6 @@
 <script src="gs-utils-json.js"></script>
 <script src="gs-utils-audio.js"></script>
 <script src="gs-utils-jquery.js"></script>
-<script src="gs-utils-checkType.dev.js"></script>
 
 <!-- ....................................................................... -->
 <script>
@@ -101,163 +100,6 @@
 			console.log( `testStrict:${ id }`, val, "!==", expected );
 		}
 	}
-	function testThrow( id, errorType, fn ) {
-		++nbTests;
-		try {
-			fn();
-			console.log( `testThrow:${ id } should have thrown something` );
-		} catch ( e ) {
-			if ( errorType === GSUcheckType_lastError ) {
-				++nbTestsOk;
-			} else {
-				console.log( `testThrow:${ id }`, GSUcheckType_lastError, "!==", errorType );
-			}
-		}
-	}
-</script>
-
-<!-- ....................................................................... -->
-<!-- ..... gs-utils-checkType .............................................. -->
-<!-- ....................................................................... -->
-<script>
-	tests( "GSUcheckType:number", () => {
-		test( "checkType_00", GSUcheckType(   0,       "number" ), true  );
-		test( "checkType_01", GSUcheckType(  21,       "number" ), true  );
-		test( "checkType_02", GSUcheckType( -21,       "number" ), true  );
-		test( "checkType_03", GSUcheckType(   1.5,     "number" ), true  );
-		test( "checkType_04", GSUcheckType(  -1.5,     "number" ), true  );
-		test( "checkType_05", GSUcheckType(  "0",      "number" ), false );
-		test( "checkType_06", GSUcheckType( "21",      "number" ), false );
-		test( "checkType_07", GSUcheckType( NaN,       "number" ), false );
-		test( "checkType_08", GSUcheckType( null,      "number" ), false );
-		test( "checkType_09", GSUcheckType( true,      "number" ), false );
-		test( "checkType_0a", GSUcheckType( false,     "number" ), false );
-		test( "checkType_0b", GSUcheckType( undefined, "number" ), false );
-		test( "checkType_0c", GSUcheckType( GSUnoop,   "number" ), false );
-		test( "checkType_0d", GSUcheckType( 0 / 0,     "number-NaN"  ), true );
-		test( "checkType_0e", GSUcheckType( null,      "number-null" ), true );
-	} );
-	tests( "GSUcheckType:integer", () => {
-		test( "checkType_10", GSUcheckType(   0,       "integer" ), true  );
-		test( "checkType_11", GSUcheckType(  21,       "integer" ), true  );
-		test( "checkType_12", GSUcheckType( -21,       "integer" ), true  );
-		test( "checkType_13", GSUcheckType(   1.5,     "integer" ), false );
-		test( "checkType_14", GSUcheckType(  -1.5,     "integer" ), false );
-		test( "checkType_15", GSUcheckType(  "0",      "integer" ), false );
-		test( "checkType_16", GSUcheckType( "21",      "integer" ), false );
-		test( "checkType_17", GSUcheckType( NaN,       "integer" ), false );
-		test( "checkType_18", GSUcheckType( null,      "integer" ), false );
-		test( "checkType_19", GSUcheckType( true,      "integer" ), false );
-		test( "checkType_1a", GSUcheckType( false,     "integer" ), false );
-		test( "checkType_1b", GSUcheckType( undefined, "integer" ), false );
-		test( "checkType_1c", GSUcheckType( GSUnoop,   "integer" ), false );
-	} );
-	tests( "GSUcheckType:function", () => {
-		test( "checkType_20", GSUcheckType( GSUnoop,      "function" ), true  );
-		test( "checkType_21", GSUcheckType( GSUnoopFalse, "function" ), true  );
-		test( "checkType_22", GSUcheckType( NaN,          "function" ), false );
-		test( "checkType_23", GSUcheckType( null,         "function" ), false );
-		test( "checkType_24", GSUcheckType( true,         "function" ), false );
-		test( "checkType_25", GSUcheckType( false,        "function" ), false );
-		test( "checkType_26", GSUcheckType( undefined,    "function" ), false );
-	} );
-	tests( "GSUcheckType:string", () => {
-		test( "checkType_30", GSUcheckType( "",        "string" ), true  );
-		test( "checkType_31", GSUcheckType( "a",       "string" ), true  );
-		test( "checkType_32", GSUcheckType( "abc",     "string" ), true  );
-		test( "checkType_33", GSUcheckType( "0",       "string" ), true  );
-		test( "checkType_34", GSUcheckType( "21",      "string" ), true  );
-		test( "checkType_35", GSUcheckType( NaN,       "string" ), false );
-		test( "checkType_36", GSUcheckType( null,      "string" ), false );
-		test( "checkType_37", GSUcheckType( true,      "string" ), false );
-		test( "checkType_38", GSUcheckType( false,     "string" ), false );
-		test( "checkType_39", GSUcheckType( undefined, "string" ), false );
-	} );
-	tests( "GSUcheckType:number-inRange", () => {
-		test( "checkType_40", GSUcheckType(  21.5, "number-inRange",  20,  22 ), true  );
-		test( "checkType_41", GSUcheckType(  21,   "number-inRange",  21,  21 ), true  );
-		test( "checkType_42", GSUcheckType( -21.5, "number-inRange", -20, -22 ), true  );
-		test( "checkType_43", GSUcheckType( -21,   "number-inRange", -22, -20 ), true  );
-		test( "checkType_44", GSUcheckType( -21,   "number-inRange", -21, -21 ), true  );
-		test( "checkType_45", GSUcheckType(  42,   "number-inRange",   0,  20 ), false );
-	} );
-	tests( "GSUcheckType:integer-inRange", () => {
-		test( "checkType_40", GSUcheckType(  21,   "integer-inRange",  21,  21 ), true  );
-		test( "checkType_41", GSUcheckType( -21,   "integer-inRange", -22, -20 ), true  );
-		test( "checkType_42", GSUcheckType( -21,   "integer-inRange", -21, -21 ), true  );
-		test( "checkType_43", GSUcheckType(  21.5, "integer-inRange",  20,  22 ), false );
-		test( "checkType_44", GSUcheckType( -21.5, "integer-inRange", -20, -22 ), false );
-		test( "checkType_45", GSUcheckType(  42,   "integer-inRange",   0,  20 ), false );
-	} );
-	tests( "GSUcheckType:array", () => {
-		test( "checkType_50", GSUcheckType( [],        "array" ), true  );
-		test( "checkType_51", GSUcheckType( [ 21 ],    "array" ), true  );
-		test( "checkType_52", GSUcheckType( {},        "array" ), false );
-		test( "checkType_53", GSUcheckType( NaN,       "array" ), false );
-		test( "checkType_54", GSUcheckType( null,      "array" ), false );
-		test( "checkType_55", GSUcheckType( true,      "array" ), false );
-		test( "checkType_56", GSUcheckType( false,     "array" ), false );
-		test( "checkType_57", GSUcheckType( undefined, "array" ), false );
-	} );
-	tests( "GSUcheckType:object", () => {
-		test( "checkType_60", GSUcheckType( {},        "object" ), true  );
-		test( "checkType_61", GSUcheckType( [],        "object" ), false );
-		test( "checkType_62", GSUcheckType( [ 21 ],    "object" ), false );
-		test( "checkType_63", GSUcheckType( NaN,       "object" ), false );
-		test( "checkType_64", GSUcheckType( null,      "object" ), false );
-		test( "checkType_65", GSUcheckType( true,      "object" ), false );
-		test( "checkType_66", GSUcheckType( false,     "object" ), false );
-		test( "checkType_67", GSUcheckType( undefined, "object" ), false );
-	} );
-	tests( "GSUcheckType:arrayOfNumber", () => {
-		test( "checkType_70", GSUcheckType( [],            "arrayOfNumber" ), true  );
-		test( "checkType_71", GSUcheckType( [ 1 ],         "arrayOfNumber" ), true  );
-		test( "checkType_72", GSUcheckType( [ 1, 2 ],      "arrayOfNumber" ), true  );
-		test( "checkType_73", GSUcheckType( [ 1, 2, 3.5 ], "arrayOfNumber" ), true  );
-		test( "checkType_74", GSUcheckType( [ 1, 2, "" ],  "arrayOfNumber" ), false );
-		test( "checkType_75", GSUcheckType( "123",         "arrayOfNumber" ), false );
-		test( "checkType_76", GSUcheckType( GSUnoop,       "arrayOfNumber" ), false );
-		test( "checkType_77", GSUcheckType( NaN,           "arrayOfNumber" ), false );
-		test( "checkType_78", GSUcheckType( null,          "arrayOfNumber" ), false );
-		test( "checkType_79", GSUcheckType( true,          "arrayOfNumber" ), false );
-		test( "checkType_7a", GSUcheckType( false,         "arrayOfNumber" ), false );
-		test( "checkType_7b", GSUcheckType( undefined,     "arrayOfNumber" ), false );
-	} );
-	tests( "GSUcheckType:arrayOfInteger", () => {
-		test( "checkType_80", GSUcheckType( [],            "arrayOfInteger" ), true  );
-		test( "checkType_81", GSUcheckType( [ 1 ],         "arrayOfInteger" ), true  );
-		test( "checkType_82", GSUcheckType( [ 1, 2 ],      "arrayOfInteger" ), true  );
-		test( "checkType_83", GSUcheckType( [ 1, 2, 3.5 ], "arrayOfInteger" ), false );
-		test( "checkType_84", GSUcheckType( [ 1, 2, "" ],  "arrayOfInteger" ), false );
-		test( "checkType_85", GSUcheckType( "123",         "arrayOfInteger" ), false );
-		test( "checkType_86", GSUcheckType( GSUnoop,       "arrayOfInteger" ), false );
-		test( "checkType_87", GSUcheckType( NaN,           "arrayOfInteger" ), false );
-		test( "checkType_88", GSUcheckType( null,          "arrayOfInteger" ), false );
-		test( "checkType_89", GSUcheckType( true,          "arrayOfInteger" ), false );
-		test( "checkType_8a", GSUcheckType( false,         "arrayOfInteger" ), false );
-		test( "checkType_8b", GSUcheckType( undefined,     "arrayOfInteger" ), false );
-	} );
-	tests( "GSUcheckType:oneOf", () => {
-		test( "checkType_90", GSUcheckType(  0,      "oneOf", [ 0, 21 ]    ), true  );
-		test( "checkType_91", GSUcheckType( 21,      "oneOf", [ 0, 21 ]    ), true  );
-		test( "checkType_92", GSUcheckType( null,    "oneOf", [ null ]     ), true  );
-		test( "checkType_93", GSUcheckType( "42",    "oneOf", [ 41, "42" ] ), true  );
-		test( "checkType_94", GSUcheckType( GSUnoop, "oneOf", [ GSUnoop ]  ), true  );
-		test( "checkType_95", GSUcheckType( 10,      "oneOf", [ 0, 21 ]    ), false );
-		test( "checkType_96", GSUcheckType( "21",    "oneOf", [ 0, 21 ]    ), false );
-		test( "checkType_97", GSUcheckType( "21",    "oneOf", [ 0, 21 ]    ), false );
-	} );
-	tests( "GSUcheckType:objay", () => {
-		test( "checkType_a0", GSUcheckType( {},        "objay" ), true  );
-		test( "checkType_a1", GSUcheckType( [],        "objay" ), true  );
-		test( "checkType_a2", GSUcheckType( [ 21 ],    "objay" ), true  );
-		test( "checkType_a3", GSUcheckType( null,      "objay" ), false );
-		test( "checkType_a4", GSUcheckType( undefined, "objay" ), false );
-		test( "checkType_a5", GSUcheckType( GSUnoop,   "objay" ), false );
-		test( "checkType_a6", GSUcheckType( 21,        "objay" ), false );
-		test( "checkType_a7", GSUcheckType( "abc",     "objay" ), false );
-		test( "checkType_a8", GSUcheckType( "",        "objay" ), false );
-	} );
 </script>
 
 <!-- ....................................................................... -->
@@ -533,10 +375,6 @@
 	tests( "GSUsetIntervalLimit", () => {
 		test( "setIntervalLimit_0", _GSUsetInterval_minMs, 0 );
 		test( "setIntervalLimit_1", GSUsetIntervalLimit( 1 ), 1_000 );
-		testThrow( "setIntervalLimit_2", "number-positive-0", () => GSUsetIntervalLimit( NaN ) );
-		testThrow( "setIntervalLimit_3", "number-positive-0", () => GSUsetIntervalLimit( -1 ) );
-		testThrow( "setIntervalLimit_4", "number-positive-0", () => GSUsetIntervalLimit( false ) );
-		testThrow( "setIntervalLimit_5", "number-positive-0", () => GSUsetIntervalLimit( true ) );
 		test( "setIntervalLimit_6", _GSUsetInterval_minMs, 1_000 );
 	} );
 	tests( "GSUsetTimeout", async () => {
@@ -552,12 +390,9 @@
 		timeoutId = GSUsetTimeout( fn, 0 );
 		test( "setTimeout_4", timeoutId, null );
 		test( "setTimeout_5", timeoutInc, 2 );
-		testThrow( "setTimeout_6", "number-positive-0", () => GSUsetTimeout( fn, -1 ) );
-		testThrow( "setTimeout_7", "number-positive-0", () => GSUsetTimeout( fn, NaN ) );
-		test( "setTimeout_8", timeoutInc, 2 );
 		timeoutId = GSUsetTimeout( fn, .01 );
 		GSUclearTimeout( timeoutId ); await GSUwait( .02 );
-		test( "setTimeout_9", timeoutInc, 2 );
+		test( "setTimeout_6", timeoutInc, 2 );
 	} );
 </script>
 
@@ -572,20 +407,12 @@
 		test( "getNewId_3", GSUgetNewId( { 0: false, 1: null } ), "2" );
 		test( "getNewId_4", GSUgetNewId( { 2: false, 1: null } ), "0" );
 		test( "getNewId_5", GSUgetNewId( { 0: false, 2: null } ), "1" );
-		testThrow( "getNewId_6", "object", () => GSUgetNewId() );
-		testThrow( "getNewId_7", "object", () => GSUgetNewId( [] ) );
 	} );
 	tests( "GSUgetNewIds", () => {
 		test( "getNewIds_0", GSUgetNewIds( {}, 1 ), [ "0" ] );
 		test( "getNewIds_1", GSUgetNewIds( {}, 2 ), [ "0", "1" ] );
 		test( "getNewIds_2", GSUgetNewIds( {}, 3 ), [ "0", "1", "2" ] );
 		test( "getNewIds_3", GSUgetNewIds( { 0: 0, 1: 1, 3: 3, 4: 4 }, 2 ), [ "2", "5" ] );
-		testThrow( "getNewIds_4", "object", () => GSUgetNewIds() );
-		testThrow( "getNewIds_5", "object", () => GSUgetNewIds( [] ) );
-		testThrow( "getNewIds_6", "integer-positive", () => GSUgetNewIds( {} ) );
-		testThrow( "getNewIds_7", "integer-positive", () => GSUgetNewIds( {}, -1   ) );
-		testThrow( "getNewIds_8", "integer-positive", () => GSUgetNewIds( {},  0   ) );
-		testThrow( "getNewIds_9", "integer-positive", () => GSUgetNewIds( {},  1.5 ) );
 	} );
 	tests( "GSUgetLastOrder", () => {
 		test( "getLastOrder_0", GSUgetLastOrder( {}                                   ),  0 );
@@ -595,8 +422,6 @@
 		test( "getLastOrder_4", GSUgetLastOrder( { 1: { order: 9 }, 2: { order: 3 } } ), 10 );
 		test( "getLastOrder_5", GSUgetLastOrder( { 1: {},           2: {}           } ),  1 );
 		test( "getLastOrder_6", GSUgetLastOrder( { 1: { order: 9 }, 2: {}           } ), 10 );
-		testThrow( "getLastOrder_7", "objay", () => GSUgetLastOrder() );
-		testThrow( "getLastOrder_8", "objay", () => GSUgetLastOrder( null ) );
 	} );
 	tests( "GSUdeepCopy", () => {
 		test( "deepCopy_0", GSUdeepCopy(  0 ),  0 );

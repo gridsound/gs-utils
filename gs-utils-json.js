@@ -1,7 +1,6 @@
 "use strict";
 
 function GSUgetNewId( obj ) {
-	___( obj, "object" );
 	let i = 0;
 
 	while ( i in obj ) {
@@ -11,8 +10,6 @@ function GSUgetNewId( obj ) {
 }
 
 function GSUgetNewIds( obj, nb ) {
-	___( obj, "object" );
-	___( nb, "integer-positive" );
 	const ids = [];
 	let i = 0;
 
@@ -25,7 +22,6 @@ function GSUgetNewIds( obj, nb ) {
 }
 
 function GSUgetLastOrder( obj ) {
-	___( obj, "objay" );
 	return GSUreduce( obj, ( max, item ) => Math.max( max, item.order || 0 ), -1 ) + 1;
 }
 
