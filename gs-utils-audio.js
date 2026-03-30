@@ -9,14 +9,10 @@ const GSUXtoHz_b = .945;
 const GSUXtoHz_c = GSUXtoHz_a - GSUXtoHz_b;
 /* eslint-enable */
 
-// ( ( 128 ** x ) - .945 ) / ( 128 - .945 );
-// GSUmathLogN( 128, x * ( 128 - .945 ) + .945 );
-
 function GSUXtoHz( x ) {
 	return ( ( GSUXtoHz_a ** x ) - GSUXtoHz_b ) / GSUXtoHz_c;
 	// return 2 ** ( x * 11 - 11 );
 }
-// GSUHztoX( val / this.#nyquist )
 function GSUHztoX( x ) {
 	return GSUmathLogN( GSUXtoHz_a, x * GSUXtoHz_c + GSUXtoHz_b );
 	// return ( Math.log2( x ) + 11 ) / 11;
@@ -70,10 +66,34 @@ function GSUaudioParamCancel( aparam, when = 0 ) {
 	aparam.cancelScheduledValues( when );
 }
 function GSUaudioParamSet( aparam, val, when = 0 ) {
-	aparam.setValueAtTime( val, when );
+	try {
+		aparam.setValueAtTime( val, when );
+	} catch ( err ) {
+		GSUaudioParamError( "GSUaudioParamSet", err );
+	}
 }
 function GSUaudioParamSetCurve( aparam, arr, when, dur ) {
-	aparam.setValueCurveAtTime( arr, when, dur );
+	try {
+		aparam.setValueCurveAtTime( arr, when, dur );
+	} catch ( err ) {
+		GSUaudioParamError( "GSUaudioParamSetCurve", err );
+	}
+}
+function GSUaudioParamError( from, err ) {
+	if ( __LOCALHOST__ ) {
+		if ( err.message.includes( "overlaps" ) ) {
+			const arr = err.message.split( ", " ).map( n => parseFloat( n ) );
+			const [ _, a, b, c, d ] = arr;
+
+			console.warn( arr.length === 4
+				? `${ from } [${ a }] overlaps [${ b } -> ${ c }]`
+				: `${ from } [${ a } -> ${ b }] overlaps [${ c } -> ${ d }]` );
+		} else {
+			console.warn( from, err );
+		}
+	} else {
+		console.warn( "overlap" );
+	}
 }
 
 // .............................................................................
