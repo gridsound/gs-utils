@@ -105,6 +105,27 @@
 <!-- ..... gs-utils-math ................................................... -->
 <!-- ....................................................................... -->
 <script>
+	tests( "GSUmathPrec", () => {
+		test( "mathPrec_0", GSUmathPrec( 0 ), 0 );
+		test( "mathPrec_1", GSUmathPrec( .1 + .2 ), .3 );
+		test( "mathPrec_2", GSUmathPrec( .001 + .002 ), .003 );
+		test( "mathPrec_3", GSUmathPrec( .0001 + .0002 ), .0003 );
+		test( "mathPrec_4", GSUmathPrec( .00001 + .00002 ), .00003 );
+		test( "mathPrec_5", GSUmathPrec( .000001 + .000002 ), .000003 );
+		test( "mathPrec_6", GSUmathPrec( .0000001 + .0000002 ), .0000003 );
+		test( "mathPrec_7", GSUmathPrec( .00000001 + .00000002 ), .00000003 );
+		test( "mathPrec_8", GSUmathPrec( .000000001 + .000000002 ), .000000003 );
+		test( "mathPrec_9", GSUmathPrec( .0000000001 + .0000000002 ), .0000000003 );
+		test( "mathPrec_a", .001 + .002, .003 );
+		test( "mathPrec_b", .0001 + .0002, 0.00030000000000000003 );
+		test( "mathPrec_c", .00001 + .00002, 0.000030000000000000004 );
+		test( "mathPrec_d", .000001 + .000002, .000003 );
+		test( "mathPrec_e", .0000001 + .0000002, .0000003 );
+		test( "mathPrec_f", .00000001 + .00000002, 3.0000000000000004e-8 );
+		test( "mathPrec_g", .000000001 + .000000002, 3.0000000000000004e-9 );
+		test( "mathPrec_h", .0000000001 + .0000000002, .0000000003 );
+		test( "mathPrec_i", GSUmathPrec( .57 * .1 ), .057 );
+	} );
 	tests( "GSUmathApprox", () => {
 		test( "mathApprox_0", GSUmathApprox(   0,     0,  0 ),  true );
 		test( "mathApprox_1", GSUmathApprox(  -0,    -0,  0 ),  true );

@@ -1,5 +1,7 @@
 "use strict";
 
+const GSUmathPrec = n => +n.toPrecision( 15 );
+
 // .............................................................................
 function GSUmathMod( n, m ) { return ( ( n % m ) + m ) % m; }
 function GSUmathLogN( x, y ) { return Math.log( y ) / Math.log( x ); }
