@@ -1,5 +1,9 @@
 "use strict";
 
+const lg = __LOCALHOST__
+	? ( ...args ) => ( console.log( ...args ), args[ 0 ] )
+	: a => a;
+
 const GSUonMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/u.test( navigator.userAgent );
 const GSUonIphone = [ "iPhone Simulator", "iPhone" ].includes( navigator.platform );
 const GSUonOpera = navigator.userAgent.toLowerCase().includes( "op" );
