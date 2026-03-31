@@ -1,5 +1,7 @@
 "use strict";
 
+const __LOCALHOST__ = true;
+
 const lg = __LOCALHOST__
 	? ( ...args ) => ( console.log( ...args ), args[ 0 ] )
 	: a => a;
