@@ -21,22 +21,22 @@ GSUsetModel( "channel", {
 	order: 0,
 	toggle: true,
 	name: "chan",
-	dest: "main",
+	dest: "0",
 	gain: 1,
 	pan: 0,
 } );
 GSUsetModel( "channelMain", {
 	toggle: true,
-	name: "main",
+	name: "0",
 	gain: .4,
 	pan: 0,
 } );
 GSUsetModel( "channels", {
-	main: GSUgetModel( "channelMain" ),
-	1: GSUgetModel( "channel", { order: 0, name: "drums" } ),
-	2: GSUgetModel( "channel", { order: 1, name: "synth" } ),
-	3: GSUgetModel( "channel", { order: 2, name: "chan 3" } ),
-	4: GSUgetModel( "channel", { order: 3, name: "chan 4" } ),
+	0: GSUgetModel( "channelMain" ),
+	1: GSUgetModel( "channel", { order: 0, name: "1" } ),
+	2: GSUgetModel( "channel", { order: 1, name: "2" } ),
+	3: GSUgetModel( "channel", { order: 2, name: "3" } ),
+	4: GSUgetModel( "channel", { order: 3, name: "4" } ),
 } );
 
 // .............................................................................
@@ -139,7 +139,7 @@ GSUsetModel( "wavetable", {
 GSUsetModel( "synth", {
 	name: "synth",
 	preset: null,
-	dest: "main",
+	dest: "0",
 	octave: 4,
 	envs: {
 		gain: GSUgetModel( "envGain" ),
