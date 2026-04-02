@@ -130,6 +130,7 @@ function GSUcreateButton( attr, ...child ) {
 	return GSUcreateElement( "button", attr2, ...child );
 }
 function GSUcreateA( attr, ...child ) { return GSUcreateElement( "a", { href: true, ...attr }, ...child ); }
+function GSUcreateB( attr, ...child ) { return GSUcreateElement( "b", attr, ...child ); }
 function GSUcreateDiv( attr, ...child ) { return GSUcreateElement( "div", attr, ...child ); }
 function GSUcreateFlex( attr, ...child ) { return GSUcreateElement( "gs-flex", attr, ...child ); }
 function GSUcreateAExt( attr, ...child ) { return GSUcreateA( { ...attr, target: "_blank", rel: "noopener" }, ...child ); }
