@@ -5,6 +5,8 @@ function $( ...args ) {
 }
 
 $.$css = ( el, prop, val ) => $$.$setStyle( el, prop, val );
+$.$prev = el => el.previousElementSibling;
+$.$next = el => el.nextElementSibling;
 $.$getElemByPoint = ( x, y ) => new $$( document.elementFromPoint( x, y ) );
 
 class $$ {
@@ -78,10 +80,10 @@ class $$ {
 	$children() { return new $$( this.#a.flatMap( el => [ ...el.children ] ) ); }
 	$parent( n ) { return new $$( this.#a.map( el => $$.#parent( el, n ) ) ); }
 	$closest( sel ) { return new $$( this.#a.map( el => el.closest( sel ) ) ); }
-	$prev() { return new $$( this.#a.map( el => el.previousElementSibling ) ); }
-	$next() { return new $$( this.#a.map( el => el.nextElementSibling ) ); }
-	$prevUntil( sel ) { return new $$( this.#a.flatMap( el => $$.#siblingUntil( el, "previousElementSibling", sel ) ) ); }
-	$nextUntil( sel ) { return new $$( this.#a.flatMap( el => $$.#siblingUntil( el, "nextElementSibling", sel ) ) ); }
+	$prev() { return new $$( this.#a.map( $.$prev ) ); }
+	$next() { return new $$( this.#a.map( $.$next ) ); }
+	$prevUntil( sel ) { return new $$( this.#a.flatMap( el => $$.#siblingUntil( el, $.$prev, sel ) ) ); }
+	$nextUntil( sel ) { return new $$( this.#a.flatMap( el => $$.#siblingUntil( el, $.$next, sel ) ) ); }
 	$query( sel ) { return new $$( this.#a.flatMap( el => [ ...$$.#qSA( el, sel ) ] ) ); }
 
 	// .........................................................................
@@ -275,11 +277,11 @@ class $$ {
 			},
 		} ) );
 	}
-	static #siblingUntil( el, dir, sel ) {
+	static #siblingUntil( el, fnDir, sel ) {
 		const arr = [];
-		let el2 = el[ dir ];
+		let el2 = fnDir( el );
 
-		for ( ; el2 && !el2.matches( sel ); el2 = el2[ dir ] ) {
+		for ( ; el2 && !el2.matches( sel ); el2 = fnDir( el2 ) ) {
 			arr.push( el2 );
 		}
 		return arr;

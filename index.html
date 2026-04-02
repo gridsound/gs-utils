@@ -1371,6 +1371,24 @@
 		testStrict( "jqIndex_6", a.$query( "*" ).$index(), 0 );
 		testStrict( "jqIndex_7", a.$query( "* + *" ).$index(), 1 );
 	} );
+	tests( "$_prev_next", () => {
+		const a = $( "<div>" ).$append(
+			$( "<div>" ).$setAttr( { id: "i0" } ),
+			$( "<div>" ).$setAttr( { id: "i1" } ),
+			$( "<div>" ).$setAttr( { id: "i2" } ),
+		);
+		const b = a.$child( 0 );
+		const c = a.$child( -1 );
+
+		testStrict( "jqIndex_0", a.$prev().$size(), 0 );
+		testStrict( "jqIndex_1", a.$next().$size(), 0 );
+		testStrict( "jqIndex_2", b.$next().$getAttr( "id" ), "i1" );
+		testStrict( "jqIndex_3", b.$next().$next().$getAttr( "id" ), "i2" );
+		testStrict( "jqIndex_4", b.$next().$next().$next().$getAttr( "id" ), null );
+		testStrict( "jqIndex_5", c.$prev().$prev().$prev().$getAttr( "id" ), null );
+		testStrict( "jqIndex_6", c.$prev().$prev().$getAttr( "id" ), "i0" );
+		testStrict( "jqIndex_7", c.$prev().$getAttr( "id" ), "i1" );
+	} );
 	tests( "$_append", () => {
 		const a = $( "<div>" );
 		const b = $( "<span>" );
