@@ -1197,26 +1197,6 @@
 		testStrict( "jqA_2", b.$get( 1 ), bb[ 1 ] );
 		testStrict( "jqA_3", u.$get( 0 ), undefined );
 	} );
-	tests( "$_cnstrctr_elm_sel", () => {
-		const eljq_1 = GSUdomQS( "#eljq_1" );
-		const eljq_2 = GSUdomQS( "#eljq_2" );
-
-		testStrict( "jqB_0", $( null,   ".a"     ).$size(), 0 );
-		testStrict( "jqB_1", $( eljq_1, ".a"     ).$size(), 1 );
-		testStrict( "jqB_2", $( eljq_1, ".b"     ).$size(), 2 );
-		testStrict( "jqB_3", $( eljq_1, ".a, .b" ).$size(), 3 );
-	} );
-	tests( "$_cnstrctr_arrElm_sel", () => {
-		const eljq_1 = GSUdomQS( "#eljq_1" );
-		const eljq_2 = GSUdomQS( "#eljq_2" );
-
-		testStrict( "jqC_0", $( [                ], ".a"     ).$size(), 0 );
-		testStrict( "jqC_1", $( [ eljq_1         ], ".a"     ).$size(), 1 );
-		testStrict( "jqC_2", $( [ eljq_1, eljq_1 ], ".a"     ).$size(), 1 );
-		testStrict( "jqC_3", $( [ eljq_1, eljq_2 ], ".a"     ).$size(), 2 );
-		testStrict( "jqC_4", $( [ eljq_1, eljq_2 ], ".b"     ).$size(), 4 );
-		testStrict( "jqC_5", $( [ eljq_1, eljq_2 ], ".a, .b" ).$size(), 6 );
-	} );
 	tests( "$_cnstrctr_jqu", () => {
 		const a = $( "#eljq_1" );
 		const b = $( "#eljq_1 .b" );

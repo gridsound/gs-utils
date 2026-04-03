@@ -17,31 +17,19 @@ class $$ {
 		const list = [];
 
 		Object.freeze( this );
-		if ( b === undefined ) {
-			if ( GSUisElm( a ) ) {
-				list.push( a );
-			} else if ( GSUisJQu( a ) ) {
-				a.$each( el => list.push( el ) );
-			} else if ( GSUisArr( a ) ) {
-				list.push( ...$$.#extractList( a ) );
-			} else if ( GSUisStr( a ) ) {
-				a.startsWith( "<" ) && a.endsWith( ">" )
-					? list.push( GSUcreateElement( a.slice( 1, -1 ) ) )
-					: list.push( ...$$.#qSA( $body.$get( 0 ), a ) );
-			}
-		} else if ( GSUisStr( b ) ) {
-			if ( GSUisElm( a ) ) {
-				list.push( ...$$.#qSA( a, b ) );
-			} else if ( GSUisArr( a ) ) {
-				list.push( ...a.flatMap( el => {
-					const arr = [ ...$$.#qSA( el, b ) ];
-
-					if ( el.matches( b ) ) {
-						arr.push( el );
-					}
-					return arr;
-				} ) );
-			}
+		if ( b !== undefined ) {
+			console.warn( "⚠️ $() constructor deprecated", [ a, b ] );
+		}
+		if ( GSUisElm( a ) ) {
+			list.push( a );
+		} else if ( GSUisJQu( a ) ) {
+			a.$each( el => list.push( el ) );
+		} else if ( GSUisArr( a ) ) {
+			list.push( ...$$.#extractList( a ) );
+		} else if ( GSUisStr( a ) ) {
+			a.startsWith( "<" ) && a.endsWith( ">" )
+				? list.push( GSUcreateElement( a.slice( 1, -1 ) ) )
+				: list.push( ...$$.#qSA( $body.$get( 0 ), a ) );
 		}
 		this.#a = !GSUisArr( a ) ? list : [ ...new Set( list ) ];
 		this.#a0 = this.#a[ 0 ];
