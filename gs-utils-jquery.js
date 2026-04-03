@@ -1,7 +1,10 @@
 "use strict";
 
-function $( ...args ) {
-	return new $$( ...args );
+function $( a, b ) {
+	if ( b !== undefined ) {
+		console.warn( "⚠️ $() constructor deprecated", [ a, b ] );
+	}
+	return GSUisJQu( a ) ? a : new $$( a );
 }
 
 $.$css = ( el, prop, val ) => $$.$setStyle( el, prop, val );
@@ -13,17 +16,12 @@ class $$ {
 	#a;
 	#a0;
 
-	constructor( a, b ) {
+	constructor( a ) {
 		const list = [];
 
 		Object.freeze( this );
-		if ( b !== undefined ) {
-			console.warn( "⚠️ $() constructor deprecated", [ a, b ] );
-		}
 		if ( GSUisElm( a ) ) {
 			list.push( a );
-		} else if ( GSUisJQu( a ) ) {
-			a.$each( el => list.push( el ) );
 		} else if ( GSUisArr( a ) ) {
 			list.push( ...$$.#extractList( a ) );
 		} else if ( GSUisStr( a ) ) {

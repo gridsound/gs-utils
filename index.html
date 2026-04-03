@@ -1182,21 +1182,26 @@
 
 	} );
 	tests( "$_constructor", () => {
+		const a = $( "#square1" );
+
 		testStrict( "jqConstructor_0", $noop.$size(), 0 );
 		testStrict( "jqConstructor_1", $( 0 ).$size(), 0 );
-		testStrict( "jqConstructor_2", $( null ).$size(), 0 );
-		testStrict( "jqConstructor_3", $( "#e404" ).$size(), 0 );
-		testStrict( "jqConstructor_4", $( undefined ).$size(), 0 );
-		testStrict( "jqConstructor_5", $( [ undefined, null ] ).$size(), 0 );
-		testStrict( "jqConstructor_6", $( [ undefined, null, $( "#square1" ).$get( 0 ) ] ).$size(), 1 );
-		testStrict( "jqConstructor_7", $( [ undefined, $( "#square1" ), null, $( "#square1" ).$get( 0 ) ] ).$size(), 1 );
-		testStrict( "jqConstructor_8", $( "#square1" ).$get( 0 ), qS( "#square1" ) );
-		testStrict( "jqConstructor_9", $( ".circle1" ).$get( 0 ), qSA( ".circle1" )[ 0 ] );
-		testStrict( "jqConstructor_a", $( ".circle1" ).$get( 1 ), qSA( ".circle1" )[ 1 ] );
-		testStrict( "jqConstructor_b", $( "#e404" ).$get( 0 ), undefined );
-		testStrict( "jqConstructor_c", $( $( "#eljq_1" ) ).$size(), 1 );
-		testStrict( "jqConstructor_d", $( $( "#eljq_1 .b" ) ).$size(), 2 );
-		testStrict( "jqConstructor_e", $( [ $( "#eljq_1 .b" ), $( "#eljq_2 .b" ) ] ).$size(), 4 );
+		testStrict( "jqConstructor_2", $( 1 ).$size(), 0 );
+		testStrict( "jqConstructor_3", $( null ).$size(), 0 );
+		testStrict( "jqConstructor_4", $( "#e404" ).$size(), 0 );
+		testStrict( "jqConstructor_5", $( undefined ).$size(), 0 );
+		testStrict( "jqConstructor_6", $( [ undefined, null ] ).$size(), 0 );
+		testStrict( "jqConstructor_7", $( [ undefined, null, a.$get( 0 ) ] ).$size(), 1 );
+		testStrict( "jqConstructor_8", $( [ undefined, a, null, a.$get( 0 ) ] ).$size(), 1 );
+		testStrict( "jqConstructor_9", a.$get( 0 ), qS( "#square1" ) );
+		testStrict( "jqConstructor_a", $( ".circle1" ).$get( 0 ), qSA( ".circle1" )[ 0 ] );
+		testStrict( "jqConstructor_b", $( ".circle1" ).$get( 1 ), qSA( ".circle1" )[ 1 ] );
+		testStrict( "jqConstructor_c", $( "#e404" ).$get( 0 ), undefined );
+		testStrict( "jqConstructor_d", $( $( "#eljq_1" ) ).$size(), 1 );
+		testStrict( "jqConstructor_e", $( $( "#eljq_1 .b" ) ).$size(), 2 );
+		testStrict( "jqConstructor_f", $( [ $( "#eljq_1 .b" ), $( "#eljq_2 .b" ) ] ).$size(), 4 );
+		testStrict( "jqConstructor_g", $( a ), a );
+		testStrict( "jqConstructor_h", $( $noop ), $noop );
 	} );
 	tests( "$_cnstrctr_tag", () => {
 		testStrict( "jqF_0", $( "<div>" ).$get( 0 ).tagName, "DIV" );
