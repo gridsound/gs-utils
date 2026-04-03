@@ -66,6 +66,11 @@
 
 <!-- ....................................................................... -->
 <script>
+	function qS( el, sel ) {
+		return sel
+			? el.querySelector( sel )
+			: document.querySelector( el );
+	}
 	function qSA( el, sel ) {
 		return sel
 			? el.querySelectorAll( sel )
@@ -1174,41 +1179,24 @@
 <!-- ....................................................................... -->
 <script>
 	tests( "$_cnstrctr_errors", () => {
-		const a = $( "#square1" );
-		const b = $( "#square1" ).$get( 0 );
 
-		testStrict( "jq0_0", $noop.$size(), 0 );
-		testStrict( "jq0_1", $( 0 ).$size(), 0 );
-		testStrict( "jq0_2", $( null ).$size(), 0 );
-		testStrict( "jq0_3", $( "#e404" ).$size(), 0 );
-		testStrict( "jq0_4", $( undefined ).$size(), 0 );
-		testStrict( "jq0_5", $( [ undefined, null ] ).$size(), 0 );
-		testStrict( "jq0_6", $( [ undefined, null, b ] ).$size(), 1 );
-		testStrict( "jq0_7", $( [ undefined, a, null, b ] ).$size(), 1 );
 	} );
-	tests( "$_cnstrctr_sel", () => {
-		const a = $( "#square1" );
-		const b = $( ".circle1" );
-		const u = $( "#e404" );
-		const bb = qSA( ".circle1" );
-
-		testStrict( "jqA_0", a.$get( 0 ), GSUdomQS( "#square1" ) );
-		testStrict( "jqA_1", b.$get( 0 ), bb[ 0 ] );
-		testStrict( "jqA_2", b.$get( 1 ), bb[ 1 ] );
-		testStrict( "jqA_3", u.$get( 0 ), undefined );
-	} );
-	tests( "$_cnstrctr_jqu", () => {
-		const a = $( "#eljq_1" );
-		const b = $( "#eljq_1 .b" );
-
-		testStrict( "jqD_0", $( a ).$size(), 1 );
-		testStrict( "jqD_1", $( b ).$size(), 2 );
-	} );
-	tests( "$_cnstrctr_arrJQu", () => {
-		const a = $( "#eljq_1 .b" );
-		const b = $( "#eljq_2 .b" );
-
-		testStrict( "jqE_0", $( [ a, b ] ).$size(), 4 );
+	tests( "$_constructor", () => {
+		testStrict( "jqConstructor_0", $noop.$size(), 0 );
+		testStrict( "jqConstructor_1", $( 0 ).$size(), 0 );
+		testStrict( "jqConstructor_2", $( null ).$size(), 0 );
+		testStrict( "jqConstructor_3", $( "#e404" ).$size(), 0 );
+		testStrict( "jqConstructor_4", $( undefined ).$size(), 0 );
+		testStrict( "jqConstructor_5", $( [ undefined, null ] ).$size(), 0 );
+		testStrict( "jqConstructor_6", $( [ undefined, null, $( "#square1" ).$get( 0 ) ] ).$size(), 1 );
+		testStrict( "jqConstructor_7", $( [ undefined, $( "#square1" ), null, $( "#square1" ).$get( 0 ) ] ).$size(), 1 );
+		testStrict( "jqConstructor_8", $( "#square1" ).$get( 0 ), qS( "#square1" ) );
+		testStrict( "jqConstructor_9", $( ".circle1" ).$get( 0 ), qSA( ".circle1" )[ 0 ] );
+		testStrict( "jqConstructor_a", $( ".circle1" ).$get( 1 ), qSA( ".circle1" )[ 1 ] );
+		testStrict( "jqConstructor_b", $( "#e404" ).$get( 0 ), undefined );
+		testStrict( "jqConstructor_c", $( $( "#eljq_1" ) ).$size(), 1 );
+		testStrict( "jqConstructor_d", $( $( "#eljq_1 .b" ) ).$size(), 2 );
+		testStrict( "jqConstructor_e", $( [ $( "#eljq_1 .b" ), $( "#eljq_2 .b" ) ] ).$size(), 4 );
 	} );
 	tests( "$_cnstrctr_tag", () => {
 		testStrict( "jqF_0", $( "<div>" ).$get( 0 ).tagName, "DIV" );
