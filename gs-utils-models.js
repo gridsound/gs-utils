@@ -20,7 +20,7 @@ GSUsetModel( "block", {
 GSUsetModel( "channel", {
 	order: 0,
 	toggle: true,
-	name: "chan",
+	name: "",
 	dest: "0",
 	gain: 1,
 	pan: 0,
@@ -33,10 +33,10 @@ GSUsetModel( "channelMain", {
 } );
 GSUsetModel( "channels", {
 	0: GSUgetModel( "channelMain" ),
-	1: GSUgetModel( "channel", { order: 0, name: "1" } ),
-	2: GSUgetModel( "channel", { order: 1, name: "2" } ),
-	3: GSUgetModel( "channel", { order: 2, name: "3" } ),
-	4: GSUgetModel( "channel", { order: 3, name: "4" } ),
+	1: GSUgetModel( "channel", { order: 0 } ),
+	2: GSUgetModel( "channel", { order: 1 } ),
+	3: GSUgetModel( "channel", { order: 2 } ),
+	4: GSUgetModel( "channel", { order: 3 } ),
 } );
 
 // .............................................................................
