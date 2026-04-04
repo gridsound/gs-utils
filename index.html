@@ -956,6 +956,30 @@
 		test( "map.8", GSUmap( [ 1, 2, 3 ], dbl ), [ 2, 4, 6 ] );
 		test( "map.9", GSUmap( { a: 1, b: 2, c: 3 }, dbl ), { a: 2, b: 4, c: 6 } );
 	} );
+	tests( "GSUfind", () => {
+		const dbl = n => n * 2;
+		const a123 = [ 1, 2, 3 ];
+		const a456 = { a: 4, b: 5, c: 6 };
+
+		testStrict( "find_0", GSUfind( NaN,       null ),    undefined );
+		testStrict( "find_1", GSUfind( null,      null ),    undefined );
+		testStrict( "find_2", GSUfind( true,      null ),    undefined );
+		testStrict( "find_3", GSUfind( false,     null ),    undefined );
+		testStrict( "find_4", GSUfind( undefined, null ),    undefined );
+		testStrict( "find_5", GSUfind( GSUnoop,   null ),    undefined );
+		testStrict( "find_6", GSUfind( [], GSUnoop ),        undefined );
+		testStrict( "find_7", GSUfind( {}, GSUnoop ),        undefined );
+		testStrict( "find_8", GSUfind( [ 21 ], GSUnoop ),    undefined );
+		testStrict( "find_9", GSUfind( { a: 21 }, GSUnoop ), undefined );
+		testStrict( "find_a", GSUfind( a123, ( n, i, a ) => n === 1 && i === 0 && a === a123 ), 1 );
+		testStrict( "find_b", GSUfind( a123, ( n, i, a ) => n === 2 && i === 1 && a === a123 ), 2 );
+		testStrict( "find_c", GSUfind( a123, ( n, i, a ) => n === 3 && i === 2 && a === a123 ), 3 );
+		testStrict( "find_d", GSUfind( a456, ( n, k, a ) => n === 4 && k === "a" && a === a456 ), 4 );
+		testStrict( "find_e", GSUfind( a456, ( n, k, a ) => n === 5 && k === "b" && a === a456 ), 5 );
+		testStrict( "find_f", GSUfind( a456, ( n, k, a ) => n === 6 && k === "c" && a === a456 ), 6 );
+		testStrict( "find_g", GSUfind( a123, n => n === 4 ), undefined );
+		testStrict( "find_h", GSUfind( a456, n => n === 7 ), undefined );
+	} );
 	tests( "GSUsome", () => {
 		const fnSome21 = n => n === 21;
 		test( "some_0", GSUsome( NaN,             null        ), false );
