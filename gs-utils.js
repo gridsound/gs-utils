@@ -81,16 +81,21 @@ function GSUreduce( obj, fn, val ) {
 function GSUmap( obj, fn ) {
 	return obj?.map ? obj.map( fn ) : GSUmap_sub( obj, fn );
 }
-function GSUfind( obj, fn ) {
-	if ( obj?.find ) {
-		return obj.find( fn );
+function GSUfindIndex( obj, fn ) {
+	if ( obj?.findIndex ) {
+		return obj.findIndex( fn );
 	}
 	for ( const k in obj ) {
 		if ( fn( obj[ k ], k, obj ) ) {
-			return obj[ k ];
+			return k;
 		}
 	}
-	return undefined;
+	return -1;
+}
+function GSUfind( obj, fn ) {
+	const ind = GSUfindIndex( obj, fn );
+
+	return ind !== -1 ? obj[ ind ] : undefined;
 }
 function GSUsome( obj, fn ) {
 	return GSUfind( obj, fn ) !== undefined;

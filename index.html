@@ -980,6 +980,30 @@
 		testStrict( "find_g", GSUfind( a123, n => n === 4 ), undefined );
 		testStrict( "find_h", GSUfind( a456, n => n === 7 ), undefined );
 	} );
+	tests( "GSUfindIndex", () => {
+		const dbl = n => n * 2;
+		const a123 = [ 1, 2, 3 ];
+		const a456 = { a: 4, b: 5, c: 6 };
+
+		testStrict( "findIndex_0", GSUfindIndex( NaN,       null ),    -1 );
+		testStrict( "findIndex_1", GSUfindIndex( null,      null ),    -1 );
+		testStrict( "findIndex_2", GSUfindIndex( true,      null ),    -1 );
+		testStrict( "findIndex_3", GSUfindIndex( false,     null ),    -1 );
+		testStrict( "findIndex_4", GSUfindIndex( undefined, null ),    -1 );
+		testStrict( "findIndex_5", GSUfindIndex( GSUnoop,   null ),    -1 );
+		testStrict( "findIndex_6", GSUfindIndex( [], GSUnoop ),        -1 );
+		testStrict( "findIndex_7", GSUfindIndex( {}, GSUnoop ),        -1 );
+		testStrict( "findIndex_8", GSUfindIndex( [ 21 ], GSUnoop ),    -1 );
+		testStrict( "findIndex_9", GSUfindIndex( { a: 21 }, GSUnoop ), -1 );
+		testStrict( "findIndex_a", GSUfindIndex( a123, ( n, i, a ) => n === 1 && i === 0 && a === a123 ), 0 );
+		testStrict( "findIndex_b", GSUfindIndex( a123, ( n, i, a ) => n === 2 && i === 1 && a === a123 ), 1 );
+		testStrict( "findIndex_c", GSUfindIndex( a123, ( n, i, a ) => n === 3 && i === 2 && a === a123 ), 2 );
+		testStrict( "findIndex_d", GSUfindIndex( a456, ( n, k, a ) => n === 4 && k === "a" && a === a456 ), "a" );
+		testStrict( "findIndex_e", GSUfindIndex( a456, ( n, k, a ) => n === 5 && k === "b" && a === a456 ), "b" );
+		testStrict( "findIndex_f", GSUfindIndex( a456, ( n, k, a ) => n === 6 && k === "c" && a === a456 ), "c" );
+		testStrict( "findIndex_g", GSUfindIndex( a123, n => n === 4 ), -1 );
+		testStrict( "findIndex_h", GSUfindIndex( a456, n => n === 7 ), -1 );
+	} );
 	tests( "GSUsome", () => {
 		const fnSome21 = n => n === 21;
 		test( "some_0", GSUsome( NaN,             null        ), false );
