@@ -98,7 +98,7 @@
 	}
 	function testStrict( id, val, expected ) {
 		++nbTests;
-		if ( val === expected ) {
+		if ( Object.is( val, expected ) ) {
 			++nbTestsOk;
 		} else {
 			console.log( `testStrict:${ id }`, val, "!==", expected );
