@@ -941,6 +941,21 @@
 		test( "reduce.8", GSUreduce( [ 10, 20, 30 ],          fnSum, 0 ), 63 );
 		test( "reduce.9", GSUreduce( { a: 10, b: 20, c: 30 }, fnSum, 0 ), "10a20b30c" );
 	} );
+	tests( "GSUmap", () => {
+		const dbl = n => n * 2;
+		const a = [ 0, 1, 2 ];
+
+		testStrict( "map.0", GSUmap( NaN,       null ), NaN );
+		testStrict( "map.1", GSUmap( null,      null ), null );
+		testStrict( "map.2", GSUmap( true,      null ), true );
+		testStrict( "map.3", GSUmap( false,     null ), false );
+		testStrict( "map.4", GSUmap( undefined, null ), undefined );
+		testStrict( "map.5", GSUmap( GSUnoop,   null ), GSUnoop );
+		test( "map.6", GSUmap( [], GSUnoop ), [] );
+		test( "map.7", GSUmap( {}, GSUnoop ), {} );
+		test( "map.8", GSUmap( [ 1, 2, 3 ], dbl ), [ 2, 4, 6 ] );
+		test( "map.9", GSUmap( { a: 1, b: 2, c: 3 }, dbl ), { a: 2, b: 4, c: 6 } );
+	} );
 	tests( "GSUsome", () => {
 		const fnSome21 = n => n === 21;
 		test( "some_0", GSUsome( NaN,             null        ), false );

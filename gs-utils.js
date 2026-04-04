@@ -64,10 +64,22 @@ function GSUreduce_sub( obj, fn, val ) {
 	}
 	return val2;
 }
+function GSUmap_sub( obj, fn ) {
+	if ( GSUisObj( obj ) ) {
+		let obj2 = {};
+
+		for ( const k in obj ) {
+			obj2[ k ] = fn( obj[ k ], k, obj );
+		}
+		return obj2;
+	}
+	return obj;
+}
 function GSUreduce( obj, fn, val ) {
-	return obj?.reduce
-		? obj.reduce( fn, val )
-		: GSUreduce_sub( obj, fn, val );
+	return obj?.reduce ? obj.reduce( fn, val ) : GSUreduce_sub( obj, fn, val );
+}
+function GSUmap( obj, fn ) {
+	return obj?.map ? obj.map( fn ) : GSUmap_sub( obj, fn );
 }
 function GSUfind( obj, fn ) {
 	if ( obj?.find ) {
