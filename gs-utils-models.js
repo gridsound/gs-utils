@@ -27,7 +27,7 @@ GSUsetModel( "channel", {
 } );
 GSUsetModel( "channelMain", {
 	toggle: true,
-	name: "0",
+	name: "main",
 	gain: .4,
 	pan: 0,
 } );
