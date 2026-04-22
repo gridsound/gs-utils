@@ -663,46 +663,6 @@
 		test( "domGetAttrNum_4", GSUdomGetAttrNum( elCirc2, "data-b" ),  0 );
 		test( "domGetAttrNum_5", GSUdomGetAttrNum( elCirc2, "data-c" ),  0 );
 	} );
-	tests( "GSUdomRmAttr", () => {
-		const foo = GSUdomQS( "[data-foo]" );
-
-		test( "domRmAttr_0", foo.hasAttribute( "data-foo" ), true );
-		GSUdomRmAttr( null, "data-foo" );
-		GSUdomRmAttr( foo, "data-foo" );
-		test( "domRmAttr_1", foo.hasAttribute( "data-foo" ), false );
-		test( "domRmAttr_2", foo.matches( "[data-bar][data-bar2]" ), true );
-		GSUdomRmAttr( foo, "data-bar", "data-bar2" );
-		test( "domRmAttr_3", foo.hasAttribute( "data-bar"  ), false );
-		test( "domRmAttr_4", foo.hasAttribute( "data-bar2" ), false );
-	} );
-	tests( "GSUdomAddClass", () => {
-		const el = GSUdomQS( "#classes" );
-
-		el.className = "";
-		GSUdomAddClass();
-		GSUdomAddClass( el );
-		GSUdomAddClass( null );
-		GSUdomAddClass( undefined );
-		                                test( "domAddClass_0", el.className, "" );
-		GSUdomAddClass( el, "a", "b" ); test( "domAddClass_1", el.className, "a b" );
-		GSUdomAddClass( el, "abc" );    test( "domAddClass_2", el.className, "a b abc" );
-	} );
-	tests( "GSUdomTogClass", () => {
-		const el = GSUdomQS( "#classes" );
-
-		el.className = "a b abc";
-		test( "domTogClass_0", [ GSUdomTogClass(                ), el.className ], [ false, "a b abc" ] );
-		test( "domTogClass_1", [ GSUdomTogClass( null           ), el.className ], [ false, "a b abc" ] );
-		test( "domTogClass_2", [ GSUdomTogClass( undefined      ), el.className ], [ false, "a b abc" ] );
-		test( "domTogClass_3", [ GSUdomTogClass( null, "123"    ), el.className ], [ false, "a b abc" ] );
-		test( "domTogClass_4", [ GSUdomTogClass( el, "abc"      ), el.className ], [ false, "a b" ] );
-		test( "domTogClass_5", [ GSUdomTogClass( el, "b"        ), el.className ], [ false, "a" ] );
-		test( "domTogClass_6", [ GSUdomTogClass( el, "b"        ), el.className ], [ true,  "a b" ] );
-		test( "domTogClass_7", [ GSUdomTogClass( el, "b", false ), el.className ], [ false, "a" ] );
-		test( "domTogClass_8", [ GSUdomTogClass( el, "b", false ), el.className ], [ false, "a" ] );
-		test( "domTogClass_9", [ GSUdomTogClass( el, "b", true  ), el.className ], [ true,  "a b" ] );
-		test( "domTogClass_a", [ GSUdomTogClass( el, "b", true  ), el.className ], [ true,  "a b" ] );
-	} );
 </script>
 
 <!-- ....................................................................... -->

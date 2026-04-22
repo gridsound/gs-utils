@@ -14,10 +14,6 @@ function GSUdomDefine( tag, clazz ) {
 function GSUdomQS(  el, sel ) { return GSUisStr( el ) ? document.querySelector( el ) : el.querySelector( sel ); }
 
 // .............................................................................
-function GSUdomTogClass( el, clazz, b ) { return el?.classList.toggle( clazz, b ) || false; }
-function GSUdomAddClass( el, ...clazz ) { el?.classList.add( ...clazz ); }
-
-// .............................................................................
 function GSUdomUnselect() {
 	window.getSelection().removeAllRanges();
 }
