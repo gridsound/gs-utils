@@ -141,13 +141,6 @@ function GSUcreateSelect( attr, ...child ) { return GSUcreateElement( "select", 
 function GSUcreateOption( attr, child ) { return GSUcreateElement( "option", attr, child || attr?.value ); }
 
 // .............................................................................
-function GSUdomViewBox( svg, x, y, w, h ) {
-	GSUdomSetAttr( svg, "viewBox", arguments.length === 5
-		? `${ x } ${ y } ${ w } ${ h }`
-		: `0 0 ${ x } ${ y }` );
-}
-
-// .............................................................................
 const _GSUdomResizeMap = new Map();
 const _GSUdomResizeObs = new ResizeObserver( entries => {
 	entries.forEach( e => {
