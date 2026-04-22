@@ -72,12 +72,11 @@ function GSUdomListen( el, cbs ) {
 }
 
 // .............................................................................
-function GSUdomRmAttr( el, ...attr ) { el && GSUforEach( attr, a => el.removeAttribute( a ) ); }
 function GSUdomGetAttr( el, attr ) { return el ? el.getAttribute( attr ) : null; }
 function GSUdomGetAttrNum( el, attr ) { return +GSUdomGetAttr( el, attr ) || 0; }
 function GSUdomSetAttr_sub( el, attr, val ) {
 	if ( val === false || val === null || val === undefined ) {
-		GSUdomRmAttr( el, attr );
+		el.removeAttribute( attr );
 	} else if ( attr === "style" && !GSUisStr( val ) ) {
 		GSUforEach( val, ( val, prop ) => el.style[ prop ] = val );
 	} else {
