@@ -69,7 +69,6 @@ function GSUdomListen( el, cbs ) {
 
 // .............................................................................
 function GSUdomGetAttr( el, attr ) { return el ? el.getAttribute( attr ) : null; }
-function GSUdomGetAttrNum( el, attr ) { return +GSUdomGetAttr( el, attr ) || 0; }
 function GSUdomSetAttr_sub( el, attr, val ) {
 	if ( val === false || val === null || val === undefined ) {
 		el.removeAttribute( attr );

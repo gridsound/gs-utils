@@ -653,16 +653,6 @@
 		test( "domGetAttr_7", GSUdomGetAttr( elCirc2, "data-b" ), "abc" );
 		test( "domGetAttr_8", GSUdomGetAttr( elCirc2, "data-c" ), "" );
 	} );
-	tests( "GSUdomGetAttrNum", () => {
-		const elCirc2 = GSUdomQS( ".circle2" );
-
-		test( "domGetAttrNum_0", GSUdomGetAttrNum( elCirc2, "data-a" ), 21 );
-		test( "domGetAttrNum_1", GSUdomGetAttrNum( elCirc2, "data-d" ), -3.14 );
-		test( "domGetAttrNum_2", GSUdomGetAttrNum(),                     0 );
-		test( "domGetAttrNum_3", GSUdomGetAttrNum( elCirc2 ),            0 );
-		test( "domGetAttrNum_4", GSUdomGetAttrNum( elCirc2, "data-b" ),  0 );
-		test( "domGetAttrNum_5", GSUdomGetAttrNum( elCirc2, "data-c" ),  0 );
-	} );
 </script>
 
 <!-- ....................................................................... -->
