@@ -17,6 +17,7 @@ const _GSUaudioChannelMerger_wm   = __LOCALHOST__ ? new WeakMap() : null;
 const _GSUaudioConstantSource_wm  = __LOCALHOST__ ? new WeakMap() : null;
 const _GSUaudioChannelSplitter_wm = __LOCALHOST__ ? new WeakMap() : null;
 
+/* eslint-disable */
 const GSUaudioContext         = !__LOCALHOST__ ? (    ...a ) => new AudioContext( ...a )        : (    ...a ) => { const n = new AudioContext( ...a );        _GSUaudioContext_wm.set( n, 1 );         return n; };
 const GSUaudioContextOff      = !__LOCALHOST__ ? (    ...a ) => new OfflineAudioContext( ...a ) : (    ...a ) => { const n = new OfflineAudioContext( ...a ); _GSUaudioContextOff_wm.set( n, 1 );      return n; };
 const GSUaudioGain            = !__LOCALHOST__ ? ( c, ...a ) => c.createGain( ...a )            : ( c, ...a ) => { const n = c.createGain( ...a );            _GSUaudioGain_wm.set( n, 1 );            return n; };
@@ -33,6 +34,7 @@ const GSUaudioStereoPanner    = !__LOCALHOST__ ? ( c, ...a ) => c.createStereoPa
 const GSUaudioChannelMerger   = !__LOCALHOST__ ? ( c, ...a ) => c.createChannelMerger( ...a )   : ( c, ...a ) => { const n = c.createChannelMerger( ...a );   _GSUaudioChannelMerger_wm.set( n, 1 );   return n; };
 const GSUaudioConstantSource  = !__LOCALHOST__ ? ( c, ...a ) => c.createConstantSource( ...a )  : ( c, ...a ) => { const n = c.createConstantSource( ...a );  _GSUaudioConstantSource_wm.set( n, 1 );  return n; };
 const GSUaudioChannelSplitter = !__LOCALHOST__ ? ( c, ...a ) => c.createChannelSplitter( ...a ) : ( c, ...a ) => { const n = c.createChannelSplitter( ...a ); _GSUaudioChannelSplitter_wm.set( n, 1 ); return n; };
+/* eslint-enable */
 
 const GSUaudioLogWeakMaps = !__LOCALHOST__ ? null : m => {
 	( !m || m === "context"         ) && console.log( "context", _GSUaudioContext_wm );

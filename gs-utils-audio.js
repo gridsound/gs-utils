@@ -83,7 +83,7 @@ function GSUaudioParamError( from, err ) {
 	if ( __LOCALHOST__ ) {
 		if ( err.message.includes( "overlaps" ) ) {
 			const arr = err.message.split( ", " ).map( n => parseFloat( n ) );
-			const [ _, a, b, c, d ] = arr;
+			const [ , a, b, c, d ] = arr;
 
 			console.warn( arr.length === 4
 				? `${ from } [${ a }] overlaps [${ b } -> ${ c }]`

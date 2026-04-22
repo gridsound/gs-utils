@@ -66,7 +66,7 @@ function GSUreduce_sub( obj, fn, val ) {
 }
 function GSUmap_sub( obj, fn ) {
 	if ( GSUisObj( obj ) ) {
-		let obj2 = {};
+		const obj2 = {};
 
 		for ( const k in obj ) {
 			obj2[ k ] = fn( obj[ k ], k, obj );
