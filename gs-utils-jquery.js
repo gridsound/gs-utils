@@ -258,7 +258,7 @@ class $$ {
 			detail: {
 				$event: ev,
 				$args: args,
-				$target: el,
+				$target: $( el ),
 				$targetId: el.dataset.id || null,
 			},
 		} ) );
