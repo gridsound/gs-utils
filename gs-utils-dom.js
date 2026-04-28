@@ -56,7 +56,7 @@ function GSUgetTemplate( tmpId, ...args ) {
 
 // .............................................................................
 function GSUdomListen( el, cbs ) {
-	el.addEventListener( "gsui", e => {
+	$( el ).$addEventListener( "gsui", e => {
 		const d = e.detail;
 		const fn = cbs[ d.$event ];
 
