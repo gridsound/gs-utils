@@ -7,10 +7,19 @@ function $( a, b ) {
 	return GSUisJQu( a ) ? a : new $$( a );
 }
 
+$.$getElemByPoint = ( x, y ) => new $$( document.elementFromPoint( x, y ) );
 $.$css = ( el, prop, val ) => $$.$setStyle( el, prop, val );
 $.$prev = el => el.previousElementSibling;
 $.$next = el => el.nextElementSibling;
-$.$getElemByPoint = ( x, y ) => new $$( document.elementFromPoint( x, y ) );
+$.$rmAttr = ( el, k ) => el.removeAttribute( k );
+$.$hasAttr = ( el, k ) => el.hasAttribute( k );
+$.$setAttr = ( el, k, v ) => el.setAttribute( k, v );
+$.$togAttr = ( el, k ) => $.$setAttr2( el, k, !$.$hasAttr( el, k ) );
+$.$setAttr2 = ( el, k, v ) => {
+	v === false || v === null || v === undefined
+		? $.$rmAttr( el, k )
+		: $.$setAttr( el, k, v === true ? "" : v );
+};
 
 class $$ {
 	#a;
@@ -132,17 +141,17 @@ class $$ {
 	$togClass( ...c ) { return this.$each( el => el.classList.toggle( ...c ) ); }
 
 	// .........................................................................
-	$hasAttr( k ) { return this.$some( el => $$.#hasAttr( el, k ) ); }
-	$togAttr( k ) { return this.$each( el => $$.#togAttr( el, k ) ); }
-	$rmAttr( ...k ) { return this.$each( el => k.forEach( a => $$.#rmAttr( el, a ) ) ); }
-	$addAttr( ...k ) { return this.$each( el => k.forEach( a => el.setAttribute( a, "" ) ) ); }
+	$hasAttr( k ) { return this.$some( el => $.$hasAttr( el, k ) ); }
+	$togAttr( k ) { return this.$each( el => $.$togAttr( el, k ) ); }
+	$rmAttr( ...k ) { return this.$each( el => k.forEach( a => $.$rmAttr( el, a ) ) ); }
+	$addAttr( ...k ) { return this.$each( el => k.forEach( a => $.$setAttr( el, a, "" ) ) ); }
 	$getAttr( ...k ) { return k.length === 1 ? this.#a0?.getAttribute( k[ 0 ] ) ?? null : k.map( a => this.#a0?.getAttribute( a ) ); }
 	$setAttr( k, v ) {
 		return this.$each( GSUisObj( k )
-			? el => GSUforEach( k, ( v, k ) => $$.#setAttr( el, k, v ) )
+			? el => GSUforEach( k, ( v, k ) => $.$setAttr2( el, k, v ) )
 			: GSUisFun( k )
-				? ( el, i ) => GSUforEach( k( el, i ), ( v, k ) => $$.#setAttr( el, k, v ) )
-				: ( el, i ) => $$.#setAttr( el, k, $$.#calcVal( v, el, i ) )
+				? ( el, i ) => GSUforEach( k( el, i ), ( v, k ) => $.$setAttr2( el, k, v ) )
+				: ( el, i ) => $.$setAttr2( el, k, $$.#calcVal( v, el, i ) )
 		);
 	}
 
@@ -232,14 +241,6 @@ class $$ {
 			el2 = el2.parentNode;
 		}
 		return el2;
-	}
-	static #rmAttr( el, k ) { el.removeAttribute( k ); }
-	static #hasAttr( el, k ) { return el.hasAttribute( k ); }
-	static #togAttr( el, k ) { $$.#setAttr( el, k, !$$.#hasAttr( el, k ) ); }
-	static #setAttr( el, k, v ) {
-		v === false || v === null || v === undefined
-			? $$.#rmAttr( el, k )
-			: el.setAttribute( k, v === true ? "" : v );
 	}
 	static #extractFirst( el ) {
 		return GSUisJQu( el ) ? el?.#a0 : el;

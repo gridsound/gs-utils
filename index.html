@@ -640,19 +640,6 @@
 		testStrict( "domQS_3", GSUdomQS( elSquare2, "*" ), elSquare3 );
 		testStrict( "domQS_4", GSUdomQS( ".u404" ), document.querySelector( ".u404" ) );
 	} );
-	tests( "GSUdomGetAttr", () => {
-		const elCirc2 = GSUdomQS( ".circle2" );
-
-		test( "domGetAttr_0", GSUdomGetAttr(),                    null );
-		test( "domGetAttr_1", GSUdomGetAttr( null ),              null );
-		test( "domGetAttr_2", GSUdomGetAttr( undefined ),         null );
-		test( "domGetAttr_3", GSUdomGetAttr( null, "qwe" ),       null );
-		test( "domGetAttr_4", GSUdomGetAttr( elCirc2 ),           null );
-		test( "domGetAttr_5", GSUdomGetAttr( elCirc2, "qwe" ),    null );
-		test( "domGetAttr_6", GSUdomGetAttr( elCirc2, "data-a" ), "21" );
-		test( "domGetAttr_7", GSUdomGetAttr( elCirc2, "data-b" ), "abc" );
-		test( "domGetAttr_8", GSUdomGetAttr( elCirc2, "data-c" ), "" );
-	} );
 </script>
 
 <!-- ....................................................................... -->
@@ -1556,6 +1543,18 @@
 		a.$setAttr( ( el, i ) => +el.id === i && b[ i ] );
 		test( "jqAttr2_0", a.$at( 0 ).$getAttr( "data-a0", "data-a1", "data-b0", "data-b1" ), [ "a0", "a1", null, null ] );
 		test( "jqAttr2_1", a.$at( 1 ).$getAttr( "data-a0", "data-a1", "data-b0", "data-b1" ), [ null, null, "b0", "b1" ] );
+	} );
+	tests( "$_addAttr", () => {
+		const a = $( "<div>" );
+
+		test( "jqAddAttr_0", $noop.$addAttr( "foo" ), $noop );
+		test( "jqAddAttr_1", a.$getAttr( "data-foo" ), null );
+		a.$addAttr( "data-foo" );
+		test( "jqAddAttr_2", a.$hasAttr( "data-foo" ), true );
+		test( "jqAddAttr_3", a.$getAttr( "data-foo" ), "" );
+		a.$addAttr( "data-bar", "data-lol" );
+		test( "jqAddAttr_4", a.$getAttr( "data-bar" ), "" );
+		test( "jqAddAttr_5", a.$getAttr( "data-lol" ), "" );
 	} );
 	tests( "$_bcr", () => {
 		const bcr = $body.$bcr();

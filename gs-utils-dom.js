@@ -68,25 +68,6 @@ function GSUdomListen( el, cbs ) {
 }
 
 // .............................................................................
-function GSUdomGetAttr( el, attr ) { return el ? el.getAttribute( attr ) : null; }
-function GSUdomSetAttr_sub( el, attr, val ) {
-	if ( val === false || val === null || val === undefined ) {
-		el.removeAttribute( attr );
-	} else if ( attr === "style" && !GSUisStr( val ) ) {
-		GSUforEach( val, ( val, prop ) => el.style[ prop ] = val );
-	} else {
-		el.setAttribute( attr, val === true ? "" : val );
-	}
-}
-function GSUdomSetAttr( el, attr, val ) {
-	if ( el && attr ) {
-		GSUisStr( attr )
-			? GSUdomSetAttr_sub( el, attr, arguments.length === 2 || val )
-			: GSUforEach( attr, ( val, a ) => GSUdomSetAttr_sub( el, a, val ) );
-	}
-}
-
-// .............................................................................
 const _GSUdomSVGelements = Object.freeze( "circle defs g line linearGradient path polygon polyline rect stop svg use"
 	.split( " " ).reduce( ( map, s ) => ( map[ s ] = true, map ), {} ) );
 
@@ -96,7 +77,7 @@ function GSUcreateElement( tag, attr, ...children ) {
 		: "http://www.w3.org/1999/xhtml";
 	const el = document.createElementNS( ns, tag );
 
-	GSUdomSetAttr( el, attr );
+	GSUforEach( attr, ( val, k ) => $.$setAttr2( el, k, val ) );
 	el.append( ...children.flat( 1 ).filter( ch => Boolean( ch ) || Number.isFinite( ch ) ) );
 	return el;
 }
