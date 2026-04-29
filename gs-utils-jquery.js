@@ -7,6 +7,7 @@ function $( a, b ) {
 	return GSUisJQu( a ) ? a : new $$( a );
 }
 
+$.$qSA = ( sel, el = document ) => el.querySelectorAll( sel );
 $.$getElemByPoint = ( x, y ) => new $$( document.elementFromPoint( x, y ) );
 $.$css = ( el, prop, val ) => $$.$setStyle( el, prop, val );
 $.$prev = el => el.previousElementSibling;
@@ -36,7 +37,7 @@ class $$ {
 		} else if ( GSUisStr( a ) ) {
 			a.startsWith( "<" ) && a.endsWith( ">" )
 				? list.push( GSUcreateElement( a.slice( 1, -1 ) ) )
-				: list.push( ...$$.#qSA( $body.$get( 0 ), a ) );
+				: list.push( ...$.$qSA( a ) );
 		}
 		this.#a = !GSUisArr( a ) ? list : [ ...new Set( list ) ];
 		this.#a0 = this.#a[ 0 ];
@@ -79,7 +80,7 @@ class $$ {
 	$next() { return new $$( this.#a.map( $.$next ) ); }
 	$prevUntil( sel ) { return new $$( this.#a.flatMap( el => $$.#siblingUntil( el, $.$prev, sel ) ) ); }
 	$nextUntil( sel ) { return new $$( this.#a.flatMap( el => $$.#siblingUntil( el, $.$next, sel ) ) ); }
-	$query( sel ) { return new $$( this.#a.flatMap( el => [ ...$$.#qSA( el, sel ) ] ) ); }
+	$query( sel ) { return new $$( this.#a.flatMap( el => [ ...$.$qSA( sel, el ) ] ) ); }
 
 	// .........................................................................
 	$queryMap( graph ) {
@@ -220,11 +221,6 @@ class $$ {
 	}
 
 	// .........................................................................
-	static #qSA( el, sel ) {
-		return sel
-			? el.querySelectorAll( sel )
-			: document.querySelectorAll( el );
-	}
 	static #calcVal( val, el, i ) {
 		return GSUisFun( val ) ? val( el, i ) : val;
 	}
