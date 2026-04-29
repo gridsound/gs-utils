@@ -22,6 +22,67 @@ $.$setAttr2 = ( el, k, v ) => {
 		: $.$setAttr( el, k, v === true ? "" : v );
 };
 
+// .............................................................................
+$.$htmlNS = "http://www.w3.org/1999/xhtml";
+$.$svgNS = "http://www.w3.org/2000/svg";
+$.$taglistSVG = Object.freeze( {
+	g: 1,
+	svg: 1,
+	use: 1,
+	defs: 1,
+	line: 1,
+	path: 1,
+	rect: 1,
+	stop: 1,
+	circle: 1,
+	polygon: 1,
+	polyline: 1,
+	linearGradient: 1,
+} );
+
+// .............................................................................
+$.$elem = ( tag, attr, ...children ) => {
+	const el = document.createElementNS( tag in $.$taglistSVG ? $.$svgNS : $.$htmlNS, tag );
+
+	GSUforEach( attr, ( val, k ) => $.$setAttr2( el, k, val ) );
+	el.append( ...children.flat( 1 ).filter( ch => Boolean( ch ) || Number.isFinite( ch ) ) );
+	return el;
+};
+$.$icon = attr => {
+	const attr2 = {
+		inert: true,
+		...attr,
+		class: `gsuiIcon${ attr?.class ? ` ${ attr.class }` : "" }`,
+		"data-icon": attr?.icon || null,
+		"data-spin": attr?.spin ? "on" : null,
+	};
+
+	delete attr2.icon;
+	return $.$elem( "i", attr2 );
+};
+$.$button = ( attr, ...child ) => {
+	const attr2 = {
+		type: "button",
+		...attr,
+		class: `${ attr?.class || "" }${ attr?.icon ? " gsuiIcon" : "" }` || null,
+		"data-icon": attr?.icon || null,
+	};
+
+	delete attr2.icon;
+	return $.$elem( "button", attr2, ...child );
+};
+$.$div = $.$elem.bind( null, "div" );
+$.$bold = $.$elem.bind( null, "b" );
+$.$flex = $.$elem.bind( null, "gs-flex" );
+$.$span = $.$elem.bind( null, "span" );
+$.$input = $.$elem.bind( null, "input" );
+$.$label = $.$elem.bind( null, "label" );
+$.$select = $.$elem.bind( null, "select" );
+$.$option  = ( a, c ) => $.$elem( "option", a, c || a?.value );
+$.$link    = ( a, ...c ) => $.$elem( "a", { href: true, ...a }, ...c );
+$.$linkExt = ( a, ...c ) => $.$elem( "a", { href: true, ...a, target: "_blank", rel: "noopener" }, ...c );
+
+// .............................................................................
 class $$ {
 	#a;
 	#a0;
@@ -36,7 +97,7 @@ class $$ {
 			list.push( ...$$.#extractList( a ) );
 		} else if ( GSUisStr( a ) ) {
 			a.startsWith( "<" ) && a.endsWith( ">" )
-				? list.push( GSUcreateElement( a.slice( 1, -1 ) ) )
+				? list.push( $.$elem( a.slice( 1, -1 ) ) )
 				: list.push( ...$.$qSA( a ) );
 		}
 		this.#a = !GSUisArr( a ) ? list : [ ...new Set( list ) ];
