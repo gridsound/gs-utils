@@ -12,6 +12,10 @@ $.$templates = new Map();
 $.$hasTemplate = id => $.$templates.has( id );
 $.$setTemplate = ( id, fn ) => $.$templates.set( id, fn );
 $.$getTemplate = ( id, ...a ) => $.$templates.get( id )( ...a );
+$.$define = ( tag, clazz ) => {
+	Object.freeze( clazz );
+	customElements.define( tag, clazz );
+};
 
 // .............................................................................
 $.$qSA = ( sel, el = document ) => el.querySelectorAll( sel );

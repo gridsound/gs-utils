@@ -1,11 +1,5 @@
 "use strict";
 
-function GSUdomDefine( tag, clazz ) {
-	Object.freeze( clazz );
-	customElements.define( tag, clazz );
-}
-
-// .............................................................................
 function GSUdomUnselect() {
 	window.getSelection().removeAllRanges();
 }
