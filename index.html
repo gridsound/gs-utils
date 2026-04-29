@@ -1549,10 +1549,18 @@
 	tests( "$_dataId", () => {
 		const a = $( "<div>" );
 
-		testStrict( "jqBCR_0", $noop.$dataId(), null );
-		testStrict( "jqBCR_1", a.$dataId(), null );
-		testStrict( "jqBCR_2", a.$dataId( "abc" ).$dataId(), "abc" );
-		testStrict( "jqBCR_3", a.$get( 0 ).dataset.id, "abc" );
+		testStrict( "jqDataId_0", $noop.$dataId(), null );
+		testStrict( "jqDataId_1", a.$dataId(), null );
+		testStrict( "jqDataId_2", a.$dataId( "abc" ).$dataId(), "abc" );
+		testStrict( "jqDataId_3", a.$get( 0 ).dataset.id, "abc" );
+	} );
+	tests( "$_dataProp", () => {
+		const a = $( "<div>" );
+
+		testStrict( "jqDataProp_0", $noop.$dataProp(), null );
+		testStrict( "jqDataProp_1", a.$dataProp(), null );
+		testStrict( "jqDataProp_2", a.$dataProp( "def" ).$dataProp(), "def" );
+		testStrict( "jqDataProp_3", a.$get( 0 ).dataset.prop, "def" );
 	} );
 </script>
 

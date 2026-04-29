@@ -96,11 +96,6 @@ class $$ {
 	// .........................................................................
 	$trigger( s ) { return this.$each( el => el[ s ]() ); }
 	$dispatch( ev, ...args ) { return this.$each( el => $$.#dispatch( el, ev, ...args ) ); }
-	$prop( str, val ) {
-		return val === undefined
-			? this.#a0?.[ str ]
-			: this.$each( ( el, i ) => el[ str ] = $$.#calcVal( val, el, i ) );
-	}
 
 	// .........................................................................
 	$message( ev, ...args ) {
@@ -157,6 +152,18 @@ class $$ {
 	}
 
 	// .........................................................................
+	$prop( str, val ) {
+		return val === undefined
+			? this.#a0?.[ str ]
+			: this.$each( ( el, i ) => el[ str ] = $$.#calcVal( val, el, i ) );
+	}
+	$dataset( k, v ) {
+		return v === undefined
+			? this.#a0?.dataset[ k ] ?? null
+			: this.$each( el => el.dataset[ k ] = v );
+	}
+
+	// .........................................................................
 	$top(    n, unit ) { return n === undefined ? parseFloat( $$.$setStyle( this.#a0, "top" ) )  || 0 : this.$css( "top",  n, unit ); }
 	$left(   n, unit ) { return n === undefined ? parseFloat( $$.$setStyle( this.#a0, "left" ) ) || 0 : this.$css( "left", n, unit ); }
 	$width(  n, unit ) { return n === undefined ? this.#a0?.clientWidth  || 0 : this.$css( "width",  n, unit ); }
@@ -200,11 +207,8 @@ class $$ {
 	$value( v ) { return this.$prop( "value", v ); }
 	$checked( b ) { return this.$prop( "checked", b ); }
 	$disabled( b ) { return this.$setAttr( "disabled", b ); }
-	$dataId( id ) {
-		return id !== undefined
-			? this.$setAttr( "data-id", id )
-			: this.$getAttr( "data-id" );
-	}
+	$dataId( id ) { return this.$dataset( "id", id ); }
+	$dataProp( v ) { return this.$dataset( "prop", v ); }
 	$viewbox( x, y, w, h ) {
 		return this.$setAttr( "viewBox", arguments.length === 4
 			? `${ x } ${ y } ${ w } ${ h }`
