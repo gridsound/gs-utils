@@ -39,19 +39,6 @@ function GSUdomIsDblClick( e ) {
 }
 
 // .............................................................................
-const _GSUtemplates = new Map();
-
-function GSUsetTemplate( tmpId, fn ) {
-	_GSUtemplates.set( tmpId, fn );
-}
-function GSUhasTemplate( tmpId ) {
-	return _GSUtemplates.has( tmpId );
-}
-function GSUgetTemplate( tmpId, ...args ) {
-	return _GSUtemplates.get( tmpId )( ...args );
-}
-
-// .............................................................................
 function GSUdomListen( el, cbs ) {
 	$( el ).$addEventListener( "gsui", e => {
 		const d = e.detail;

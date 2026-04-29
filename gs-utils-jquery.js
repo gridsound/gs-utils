@@ -7,6 +7,13 @@ function $( a, b ) {
 	return GSUisJQu( a ) ? a : new $$( a );
 }
 
+// .............................................................................
+$.$templates = new Map();
+$.$hasTemplate = id => $.$templates.has( id );
+$.$setTemplate = ( id, fn ) => $.$templates.set( id, fn );
+$.$getTemplate = ( id, ...a ) => $.$templates.get( id )( ...a );
+
+// .............................................................................
 $.$qSA = ( sel, el = document ) => el.querySelectorAll( sel );
 $.$getElemByPoint = ( x, y ) => new $$( document.elementFromPoint( x, y ) );
 $.$css = ( el, prop, val ) => $$.$setStyle( el, prop, val );
