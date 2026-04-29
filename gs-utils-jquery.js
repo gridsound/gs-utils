@@ -42,6 +42,15 @@ $.$css = ( el, prop, val ) => $$.$setStyle( el, prop, val );
 $.$prev = el => el.previousElementSibling;
 $.$next = el => el.nextElementSibling;
 $.$unselect = () => window.getSelection().removeAllRanges();
+$.$bcr = el => {
+	if ( el ) {
+		const bcr = el.getBoundingClientRect();
+
+		bcr.w = bcr.width;
+		bcr.h = bcr.height;
+		return bcr;
+	}
+};
 
 // .............................................................................
 $.$rmAttr = ( el, k ) => el.removeAttribute( k );
@@ -276,6 +285,7 @@ class $$ {
 	$click() { return this.$trigger( "click" ); }
 
 	// .........................................................................
+	$bcr() { return $.$bcr( this.#a0 ); }
 	$tag() { return this.#a0?.tagName.toLowerCase(); }
 	$focus() { return this.#a0?.focus( { preventScroll: true } ); }
 	$text( v ) { return this.$prop( "textContent", v ); }
@@ -288,15 +298,6 @@ class $$ {
 		return this.$setAttr( "viewBox", arguments.length === 4
 			? `${ x } ${ y } ${ w } ${ h }`
 			: `0 0 ${ x } ${ y }` );
-	}
-	$bcr() {
-		if ( this.#a0 ) {
-			const bcr = this.#a0.getBoundingClientRect();
-
-			bcr.w = bcr.width;
-			bcr.h = bcr.height;
-			return bcr;
-		}
 	}
 
 	// .........................................................................
