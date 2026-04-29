@@ -65,54 +65,6 @@ function GSUdomListen( el, cbs ) {
 }
 
 // .............................................................................
-const _GSUdomSVGelements = Object.freeze( "circle defs g line linearGradient path polygon polyline rect stop svg use"
-	.split( " " ).reduce( ( map, s ) => ( map[ s ] = true, map ), {} ) );
-
-function GSUcreateElement( tag, attr, ...children ) {
-	const ns = tag in _GSUdomSVGelements
-		? "http://www.w3.org/2000/svg"
-		: "http://www.w3.org/1999/xhtml";
-	const el = document.createElementNS( ns, tag );
-
-	GSUforEach( attr, ( val, k ) => $.$setAttr2( el, k, val ) );
-	el.append( ...children.flat( 1 ).filter( ch => Boolean( ch ) || Number.isFinite( ch ) ) );
-	return el;
-}
-function GSUcreateIcon( attr ) {
-	const attr2 = {
-		inert: true,
-		...attr,
-		class: `gsuiIcon${ attr?.class ? ` ${ attr.class }` : "" }`,
-		"data-icon": attr?.icon || null,
-		"data-spin": attr?.spin ? "on" : null,
-	};
-
-	delete attr2.icon;
-	return GSUcreateElement( "i", attr2 );
-}
-function GSUcreateButton( attr, ...child ) {
-	const attr2 = {
-		type: "button",
-		...attr,
-		class: `${ attr?.class || "" }${ attr?.icon ? " gsuiIcon" : "" }` || null,
-		"data-icon": attr?.icon || null,
-	};
-
-	delete attr2.icon;
-	return GSUcreateElement( "button", attr2, ...child );
-}
-function GSUcreateA( attr, ...child ) { return GSUcreateElement( "a", { href: true, ...attr }, ...child ); }
-function GSUcreateB( attr, ...child ) { return GSUcreateElement( "b", attr, ...child ); }
-function GSUcreateDiv( attr, ...child ) { return GSUcreateElement( "div", attr, ...child ); }
-function GSUcreateFlex( attr, ...child ) { return GSUcreateElement( "gs-flex", attr, ...child ); }
-function GSUcreateAExt( attr, ...child ) { return GSUcreateA( { ...attr, target: "_blank", rel: "noopener" }, ...child ); }
-function GSUcreateSpan( attr, ...child ) { return GSUcreateElement( "span", attr, ...child ); }
-function GSUcreateInput( attr, ...child ) { return GSUcreateElement( "input", attr, ...child ); }
-function GSUcreateLabel( attr, ...child ) { return GSUcreateElement( "label", attr, ...child ); }
-function GSUcreateSelect( attr, ...child ) { return GSUcreateElement( "select", attr, ...child ); }
-function GSUcreateOption( attr, child ) { return GSUcreateElement( "option", attr, child || attr?.value ); }
-
-// .............................................................................
 const _GSUdomResizeMap = new Map();
 const _GSUdomResizeObs = new ResizeObserver( entries => {
 	entries.forEach( e => {
@@ -179,7 +131,7 @@ function GSUdomClosestScrollable( el ) {
 // .............................................................................
 function GSUdomSetChildrenLength( el, n, tag, prop ) {
 	if ( el.children.length < n ) {
-		el.append( ...GSUnewArray( n - el.children.length, () => GSUcreateElement( tag, prop ) ) );
+		el.append( ...GSUnewArray( n - el.children.length, () => $.$elem( tag, prop ) ) );
 	} else {
 		while ( el.children.length > n ) {
 			el.lastChild.remove();
