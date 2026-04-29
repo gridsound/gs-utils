@@ -626,23 +626,6 @@
 </script>
 
 <!-- ....................................................................... -->
-<!-- ..... gs-utils-dom .................................................... -->
-<!-- ....................................................................... -->
-<script>
-	tests( "GSUdomQS", () => {
-		const elSquare1 = document.querySelector( "#square1" );
-		const elSquare2 = document.querySelector( "#square2" );
-		const elSquare3 = document.querySelector( "#square3" );
-
-		testStrict( "domQS_0", GSUdomQS( "#square1" ), elSquare1 );
-		testStrict( "domQS_1", GSUdomQS( elSquare2, "#square3" ), elSquare3 );
-		testStrict( "domQS_2", GSUdomQS( elSquare2, "div" ), elSquare3 );
-		testStrict( "domQS_3", GSUdomQS( elSquare2, "*" ), elSquare3 );
-		testStrict( "domQS_4", GSUdomQS( ".u404" ), document.querySelector( ".u404" ) );
-	} );
-</script>
-
-<!-- ....................................................................... -->
 <!-- ..... gs-utils-audio .................................................. -->
 <!-- ....................................................................... -->
 <script>

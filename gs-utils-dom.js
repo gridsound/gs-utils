@@ -11,9 +11,6 @@ function GSUdomDefine( tag, clazz ) {
 }
 
 // .............................................................................
-function GSUdomQS(  el, sel ) { return GSUisStr( el ) ? document.querySelector( el ) : el.querySelector( sel ); }
-
-// .............................................................................
 function GSUdomUnselect() {
 	window.getSelection().removeAllRanges();
 }
