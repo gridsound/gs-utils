@@ -8,32 +8,6 @@ function $( a, b ) {
 }
 
 // .............................................................................
-$.$templates = new Map();
-$.$hasTemplate = id => $.$templates.has( id );
-$.$setTemplate = ( id, fn ) => $.$templates.set( id, fn );
-$.$getTemplate = ( id, ...a ) => $.$templates.get( id )( ...a );
-$.$define = ( tag, clazz ) => {
-	Object.freeze( clazz );
-	customElements.define( tag, clazz );
-};
-
-// .............................................................................
-$.$qSA = ( sel, el = document ) => el.querySelectorAll( sel );
-$.$getElemByPoint = ( x, y ) => new $$( document.elementFromPoint( x, y ) );
-$.$css = ( el, prop, val ) => $$.$setStyle( el, prop, val );
-$.$prev = el => el.previousElementSibling;
-$.$next = el => el.nextElementSibling;
-$.$rmAttr = ( el, k ) => el.removeAttribute( k );
-$.$hasAttr = ( el, k ) => el.hasAttribute( k );
-$.$setAttr = ( el, k, v ) => el.setAttribute( k, v );
-$.$togAttr = ( el, k ) => $.$setAttr2( el, k, !$.$hasAttr( el, k ) );
-$.$setAttr2 = ( el, k, v ) => {
-	v === false || v === null || v === undefined
-		? $.$rmAttr( el, k )
-		: $.$setAttr( el, k, v === true ? "" : v );
-};
-
-// .............................................................................
 $.$htmlNS = "http://www.w3.org/1999/xhtml";
 $.$svgNS = "http://www.w3.org/2000/svg";
 $.$taglistSVG = Object.freeze( {
@@ -50,6 +24,35 @@ $.$taglistSVG = Object.freeze( {
 	polyline: 1,
 	linearGradient: 1,
 } );
+
+// .............................................................................
+$.$templates = new Map();
+$.$hasTemplate = id => $.$templates.has( id );
+$.$setTemplate = ( id, fn ) => $.$templates.set( id, fn );
+$.$getTemplate = ( id, ...a ) => $.$templates.get( id )( ...a );
+$.$define = ( tag, clazz ) => {
+	Object.freeze( clazz );
+	customElements.define( tag, clazz );
+};
+
+// .............................................................................
+$.$qSA = ( sel, el = document ) => el.querySelectorAll( sel );
+$.$getElemByPoint = ( x, y ) => new $$( document.elementFromPoint( x, y ) );
+$.$css = ( el, prop, val ) => $$.$setStyle( el, prop, val );
+$.$prev = el => el.previousElementSibling;
+$.$next = el => el.nextElementSibling;
+$.$unselect = () => window.getSelection().removeAllRanges();
+
+// .............................................................................
+$.$rmAttr = ( el, k ) => el.removeAttribute( k );
+$.$hasAttr = ( el, k ) => el.hasAttribute( k );
+$.$setAttr = ( el, k, v ) => el.setAttribute( k, v );
+$.$togAttr = ( el, k ) => $.$setAttr2( el, k, !$.$hasAttr( el, k ) );
+$.$setAttr2 = ( el, k, v ) => {
+	v === false || v === null || v === undefined
+		? $.$rmAttr( el, k )
+		: $.$setAttr( el, k, v === true ? "" : v );
+};
 
 // .............................................................................
 $.$elem = ( tag, attr, ...children ) => {
