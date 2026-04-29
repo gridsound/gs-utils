@@ -1,10 +1,5 @@
 "use strict";
 
-const GSUpopup = document.createElement( "gsui-popup" );
-
-document.body.prepend( GSUpopup );
-
-// .............................................................................
 function GSUdomDefine( tag, clazz ) {
 	Object.freeze( clazz );
 	customElements.define( tag, clazz );

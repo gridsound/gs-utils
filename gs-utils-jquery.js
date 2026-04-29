@@ -388,4 +388,7 @@ const $noop = $();
 const $head = $( document.head );
 const $body = $( document.body );
 const $html = $body.$parent();
+const $popup = $.$elem( "gsui-popup" );
 /* eslint-enable */
+
+$body.$prepend( $popup );
