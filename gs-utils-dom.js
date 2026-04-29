@@ -66,22 +66,6 @@ function GSUdomUnobserveSize( el, fn ) {
 }
 
 // .............................................................................
-function GSUdomScrollIntoViewX( el, par ) {
-	if ( el && par ) {
-		const elBCR = $( el ).$bcr();
-		const parBCR = $( par ).$bcr();
-		const elX = elBCR.x - parBCR.x;
-		const diff = elX + elBCR.w - parBCR.w;
-
-		if ( elX < 0 ) {
-			par.scrollLeft += elX;
-		} else if ( diff > 0 ) {
-			par.scrollLeft += diff;
-		}
-	}
-}
-
-// .............................................................................
 function GSUdomIsScrollable( el ) {
 	const ov = $.$css( el, "overflow" );
 
