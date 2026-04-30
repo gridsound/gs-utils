@@ -4,7 +4,25 @@ function $( a, b ) {
 	if ( b !== undefined ) {
 		console.warn( "⚠️ $() constructor deprecated", [ a, b ] );
 	}
-	return GSUisJQu( a ) ? a : new $$( a );
+	if ( GSUisJQu( a ) ) {
+		return a;
+	}
+	if ( GSUisElm( a ) ) {
+		return new $$( [ a ] );
+	}
+	if ( GSUisStr( a ) && a.startsWith( "<" ) && a.endsWith( ">" ) ) {
+		return new $$( [ $.$elem( a.slice( 1, -1 ) ) ] );
+	}
+	if ( GSUisArr( a ) || GSUisStr( a ) ) {
+		const arr = GSUisArr( a )
+			? $.$flatElements( a )
+			: [ ...$.$qSA( a ) ];
+
+		if ( arr.length ) {
+			return new $$( arr );
+		}
+	}
+	return $noop;
 }
 
 // .............................................................................
@@ -67,6 +85,14 @@ $.$isScrollable = el => {
 
 	return ov === "auto" || ov === "scroll";
 };
+$.$flatElements = arr => {
+	return [ ...new Set( arr.reduce( ( arr, el ) => {
+		GSUisElm( el )
+			? arr.push( el )
+			: el?.$each?.( el => arr.push( el ) );
+		return arr;
+	}, [] ) ) ];
+};
 
 // .............................................................................
 $.$elem = ( tag, attr, ...children ) => {
@@ -116,20 +142,9 @@ class $$ {
 	#a0;
 
 	constructor( a ) {
-		const list = [];
-
 		Object.freeze( this );
-		if ( GSUisElm( a ) ) {
-			list.push( a );
-		} else if ( GSUisArr( a ) ) {
-			list.push( ...$$.#extractList( a ) );
-		} else if ( GSUisStr( a ) ) {
-			a.startsWith( "<" ) && a.endsWith( ">" )
-				? list.push( $.$elem( a.slice( 1, -1 ) ) )
-				: list.push( ...$.$qSA( a ) );
-		}
-		this.#a = !GSUisArr( a ) ? list : [ ...new Set( list ) ];
-		this.#a0 = this.#a[ 0 ];
+		this.#a = a;
+		this.#a0 = a[ 0 ];
 	}
 
 	// .........................................................................
@@ -225,8 +240,8 @@ class $$ {
 	// .........................................................................
 	$empty() { return this.$each( $$.#empty ); }
 	$remove() { return this.$each( el => el.remove() ); }
-	$prepend( ...arr ) { return this.#a0?.prepend( ...$$.#extractList( arr ) ), this; }
-	$append( ...arr ) { return this.#a0?.append( ...$$.#extractList( arr ) ), this; }
+	$prepend( ...arr ) { return this.#a0?.prepend( ...$.$flatElements( arr ) ), this; }
+	$append( ...arr ) { return this.#a0?.append( ...$.$flatElements( arr ) ), this; }
 	$prependTo( el ) { return $$.#extractFirst( el )?.prepend( ...this.#a ), this; }
 	$appendTo( el ) { return $$.#extractFirst( el )?.append( ...this.#a ), this; }
 
@@ -339,14 +354,6 @@ class $$ {
 	static #extractFirst( el ) {
 		return GSUisJQu( el ) ? el?.#a0 : el;
 	}
-	static #extractList( arr ) {
-		return arr.reduce( ( arr, el ) => {
-			GSUisElm( el )
-				? arr.push( el )
-				: el?.$each?.( el => arr.push( el ) );
-			return arr;
-		}, [] );
-	}
 	static #dispatch( el, ev, ...args ) {
 		el.dispatchEvent( new CustomEvent( "gsui", {
 			bubbles: true,
@@ -435,7 +442,7 @@ Object.freeze( $ );
 Object.freeze( $$ );
 
 /* eslint-disable */
-const $noop = $();
+const $noop = new $$( [] );
 const $head = $( document.head );
 const $body = $( document.body );
 const $html = $body.$parent();

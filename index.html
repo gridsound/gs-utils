@@ -1190,6 +1190,26 @@
 		testStrict( "jqF_0", $( "<div>" ).$get( 0 ).tagName, "DIV" );
 		testStrict( "jqF_1", $( "<gs-flex>" ).$get( 0 ).tagName, "GS-FLEX" );
 	} );
+	tests( "$_noop", () => {
+		testStrict( "jqNoop_0", $noop.$size(), 0 );
+		testStrict( "jqNoop_1", $(), $() );
+		testStrict( "jqNoop_2", $(), $noop );
+		testStrict( "jqNoop_3", $( $() ), $noop );
+		testStrict( "jqNoop_4", $( $noop ), $noop );
+		testStrict( "jqNoop_5", $( [] ), $noop );
+		testStrict( "jqNoop_6", $( [ $noop ] ), $noop );
+		testStrict( "jqNoop_7", $( [ $noop, $() ] ), $noop );
+		testStrict( "jqNoop_8", $( [ null ] ), $noop );
+		testStrict( "jqNoop_9", $( [ null, undefined ] ), $noop );
+		testStrict( "jqNoop_a", $( [ null, undefined, false, 0, 21 ] ), $noop );
+		testStrict( "jqNoop_b", $( "nothing" ), $noop );
+		testStrict( "jqNoop_c", $body.$query( "nothing" ), $noop );
+		testStrict( "jqNoop_d", $html.$parent(), $noop );
+		testStrict( "jqNoop_e", $html.$parent( 5 ), $noop );
+		testStrict( "jqNoop_f", $html.$prev(), $noop );
+		testStrict( "jqNoop_g", $html.$next(), $noop );
+		testStrict( "jqNoop_h", $body.$closest( "nothing" ), $noop );
+	} );
 	tests( "$_is", () => {
 		const a = $( "#eljq_1" );
 		const b = $( "#eljq_1" ).$get( 0 );
