@@ -205,6 +205,16 @@ class $$ {
 	$rmEventListener( ev, fn ) { return this.$each( el => el.removeEventListener( ev, fn ) ); }
 	$setPtrCapture( ptrId ) { return this.#a0?.setPointerCapture( ptrId ), this; }
 	$relPtrCapture( ptrId ) { return this.#a0?.releasePointerCapture( ptrId ), this; }
+	$listen( cbs ) { return this.$addEventListener( "gsui", $$.#listenCB.bind( null, cbs ) ); }
+	static #listenCB( cbs, e ) {
+		const d = e.detail;
+		const fn = cbs[ d.$event ];
+
+		if ( fn && fn( d, ...d.$args ) !== true ) {
+			e.stopPropagation();
+			e.stopImmediatePropagation();
+		}
+	}
 
 	// .........................................................................
 	$empty() { return this.$each( $$.#empty ); }

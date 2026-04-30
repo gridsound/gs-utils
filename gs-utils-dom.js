@@ -23,19 +23,6 @@ function GSUdomIsDblClick( e ) {
 }
 
 // .............................................................................
-function GSUdomListen( el, cbs ) {
-	$( el ).$addEventListener( "gsui", e => {
-		const d = e.detail;
-		const fn = cbs[ d.$event ];
-
-		if ( fn && fn( d, ...d.$args ) !== true ) {
-			e.stopPropagation();
-			e.stopImmediatePropagation();
-		}
-	} );
-}
-
-// .............................................................................
 const _GSUdomResizeMap = new Map();
 const _GSUdomResizeObs = new ResizeObserver( entries => {
 	entries.forEach( e => {
