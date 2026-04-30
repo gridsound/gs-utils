@@ -48,7 +48,7 @@ $.$setAttr2 = ( el, k, v ) => {
 
 // .............................................................................
 $.$qSA = ( sel, el = document ) => el.querySelectorAll( sel );
-$.$getElemByPoint = ( x, y ) => new $$( document.elementFromPoint( x, y ) );
+$.$getElemByPoint = ( x, y ) => $( document.elementFromPoint( x, y ) );
 $.$css = ( el, prop, val ) => $$.$setStyle( el, prop, val );
 $.$prev = el => el.previousElementSibling;
 $.$next = el => el.nextElementSibling;
@@ -143,13 +143,13 @@ class $$ {
 
 	// .........................................................................
 	$size() { return this.#a.length; }
-	$at( n ) { return new $$( this.#a.at( n ) ); }
+	$at( n ) { return $( this.#a.at( n ) ); }
 	$get( n ) { return this.#a.at( n ); }
 	$map( fn ) { return this.#a.map( fn ); }
 	$some( fn ) { return this.#a.some( fn ); }
 	$sort( fn ) { return this.#a.sort( fn ), this; }
 	$each( fn ) { return this.#a.forEach( fn ), this; }
-	$find( fn ) { return new $$( this.#a.find( fn ) ); }
+	$find( fn ) { return $( this.#a.find( fn ) ); }
 	$findIndex( fn ) { return this.#a.findIndex( fn ); }
 	$reduce( fn, x ) { return this.#a.reduce( fn, x ); }
 	$contains( tar ) { return this.$some( el => el.contains( $$.#extractFirst( tar ) ) ); }
@@ -160,17 +160,17 @@ class $$ {
 	}
 
 	// .........................................................................
-	$filter( fn ) { return new $$( this.#a.filter( GSUisFun( fn ) ? fn : el => el.matches( fn ) ) ); }
-	$child( n ) { return new $$( this.#a.map( el => Array.prototype.at.call( el.children, n ) ) ); }
-	$children() { return new $$( this.#a.flatMap( el => [ ...el.children ] ) ); }
-	$parent( n ) { return new $$( this.#a.map( el => $$.#parent( el, n ) ) ); }
-	$closest( sel ) { return new $$( this.#a.map( el => el.closest( sel ) ) ); }
-	$closestScrollable() { return new $$( this.#a.map( el => $$.#closestScrollable( el ) ) ); }
-	$prev() { return new $$( this.#a.map( $.$prev ) ); }
-	$next() { return new $$( this.#a.map( $.$next ) ); }
-	$prevUntil( sel ) { return new $$( this.#a.flatMap( el => $$.#siblingUntil( el, $.$prev, sel ) ) ); }
-	$nextUntil( sel ) { return new $$( this.#a.flatMap( el => $$.#siblingUntil( el, $.$next, sel ) ) ); }
-	$query( sel ) { return new $$( this.#a.flatMap( el => [ ...$.$qSA( sel, el ) ] ) ); }
+	$filter( fn ) { return $( this.#a.filter( GSUisFun( fn ) ? fn : el => el.matches( fn ) ) ); }
+	$child( n ) { return $( this.#a.map( el => Array.prototype.at.call( el.children, n ) ) ); }
+	$children() { return $( this.#a.flatMap( el => [ ...el.children ] ) ); }
+	$parent( n ) { return $( this.#a.map( el => $$.#parent( el, n ) ) ); }
+	$closest( sel ) { return $( this.#a.map( el => el.closest( sel ) ) ); }
+	$closestScrollable() { return $( this.#a.map( el => $$.#closestScrollable( el ) ) ); }
+	$prev() { return $( this.#a.map( $.$prev ) ); }
+	$next() { return $( this.#a.map( $.$next ) ); }
+	$prevUntil( sel ) { return $( this.#a.flatMap( el => $$.#siblingUntil( el, $.$prev, sel ) ) ); }
+	$nextUntil( sel ) { return $( this.#a.flatMap( el => $$.#siblingUntil( el, $.$next, sel ) ) ); }
+	$query( sel ) { return $( this.#a.flatMap( el => [ ...$.$qSA( sel, el ) ] ) ); }
 
 	// .........................................................................
 	$queryMap( graph ) {
