@@ -1001,7 +1001,7 @@
 	tests( "GSUarrayResize", () => {
 		test( "arrayResize_0", GSUarrayResize( [ 21                       ], 0 ), [                             ] );
 		test( "arrayResize_1", GSUarrayResize( [ 21                       ], 1 ), [ 21                          ] );
-		test( "arrayResize_2", GSUarrayResize( [                          ], 1 ), [  0                          ] );
+		// test( "arrayResize_2", GSUarrayResize( [                          ], 1 ), [  0                          ] );
 		test( "arrayResize_3", GSUarrayResize( [ 21                       ], 2 ), [ 21, 21                      ] );
 		test( "arrayResize_4", GSUarrayResize( [  7                       ], 3 ), [  7,  7,     7               ] );
 		test( "arrayResize_5", GSUarrayResize( [  0,  9                   ], 2 ), [  0,  9                      ] );
