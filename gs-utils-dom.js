@@ -53,24 +53,6 @@ function GSUdomUnobserveSize( el, fn ) {
 }
 
 // .............................................................................
-function GSUdomIsScrollable( el ) {
-	const ov = $.$css( el, "overflow" );
-
-	return ov === "auto" || ov === "scroll";
-}
-function GSUdomClosestScrollable( el ) {
-	const limit = $html.$get( 0 );
-	let par = el;
-
-	while ( par !== limit && ( par = par.parentNode ) ) {
-		if ( GSUdomIsScrollable( par ) ) {
-			return par;
-		}
-	}
-	return null;
-}
-
-// .............................................................................
 function GSUdomSetChildrenLength( el, n, tag, prop ) {
 	if ( el.children.length < n ) {
 		el.append( ...GSUnewArray( n - el.children.length, () => $.$elem( tag, prop ) ) );

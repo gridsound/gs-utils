@@ -36,6 +36,17 @@ $.$define = ( tag, clazz ) => {
 };
 
 // .............................................................................
+$.$rmAttr = ( el, k ) => el.removeAttribute( k );
+$.$hasAttr = ( el, k ) => el.hasAttribute( k );
+$.$setAttr = ( el, k, v ) => el.setAttribute( k, v );
+$.$togAttr = ( el, k ) => $.$setAttr2( el, k, !$.$hasAttr( el, k ) );
+$.$setAttr2 = ( el, k, v ) => {
+	v === false || v === null || v === undefined
+		? $.$rmAttr( el, k )
+		: $.$setAttr( el, k, v === true ? "" : v );
+};
+
+// .............................................................................
 $.$qSA = ( sel, el = document ) => el.querySelectorAll( sel );
 $.$getElemByPoint = ( x, y ) => new $$( document.elementFromPoint( x, y ) );
 $.$css = ( el, prop, val ) => $$.$setStyle( el, prop, val );
@@ -51,16 +62,10 @@ $.$bcr = el => {
 		return bcr;
 	}
 };
+$.$isScrollable = el => {
+	const ov = $.$css( el, "overflow" );
 
-// .............................................................................
-$.$rmAttr = ( el, k ) => el.removeAttribute( k );
-$.$hasAttr = ( el, k ) => el.hasAttribute( k );
-$.$setAttr = ( el, k, v ) => el.setAttribute( k, v );
-$.$togAttr = ( el, k ) => $.$setAttr2( el, k, !$.$hasAttr( el, k ) );
-$.$setAttr2 = ( el, k, v ) => {
-	v === false || v === null || v === undefined
-		? $.$rmAttr( el, k )
-		: $.$setAttr( el, k, v === true ? "" : v );
+	return ov === "auto" || ov === "scroll";
 };
 
 // .............................................................................
@@ -160,6 +165,7 @@ class $$ {
 	$children() { return new $$( this.#a.flatMap( el => [ ...el.children ] ) ); }
 	$parent( n ) { return new $$( this.#a.map( el => $$.#parent( el, n ) ) ); }
 	$closest( sel ) { return new $$( this.#a.map( el => el.closest( sel ) ) ); }
+	$closestScrollable() { return new $$( this.#a.map( el => $$.#closestScrollable( el ) ) ); }
 	$prev() { return new $$( this.#a.map( $.$prev ) ); }
 	$next() { return new $$( this.#a.map( $.$next ) ); }
 	$prevUntil( sel ) { return new $$( this.#a.flatMap( el => $$.#siblingUntil( el, $.$prev, sel ) ) ); }
@@ -410,6 +416,17 @@ class $$ {
 				par.scrollLeft += diff;
 			}
 		}
+	}
+	static #closestScrollable( el ) {
+		const limit = $html.$get( 0 );
+		let par = el;
+
+		while ( par !== limit && ( par = par.parentNode ) ) {
+			if ( $.$isScrollable( par ) ) {
+				return par;
+			}
+		}
+		return null;
 	}
 }
 
