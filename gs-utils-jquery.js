@@ -284,6 +284,7 @@ class $$ {
 	$scrollX( n, beh ) { return n === undefined ? this.#a0?.scrollLeft : this.#scroll( "left", n, beh ); }
 	$scrollY( n, beh ) { return n === undefined ? this.#a0?.scrollTop : this.#scroll( "top", n, beh ); }
 	$scrollIntoViewX( par ) { return $$.#scrollIntoViewX( this.#a0, GSUisJQu( par ) ? par.$get( 0 ) : par ), this; }
+	$scrollIntoViewX( par ) { return $$.#scrollIntoViewX( this.#a0, $$.#extractFirst( par ) ), this; }
 	#scroll( dir, n, beh ) {
 		return this.$each( ( el, i ) => el.scrollTo( {
 			[ dir ]: $$.#calcVal( n, el, i ),
