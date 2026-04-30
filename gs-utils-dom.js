@@ -23,36 +23,6 @@ function GSUdomIsDblClick( e ) {
 }
 
 // .............................................................................
-const _GSUdomResizeMap = new Map();
-const _GSUdomResizeObs = new ResizeObserver( entries => {
-	entries.forEach( e => {
-		_GSUdomResizeMap.get( e.target )
-			.forEach( fn => fn( e.contentRect.width, e.contentRect.height ) );
-	} );
-} );
-
-function GSUdomObserveSize( el, fn ) {
-	if ( _GSUdomResizeMap.has( el ) ) {
-		_GSUdomResizeMap.get( el ).push( fn );
-	} else {
-		_GSUdomResizeMap.set( el, [ fn ] );
-	}
-	_GSUdomResizeObs.observe( el );
-}
-function GSUdomUnobserveSize( el, fn ) {
-	const fns = _GSUdomResizeMap.get( el );
-	const fnInd = fns?.indexOf( fn );
-
-	if ( fnInd > -1 ) {
-		_GSUdomResizeObs.unobserve( el );
-		fns.splice( fnInd, 1 );
-		if ( fns.length === 0 ) {
-			_GSUdomResizeMap.delete( el );
-		}
-	}
-}
-
-// .............................................................................
 function GSUdomSetChildrenLength( el, n, tag, prop ) {
 	if ( el.children.length < n ) {
 		el.append( ...GSUnewArray( n - el.children.length, () => $.$elem( tag, prop ) ) );

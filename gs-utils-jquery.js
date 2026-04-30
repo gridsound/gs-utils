@@ -222,6 +222,8 @@ class $$ {
 	$off( ...ev ) {
 		return this.$each( el => ev.forEach( ev => el[ `on${ ev }` ] = null ) );
 	}
+	$observeSize( fn ) { return this.$each( el => $$.#observeSize( el, fn ) ); }
+	$unobserveSize( fn ) { return this.$each( el => $$.#unobserveSize( el, fn ) ); }
 	$addEventListener( ev, fn, opt ) { return this.$each( el => el.addEventListener( ev, fn, opt ) ); }
 	$rmEventListener( ev, fn ) { return this.$each( el => el.removeEventListener( ev, fn ) ); }
 	$setPtrCapture( ptrId ) { return this.#a0?.setPointerCapture( ptrId ), this; }
@@ -435,6 +437,35 @@ class $$ {
 			}
 		}
 		return null;
+	}
+
+	// .........................................................................
+	static #resizeMap = new Map();
+	static #resizeObs = new ResizeObserver( entries => {
+		entries.forEach( e => {
+			$$.#resizeMap.get( e.target )
+				.forEach( fn => fn( e.contentRect.width, e.contentRect.height ) );
+		} );
+	} );
+	static #observeSize( el, fn ) {
+		if ( $$.#resizeMap.has( el ) ) {
+			$$.#resizeMap.get( el ).push( fn );
+		} else {
+			$$.#resizeMap.set( el, [ fn ] );
+		}
+		$$.#resizeObs.observe( el );
+	}
+	static #unobserveSize( el, fn ) {
+		const fns = $$.#resizeMap.get( el );
+		const fnInd = fns?.indexOf( fn );
+
+		if ( fnInd > -1 ) {
+			$$.#resizeObs.unobserve( el );
+			fns.splice( fnInd, 1 );
+			if ( fns.length === 0 ) {
+				$$.#resizeMap.delete( el );
+			}
+		}
 	}
 }
 
