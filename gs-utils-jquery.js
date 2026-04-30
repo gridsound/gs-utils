@@ -149,7 +149,7 @@ class $$ {
 
 	// .........................................................................
 	$is( tar ) {
-		return this.$some(
+		return this === tar || this.$some(
 			GSUisElm( tar ) ? el => el === tar :
 			GSUisJQu( tar ) ? el => tar.$is( el ) :
 			GSUisStr( tar ) ? el => el.matches( tar ) : GSUnoopFalse

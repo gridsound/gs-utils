@@ -1231,6 +1231,8 @@
 		testStrict( "jqIs_a", e.$is( d ), true );
 		testStrict( "jqIs_b", a.$is( "#eljq_1" ), true );
 		testStrict( "jqIs_c", a.$is( "#eljq_0" ), false );
+		testStrict( "jqIs_d", $noop.$is( $noop ), true );
+		testStrict( "jqIs_e", $().$is( $() ), true );
 	} )
 	tests( "$_get", () => {
 		const x = $( "<div>" );
