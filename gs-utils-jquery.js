@@ -440,6 +440,28 @@ class $$ {
 	}
 
 	// .........................................................................
+	static #dblClickDelay = 300;
+	static #dblClickWhen = 0;
+	static #dblClickElem = null;
+	static $dblClick( e ) {
+		if ( e.button === 0 ) {
+			const now = Date.now();
+			const old = $$.#dblClickElem?.deref();
+
+			if ( old !== e.target ) {
+				$$.#dblClickElem = new WeakRef( e.target );
+				$$.#dblClickWhen = now;
+			} else {
+				const dbl = now - $$.#dblClickWhen < $$.#dblClickDelay;
+
+				$$.#dblClickWhen = dbl ? 0 : now;
+				return dbl;
+			}
+		}
+		return false;
+	}
+
+	// .........................................................................
 	static #resizeMap = new Map();
 	static #resizeObs = new ResizeObserver( entries => {
 		entries.forEach( e => {
@@ -468,6 +490,8 @@ class $$ {
 		}
 	}
 }
+
+$.$isDblClick = $$.$dblClick;
 
 Object.freeze( $ );
 Object.freeze( $$ );
