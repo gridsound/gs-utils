@@ -246,7 +246,7 @@ class $$ {
 	$append( ...arr ) { return this.#a0?.append( ...$.$flatElements( arr ) ), this; }
 	$prependTo( el ) { return $$.#extractFirst( el )?.prepend( ...this.#a ), this; }
 	$appendTo( el ) { return $$.#extractFirst( el )?.append( ...this.#a ), this; }
-	$maintainChildren( n, tag, attr ) { return this.$each( el => $$.#maintainChildren( el, n, tag, attr ) ) }
+	$maintainChildren( n, tag, attr ) { return this.$each( el => $$.#maintainChildren( el, n, tag, attr ) ); }
 
 	// .........................................................................
 	$hasClass( c ) { return this.$some( el => el.classList.contains( c ) ); }
