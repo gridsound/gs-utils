@@ -318,11 +318,7 @@ class $$ {
 	$play() { return this.$trigger( "play" ); }
 	$pause() { return this.$trigger( "pause" ); }
 	$click() { return this.$trigger( "click" ); }
-	$togglePopover( b ) {
-		return b
-			? this.$trigger( "showPopover" )
-			: this.$trigger( "hidePopover" );
-	}
+	$togglePopover( b ) { return this.$trigger( b ? "showPopover" : "hidePopover" ); }
 
 	// .........................................................................
 	$bcr() { return $.$bcr( this.#a0 ); }
