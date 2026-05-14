@@ -129,6 +129,10 @@ function GSUarrayEq( a, b, diff ) {
 		: ( a, i ) => a === b[ i ]
 	);
 }
+function GSUarrayPushBack( a, ...args ) {
+	a.push( ...args );
+	return a;
+}
 function GSUarrayFrom( a ) {
 	return GSUisArr( a ) ? a : "length" in a ? Array.from( a ) : [ a ];
 }
