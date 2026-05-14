@@ -1,13 +1,8 @@
 "use strict";
 
-function GSUloadJSFile( src ) {
-	return new Promise( resolve => {
-		$( "<script>" )
-			.$setAttr( { src, type: "text/javascript" } )
-			.$on( "load", resolve )
-			.$appendTo( $head );
-	} );
-}
+function GSUloadJSFile( src ) { return $.$loadJS( src ); }
+function GSUdownloadURL( name, url ) { $.$downloadURL( name, url ); }
+function GSUdownloadBlob( name, blob ) { $.$downloadBlob( name, blob ); }
 
 function GSUgetFileContent( file, format ) {
 	return new Promise( res => {
@@ -19,22 +14,6 @@ function GSUgetFileContent( file, format ) {
 			case "array": rd.readAsArrayBuffer( file ); break;
 		}
 	} );
-}
-
-function GSUdownloadURL( name, url ) {
-	$( "<a>" )
-		.$setAttr( {
-			href: url,
-			download: name,
-			target: "_blank",
-		} )
-		.$appendTo( $body )
-		.$click()
-		.$remove();
-}
-
-function GSUdownloadBlob( name, blob ) {
-	GSUdownloadURL( name, URL.createObjectURL( blob ) );
 }
 
 function GSUgetFilesDataTransfert_rec( files, item, path = "" ) {

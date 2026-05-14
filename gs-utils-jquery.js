@@ -54,6 +54,26 @@ $.$define = ( tag, clazz ) => {
 };
 
 // .............................................................................
+$.$loadJS = src => new Promise( resolve => {
+	$( "<script>" )
+		.$setAttr( { src, type: "text/javascript" } )
+		.$on( "load", resolve )
+		.$appendTo( $head );
+} );
+$.$downloadBlob = ( name, blob ) => $.$downloadURL( name, URL.createObjectURL( blob ) );
+$.$downloadURL = ( name, url ) => {
+	$( "<a>" )
+		.$setAttr( {
+			href: url,
+			download: name,
+			target: "_blank",
+		} )
+		.$appendTo( $body )
+		.$click()
+		.$remove();
+};
+
+// .............................................................................
 $.$rmAttr = ( el, k ) => el.removeAttribute( k );
 $.$hasAttr = ( el, k ) => el.hasAttribute( k );
 $.$setAttr = ( el, k, v ) => el.setAttribute( k, v );
