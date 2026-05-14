@@ -264,8 +264,12 @@ class $$ {
 	$remove() { return this.$each( el => el.remove() ); }
 	$prepend( ...arr ) { return this.#a0?.prepend( ...$.$flatElements( arr ) ), this; }
 	$append( ...arr ) { return this.#a0?.append( ...$.$flatElements( arr ) ), this; }
+	$before( ...arr ) { return this.#a0?.before( ...$.$flatElements( arr ) ), this; }
+	$after( ...arr ) { return this.#a0?.after( ...$.$flatElements( arr ) ), this; }
 	$prependTo( el ) { return $$.#extractFirst( el )?.prepend( ...this.#a ), this; }
 	$appendTo( el ) { return $$.#extractFirst( el )?.append( ...this.#a ), this; }
+	$beforeTo( el ) { return $$.#extractFirst( el )?.before( ...this.#a ), this; }
+	$afterTo( el ) { return $$.#extractFirst( el )?.after( ...this.#a ), this; }
 	$maintainChildren( n, tag, attr ) { return this.$each( el => $$.#maintainChildren( el, n, tag, attr ) ); }
 
 	// .........................................................................
