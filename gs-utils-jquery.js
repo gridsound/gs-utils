@@ -157,6 +157,33 @@ $.$link    = ( a, ...c ) => $.$elem( "a", { href: true, ...a }, ...c );
 $.$linkExt = ( a, ...c ) => $.$elem( "a", { href: true, ...a, target: "_blank", rel: "noopener" }, ...c );
 
 // .............................................................................
+$.$simpleStringHTML = s => {
+	let ind = 0;
+	const arr = [];
+	const reg = /<(b|i)>(.*?)<\/\1>|<a (https?:\/\/[^>]+)>(.*?)<\/a>|<br\/>/ug;
+	//              1     2                    3            4
+
+	for ( let m; m = reg.exec( s ); ) {
+		const href = m[ 3 ];
+
+		if ( m.index > ind ) {
+			arr.push( $.$span( null, s.slice( ind, m.index ) ) );
+		}
+		arr.push( href
+			? $.$link( { href }, m[ 4 ] || href )
+			: m[ 0 ] === "<br/>"
+				? $.$elem( "br" )
+				: $.$elem( m[ 1 ], null, m[ 2 ] )
+		);
+		ind = reg.lastIndex;
+	}
+	if ( ind < s.length ) {
+		arr.push( $.$span( null, s.slice( ind ) ) );
+	}
+	return arr;
+};
+
+// .............................................................................
 class $$ {
 	#a;
 	#a0;
