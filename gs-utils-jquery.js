@@ -26,6 +26,13 @@ function $( a, b ) {
 }
 
 // .............................................................................
+$.$lang = () => {
+	const l = navigator.language;
+
+	return l === "en-US"
+		? "en"
+		:  l || "en";
+};
 $.$htmlNS = "http://www.w3.org/1999/xhtml";
 $.$svgNS = "http://www.w3.org/2000/svg";
 $.$taglistSVG = Object.freeze( {
