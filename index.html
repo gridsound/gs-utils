@@ -1583,6 +1583,47 @@
 		testStrict( "jqDataProp_2", a.$dataProp( "def" ).$dataProp(), "def" );
 		testStrict( "jqDataProp_3", a.$get( 0 ).dataset.prop, "def" );
 	} );
+	tests( "$_$simpleStringHTML", () => {
+		const elB0 = $.$bold( null, "b" );
+		const elS0 = $.$span( null, "a" );
+		const elS1 = $.$span( null, "c" );
+		const elS2 = $.$span( null, "d" );
+		const elS3 = $.$span( null, "<v>v</v>" );
+		const elI0 = $.$elem( "i", null, "c" );
+		const elBR = $.$elem( "br" );
+		const elA0 = $.$link( { href: "http://google" }, "http://google" );
+		const elA1 = $.$link( { href: "https://google" }, "https://google" );
+		const elA2 = $.$link( { href: "https://google" }, "g g" );
+		const a = $.$simpleStringHTML( "a" );
+		const b = $.$simpleStringHTML( "<b>b</b>" );
+		const c = $.$simpleStringHTML( "a<b>b</b>c" );
+		const d = $.$simpleStringHTML( "a<b>b</b><i>c</i>d" );
+		const e = $.$simpleStringHTML( "<i>c</i>" );
+		const f = $.$simpleStringHTML( "" );
+		const g = $.$simpleStringHTML( "<v>v</v>" );
+		const h = $.$simpleStringHTML( "<br/>" );
+		const i = $.$simpleStringHTML( "a<br/>c" );
+		const j = $.$simpleStringHTML( "<br/><br/>" );
+		const k = $.$simpleStringHTML( "<a http://google></a>" );
+		const l = $.$simpleStringHTML( "<a https://google></a>" );
+		const m = $.$simpleStringHTML( "<a https://google>g g</a>" );
+		const n = $.$simpleStringHTML( "a<b>b</b>d<a https://google>g g</a><br/><i>c</i>" );
+
+		test( "jqSSHTML_0", a, [ elS0 ] );
+		test( "jqSSHTML_1", b, [ elB0 ] );
+		test( "jqSSHTML_2", c, [ elS0, elB0, elS1 ] );
+		test( "jqSSHTML_3", d, [ elS0, elB0, elI0, elS2 ] );
+		test( "jqSSHTML_4", e, [ elI0 ] );
+		test( "jqSSHTML_5", f, [] );
+		test( "jqSSHTML_6", g, [ elS3 ] );
+		test( "jqSSHTML_7", h, [ elBR ] );
+		test( "jqSSHTML_8", i, [ elS0, elBR, elS1 ] );
+		test( "jqSSHTML_9", j, [ elBR, elBR ] );
+		test( "jqSSHTML_a", k, [ elA0 ] );
+		test( "jqSSHTML_b", l, [ elA1 ] );
+		test( "jqSSHTML_c", m, [ elA2 ] );
+		test( "jqSSHTML_d", n, [ elS0, elB0, elS2, elA2, elBR, elI0 ] );
+	} );
 </script>
 
 <!-- ....................................................................... -->
