@@ -1594,6 +1594,7 @@
 		const elA0 = $.$link( { href: "http://google" }, "http://google" );
 		const elA1 = $.$link( { href: "https://google" }, "https://google" );
 		const elA2 = $.$link( { href: "https://google" }, "g g" );
+		const elBI = $.$bold( null, $.$elem( "i", null, "bi" ) );
 		const a = $.$simpleStringHTML( "a" );
 		const b = $.$simpleStringHTML( "<b>b</b>" );
 		const c = $.$simpleStringHTML( "a<b>b</b>c" );
@@ -1608,6 +1609,8 @@
 		const l = $.$simpleStringHTML( "<a https://google></a>" );
 		const m = $.$simpleStringHTML( "<a https://google>g g</a>" );
 		const n = $.$simpleStringHTML( "a<b>b</b>d<a https://google>g g</a><br/><i>c</i>" );
+		const o = $.$simpleStringHTML( "<bi>bi</bi>" );
+		const p = $.$simpleStringHTML( "a<bi>bi</bi>" );
 
 		test( "jqSSHTML_0", a, [ elS0 ] );
 		test( "jqSSHTML_1", b, [ elB0 ] );
@@ -1623,6 +1626,8 @@
 		test( "jqSSHTML_b", l, [ elA1 ] );
 		test( "jqSSHTML_c", m, [ elA2 ] );
 		test( "jqSSHTML_d", n, [ elS0, elB0, elS2, elA2, elBR, elI0 ] );
+		test( "jqSSHTML_e", o, [ elBI ] );
+		test( "jqSSHTML_f", p, [ elS0, elBI ] );
 	} );
 </script>
 

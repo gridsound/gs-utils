@@ -167,8 +167,8 @@ $.$linkExt = ( a, ...c ) => $.$elem( "a", { href: true, ...a, target: "_blank", 
 $.$simpleStringHTML = s => {
 	let ind = 0;
 	const arr = [];
-	const reg = /<(b|i)>(.*?)<\/\1>|<a (https?:\/\/[^>]+)>(.*?)<\/a>|<br\/>/ug;
-	//              1     2                    3            4
+	const reg = /<(b|i|bi)>(.*?)<\/\1>|<a (https?:\/\/[^>]+)>(.*?)<\/a>|<br\/>/ug;
+	//               1       2                    3            4
 
 	for ( let m; m = reg.exec( s ); ) {
 		const href = m[ 3 ];
@@ -180,7 +180,9 @@ $.$simpleStringHTML = s => {
 			? $.$link( { href }, m[ 4 ] || href )
 			: m[ 0 ] === "<br/>"
 				? $.$elem( "br" )
-				: $.$elem( m[ 1 ], null, m[ 2 ] )
+				: m[ 1 ] === "bi"
+					? $.$bold( null, $.$elem( "i", null, m[ 2 ] ) )
+					: $.$elem( m[ 1 ], null, m[ 2 ] )
 		);
 		ind = reg.lastIndex;
 	}
