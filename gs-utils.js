@@ -105,6 +105,7 @@ function GSUsome( obj, fn ) {
 function GSUisEqual( a, b ) {
 	return (
 		Object.is( a, b ) ? true :
+		GSUisElm( a ) || GSUisElm( b ) ? a?.isEqualNode?.( b ) || false :
 		!GSUisObj( a ) || !GSUisObj( b ) || GSUisArr( a ) !== GSUisArr( b ) ? false :
 		!(
 			GSUsome( a, ( av, ak ) => !GSUisEqual( av, b[ ak ] ) ) ||
