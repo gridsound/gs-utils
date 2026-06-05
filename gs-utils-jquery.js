@@ -26,6 +26,7 @@ function $( a, b ) {
 }
 
 // .............................................................................
+$.$year = new Date().getFullYear();
 $.$lang = () => {
 	const l = navigator.language;
 
