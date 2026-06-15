@@ -386,6 +386,7 @@ class $$ {
 	$tag() { return this.#a0?.tagName.toLowerCase(); }
 	$focus() { return this.#a0?.focus( { preventScroll: true } ); }
 	$text( v ) { return this.$prop( "textContent", v ); }
+	$textHTML( s ) { return this.$empty().$append( ...$.$simpleStringHTML( s ) ); }
 	$value( v ) { return this.$prop( "value", v ); }
 	$checked( b ) { return this.$prop( "checked", b ); }
 	$disabled( b ) { return this.$setAttr( "disabled", b ); }
