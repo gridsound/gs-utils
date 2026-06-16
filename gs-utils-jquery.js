@@ -134,13 +134,13 @@ $.$icon = attr => {
 	const attr2 = {
 		inert: true,
 		...attr,
-		class: `gsuiIcon${ attr?.class ? ` ${ attr.class }` : "" }`,
-		"data-icon": attr?.icon || null,
-		"data-spin": attr?.spin ? "on" : null,
+		class: `gsuiIcon ${ attr?.class || "" }`,
+		"data-icon": attr?.icon || false,
+		"data-spin": !!attr?.spin,
 	};
 
 	delete attr2.icon;
-	return $.$elem( "i", attr2 );
+	return $.$elem( "gsui-icon", attr2 );
 };
 $.$button = ( attr, ...child ) => {
 	const attr2 = {
