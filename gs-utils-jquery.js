@@ -134,7 +134,6 @@ $.$icon = attr => {
 	const attr2 = {
 		inert: true,
 		...attr,
-		class: `gsuiIcon ${ attr?.class || "" }`,
 		"data-icon": attr?.icon || false,
 		"data-spin": !!attr?.spin,
 	};
