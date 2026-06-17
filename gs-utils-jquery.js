@@ -141,17 +141,6 @@ $.$icon = attr => {
 	delete attr2.icon;
 	return $.$elem( "gsui-icon", attr2 );
 };
-$.$button = ( attr, ...child ) => {
-	const attr2 = {
-		type: "button",
-		...attr,
-		class: `${ attr?.class || "" }${ attr?.icon ? " gsuiIcon" : "" }` || null,
-		"data-icon": attr?.icon || null,
-	};
-
-	delete attr2.icon;
-	return $.$elem( "button", attr2, ...child );
-};
 $.$div = $.$elem.bind( null, "div" );
 $.$bold = $.$elem.bind( null, "b" );
 $.$flex = $.$elem.bind( null, "gs-flex" );
@@ -162,6 +151,7 @@ $.$select = $.$elem.bind( null, "select" );
 $.$option  = ( a, c ) => $.$elem( "option", a, c || a?.value );
 $.$link    = ( a, ...c ) => $.$elem( "a", { href: true, ...a }, ...c );
 $.$linkExt = ( a, ...c ) => $.$elem( "a", { href: true, ...a, target: "_blank", rel: "noopener" }, ...c );
+$.$button  = ( a, ...c ) => $.$elem( "button", { type: "button", ...a }, ...c );
 
 // .............................................................................
 $.$simpleStringHTML = s => {
