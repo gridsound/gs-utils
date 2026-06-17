@@ -135,7 +135,6 @@ $.$icon = attr => {
 		inert: true,
 		...attr,
 		"data-icon": attr?.icon || false,
-		"data-spin": !!attr?.spin,
 	};
 
 	delete attr2.icon;
