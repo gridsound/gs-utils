@@ -35,6 +35,7 @@ $.$lang = () => {
 		:  l || "en";
 };
 $.$htmlNS = "http://www.w3.org/1999/xhtml";
+$.$linkNS = "http://www.w3.org/1999/xlink";
 $.$svgNS = "http://www.w3.org/2000/svg";
 $.$taglistSVG = Object.freeze( {
 	g: 1,
