@@ -130,16 +130,6 @@ $.$elem = ( tag, attr, ...children ) => {
 	el.append( ...children.flat( 1 ).filter( ch => Boolean( ch ) || Number.isFinite( ch ) ) );
 	return el;
 };
-$.$icon = attr => {
-	const attr2 = {
-		inert: true,
-		...attr,
-		"data-icon": attr?.icon || false,
-	};
-
-	delete attr2.icon;
-	return $.$elem( "gsui-icon", attr2 );
-};
 $.$div = $.$elem.bind( null, "div" );
 $.$bold = $.$elem.bind( null, "b" );
 $.$flex = $.$elem.bind( null, "gs-flex" );
@@ -147,10 +137,11 @@ $.$span = $.$elem.bind( null, "span" );
 $.$input = $.$elem.bind( null, "input" );
 $.$label = $.$elem.bind( null, "label" );
 $.$select = $.$elem.bind( null, "select" );
-$.$option  = ( a, c ) => $.$elem( "option", a, c || a?.value );
-$.$link    = ( a, ...c ) => $.$elem( "a", { href: true, ...a }, ...c );
+$.$icon = a => $.$elem( "gsui-icon", { inert: true, ...a } );
+$.$option = ( a, c ) => $.$elem( "option", a, c || a?.value );
+$.$link = ( a, ...c ) => $.$elem( "a", { href: true, ...a }, ...c );
 $.$linkExt = ( a, ...c ) => $.$elem( "a", { href: true, ...a, target: "_blank", rel: "noopener" }, ...c );
-$.$button  = ( a, ...c ) => $.$elem( "button", { type: "button", ...a }, ...c );
+$.$button = ( a, ...c ) => $.$elem( "button", { type: "button", ...a }, ...c );
 
 // .............................................................................
 $.$simpleStringHTML = s => {
