@@ -88,7 +88,7 @@ GSUsetModel( "envLowpass", {
 	q: 1,
 } );
 GSUsetModel( "envWtpos", {
-	toggle: false,
+	toggle: true,
 	attack: .04,
 	hold: 0,
 	decay: .08,
