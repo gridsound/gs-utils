@@ -123,7 +123,7 @@ GSUsetModel( "wavetable", {
 	waves: {
 		0: {
 			index: 0,
-			curve: GSUnewArray( 2048, 0 ),
+			curve: GSUnewArray( 512, 0 ),
 		},
 	},
 	wtposCurves: {
