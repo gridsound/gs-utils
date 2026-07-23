@@ -131,17 +131,8 @@ GSUsetModel( "wavetable", {
 	waves: {
 		0: {
 			index: 0,
-			curve: GSUnewArray( 512, 0 ),
+			curve: GSUnewArray( 2048, 0 ),
 		},
-	},
-	wtposCurves: {
-		...GSUnewArray( 10, () => ( {
-			duration: 1,
-			curve: {
-				0: { x: 0, y: 0, type: null, val: null },
-				1: { x: 1, y: 1, type: "curve", val: 0 },
-			},
-		} ) ),
 	},
 } );
 GSUsetModel( "synth", {
@@ -176,7 +167,6 @@ GSUsetModel( "key", {
 	pan: 0,
 	highpass: 1,
 	lowpass: 1,
-	wtposCurves: {},
 	selected: false,
 } );
 
