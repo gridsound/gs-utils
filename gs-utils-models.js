@@ -147,8 +147,11 @@ GSUsetModel( "synth", {
 		wtpos: GSUgetModel( "envWtpos" ),
 	},
 	lfos: {
+		pan: GSUgetModel( "lfo" ),
 		gain: GSUgetModel( "lfo" ),
 		detune: GSUgetModel( "lfo", { amp: 12 } ),
+		lowpass: GSUgetModel( "lfo" ),
+		wtpos: GSUgetModel( "lfo" ),
 	},
 	noise: GSUgetModel( "noise" ),
 	oscillators: {},
