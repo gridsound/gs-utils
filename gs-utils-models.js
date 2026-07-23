@@ -167,6 +167,8 @@ GSUsetModel( "key", {
 	gain: .8,
 	gainLFOAmp: 1,
 	gainLFOSpeed: 1,
+	detuneLFOAmp: 1,
+	detuneLFOSpeed: 1,
 	pan: 0,
 	highpass: 1,
 	lowpass: 1,
