@@ -263,6 +263,7 @@ class $$ {
 	$unobserveSize( fn ) { return this.$each( el => $$.#unobserveSize( el, fn ) ); }
 	$addEventListener( ev, fn, opt ) { return this.$each( el => el.addEventListener( ev, fn, opt ) ); }
 	$rmEventListener( ev, fn ) { return this.$each( el => el.removeEventListener( ev, fn ) ); }
+	$hasPtrCapture( ptrId ) { return this.#a0?.hasPointerCapture( ptrId ); }
 	$setPtrCapture( ptrId ) { return this.#a0?.setPointerCapture( ptrId ), this; }
 	$relPtrCapture( ptrId ) { return this.#a0?.releasePointerCapture( ptrId ), this; }
 	$listen( cbs ) { return this.$addEventListener( "gsui", $$.#listenCB.bind( null, cbs ) ); }
