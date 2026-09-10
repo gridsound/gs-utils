@@ -92,6 +92,12 @@ $.$setAttr2 = ( el, k, v ) => {
 		? $.$rmAttr( el, k )
 		: $.$setAttr( el, k, v === true ? "" : v );
 };
+$.$dataProp = ( el, v ) => {
+	if ( v !== undefined ) {
+		el.dataset.prop = v;
+	}
+	return el.dataset.prop;
+};
 
 // .............................................................................
 $.$qSA = ( sel, el = document ) => el.querySelectorAll( sel );
