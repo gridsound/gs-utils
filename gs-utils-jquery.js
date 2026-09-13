@@ -212,6 +212,7 @@ class $$ {
 	$findIndex( fn ) { return this.#a.findIndex( fn ); }
 	$reduce( fn, x ) { return this.#a.reduce( fn, x ); }
 	$contains( tar ) { return this.$some( el => el.contains( $$.#extractFirst( tar ) ) ); }
+	$childrenCount() { return this.#a0?.childElementCount || 0; }
 	$index() {
 		return this.#a0?.parentNode
 			? Array.prototype.indexOf.call( this.#a0?.parentNode.children, this.#a0 )
