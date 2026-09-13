@@ -84,6 +84,7 @@ $.$downloadURL = ( name, url ) => {
 
 // .............................................................................
 $.$rmAttr = ( el, k ) => el.removeAttribute( k );
+$.$getAttr = ( el, k ) => el.getAttribute( k );
 $.$hasAttr = ( el, k ) => el.hasAttribute( k );
 $.$setAttr = ( el, k, v ) => el.setAttribute( k, v );
 $.$togAttr = ( el, k ) => $.$setAttr2( el, k, !$.$hasAttr( el, k ) );
