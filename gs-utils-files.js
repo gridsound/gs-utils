@@ -16,7 +16,7 @@ function GSUgetFileContent( file, format ) {
 	} );
 }
 
-const GSUopenFileManager = () => new Promise( ( res, rej ) => {
+const GSUopenFileManager = () => new Promise( res => {
 	GSUopenFileManager.$inputRes = res;
 	GSUopenFileManager.$input.$click();
 } );

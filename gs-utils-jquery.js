@@ -559,12 +559,10 @@ $.$isDblClick = $$.$dblClick;
 Object.freeze( $ );
 Object.freeze( $$ );
 
-/* eslint-disable */
 const $noop = new $$( [] );
 const $head = $( document.head );
 const $body = $( document.body );
 const $html = $body.$parent();
 const $popup = $.$elem( "gsui-popup" );
-/* eslint-enable */
 
 $body.$prepend( $popup );
