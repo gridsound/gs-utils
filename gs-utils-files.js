@@ -16,6 +16,16 @@ function GSUgetFileContent( file, format ) {
 	} );
 }
 
+const GSUopenFileManager = () => new Promise( ( res, rej ) => {
+	GSUopenFileManager.$inputRes = res;
+	GSUopenFileManager.$input.$click();
+} );
+GSUopenFileManager.$inputRes = null;
+GSUopenFileManager.$callback = e => GSUopenFileManager.$inputRes( e.target.files );
+GSUopenFileManager.$input = $( "<input>" )
+	.$setAttr( "type", "file" )
+	.$onchange( GSUopenFileManager.$callback );
+
 function GSUgetFilesDataTransfert_rec( files, item, path = "" ) {
 	return new Promise( res => {
 		if ( item.isFile ) {
