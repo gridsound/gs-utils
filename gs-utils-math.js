@@ -47,13 +47,13 @@ function GSUmathClamp( n, min, max ) {
 }
 
 // .............................................................................
-function GSUmathIntReadable( n ) {
+function GSUmathFloatReadable( n ) {
 	if ( !n || !GSUisNum( n ) ) {
 		return [ 0, "" ];
 	}
 
 	const abs = Math.abs( n );
-	const uni = GSUmathIntReadable.$units;
+	const uni = GSUmathFloatReadable.$units;
 	const ind = uni.findIndex( u => abs >= u[ 0 ] );
 
 	if ( ind === -1 ) {
@@ -69,7 +69,7 @@ function GSUmathIntReadable( n ) {
 	}
 	return [ rounded, unit[ 1 ] ];
 }
-GSUmathIntReadable.$units = [
+GSUmathFloatReadable.$units = [
 	[ 1e12, "T" ],
 	[ 1e9,  "G" ],
 	[ 1e6,  "M" ],
