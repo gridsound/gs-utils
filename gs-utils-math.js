@@ -47,6 +47,36 @@ function GSUmathClamp( n, min, max ) {
 }
 
 // .............................................................................
+function GSUmathIntReadable( n ) {
+	if ( !n || !GSUisNum( n ) ) {
+		return [ 0, "" ];
+	}
+
+	const abs = Math.abs( n );
+	const uni = GSUmathIntReadable.$units;
+	const ind = uni.findIndex( u => abs >= u[ 0 ] );
+
+	if ( ind === -1 ) {
+		return [ n, "" ];
+	}
+
+	let unit = uni[ ind ];
+	let rounded = Math.round( ( n / unit[ 0 ] ) * 1000 ) / 1000;
+
+	if ( Math.abs( rounded ) >= 1000 && ind > 0 ) {
+		unit = uni[ ind - 1 ];
+		rounded = Math.round( ( n / unit[ 0 ] ) * 1000 ) / 1000;
+	}
+	return [ rounded, unit[ 1 ] ];
+}
+GSUmathIntReadable.$units = [
+	[ 1e12, "T" ],
+	[ 1e9,  "G" ],
+	[ 1e6,  "M" ],
+	[ 1e3,  "K" ],
+];
+
+// .............................................................................
 function GSUmathWaveSine( len ) {
 	return GSUnewArray( len, i => Math.sin( ( i / ( len - 1 ) ) * Math.PI * 2 ) );
 }
