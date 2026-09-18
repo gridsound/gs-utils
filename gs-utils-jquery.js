@@ -309,7 +309,14 @@ class $$ {
 	$togAttr( k ) { return this.$each( el => $.$togAttr( el, k ) ); }
 	$rmAttr( ...k ) { return this.$each( el => k.forEach( a => $.$rmAttr( el, a ) ) ); }
 	$addAttr( ...k ) { return this.$each( el => k.forEach( a => $.$setAttr( el, a, "" ) ) ); }
-	$getAttr( ...k ) { return k.length === 1 ? this.#a0?.getAttribute( k[ 0 ] ) ?? null : k.map( a => this.#a0?.getAttribute( a ) ); }
+	$getAttr( ...k ) {
+		if ( !this.#a0 ) {
+			return k.length === 1 ? null : [];
+		}
+		return k.length === 1
+			? $.$getAttr( this.#a0, k[ 0 ] ) ?? null
+			: k.map( a => $.$getAttr( this.#a0, a ) ?? null );
+	}
 	$setAttr( k, v ) {
 		return this.$each( GSUisObj( k )
 			? el => GSUforEach( k, ( v, k ) => $.$setAttr2( el, k, v ) )
