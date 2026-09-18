@@ -9,9 +9,9 @@ function GSUmathEaseInCirc( n, pow = 2 ) { return 1 - Math.sqrt( 1 - n ** pow );
 function GSUmathEaseOutCirc( n, pow = 2 ) { return Math.sqrt( 1 - ( n - 1 ) ** pow ); }
 
 // .............................................................................
-function GSUmathRound( val, step = 1 ) { return Math.round( val / step ) * step; }
-function GSUmathFloor( val, step = 1 ) { return Math.floor( val / step ) * step; }
-function GSUmathCeil(  val, step = 1 ) { return Math.ceil(  val / step ) * step; }
+function GSUmathRound( val, step = 1 ) { return GSUmathPrec( Math.round( val / step ) * step ); }
+function GSUmathFloor( val, step = 1 ) { return GSUmathPrec( Math.floor( val / step ) * step ); }
+function GSUmathCeil(  val, step = 1 ) { return GSUmathPrec( Math.ceil(  val / step ) * step ); }
 function GSUmathFix( val, dec = 0 ) {
 	return GSUisNum( val )
 		? +val.toFixed( dec )
