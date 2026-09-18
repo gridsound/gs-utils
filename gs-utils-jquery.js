@@ -83,6 +83,7 @@ $.$downloadURL = ( name, url ) => {
 };
 
 // .............................................................................
+$.$tag = el => el?.tagName.toLowerCase();
 $.$rmAttr = ( el, k ) => el.removeAttribute( k );
 $.$getAttr = ( el, k ) => el.getAttribute( k );
 $.$hasAttr = ( el, k ) => el.hasAttribute( k );
@@ -379,7 +380,7 @@ class $$ {
 
 	// .........................................................................
 	$bcr() { return $.$bcr( this.#a0 ); }
-	$tag() { return this.#a0?.tagName.toLowerCase(); }
+	$tag() { return $.$tag( this.#a0 ); }
 	$focus() { return this.#a0?.focus( { preventScroll: true } ); }
 	$text( v ) { return this.$prop( "textContent", v ); }
 	$textHTML( s ) { return this.$empty().$append( ...$.$simpleStringHTML( s ) ); }
