@@ -62,6 +62,7 @@
 <script src="gs-utils-json.js"></script>
 <script src="gs-utils-audio.js"></script>
 <script src="gs-utils-jquery.js"></script>
+<script src="gs-utils-files.js"></script>
 
 <!-- ....................................................................... -->
 <script>
@@ -446,6 +447,30 @@
 		timeoutId = GSUsetTimeout( fn, .01 );
 		GSUclearTimeout( timeoutId ); await GSUwait( .02 );
 		test( "setTimeout_6", timeoutInc, 2 );
+	} );
+</script>
+
+<!-- ....................................................................... -->
+<!-- ..... gs-utils-files .................................................. -->
+<!-- ....................................................................... -->
+<script>
+	tests( "GSUhashBuffer", async () => {
+		const bufA = new ArrayBuffer( 4 );
+		const bufB = new ArrayBuffer( 5 );
+		const hashA = "9069ca78e7450a285173431b3e52c5c25299e473";
+		const hashB = "a10909c2cdcaf5adb7e6b092a4faba558b62bd96";
+		let hashA2;
+		let hashA3;
+		let hashB2;
+
+		GSUhashBuffer( bufA ).then( h => hashA2 = h );
+		GSUhashBuffer( bufA ).then( h => hashA3 = h );
+		GSUhashBuffer( bufB ).then( h => hashB2 = h );
+		await GSUwait( .1 );
+		test( "hashBuffer_0", hashA2, hashA );
+		test( "hashBuffer_1", hashA3, hashA );
+		test( "hashBuffer_2", hashA2.length, 40 );
+		test( "hashBuffer_3", hashB2, hashB );
 	} );
 </script>
 

@@ -16,6 +16,12 @@ function GSUgetFileContent( file, format ) {
 	} );
 }
 
+function GSUhashBuffer( arrBuf ) {
+	return crypto.subtle.digest( "SHA-1", arrBuf )
+		.then( hash => Array.from( new Uint8Array( hash ) ) )
+		.then( arr => arr.map( n => n.toString( 16 ).padStart( 2, "0" ) ).join( "" ) );
+}
+
 const GSUopenFileManager = () => new Promise( res => {
 	GSUopenFileManager.$inputRes = res;
 	GSUopenFileManager.$input.$click();
