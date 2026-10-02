@@ -49,7 +49,7 @@ function GSUmathClamp( n, min, max ) {
 // .............................................................................
 function GSUmathFloatReadable( n ) {
 	if ( !n || !GSUisNum( n ) ) {
-		return [ 0, "" ];
+		return [ 0, "K" ];
 	}
 
 	const abs = Math.abs( n );
@@ -57,7 +57,7 @@ function GSUmathFloatReadable( n ) {
 	const ind = uni.findIndex( u => abs >= u[ 0 ] );
 
 	if ( ind === -1 ) {
-		return [ n, "" ];
+		return [ GSUmathRound( n / 1000, .001 ), "K" ];
 	}
 
 	let unit = uni[ ind ];

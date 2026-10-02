@@ -111,16 +111,16 @@
 <!-- ....................................................................... -->
 <script>
 	tests( "GSUmathFloatReadable", () => {
-		test( "mathFloatReadable_0", GSUmathFloatReadable( NaN       ), [ 0, "" ] );
-		test( "mathFloatReadable_1", GSUmathFloatReadable( null      ), [ 0, "" ] );
-		test( "mathFloatReadable_2", GSUmathFloatReadable( true      ), [ 0, "" ] );
-		test( "mathFloatReadable_3", GSUmathFloatReadable( false     ), [ 0, "" ] );
-		test( "mathFloatReadable_4", GSUmathFloatReadable( undefined ), [ 0, "" ] );
-		test( "mathFloatReadable_5", GSUmathFloatReadable( ''        ), [ 0, "" ] );
-		test( "mathFloatReadable_6", GSUmathFloatReadable( '21'      ), [ 0, "" ] );
-		test( "mathFloatReadable_7", GSUmathFloatReadable(             0 ), [   0,     ""  ] );
-		test( "mathFloatReadable_8", GSUmathFloatReadable(             1 ), [   1,     ""  ] );
-		test( "mathFloatReadable_9", GSUmathFloatReadable(           999 ), [ 999,     ""  ] );
+		test( "mathFloatReadable_0", GSUmathFloatReadable( NaN       ), [ 0, "K" ] );
+		test( "mathFloatReadable_1", GSUmathFloatReadable( null      ), [ 0, "K" ] );
+		test( "mathFloatReadable_2", GSUmathFloatReadable( true      ), [ 0, "K" ] );
+		test( "mathFloatReadable_3", GSUmathFloatReadable( false     ), [ 0, "K" ] );
+		test( "mathFloatReadable_4", GSUmathFloatReadable( undefined ), [ 0, "K" ] );
+		test( "mathFloatReadable_5", GSUmathFloatReadable( ''        ), [ 0, "K" ] );
+		test( "mathFloatReadable_6", GSUmathFloatReadable( '21'      ), [ 0, "K" ] );
+		test( "mathFloatReadable_7", GSUmathFloatReadable(             0 ), [   0,     "K"  ] );
+		test( "mathFloatReadable_8", GSUmathFloatReadable(             1 ), [   0.001, "K"  ] );
+		test( "mathFloatReadable_9", GSUmathFloatReadable(           999 ), [   0.999, "K"  ] );
 		test( "mathFloatReadable_a", GSUmathFloatReadable(         1_000 ), [   1,     "K" ] );
 		test( "mathFloatReadable_b", GSUmathFloatReadable(         1_001 ), [   1.001, "K" ] );
 		test( "mathFloatReadable_c", GSUmathFloatReadable(         1_999 ), [   1.999, "K" ] );
