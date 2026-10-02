@@ -315,8 +315,8 @@ class $$ {
 			return k.length === 1 ? null : [];
 		}
 		return k.length === 1
-			? $.$getAttr( this.#a0, k[ 0 ] ) ?? null
-			: k.map( a => $.$getAttr( this.#a0, a ) ?? null );
+			? $.$getAttr( this.#a0, k[ 0 ] )
+			: k.map( a => $.$getAttr( this.#a0, a ) );
 	}
 	$setAttr( k, v ) {
 		return this.$each( GSUisObj( k )
