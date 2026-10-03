@@ -156,8 +156,8 @@ $.$button = ( a, ...c ) => $.$elem( "button", { type: "button", ...a }, ...c );
 $.$simpleStringHTML = s => {
 	let ind = 0;
 	const arr = [];
-	const reg = /<(b|i|bi)>(.*?)<\/\1>|<a (https?:\/\/[^>]+)>(.*?)<\/a>|<br\/>/ug;
-	//               1       2                    3            4
+	const reg = /<(b|i|bi|small)>(.*?)<\/\1>|<a (https?:\/\/[^>]+)>(.*?)<\/a>|<br\/>/ug;
+	//                  1          2                    3            4
 
 	for ( let m; m = reg.exec( s ); ) {
 		const href = m[ 3 ];
