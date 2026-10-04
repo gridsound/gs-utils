@@ -702,6 +702,20 @@
 <!-- ..... GSUxxxx ......................................................... -->
 <!-- ....................................................................... -->
 <script>
+	tests( "GSUisOneOf", () => {
+		test( "isOneOf_0", GSUisOneOf( 0 ),                false );
+		test( "isOneOf_1", GSUisOneOf( 1 ),                false );
+		test( "isOneOf_2", GSUisOneOf( 1, [] ),            false );
+		test( "isOneOf_3", GSUisOneOf( 21, 212 ),          false );
+		test( "isOneOf_4", GSUisOneOf( "a", "b", "c" ),    false );
+		test( "isOneOf_5", GSUisOneOf( "a" ),              false );
+		test( "isOneOf_6", GSUisOneOf( 21, 20, "21", 22 ), false );
+		test( "isOneOf_7", GSUisOneOf( "a", "b", "ab" ),   false );
+		test( "isOneOf_8", GSUisOneOf( "A", "b", "a" ),    false );
+		test( "isOneOf_9", GSUisOneOf( 21, 20, 21, 22 ),   true );
+		test( "isOneOf_a", GSUisOneOf( "a", "a" ),         true );
+		test( "isOneOf_b", GSUisOneOf( "a", "b", "a" ),    true );
+	} );
 	tests( "GSUisObj", () => {
 		test( "isObj.0", GSUisObj(),            false );
 		test( "isObj.1", GSUisObj( NaN ),       false );

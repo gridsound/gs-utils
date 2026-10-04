@@ -32,6 +32,9 @@ function GSUisEmpty( o ) {
 	}
 	return !o?.size;
 }
+function GSUisOneOf( v, ...a ) {
+	return a.some( a => a === v );
+}
 
 // .............................................................................
 function GSUdotProp( obj, path ) {
