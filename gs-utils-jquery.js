@@ -102,6 +102,11 @@ $.$dataProp = ( el, v ) => {
 };
 
 // .............................................................................
+$.$hasPtrCapture = ( el, ptrId ) => el?.hasPointerCapture( ptrId );
+$.$setPtrCapture = ( el, ptrId ) => el?.setPointerCapture( ptrId );
+$.$relPtrCapture = ( el, ptrId ) => el?.releasePointerCapture( ptrId );
+
+// .............................................................................
 $.$qSA = ( sel, el = document ) => el.querySelectorAll( sel );
 $.$getElemByPoint = ( x, y ) => $( document.elementFromPoint( x, y ) );
 $.$css = ( el, prop, val ) => $$.$setStyle( el, prop, val );
@@ -272,9 +277,9 @@ class $$ {
 	$unobserveSize( fn ) { return this.$each( el => $$.#unobserveSize( el, fn ) ); }
 	$addEventListener( ev, fn, opt ) { return this.$each( el => el.addEventListener( ev, fn, opt ) ); }
 	$rmEventListener( ev, fn ) { return this.$each( el => el.removeEventListener( ev, fn ) ); }
-	$hasPtrCapture( ptrId ) { return this.#a0?.hasPointerCapture( ptrId ); }
-	$setPtrCapture( ptrId ) { return this.#a0?.setPointerCapture( ptrId ), this; }
-	$relPtrCapture( ptrId ) { return this.#a0?.releasePointerCapture( ptrId ), this; }
+	$hasPtrCapture( ptrId ) { return $.$hasPtrCapture( this.#a0, ptrId ); }
+	$setPtrCapture( ptrId ) { return $.$setPtrCapture( this.#a0, ptrId ), this; }
+	$relPtrCapture( ptrId ) { return $.$relPtrCapture( this.#a0, ptrId ), this; }
 	$listen( cbs ) { return this.$addEventListener( "gsui", $$.#listenCB.bind( null, cbs ) ); }
 	static #listenCB( cbs, e ) {
 		const d = e.detail;
