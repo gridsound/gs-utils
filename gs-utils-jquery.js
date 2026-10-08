@@ -341,7 +341,9 @@ class $$ {
 	$dataset( k, v ) {
 		return v === undefined
 			? this.#a0?.dataset[ k ] ?? null
-			: this.$each( el => el.dataset[ k ] = v );
+			: this.$each( GSUisStr( v )
+				? el => el.dataset[ k ] = v
+				: el => delete el.dataset[ k ] );
 	}
 
 	// .........................................................................

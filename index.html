@@ -1648,8 +1648,10 @@
 
 		testStrict( "jqDataProp_0", $noop.$dataProp(), null );
 		testStrict( "jqDataProp_1", a.$dataProp(), null );
-		testStrict( "jqDataProp_2", a.$dataProp( "def" ).$dataProp(), "def" );
-		testStrict( "jqDataProp_3", a.$get( 0 ).dataset.prop, "def" );
+		testStrict( "jqDataProp_2", a.$dataProp( null ).$dataProp(), null );
+		testStrict( "jqDataProp_3", a.$dataProp( "def" ).$dataProp(), "def" );
+		testStrict( "jqDataProp_4", a.$get( 0 ).dataset.prop, "def" );
+		testStrict( "jqDataProp_5", a.$dataProp( false ).$dataProp(), null );
 	} );
 	tests( "$_$simpleStringHTML", () => {
 		const elB0 = $.$bold( null, "b" );
