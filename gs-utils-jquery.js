@@ -411,7 +411,7 @@ class $$ {
 		$.$setPtrCapture( e.currentTarget, ptrId );
 		pn.$ptrs.set( ptrId, [ e.clientX, e.clientY ] );
 		if ( pn.$ptrs.size === 2 ) {
-			pn.$startDist = $$.#pinchGetDist( pn.$ptrs );
+			pn.$startDist = $$.#pinchGetData( pn.$ptrs )[ 0 ];
 		}
 	}
 	static #pinchPtrmove( e ) {
@@ -421,9 +421,10 @@ class $$ {
 		if ( pn.$ptrs.has( ptrId ) ) {
 			pn.$ptrs.set( ptrId, [ e.clientX, e.clientY ] );
 			if ( pn.$ptrs.size === 2 ) {
-				const ratio = $$.#pinchGetDist( pn.$ptrs ) / pn.$startDist;
+				const data = $$.#pinchGetData( pn.$ptrs );
 
-				pn.$fn( e, GSUmathClamp( ratio, .5, 5 ) );
+				data[ 0 ] = GSUmathClamp( data[ 0 ] / pn.$startDist, .5, 5 );
+				pn.$fn( e, ...data );
 			}
 		}
 	}
@@ -436,10 +437,14 @@ class $$ {
 			pn.$startDist = 0;
 		}
 	}
-	static #pinchGetDist( ptrs ) {
-		const [ a, b ] = [ ...ptrs.values() ];
+	static #pinchGetData( ptrs ) {
+		const [ [ ax, ay ], [ bx, by ] ] = [ ...ptrs.values() ];
 
-		return Math.hypot( a[ 0 ] - b[ 0 ], a[ 1 ] - b[ 1 ] );
+		return [
+			Math.hypot( ax - bx, ay - by ),
+			( ax + bx ) / 2,
+			( ay + by ) / 2,
+		];
 	}
 
 	// .........................................................................
