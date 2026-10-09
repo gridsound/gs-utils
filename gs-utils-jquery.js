@@ -409,7 +409,7 @@ class $$ {
 		const ptrId = e.pointerId;
 
 		$.$setPtrCapture( e.currentTarget, ptrId );
-		pn.$ptrs.set( ptrId, { x: e.clientX, y: e.clientY } );
+		pn.$ptrs.set( ptrId, [ e.clientX, e.clientY ] );
 		if ( pn.$ptrs.size === 2 ) {
 			pn.$startDist = $$.#pinchGetDist( pn.$ptrs );
 		}
