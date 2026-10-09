@@ -401,7 +401,7 @@ class $$ {
 					$fn: fn,
 					$ptrs: new Map(),
 					$startDist: 0,
-					$dist: 1,
+					$dist: 0,
 				} );
 			} );
 	}
@@ -412,6 +412,7 @@ class $$ {
 		$.$setPtrCapture( e.currentTarget, ptrId );
 		pn.$ptrs.set( ptrId, [ e.clientX, e.clientY ] );
 		if ( pn.$ptrs.size === 2 ) {
+			pn.$dist =
 			pn.$startDist = $$.#pinchGetData( pn.$ptrs )[ 0 ];
 		}
 	}
@@ -426,7 +427,7 @@ class $$ {
 				const scaleAbs = GSUmathClamp( data[ 0 ] / pn.$startDist, .5, 5 );
 				const scaleRel = GSUmathClamp( data[ 0 ] / pn.$dist, .5, 5 );
 
-				pn.$dist = scaleAbs;
+				pn.$dist = data[ 0 ];
 				pn.$fn( {
 					$event: e,
 					$scale: scaleAbs,
