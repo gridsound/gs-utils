@@ -401,6 +401,7 @@ class $$ {
 					$fn: fn,
 					$ptrs: new Map(),
 					$startDist: 0,
+					$dist: 1,
 				} );
 			} );
 	}
@@ -422,9 +423,17 @@ class $$ {
 			pn.$ptrs.set( ptrId, [ e.clientX, e.clientY ] );
 			if ( pn.$ptrs.size === 2 ) {
 				const data = $$.#pinchGetData( pn.$ptrs );
+				const scaleAbs = GSUmathClamp( data[ 0 ] / pn.$startDist, .5, 5 );
+				const scaleRel = GSUmathClamp( data[ 0 ] / pn.$dist, .5, 5 );
 
-				data[ 0 ] = GSUmathClamp( data[ 0 ] / pn.$startDist, .5, 5 );
-				pn.$fn( e, ...data );
+				pn.$dist = scaleAbs;
+				pn.$fn( {
+					$event: e,
+					$scale: scaleAbs,
+					$scaleRelative: scaleRel,
+					$pageX: data[ 1 ],
+					$pageY: data[ 2 ],
+				} );
 			}
 		}
 	}
