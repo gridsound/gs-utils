@@ -380,6 +380,69 @@ class $$ {
 	$onchange( fn ) { return this.$on( "change", fn ); }
 
 	// .........................................................................
+	$offpinch() {
+		return this
+			.$rmEventListener( "pointerdown", $$.#pinchPtrdown )
+			.$rmEventListener( "pointermove", $$.#pinchPtrmove )
+			.$rmEventListener( "pointerup", $$.#pinchPtrup )
+			.$rmEventListener( "pointercancel", $$.#pinchPtrup )
+			.$each( el => {
+				delete el.$__pinch__;
+			} );
+	}
+	$onpinch( fn ) {
+		return this
+			.$addEventListener( "pointerdown", $$.#pinchPtrdown )
+			.$addEventListener( "pointermove", $$.#pinchPtrmove )
+			.$addEventListener( "pointerup", $$.#pinchPtrup )
+			.$addEventListener( "pointercancel", $$.#pinchPtrup )
+			.$each( el => {
+				el.$__pinch__ = Object.seal( {
+					$fn: fn,
+					$ptrs: new Map(),
+					$startDist: 0,
+				} );
+			} );
+	}
+	static #pinchPtrdown( e ) {
+		const pn = e.currentTarget.$__pinch__;
+		const ptrId = e.pointerId;
+
+		$.$setPtrCapture( e.currentTarget, ptrId );
+		pn.$ptrs.set( ptrId, { x: e.clientX, y: e.clientY } );
+		if ( pn.$ptrs.size === 2 ) {
+			pn.$startDist = $$.#pinchGetDist( pn.$ptrs );
+		}
+	}
+	static #pinchPtrmove( e ) {
+		const pn = e.currentTarget.$__pinch__;
+		const ptrId = e.pointerId;
+
+		if ( pn.$ptrs.has( ptrId ) ) {
+			pn.$ptrs.set( ptrId, [ e.clientX, e.clientY ] );
+			if ( pn.$ptrs.size === 2 ) {
+				const ratio = $$.#pinchGetDist( pn.$ptrs ) / pn.$startDist;
+
+				pn.$fn( e, GSUmathClamp( ratio, .5, 5 ) );
+			}
+		}
+	}
+	static #pinchPtrup( e ) {
+		const pn = e.currentTarget.$__pinch__;
+		const ptrId = e.pointerId;
+
+		pn.$ptrs.delete( ptrId );
+		if ( pn.$ptrs.size < 2 ) {
+			pn.$startDist = 0;
+		}
+	}
+	static #pinchGetDist( ptrs ) {
+		const [ a, b ] = [ ...ptrs.values() ];
+
+		return Math.hypot( a[ 0 ] - b[ 0 ], a[ 1 ] - b[ 1 ] );
+	}
+
+	// .........................................................................
 	$play() { return this.$trigger( "play" ); }
 	$pause() { return this.$trigger( "pause" ); }
 	$click() { return this.$trigger( "click" ); }
