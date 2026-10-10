@@ -442,6 +442,7 @@ class $$ {
 		const pn = e.currentTarget.$__pinch__;
 		const ptrId = e.pointerId;
 
+		$.$relPtrCapture( e.currentTarget, ptrId );
 		pn.$ptrs.delete( ptrId );
 		if ( pn.$ptrs.size < 2 ) {
 			pn.$startDist = 0;
