@@ -440,13 +440,11 @@ class $$ {
 	}
 	static #pinchPtrup( e ) {
 		const pn = e.currentTarget.$__pinch__;
-		const ptrId = e.pointerId;
 
-		$.$relPtrCapture( e.currentTarget, ptrId );
-		pn.$ptrs.delete( ptrId );
-		if ( pn.$ptrs.size < 2 ) {
-			pn.$startDist = 0;
-		}
+		pn.$ptrs.forEach( ( _, ptrId ) => $.$relPtrCapture( e.currentTarget, ptrId ) );
+		pn.$ptrs.clear();
+		pn.$dist =
+		pn.$startDist = 0;
 	}
 	static #pinchGetData( ptrs ) {
 		const [ [ ax, ay ], [ bx, by ] ] = [ ...ptrs.values() ];
