@@ -392,6 +392,7 @@ class $$ {
 	}
 	$onpinch( fn ) {
 		return this
+			.$offpinch()
 			.$addEventListener( "pointerdown", $$.#pinchPtrdown )
 			.$addEventListener( "pointermove", $$.#pinchPtrmove )
 			.$addEventListener( "pointerup", $$.#pinchPtrup )
