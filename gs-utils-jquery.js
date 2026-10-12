@@ -88,6 +88,7 @@ $.$rmAttr = ( el, k ) => el.removeAttribute( k );
 $.$getAttr = ( el, k ) => el.getAttribute( k );
 $.$hasAttr = ( el, k ) => el.hasAttribute( k );
 $.$setAttr = ( el, k, v ) => el.setAttribute( k, v );
+$.$setAtXL = ( el, k, v ) => el.setAttributeNS( $.$linkNS, k, v );
 $.$togAttr = ( el, k ) => $.$setAttr2( el, k, !$.$hasAttr( el, k ) );
 $.$setAttr2 = ( el, k, v ) => {
 	v === false || v === null || v === undefined
