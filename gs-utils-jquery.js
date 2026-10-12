@@ -161,6 +161,14 @@ $.$linkExt = ( a, ...c ) => $.$elem( "a", { href: true, ...a, target: "_blank", 
 $.$button = ( a, ...c ) => $.$elem( "button", { type: "button", ...a }, ...c );
 
 // .............................................................................
+$.$toggleFullscreen = el => {
+	return ( document.fullscreenElement
+		? document.exitFullscreen()
+		: el.requestFullscreen()
+	).then( () => !!document.fullscreenElement );
+};
+
+// .............................................................................
 $.$simpleStringHTML = s => {
 	let ind = 0;
 	const arr = [];
@@ -465,6 +473,7 @@ class $$ {
 	$pause() { return this.$trigger( "pause" ); }
 	$click() { return this.$trigger( "click" ); }
 	$togglePopover( b ) { return this.$trigger( b ? "showPopover" : "hidePopover" ); }
+	$toggleFullscreen() { return this.#a0 && $.$toggleFullscreen( this.#a0 ); }
 
 	// .........................................................................
 	$bcr() { return $.$bcr( this.#a0 ); }
