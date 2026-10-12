@@ -95,12 +95,14 @@ $.$setAttr2 = ( el, k, v ) => {
 		? $.$rmAttr( el, k )
 		: $.$setAttr( el, k, v === true ? "" : v );
 };
-$.$dataProp = ( el, v ) => {
+$.$dataset = ( el, k, v ) => {
 	if ( v !== undefined ) {
-		el.dataset.prop = v;
+		el.dataset[ k ] = v;
 	}
-	return el.dataset.prop;
+	return el.dataset[ k ];
 };
+$.$dataId = ( el, v ) => $.$dataset( el, "id", v );
+$.$dataProp = ( el, v ) => $.$dataset( el, "prop", v );
 
 // .............................................................................
 $.$hasPtrCapture = ( el, ptrId ) => el?.hasPointerCapture( ptrId );
@@ -509,7 +511,7 @@ class $$ {
 				$event: ev,
 				$args: args,
 				$target: $( el ),
-				$targetId: el.dataset.id || null,
+				$targetId: $.$dataId( el ) || null,
 			},
 		} ) );
 	}
