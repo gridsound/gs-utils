@@ -112,7 +112,7 @@ $.$relPtrCapture = ( el, ptrId ) => el?.releasePointerCapture( ptrId );
 // .............................................................................
 $.$qSA = ( sel, el = document ) => el.querySelectorAll( sel );
 $.$getElemByPoint = ( x, y ) => $( document.elementFromPoint( x, y ) );
-$.$css = ( el, prop, val ) => $$.$setStyle( el, prop, val );
+$.$css = ( el, prop, val ) => el && $$.$setStyle( el, prop, val );
 $.$prev = el => el.previousElementSibling;
 $.$next = el => el.nextElementSibling;
 $.$unselect = () => window.getSelection().removeAllRanges();
