@@ -159,3 +159,27 @@ function GSUreverseBuffer( buf ) {
 	}
 	return buf;
 }
+
+function GSUbufferCut( buf, a, b ) {
+	const a2 = GSUmathClamp( a, 0, 1 );
+	const b2 = GSUmathClamp( b, 0, 1 - a2 );
+	const a3 = Math.round( a2 * buf.length );
+	const b3 = Math.round( ( a2 + b2 ) * buf.length );
+	const len2 = buf.length - ( b3 - a3 );
+	const buf2 = new AudioBuffer( {
+		length: Math.max( 1, len2 ),
+		numberOfChannels: buf.numberOfChannels,
+		sampleRate: buf.sampleRate,
+	} );
+
+	if ( len2 > 1 ) {
+		for ( let ch = 0; ch < buf.numberOfChannels; ++ch ) {
+			const src = buf.getChannelData( ch );
+			const dst = buf2.getChannelData( ch );
+
+			dst.set( src.subarray( 0, a3 ), 0 );
+			dst.set( src.subarray( b3 ), a3 );
+		}
+	}
+	return buf2;
+}
