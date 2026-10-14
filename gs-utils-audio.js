@@ -153,7 +153,7 @@ function GSUbufferClone( ctx, buf ) {
 	return cpy;
 }
 
-function GSUreverseBuffer( buf ) {
+function GSUbufferReverse( buf ) {
 	for ( let i = buf.numberOfChannels - 1; i >= 0; --i ) {
 		Array.prototype.reverse.call( buf.getChannelData( i ) );
 	}
