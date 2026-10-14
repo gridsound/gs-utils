@@ -142,7 +142,7 @@ function GSUpanningMerge( ...pans ) {
 }
 
 // .............................................................................
-function GSUbufferClone( ctx, buf ) {
+const GSUbufferClone = ( ctx, buf ) => {
 	const bufSize = buf.duration * ctx.sampleRate;
 	const nbChans = buf.numberOfChannels;
 	const cpy = GSUaudioBuffer( ctx, nbChans, bufSize, ctx.sampleRate );
@@ -151,16 +151,16 @@ function GSUbufferClone( ctx, buf ) {
 		cpy.copyToChannel( buf.getChannelData( i ), i );
 	}
 	return cpy;
-}
+};
 
-function GSUbufferReverse( buf ) {
-	for ( let i = buf.numberOfChannels - 1; i >= 0; --i ) {
+const GSUbufferReverse = buf => {
+	for ( let i = 0; i < nbChans; ++i ) {
 		Array.prototype.reverse.call( buf.getChannelData( i ) );
 	}
 	return buf;
-}
+};
 
-function GSUbufferCut( buf, a, b ) {
+const GSUbufferCut = ( buf, a, b ) => {
 	const a2 = GSUmathClamp( a, 0, 1 );
 	const b2 = GSUmathClamp( b, 0, 1 - a2 );
 	const a3 = Math.round( a2 * buf.length );
@@ -182,4 +182,4 @@ function GSUbufferCut( buf, a, b ) {
 		}
 	}
 	return buf2;
-}
+};
