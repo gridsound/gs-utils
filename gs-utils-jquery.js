@@ -100,15 +100,9 @@ $.$attr = ( el, k, v ) => {
 		? $.$setAttr2( el, k, v )
 		: $.$getAttr( el, k );
 };
-$.$dataset = ( el, k, v ) => {
-	if ( v !== undefined ) {
-		el.dataset[ k ] = v;
-	}
-	return el.dataset[ k ];
-};
 $.$href = ( el, v ) => $.$attr( el, "href", v );
-$.$dataId = ( el, v ) => $.$dataset( el, "id", v );
-$.$dataProp = ( el, v ) => $.$dataset( el, "prop", v );
+$.$dataId = ( el, v ) => $.$attr( el, "data-id", v );
+$.$dataProp = ( el, v ) => $.$attr( el, "data-prop", v );
 
 // .............................................................................
 $.$hasPtrCapture = ( el, ptrId ) => el?.hasPointerCapture( ptrId );
