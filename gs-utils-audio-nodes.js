@@ -22,7 +22,6 @@ const GSUaudioContext         = !__LOCALHOST__ ? (    ...a ) => new AudioContext
 const GSUaudioContextOff      = !__LOCALHOST__ ? (    ...a ) => new OfflineAudioContext( ...a ) : (    ...a ) => { const n = new OfflineAudioContext( ...a ); _GSUaudioContextOff_wm.set( n, 1 );      return n; };
 const GSUaudioGain            = !__LOCALHOST__ ? ( c, ...a ) => c.createGain( ...a )            : ( c, ...a ) => { const n = c.createGain( ...a );            _GSUaudioGain_wm.set( n, 1 );            return n; };
 const GSUaudioDelay           = !__LOCALHOST__ ? ( c, ...a ) => c.createDelay( ...a )           : ( c, ...a ) => { const n = c.createDelay( ...a );           _GSUaudioDelay_wm.set( n, 1 );           return n; };
-const GSUaudioBuffer          = !__LOCALHOST__ ? ( c, ...a ) => c.createBuffer( ...a )          : ( c, ...a ) => { const n = c.createBuffer( ...a );          _GSUaudioBuffer_wm.set( n, 1 );          return n; };
 const GSUaudioAnalyser        = !__LOCALHOST__ ? ( c, ...a ) => c.createAnalyser( ...a )        : ( c, ...a ) => { const n = c.createAnalyser( ...a );        _GSUaudioAnalyser_wm.set( n, 1 );        return n; };
 const GSUaudioConvolver       = !__LOCALHOST__ ? ( c, ...a ) => c.createConvolver( ...a )       : ( c, ...a ) => { const n = c.createConvolver( ...a );       _GSUaudioConvolver_wm.set( n, 1 );       return n; };
 const GSUaudioOscillator      = !__LOCALHOST__ ? ( c, ...a ) => c.createOscillator( ...a )      : ( c, ...a ) => { const n = c.createOscillator( ...a );      _GSUaudioOscillator_wm.set( n, 1 );      return n; };
@@ -34,6 +33,14 @@ const GSUaudioStereoPanner    = !__LOCALHOST__ ? ( c, ...a ) => c.createStereoPa
 const GSUaudioChannelMerger   = !__LOCALHOST__ ? ( c, ...a ) => c.createChannelMerger( ...a )   : ( c, ...a ) => { const n = c.createChannelMerger( ...a );   _GSUaudioChannelMerger_wm.set( n, 1 );   return n; };
 const GSUaudioConstantSource  = !__LOCALHOST__ ? ( c, ...a ) => c.createConstantSource( ...a )  : ( c, ...a ) => { const n = c.createConstantSource( ...a );  _GSUaudioConstantSource_wm.set( n, 1 );  return n; };
 const GSUaudioChannelSplitter = !__LOCALHOST__ ? ( c, ...a ) => c.createChannelSplitter( ...a ) : ( c, ...a ) => { const n = c.createChannelSplitter( ...a ); _GSUaudioChannelSplitter_wm.set( n, 1 ); return n; };
+const GSUaudioBuffer = ( a, b, c ) => {
+	const n = new AudioBuffer( { numberOfChannels: a, length: b, sampleRate: c } );
+
+	if ( __LOCALHOST__ ) {
+		_GSUaudioBuffer_wm.set( n, 1 );
+	}
+	return n;
+};
 /* eslint-enable */
 
 const GSUaudioLogWeakMaps = !__LOCALHOST__ ? null : m => {

@@ -145,7 +145,7 @@ function GSUpanningMerge( ...pans ) {
 const GSUbufferClone = ( ctx, buf ) => {
 	const bufSize = buf.duration * ctx.sampleRate;
 	const nbChans = buf.numberOfChannels;
-	const cpy = GSUaudioBuffer( ctx, nbChans, bufSize, ctx.sampleRate );
+	const cpy = GSUaudioBuffer( nbChans, bufSize, ctx.sampleRate );
 
 	for ( let i = 0; i < nbChans; ++i ) {
 		cpy.copyToChannel( buf.getChannelData( i ), i );
