@@ -156,12 +156,18 @@ const GSUbufferClone = buf => {
 	return buf2;
 };
 
-const GSUbufferCut = ( buf, a, b ) => {
+const _GSUbufferAB = ( buf, a = 0, b = 1 ) => {
 	const a2 = GSUmathClamp( a, 0, 1 );
 	const b2 = GSUmathClamp( b, 0, 1 - a2 );
 	const a3 = Math.round( a2 * buf.length );
-	const b3 = Math.round( ( a2 + b2 ) * buf.length );
-	const len2 = buf.length - ( b3 - a3 );
+	const b3 = Math.round( b2 * buf.length );
+
+	return [ a3, b3 ];
+};
+
+const GSUbufferCut = ( buf, a, b ) => {
+	const [ a2, b2 ] = _GSUbufferAB( buf, a, b );
+	const len2 = buf.length - b2;
 	const buf2 = GSUaudioBuffer( buf.numberOfChannels, Math.max( 1, len2 ), buf.sampleRate );
 
 	return len2 < 2
@@ -169,35 +175,29 @@ const GSUbufferCut = ( buf, a, b ) => {
 		: GSUbufferForEach( buf2, ( ch, i ) => {
 			const src = buf.getChannelData( i );
 
-			ch.set( src.subarray( 0, a3 ), 0 );
-			ch.set( src.subarray( b3 ), a3 );
+			ch.set( src.subarray( 0, a2 ), 0 );
+			ch.set( src.subarray( a2 + b2 ), a2 );
 		} );
 };
 
 const GSUbufferSilent = ( buf, a, b ) => {
-	const a2 = GSUmathClamp( a, 0, 1 );
-	const b2 = GSUmathClamp( b, 0, 1 - a2 );
-	const a3 = Math.round( a2 * buf.length );
-	const b3 = Math.round( b2 * buf.length );
+	const [ a2, b2 ] = _GSUbufferAB( buf, a, b );
 
 	return GSUbufferForEach( GSUbufferClone( buf ), ( ch, i ) => {
-		for ( let j = 0; j < b3; ++j ) {
-			ch[ a3 + j ] = 0;
+		for ( let j = 0; j < b2; ++j ) {
+			ch[ a2 + j ] = 0;
 		}
 	} );
 };
 
-const GSUbufferReverse = ( buf, a = 0, b = 1 ) => {
-	const a2 = GSUmathClamp( a, 0, 1 );
-	const b2 = GSUmathClamp( b, 0, 1 - a2 );
-	const a3 = Math.round( a2 * buf.length );
-	const b3 = Math.round( b2 * buf.length );
+const GSUbufferReverse = ( buf, a, b ) => {
+	const [ a2, b2 ] = _GSUbufferAB( buf, a, b );
 
 	return GSUbufferForEach( GSUbufferClone( buf ), ( ch, i ) => {
 		const chOriginal = buf.getChannelData( i );
 
-		for ( let j = 0; j < b3; ++j ) {
-			ch[ a3 + j ] = chOriginal[ a3 + b3 - 1 - j ];
+		for ( let j = 0; j < b2; ++j ) {
+			ch[ a2 + j ] = chOriginal[ a2 + b2 - 1 - j ];
 		}
 	} );
 };
