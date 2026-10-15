@@ -33,14 +33,6 @@ const GSUaudioStereoPanner    = !__LOCALHOST__ ? ( c, ...a ) => c.createStereoPa
 const GSUaudioChannelMerger   = !__LOCALHOST__ ? ( c, ...a ) => c.createChannelMerger( ...a )   : ( c, ...a ) => { const n = c.createChannelMerger( ...a );   _GSUaudioChannelMerger_wm.set( n, 1 );   return n; };
 const GSUaudioConstantSource  = !__LOCALHOST__ ? ( c, ...a ) => c.createConstantSource( ...a )  : ( c, ...a ) => { const n = c.createConstantSource( ...a );  _GSUaudioConstantSource_wm.set( n, 1 );  return n; };
 const GSUaudioChannelSplitter = !__LOCALHOST__ ? ( c, ...a ) => c.createChannelSplitter( ...a ) : ( c, ...a ) => { const n = c.createChannelSplitter( ...a ); _GSUaudioChannelSplitter_wm.set( n, 1 ); return n; };
-const GSUaudioBuffer = ( a, b, c ) => {
-	const n = new AudioBuffer( { numberOfChannels: a, length: b, sampleRate: c } );
-
-	if ( __LOCALHOST__ ) {
-		_GSUaudioBuffer_wm.set( n, 1 );
-	}
-	return n;
-};
 /* eslint-enable */
 
 const GSUaudioLogWeakMaps = !__LOCALHOST__ ? null : m => {
