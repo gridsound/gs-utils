@@ -156,10 +156,6 @@ const GSUbufferClone = buf => {
 	return buf2;
 };
 
-const GSUbufferReverse = buf => {
-	return GSUbufferForEach( GSUbufferClone( buf ), ch => Array.prototype.reverse.call( ch ) );
-};
-
 const GSUbufferCut = ( buf, a, b ) => {
 	const a2 = GSUmathClamp( a, 0, 1 );
 	const b2 = GSUmathClamp( b, 0, 1 - a2 );
@@ -187,6 +183,21 @@ const GSUbufferSilent = ( buf, a, b ) => {
 	return GSUbufferForEach( GSUbufferClone( buf ), ( ch, i ) => {
 		for ( let j = 0; j < b3; ++j ) {
 			ch[ a3 + j ] = 0;
+		}
+	} );
+};
+
+const GSUbufferReverse = ( buf, a = 0, b = 1 ) => {
+	const a2 = GSUmathClamp( a, 0, 1 );
+	const b2 = GSUmathClamp( b, 0, 1 - a2 );
+	const a3 = Math.round( a2 * buf.length );
+	const b3 = Math.round( b2 * buf.length );
+
+	return GSUbufferForEach( GSUbufferClone( buf ), ( ch, i ) => {
+		const chOriginal = buf.getChannelData( i );
+
+		for ( let j = 0; j < b3; ++j ) {
+			ch[ a3 + j ] = chOriginal[ a3 + b3 - 1 - j ];
 		}
 	} );
 };
