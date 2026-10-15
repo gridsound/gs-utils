@@ -142,22 +142,22 @@ function GSUpanningMerge( ...pans ) {
 }
 
 // .............................................................................
-const GSUbufferClone = ( ctx, buf ) => {
-	const bufSize = buf.duration * ctx.sampleRate;
-	const nbChans = buf.numberOfChannels;
-	const cpy = GSUaudioBuffer( nbChans, bufSize, ctx.sampleRate );
-
-	for ( let i = 0; i < nbChans; ++i ) {
-		cpy.copyToChannel( buf.getChannelData( i ), i );
+const GSUbufferForEach = ( buf, fn ) => {
+	for ( let i = 0; i < buf.numberOfChannels; ++i ) {
+		fn( buf.getChannelData( i ), i, buf );
 	}
-	return cpy;
+	return buf;
+};
+
+const GSUbufferClone = buf => {
+	const buf2 = GSUaudioBuffer( buf.numberOfChannels, buf.length, buf.sampleRate );
+
+	GSUbufferForEach( buf, ( ch, i ) => buf2.copyToChannel( ch, i ) );
+	return buf2;
 };
 
 const GSUbufferReverse = buf => {
-	for ( let i = 0; i < nbChans; ++i ) {
-		Array.prototype.reverse.call( buf.getChannelData( i ) );
-	}
-	return buf;
+	return GSUbufferForEach( GSUbufferClone( buf ), ch => Array.prototype.reverse.call( ch ) );
 };
 
 const GSUbufferCut = ( buf, a, b ) => {
@@ -166,20 +166,14 @@ const GSUbufferCut = ( buf, a, b ) => {
 	const a3 = Math.round( a2 * buf.length );
 	const b3 = Math.round( ( a2 + b2 ) * buf.length );
 	const len2 = buf.length - ( b3 - a3 );
-	const buf2 = new AudioBuffer( {
-		length: Math.max( 1, len2 ),
-		numberOfChannels: buf.numberOfChannels,
-		sampleRate: buf.sampleRate,
-	} );
+	const buf2 = GSUaudioBuffer( buf.numberOfChannels, Math.max( 1, len2 ), buf.sampleRate );
 
-	if ( len2 > 1 ) {
-		for ( let ch = 0; ch < buf.numberOfChannels; ++ch ) {
-			const src = buf.getChannelData( ch );
-			const dst = buf2.getChannelData( ch );
+	return len2 < 2
+		? buf2
+		: GSUbufferForEach( buf2, ( ch, i ) => {
+			const src = buf.getChannelData( i );
 
-			dst.set( src.subarray( 0, a3 ), 0 );
-			dst.set( src.subarray( b3 ), a3 );
-		}
-	}
-	return buf2;
+			ch.set( src.subarray( 0, a3 ), 0 );
+			ch.set( src.subarray( b3 ), a3 );
+		} );
 };
