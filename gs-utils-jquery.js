@@ -95,6 +95,11 @@ $.$setAttr2 = ( el, k, v ) => {
 		? $.$rmAttr( el, k )
 		: $.$setAttr( el, k, v === true ? "" : v );
 };
+$.$attr = ( el, k, v ) => {
+	return v !== undefined
+		? $.$setAttr2( el, k, v )
+		: $.$getAttr( el, k );
+};
 $.$dataset = ( el, k, v ) => {
 	if ( v !== undefined ) {
 		el.dataset[ k ] = v;
