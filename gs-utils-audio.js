@@ -150,10 +150,13 @@ const GSUbufferForEach = ( buf, fn ) => {
 };
 
 const GSUbufferClone = buf => {
-	const buf2 = GSUaudioBuffer( buf.numberOfChannels, buf.length, buf.sampleRate );
+	if ( buf ) {
+		const buf2 = GSUaudioBuffer( buf.numberOfChannels, buf.length, buf.sampleRate );
 
-	GSUbufferForEach( buf, ( ch, i ) => buf2.copyToChannel( ch, i ) );
-	return buf2;
+		GSUbufferForEach( buf, ( ch, i ) => buf2.copyToChannel( ch, i ) );
+		return buf2;
+	}
+	return null;
 };
 
 const _GSUbufferAB = ( buf, a = 0, b = 1 ) => {
