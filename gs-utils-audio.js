@@ -170,11 +170,14 @@ const _GSUbufferAB = ( buf, a = 0, b = 1 ) => {
 	return [ a2, b2 - a2 ];
 };
 
-const GSUbufferClone = buf => {
+const GSUbufferClone = ( buf, a, b ) => {
 	if ( buf ) {
-		const buf2 = GSUaudioBuffer( buf.numberOfChannels, buf.length, buf.sampleRate );
+		const [ a2, b2 ] = _GSUbufferAB( buf, a, b );
+		const buf2 = GSUaudioBuffer( buf.numberOfChannels, b2, buf.sampleRate );
 
-		GSUbufferForEach( buf, ( ch, i ) => buf2.copyToChannel( ch, i ) );
+		GSUbufferForEach( buf, ( ch, i ) => {
+			buf2.copyToChannel( ch.subarray( a2, a2 + b2 ), i );
+		} );
 		return buf2;
 	}
 	return null;
