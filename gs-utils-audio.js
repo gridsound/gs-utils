@@ -142,7 +142,7 @@ function GSUpanningMerge( ...pans ) {
 }
 
 // .............................................................................
-const GSUaudioBuffer = ( a, b, c ) => {
+const GSUbufferCreate = ( a, b, c ) => {
 	const n = new AudioBuffer( {
 		numberOfChannels: a,
 		length: Math.max( 1, b ),
@@ -173,7 +173,7 @@ const _GSUbufferAB = ( buf, a = 0, b = 1 ) => {
 const GSUbufferClone = ( buf, a, b ) => {
 	if ( buf ) {
 		const [ a2, b2 ] = _GSUbufferAB( buf, a, b );
-		const buf2 = GSUaudioBuffer( buf.numberOfChannels, b2, buf.sampleRate );
+		const buf2 = GSUbufferCreate( buf.numberOfChannels, b2, buf.sampleRate );
 
 		GSUbufferForEach( buf, ( ch, i ) => {
 			buf2.copyToChannel( ch.subarray( a2, a2 + b2 ), i );
@@ -186,7 +186,7 @@ const GSUbufferClone = ( buf, a, b ) => {
 const GSUbufferCut = ( buf, a, b ) => {
 	const [ a2, b2 ] = _GSUbufferAB( buf, a, b );
 	const len2 = buf.length - b2;
-	const buf2 = GSUaudioBuffer( buf.numberOfChannels, Math.max( 1, len2 ), buf.sampleRate );
+	const buf2 = GSUbufferCreate( buf.numberOfChannels, Math.max( 1, len2 ), buf.sampleRate );
 
 	return len2 < 2
 		? buf2
