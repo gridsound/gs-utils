@@ -150,12 +150,11 @@ const GSUbufferForEach = ( buf, fn ) => {
 };
 
 const _GSUbufferAB = ( buf, a = 0, b = 1 ) => {
-	const a2 = GSUmathClamp( a, 0, 1 );
-	const b2 = GSUmathClamp( b, 0, 1 - a2 );
-	const a3 = Math.round( a2 * buf.length );
-	const b3 = Math.round( b2 * buf.length );
+	const len = buf.length;
+	const a2 = GSUmathClamp( Math.round( a * len ), 0, len );
+	const b2 = GSUmathClamp( Math.round( ( a + b ) * len ), a2, len );
 
-	return [ a3, b3 ];
+	return [ a2, b2 - a2 ];
 };
 
 const GSUbufferClone = buf => {
