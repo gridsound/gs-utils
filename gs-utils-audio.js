@@ -149,6 +149,15 @@ const GSUbufferForEach = ( buf, fn ) => {
 	return buf;
 };
 
+const _GSUbufferAB = ( buf, a = 0, b = 1 ) => {
+	const a2 = GSUmathClamp( a, 0, 1 );
+	const b2 = GSUmathClamp( b, 0, 1 - a2 );
+	const a3 = Math.round( a2 * buf.length );
+	const b3 = Math.round( b2 * buf.length );
+
+	return [ a3, b3 ];
+};
+
 const GSUbufferClone = buf => {
 	if ( buf ) {
 		const buf2 = GSUaudioBuffer( buf.numberOfChannels, buf.length, buf.sampleRate );
@@ -157,15 +166,6 @@ const GSUbufferClone = buf => {
 		return buf2;
 	}
 	return null;
-};
-
-const _GSUbufferAB = ( buf, a = 0, b = 1 ) => {
-	const a2 = GSUmathClamp( a, 0, 1 );
-	const b2 = GSUmathClamp( b, 0, 1 - a2 );
-	const a3 = Math.round( a2 * buf.length );
-	const b3 = Math.round( b2 * buf.length );
-
-	return [ a3, b3 ];
 };
 
 const GSUbufferCut = ( buf, a, b ) => {
