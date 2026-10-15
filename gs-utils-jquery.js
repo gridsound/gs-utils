@@ -101,6 +101,7 @@ $.$dataset = ( el, k, v ) => {
 	}
 	return el.dataset[ k ];
 };
+$.$href = ( el, v ) => $.$setAttr2( el, "href", v );
 $.$dataId = ( el, v ) => $.$dataset( el, "id", v );
 $.$dataProp = ( el, v ) => $.$dataset( el, "prop", v );
 
@@ -481,6 +482,7 @@ class $$ {
 	$focus() { return this.#a0?.focus( { preventScroll: true } ); }
 	$text( v ) { return this.$prop( "textContent", v ); }
 	$textHTML( s ) { return this.$empty().$append( ...$.$simpleStringHTML( s ) ); }
+	$href( v ) { return this.$setAttr( "href", v ); }
 	$value( v ) { return this.$prop( "value", v ); }
 	$checked( b ) { return this.$prop( "checked", b ); }
 	$disabled( b ) { return this.$setAttr( "disabled", b ); }
