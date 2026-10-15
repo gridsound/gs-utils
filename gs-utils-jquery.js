@@ -106,7 +106,7 @@ $.$dataset = ( el, k, v ) => {
 	}
 	return el.dataset[ k ];
 };
-$.$href = ( el, v ) => $.$setAttr2( el, "href", v );
+$.$href = ( el, v ) => $.$attr( el, "href", v );
 $.$dataId = ( el, v ) => $.$dataset( el, "id", v );
 $.$dataProp = ( el, v ) => $.$dataset( el, "prop", v );
 
