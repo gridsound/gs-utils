@@ -177,3 +177,16 @@ const GSUbufferCut = ( buf, a, b ) => {
 			ch.set( src.subarray( b3 ), a3 );
 		} );
 };
+
+const GSUbufferSilent = ( buf, a, b ) => {
+	const a2 = GSUmathClamp( a, 0, 1 );
+	const b2 = GSUmathClamp( b, 0, 1 - a2 );
+	const a3 = Math.round( a2 * buf.length );
+	const b3 = Math.round( b2 * buf.length );
+
+	return GSUbufferForEach( GSUbufferClone( buf ), ( ch, i ) => {
+		for ( let j = 0; j < b3; ++j ) {
+			ch[ a3 + j ] = 0;
+		}
+	} );
+};
