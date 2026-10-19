@@ -4,18 +4,6 @@ function GSUloadJSFile( src ) { return $.$loadJS( src ); }
 function GSUdownloadURL( name, url ) { $.$downloadURL( name, url ); }
 function GSUdownloadBlob( name, blob ) { $.$downloadBlob( name, blob ); }
 
-function GSUgetFileContent( file, format ) {
-	return new Promise( res => {
-		const rd = new FileReader();
-
-		rd.onload = e => res( e.target.result );
-		switch ( format ) {
-			case "text": rd.readAsText( file ); break;
-			case "array": rd.readAsArrayBuffer( file ); break;
-		}
-	} );
-}
-
 function GSUhashBuffer( arrBuf ) {
 	return crypto.subtle.digest( "SHA-1", arrBuf )
 		.then( hash => Array.from( new Uint8Array( hash ) ) )
