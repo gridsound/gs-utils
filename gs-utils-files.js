@@ -22,9 +22,12 @@ function GSUhashBuffer( arrBuf ) {
 		.then( arr => arr.map( n => n.toString( 16 ).padStart( 2, "0" ) ).join( "" ) );
 }
 
-const GSUopenFileManager = () => new Promise( res => {
+const GSUopenFileManager = o => new Promise( res => {
 	GSUopenFileManager.$inputRes = res;
-	GSUopenFileManager.$input.$click();
+	GSUopenFileManager.$input
+		.$setAttr( "multiple", !!o?.$multiple )
+		.$setAttr( "accept", o?.$accept || false )
+		.$click();
 } );
 GSUopenFileManager.$inputRes = null;
 GSUopenFileManager.$callback = e => GSUopenFileManager.$inputRes( e.target.files );
