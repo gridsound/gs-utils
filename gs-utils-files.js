@@ -18,7 +18,7 @@ const GSUopenFileManager = o => new Promise( res => {
 		.$click();
 } );
 GSUopenFileManager.$inputRes = null;
-GSUopenFileManager.$callback = e => GSUopenFileManager.$inputRes( e.target.files );
+GSUopenFileManager.$callback = e => GSUopenFileManager.$inputRes( Array.from( e.target.files ) );
 GSUopenFileManager.$input = $( "<input>" )
 	.$setAttr( "type", "file" )
 	.$onchange( GSUopenFileManager.$callback );
