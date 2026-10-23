@@ -484,6 +484,7 @@ class $$ {
 	$href( v ) { return this.$setAttr( "href", v ); }
 	$value( v ) { return this.$prop( "value", v ); }
 	$checked( b ) { return this.$prop( "checked", b ); }
+	$loading( b ) { return this.$setAttr( "loading", b ); }
 	$disabled( b ) { return this.$setAttr( "disabled", b ); }
 	$dataId( id ) { return this.$dataset( "id", id ); }
 	$dataProp( v ) { return this.$dataset( "prop", v ); }
