@@ -110,34 +110,34 @@
 <!-- ..... gs-utils-math ................................................... -->
 <!-- ....................................................................... -->
 <script>
-	tests( "GSUmathFloatReadable", () => {
-		test( "mathFloatReadable_0", GSUmathFloatReadable( NaN       ), [ 0, "K" ] );
-		test( "mathFloatReadable_1", GSUmathFloatReadable( null      ), [ 0, "K" ] );
-		test( "mathFloatReadable_2", GSUmathFloatReadable( true      ), [ 0, "K" ] );
-		test( "mathFloatReadable_3", GSUmathFloatReadable( false     ), [ 0, "K" ] );
-		test( "mathFloatReadable_4", GSUmathFloatReadable( undefined ), [ 0, "K" ] );
-		test( "mathFloatReadable_5", GSUmathFloatReadable( ''        ), [ 0, "K" ] );
-		test( "mathFloatReadable_6", GSUmathFloatReadable( '21'      ), [ 0, "K" ] );
-		test( "mathFloatReadable_7", GSUmathFloatReadable(             0 ), [   0,     "K"  ] );
-		test( "mathFloatReadable_8", GSUmathFloatReadable(             1 ), [   0.001, "K"  ] );
-		test( "mathFloatReadable_9", GSUmathFloatReadable(           999 ), [   0.999, "K"  ] );
-		test( "mathFloatReadable_a", GSUmathFloatReadable(         1_000 ), [   1,     "K" ] );
-		test( "mathFloatReadable_b", GSUmathFloatReadable(         1_001 ), [   1.001, "K" ] );
-		test( "mathFloatReadable_c", GSUmathFloatReadable(         1_999 ), [   1.999, "K" ] );
-		test( "mathFloatReadable_d", GSUmathFloatReadable(        21_000 ), [  21,     "K" ] );
-		test( "mathFloatReadable_e", GSUmathFloatReadable(        21_001 ), [  21.001, "K" ] );
-		test( "mathFloatReadable_f", GSUmathFloatReadable(        21_995 ), [  21.995, "K" ] );
-		test( "mathFloatReadable_g", GSUmathFloatReadable(       999_999 ), [ 999.999, "K" ] );
-		test( "mathFloatReadable_h", GSUmathFloatReadable(     1_000_000 ), [   1,     "M" ] );
-		test( "mathFloatReadable_i", GSUmathFloatReadable(     1_000_001 ), [   1,     "M" ] );
-		test( "mathFloatReadable_j", GSUmathFloatReadable(     1_000_010 ), [   1,     "M" ] );
-		test( "mathFloatReadable_k", GSUmathFloatReadable(     1_000_100 ), [   1,     "M" ] );
-		test( "mathFloatReadable_l", GSUmathFloatReadable(     1_000_500 ), [   1.001, "M" ] );
-		test( "mathFloatReadable_m", GSUmathFloatReadable(   100_000_000 ), [ 100,     "M" ] );
-		test( "mathFloatReadable_n", GSUmathFloatReadable(   999_999_499 ), [ 999.999, "M" ] );
-		test( "mathFloatReadable_o", GSUmathFloatReadable(   999_999_500 ), [   1,     "G" ] );
-		test( "mathFloatReadable_p", GSUmathFloatReadable( 1_000_000_000 ), [   1,     "G" ] );
-		test( "mathFloatReadable_q", GSUmathFloatReadable( 1_234_000_000 ), [   1.234, "G" ] );
+	tests( "GSUmathFloatHuman", () => {
+		test( "mathFloatHuman_0", GSUmathFloatHuman( NaN       ), "0 Kb" );
+		test( "mathFloatHuman_1", GSUmathFloatHuman( null      ), "0 Kb" );
+		test( "mathFloatHuman_2", GSUmathFloatHuman( true      ), "0 Kb" );
+		test( "mathFloatHuman_3", GSUmathFloatHuman( false     ), "0 Kb" );
+		test( "mathFloatHuman_4", GSUmathFloatHuman( undefined ), "0 Kb" );
+		test( "mathFloatHuman_5", GSUmathFloatHuman( ''        ), "0 Kb" );
+		test( "mathFloatHuman_6", GSUmathFloatHuman( '21'      ), "0 Kb" );
+		test( "mathFloatHuman_7", GSUmathFloatHuman(             0 ), "0 Kb" );
+		test( "mathFloatHuman_8", GSUmathFloatHuman(             1 ), "0.001 Kb" );
+		test( "mathFloatHuman_9", GSUmathFloatHuman(           999 ), "0.999 Kb" );
+		test( "mathFloatHuman_a", GSUmathFloatHuman(         1_000 ), "1 Kb" );
+		test( "mathFloatHuman_b", GSUmathFloatHuman(         1_001 ), "1.001 Kb" );
+		test( "mathFloatHuman_c", GSUmathFloatHuman(         1_999 ), "1.999 Kb" );
+		test( "mathFloatHuman_d", GSUmathFloatHuman(        21_000 ), "21 Kb" );
+		test( "mathFloatHuman_e", GSUmathFloatHuman(        21_001 ), "21.001 Kb" );
+		test( "mathFloatHuman_f", GSUmathFloatHuman(        21_995 ), "21.995 Kb" );
+		test( "mathFloatHuman_g", GSUmathFloatHuman(       999_999 ), "999.999 Kb" );
+		test( "mathFloatHuman_h", GSUmathFloatHuman(     1_000_000 ), "1 Mb" );
+		test( "mathFloatHuman_i", GSUmathFloatHuman(     1_000_001 ), "1 Mb" );
+		test( "mathFloatHuman_j", GSUmathFloatHuman(     1_000_010 ), "1 Mb" );
+		test( "mathFloatHuman_k", GSUmathFloatHuman(     1_000_100 ), "1 Mb" );
+		test( "mathFloatHuman_l", GSUmathFloatHuman(     1_000_500 ), "1.001 Mb" );
+		test( "mathFloatHuman_m", GSUmathFloatHuman(   100_000_000 ), "100 Mb" );
+		test( "mathFloatHuman_n", GSUmathFloatHuman(   999_999_499 ), "999.999 Mb" );
+		test( "mathFloatHuman_o", GSUmathFloatHuman(   999_999_500 ), "1 Gb" );
+		test( "mathFloatHuman_p", GSUmathFloatHuman( 1_000_000_000 ), "1 Gb" );
+		test( "mathFloatHuman_q", GSUmathFloatHuman( 1_234_000_000 ), "1.234 Gb" );
 	} );
 	tests( "GSUmathPrec", () => {
 		test( "mathPrec_0", GSUmathPrec( 0 ), 0 );
