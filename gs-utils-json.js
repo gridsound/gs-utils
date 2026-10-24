@@ -131,22 +131,16 @@ function GSUcomposeUndo( data, redo ) {
 	return data;
 }
 
-function GSUcreateUpdateDelete( dataSrc, fnCreate, fnUpdate, fnDelete, dataChange, preArg ) {
+function GSUcreateUpdateDelete( dataSrc, fnCreate, fnUpdate, fnDelete, dataChange ) {
 	GSUforEach( dataChange, ( obj, id ) => {
 		if ( !obj ) {
 			if ( id in dataSrc ) {
-				preArg
-					? fnDelete( preArg, id, dataChange )
-					: fnDelete(         id, dataChange );
+				fnDelete( id, dataChange );
 			}
 		} else if ( id in dataSrc ) {
-			preArg
-				? fnUpdate( preArg, id, obj, dataChange )
-				: fnUpdate(         id, obj, dataChange );
+			fnUpdate( id, obj, dataChange );
 		} else {
-			preArg
-				? fnCreate( preArg, id, obj, dataChange )
-				: fnCreate(         id, obj, dataChange );
+			fnCreate( id, obj, dataChange );
 		}
 	} );
 }
