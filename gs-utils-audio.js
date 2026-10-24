@@ -1,8 +1,5 @@
 "use strict";
 
-/* eslint-disable */
-let GSUaudioCurrentContext = null;
-
 // .............................................................................
 const GSUXtoHz_a = 128;
 const GSUXtoHz_b = .945;
