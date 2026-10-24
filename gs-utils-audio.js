@@ -140,16 +140,11 @@ function GSUpanningMerge( ...pans ) {
 
 // .............................................................................
 const GSUbufferCreate = ( a, b, c ) => {
-	const n = new AudioBuffer( {
+	return new AudioBuffer( {
 		numberOfChannels: a,
 		length: Math.max( 1, b ),
 		sampleRate: c,
 	} );
-
-	if ( __LOCALHOST__ ) {
-		_GSUaudioBuffer_wm.set( n, 1 );
-	}
-	return n;
 };
 
 const GSUbufferForEach = ( buf, fn ) => {
