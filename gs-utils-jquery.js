@@ -214,13 +214,13 @@ $.$simpleStringHTML = s => {
 
 // .............................................................................
 class $$ {
-	#a;
-	#a0;
+	$_elems;
+	$_elem0;
 
 	constructor( a ) {
+		this.$_elems = a;
+		this.$_elem0 = a[ 0 ];
 		Object.freeze( this );
-		this.#a = a;
-		this.#a0 = a[ 0 ];
 	}
 
 	// .........................................................................
@@ -233,36 +233,36 @@ class $$ {
 	}
 
 	// .........................................................................
-	$size() { return this.#a.length; }
-	$at( n ) { return $( this.#a.at( n ) ); }
-	$get( n ) { return this.#a.at( n ); }
-	$map( fn ) { return this.#a.map( fn ); }
-	$some( fn ) { return this.#a.some( fn ); }
-	$sort( fn ) { return this.#a.sort( fn ), this; }
-	$each( fn ) { return this.#a.forEach( fn ), this; }
-	$find( fn ) { return $( this.#a.find( fn ) ); }
-	$findIndex( fn ) { return this.#a.findIndex( fn ); }
-	$reduce( fn, x ) { return this.#a.reduce( fn, x ); }
+	$size() { return this.$_elems.length; }
+	$at( n ) { return $( this.$_elems.at( n ) ); }
+	$get( n ) { return this.$_elems.at( n ); }
+	$map( fn ) { return this.$_elems.map( fn ); }
+	$some( fn ) { return this.$_elems.some( fn ); }
+	$sort( fn ) { return this.$_elems.sort( fn ), this; }
+	$each( fn ) { return this.$_elems.forEach( fn ), this; }
+	$find( fn ) { return $( this.$_elems.find( fn ) ); }
+	$findIndex( fn ) { return this.$_elems.findIndex( fn ); }
+	$reduce( fn, x ) { return this.$_elems.reduce( fn, x ); }
 	$contains( tar ) { return this.$some( el => el.contains( $$.#extractFirst( tar ) ) ); }
-	$childrenCount() { return this.#a0?.childElementCount || 0; }
+	$childrenCount() { return this.$_elem0?.childElementCount || 0; }
 	$index() {
-		return this.#a0?.parentNode
-			? Array.prototype.indexOf.call( this.#a0?.parentNode.children, this.#a0 )
+		return this.$_elem0?.parentNode
+			? Array.prototype.indexOf.call( this.$_elem0?.parentNode.children, this.$_elem0 )
 			: -1;
 	}
 
 	// .........................................................................
-	$filter( fn ) { return $( this.#a.filter( GSUisFun( fn ) ? fn : el => el.matches( fn ) ) ); }
-	$child( n ) { return $( this.#a.map( el => Array.prototype.at.call( el.children, n ) ) ); }
-	$children() { return $( this.#a.flatMap( el => [ ...el.children ] ) ); }
-	$parent( n ) { return $( this.#a.map( el => $$.#parent( el, n ) ) ); }
-	$closest( sel ) { return $( this.#a.map( el => el.closest( sel ) ) ); }
-	$closestScrollable() { return $( this.#a.map( el => $$.#closestScrollable( el ) ) ); }
-	$prev() { return $( this.#a.map( $.$prev ) ); }
-	$next() { return $( this.#a.map( $.$next ) ); }
-	$prevUntil( sel ) { return $( this.#a.flatMap( el => $$.#siblingUntil( el, $.$prev, sel ) ) ); }
-	$nextUntil( sel ) { return $( this.#a.flatMap( el => $$.#siblingUntil( el, $.$next, sel ) ) ); }
-	$query( sel ) { return $( this.#a.flatMap( el => [ ...$.$qSA( sel, el ) ] ) ); }
+	$filter( fn ) { return $( this.$_elems.filter( GSUisFun( fn ) ? fn : el => el.matches( fn ) ) ); }
+	$child( n ) { return $( this.$_elems.map( el => Array.prototype.at.call( el.children, n ) ) ); }
+	$children() { return $( this.$_elems.flatMap( el => [ ...el.children ] ) ); }
+	$parent( n ) { return $( this.$_elems.map( el => $$.#parent( el, n ) ) ); }
+	$closest( sel ) { return $( this.$_elems.map( el => el.closest( sel ) ) ); }
+	$closestScrollable() { return $( this.$_elems.map( el => $$.#closestScrollable( el ) ) ); }
+	$prev() { return $( this.$_elems.map( $.$prev ) ); }
+	$next() { return $( this.$_elems.map( $.$next ) ); }
+	$prevUntil( sel ) { return $( this.$_elems.flatMap( el => $$.#siblingUntil( el, $.$prev, sel ) ) ); }
+	$nextUntil( sel ) { return $( this.$_elems.flatMap( el => $$.#siblingUntil( el, $.$next, sel ) ) ); }
+	$query( sel ) { return $( this.$_elems.flatMap( el => [ ...$.$qSA( sel, el ) ] ) ); }
 
 	// .........................................................................
 	$queryMap( graph ) {
@@ -303,9 +303,9 @@ class $$ {
 	$unobserveSize( fn ) { return this.$each( el => $$.#unobserveSize( el, fn ) ); }
 	$addEventListener( ev, fn, opt ) { return this.$each( el => el.addEventListener( ev, fn, opt ) ); }
 	$rmEventListener( ev, fn ) { return this.$each( el => el.removeEventListener( ev, fn ) ); }
-	$hasPtrCapture( ptrId ) { return $.$hasPtrCapture( this.#a0, ptrId ); }
-	$setPtrCapture( ptrId ) { return $.$setPtrCapture( this.#a0, ptrId ), this; }
-	$relPtrCapture( ptrId ) { return $.$relPtrCapture( this.#a0, ptrId ), this; }
+	$hasPtrCapture( ptrId ) { return $.$hasPtrCapture( this.$_elem0, ptrId ); }
+	$setPtrCapture( ptrId ) { return $.$setPtrCapture( this.$_elem0, ptrId ), this; }
+	$relPtrCapture( ptrId ) { return $.$relPtrCapture( this.$_elem0, ptrId ), this; }
 	$listen( cbs ) { return this.$addEventListener( "gsui", $$.#listenCB.bind( null, cbs ) ); }
 	static #listenCB( cbs, e ) {
 		const d = e.detail;
@@ -320,14 +320,14 @@ class $$ {
 	// .........................................................................
 	$empty() { return this.$each( $$.#empty ); }
 	$remove() { return this.$each( el => el.remove() ); }
-	$prepend( ...arr ) { return this.#a0?.prepend( ...$.$flatElements( arr ) ), this; }
-	$append( ...arr ) { return this.#a0?.append( ...$.$flatElements( arr ) ), this; }
-	$before( ...arr ) { return this.#a0?.before( ...$.$flatElements( arr ) ), this; }
-	$after( ...arr ) { return this.#a0?.after( ...$.$flatElements( arr ) ), this; }
-	$prependTo( el ) { return $$.#extractFirst( el )?.prepend( ...this.#a ), this; }
-	$appendTo( el ) { return $$.#extractFirst( el )?.append( ...this.#a ), this; }
-	$beforeTo( el ) { return $$.#extractFirst( el )?.before( ...this.#a ), this; }
-	$afterTo( el ) { return $$.#extractFirst( el )?.after( ...this.#a ), this; }
+	$prepend( ...arr ) { return this.$_elem0?.prepend( ...$.$flatElements( arr ) ), this; }
+	$append( ...arr ) { return this.$_elem0?.append( ...$.$flatElements( arr ) ), this; }
+	$before( ...arr ) { return this.$_elem0?.before( ...$.$flatElements( arr ) ), this; }
+	$after( ...arr ) { return this.$_elem0?.after( ...$.$flatElements( arr ) ), this; }
+	$prependTo( el ) { return $$.#extractFirst( el )?.prepend( ...this.$_elems ), this; }
+	$appendTo( el ) { return $$.#extractFirst( el )?.append( ...this.$_elems ), this; }
+	$beforeTo( el ) { return $$.#extractFirst( el )?.before( ...this.$_elems ), this; }
+	$afterTo( el ) { return $$.#extractFirst( el )?.after( ...this.$_elems ), this; }
 	$maintainChildren( n, tag, attr ) { return this.$each( el => $$.#maintainChildren( el, n, tag, attr ) ); }
 
 	// .........................................................................
@@ -342,12 +342,12 @@ class $$ {
 	$rmAttr( ...k ) { return this.$each( el => k.forEach( a => $.$rmAttr( el, a ) ) ); }
 	$addAttr( ...k ) { return this.$each( el => k.forEach( a => $.$setAttr( el, a, "" ) ) ); }
 	$getAttr( ...k ) {
-		if ( !this.#a0 ) {
+		if ( !this.$_elem0 ) {
 			return k.length === 1 ? null : [];
 		}
 		return k.length === 1
-			? $.$getAttr( this.#a0, k[ 0 ] )
-			: k.map( a => $.$getAttr( this.#a0, a ) );
+			? $.$getAttr( this.$_elem0, k[ 0 ] )
+			: k.map( a => $.$getAttr( this.$_elem0, a ) );
 	}
 	$setAttr( k, v ) {
 		return this.$each( GSUisObj( k )
@@ -361,25 +361,25 @@ class $$ {
 	// .........................................................................
 	$prop( str, val ) {
 		return val === undefined
-			? this.#a0?.[ str ]
+			? this.$_elem0?.[ str ]
 			: this.$each( ( el, i ) => el[ str ] = $$.#calcVal( val, el, i ) );
 	}
 	$dataset( k, v ) {
 		return v === undefined
-			? this.#a0?.dataset[ k ] ?? null
+			? this.$_elem0?.dataset[ k ] ?? null
 			: this.$each( GSUisStr( v )
 				? el => el.dataset[ k ] = v
 				: el => delete el.dataset[ k ] );
 	}
 
 	// .........................................................................
-	$top(    n, unit ) { return n === undefined ? parseFloat( $$.$setStyle( this.#a0, "top" ) )  || 0 : this.$css( "top",  n, unit ); }
-	$left(   n, unit ) { return n === undefined ? parseFloat( $$.$setStyle( this.#a0, "left" ) ) || 0 : this.$css( "left", n, unit ); }
-	$width(  n, unit ) { return n === undefined ? this.#a0?.clientWidth  || 0 : this.$css( "width",  n, unit ); }
-	$height( n, unit ) { return n === undefined ? this.#a0?.clientHeight || 0 : this.$css( "height", n, unit ); }
+	$top(    n, unit ) { return n === undefined ? parseFloat( $$.$setStyle( this.$_elem0, "top" ) )  || 0 : this.$css( "top",  n, unit ); }
+	$left(   n, unit ) { return n === undefined ? parseFloat( $$.$setStyle( this.$_elem0, "left" ) ) || 0 : this.$css( "left", n, unit ); }
+	$width(  n, unit ) { return n === undefined ? this.$_elem0?.clientWidth  || 0 : this.$css( "width",  n, unit ); }
+	$height( n, unit ) { return n === undefined ? this.$_elem0?.clientHeight || 0 : this.$css( "height", n, unit ); }
 	$css( prop, val, unit = "" ) {
 		return ( GSUisStr( prop ) || prop === undefined ) && val === undefined
-			? this.#a0 && $$.$setStyle( this.#a0, prop )
+			? this.$_elem0 && $$.$setStyle( this.$_elem0, prop )
 			: this.$each(
 				GSUisObj( prop ) ? el => $$.$setStyle( el, prop ) :
 				GSUisFun( prop ) ? ( el, i ) => $$.$setStyle( el, prop( el, i ) ) :
@@ -388,11 +388,11 @@ class $$ {
 	}
 
 	// .........................................................................
-	$scrollW() { return this.#a0?.scrollWidth; }
-	$scrollH() { return this.#a0?.scrollHeight; }
-	$scrollX( n, beh ) { return n === undefined ? this.#a0?.scrollLeft : this.#scroll( "left", n, beh ); }
-	$scrollY( n, beh ) { return n === undefined ? this.#a0?.scrollTop : this.#scroll( "top", n, beh ); }
-	$scrollIntoViewX( par ) { return $$.#scrollIntoViewX( this.#a0, $$.#extractFirst( par ) ), this; }
+	$scrollW() { return this.$_elem0?.scrollWidth; }
+	$scrollH() { return this.$_elem0?.scrollHeight; }
+	$scrollX( n, beh ) { return n === undefined ? this.$_elem0?.scrollLeft : this.#scroll( "left", n, beh ); }
+	$scrollY( n, beh ) { return n === undefined ? this.$_elem0?.scrollTop : this.#scroll( "top", n, beh ); }
+	$scrollIntoViewX( par ) { return $$.#scrollIntoViewX( this.$_elem0, $$.#extractFirst( par ) ), this; }
 	#scroll( dir, n, beh ) {
 		return this.$each( ( el, i ) => el.scrollTo( {
 			[ dir ]: $$.#calcVal( n, el, i ),
@@ -488,12 +488,12 @@ class $$ {
 	$pause() { return this.$trigger( "pause" ); }
 	$click() { return this.$trigger( "click" ); }
 	$togglePopover( b ) { return this.$trigger( b ? "showPopover" : "hidePopover" ); }
-	$toggleFullscreen() { return this.#a0 && $.$toggleFullscreen( this.#a0 ); }
+	$toggleFullscreen() { return this.$_elem0 && $.$toggleFullscreen( this.$_elem0 ); }
 
 	// .........................................................................
-	$bcr() { return $.$bcr( this.#a0 ); }
-	$tag() { return $.$tag( this.#a0 ); }
-	$focus() { return this.#a0?.focus( { preventScroll: true } ); }
+	$bcr() { return $.$bcr( this.$_elem0 ); }
+	$tag() { return $.$tag( this.$_elem0 ); }
+	$focus() { return this.$_elem0?.focus( { preventScroll: true } ); }
 	$text( v ) { return this.$prop( "textContent", v ); }
 	$textHTML( s ) { return this.$empty().$append( ...$.$simpleStringHTML( s ) ); }
 	$href( v ) { return this.$setAttr( "href", v ); }
@@ -530,7 +530,7 @@ class $$ {
 		return el2;
 	}
 	static #extractFirst( el ) {
-		return GSUisJQu( el ) ? el?.#a0 : el;
+		return GSUisJQu( el ) ? el?.$_elem0 : el;
 	}
 	static #siblingUntil( el, fnDir, sel ) {
 		const arr = [];
