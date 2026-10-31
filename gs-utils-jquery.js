@@ -83,6 +83,19 @@ $.$downloadURL = ( name, url ) => {
 };
 
 // .............................................................................
+$.$dispatch = ( el, ev, ...args ) => {
+	el.dispatchEvent( new CustomEvent( "gsui", {
+		bubbles: true,
+		detail: {
+			$event: ev,
+			$args: args,
+			$target: $( el ),
+			$targetId: $.$dataId( el ) || null,
+		},
+	} ) );
+};
+
+// .............................................................................
 $.$tag = el => el?.tagName.toLowerCase();
 $.$rmAttr = ( el, k ) => el.removeAttribute( k );
 $.$getAttr = ( el, k ) => el.getAttribute( k );
@@ -264,7 +277,7 @@ class $$ {
 
 	// .........................................................................
 	$trigger( s ) { return this.$each( el => el[ s ]() ); }
-	$dispatch( ev, ...args ) { return this.$each( el => $$.#dispatch( el, ev, ...args ) ); }
+	$dispatch( ev, ...args ) { return this.$each( el => $.$dispatch( el, ev, ...args ) ); }
 
 	// .........................................................................
 	$message( ev, ...args ) {
@@ -518,17 +531,6 @@ class $$ {
 	}
 	static #extractFirst( el ) {
 		return GSUisJQu( el ) ? el?.#a0 : el;
-	}
-	static #dispatch( el, ev, ...args ) {
-		el.dispatchEvent( new CustomEvent( "gsui", {
-			bubbles: true,
-			detail: {
-				$event: ev,
-				$args: args,
-				$target: $( el ),
-				$targetId: $.$dataId( el ) || null,
-			},
-		} ) );
 	}
 	static #siblingUntil( el, fnDir, sel ) {
 		const arr = [];
