@@ -103,6 +103,8 @@ $.$attr = ( el, k, v ) => {
 $.$href = ( el, v ) => $.$attr( el, "href", v );
 $.$dataId = ( el, v ) => $.$attr( el, "data-id", v );
 $.$dataProp = ( el, v ) => $.$attr( el, "data-prop", v );
+$.$dataAction = ( el, v ) => $.$attr( el, "data-action", v );
+$.$dataTooltip = ( el, v ) => $.$attr( el, "data-tooltip", v );
 
 // .............................................................................
 $.$hasPtrCapture = ( el, ptrId ) => el?.hasPointerCapture( ptrId );
@@ -488,6 +490,8 @@ class $$ {
 	$disabled( b ) { return this.$setAttr( "disabled", b ); }
 	$dataId( id ) { return this.$dataset( "id", id ); }
 	$dataProp( v ) { return this.$dataset( "prop", v ); }
+	$dataAction( v ) { return this.$dataset( "action", v ); }
+	$dataTooltip( v ) { return this.$dataset( "tooltip", v ); }
 	$viewbox( x, y, w, h ) {
 		return this.$setAttr( "viewBox", arguments.length === 4
 			? `${ x } ${ y } ${ w } ${ h }`
