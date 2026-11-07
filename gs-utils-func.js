@@ -6,6 +6,9 @@ function GSUnoopFalse() { return false; }
 /* eslint-enable */
 
 // .............................................................................
+function GSUiife( fn, ...args ) { return fn( ...args ); }
+
+// .............................................................................
 function GSUsetTimeout( fn, sec ) {
 	const ms = sec * 1000 | 0;
 
